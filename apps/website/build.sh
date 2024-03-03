@@ -5,4 +5,6 @@ if [ "$VERCEL_ENV" != "production" ]; then
     exit 0
 fi
 
+echo "Detected production deployment, proceeding"
+
 npx turbo-ignore
