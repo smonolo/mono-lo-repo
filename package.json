@@ -1,24 +1,20 @@
 {
   "name": "mono-lo-repo",
-  "private": true,
-  "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
-  },
-  "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
-    "prettier": "^3.1.1",
-    "turbo": "latest"
-  },
-  "engines": {
-    "node": ">=18"
-  },
-  "packageManager": "npm@10.5.0",
+  "version": "1.0.0",
+  "author": "Stefano Monolo <stefano@smnl.dev>",
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "scripts": {
+    "format": "prettier . --write",
+    "dev:website": "turbo dev --filter=website",
+    "dev": "turbo dev",
+    "build:website": "turbo build --filter=website",
+    "build:common": "turbo build --filter=common",
+    "build": "turbo build"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5"
+  }
 }
