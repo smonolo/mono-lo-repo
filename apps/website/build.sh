@@ -7,4 +7,4 @@ fi
 
 echo "Detected production deployment, proceeding"
 
-npx turbo-ignore
+npx turbo-ignore apps/website
