@@ -8,11 +8,11 @@
   ],
   "scripts": {
     "format": "prettier . --write",
-    "dev:website": "turbo dev --filter=website",
-    "dev": "turbo dev",
-    "build:website": "turbo build --filter=website",
+    "dev:website": " turbo build --filter=common && turbo dev --filter=website",
+    "dev": "turbo build --filter=common && turbo dev",
+    "build:website": "turbo build --filter=common && turbo build --filter=website",
     "build:common": "turbo build --filter=common",
-    "build": "turbo build"
+    "build": "turbo build --filter=common && turbo build --filter=!common"
   },
   "devDependencies": {
     "prettier": "^3.2.5"
