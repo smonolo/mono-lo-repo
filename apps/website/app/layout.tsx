@@ -1,18 +1,59 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import type { Metadata, Viewport } from 'next'
 import type { PropsWithChildren } from 'react'
 import '@/app/globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
-
 export const metadata: Metadata = {
-  title: 'Hello',
+  title: {
+    template: '%s | Stefano Monolo',
+    default: 'Stefano Monolo',
+  },
+  description:
+    'I am a software engineer deeply passionate about the web and its technologies.',
+  alternates: {
+    canonical: '/',
+  },
+  applicationName: 'Stefano Monolo',
+  authors: [
+    {
+      name: 'Stefano Monolo <stefano@smnl.dev>',
+      url: 'https://smnl.dev',
+    },
+  ],
+  creator: 'Stefano Monolo <stefano@smnl.dev>',
+  metadataBase: new URL('https://smnl.dev'),
+  openGraph: {
+    title: 'Stefano Monolo',
+    description:
+      'I am a software engineer deeply passionate about the web and its technologies.',
+    url: 'https://smnl.dev',
+    siteName: 'Stefano',
+    type: 'website',
+  },
+  publisher: 'Stefano Monolo <stefano@smnl.dev>',
+  robots: {
+    index: true,
+    follow: true,
+  },
+  twitter: {
+    card: 'summary',
+    site: '@stmonolo',
+    creator: '@stmonolo',
+    title: 'Stefano Monolo',
+    description:
+      'I am a software engineer deeply passionate about the web and its technologies.',
+  },
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#121215',
 }
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <main>{children}</main>
       </body>
     </html>

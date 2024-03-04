@@ -1,0 +1,79 @@
+{
+  "socials": {
+    "github": "https://github.com/smonolo",
+    "twitter-x": "https://x.com/stmonolo",
+    "linkedin": "https://www.linkedin.com/in/stemon",
+    "discord": "https://discord.com/users/191598787410526208",
+    "envelope-fill": "mailto:stefano@smnl.dev"
+  },
+  "items": [
+    {
+      "project": "Kampaay",
+      "website": "https://app.kampaay.com"
+    },
+    {
+      "project": "EVNT Games",
+      "website": "https://evnt.games"
+    },
+    {
+      "project": "MCL",
+      "website": "https://mcl.live"
+    },
+    {
+      "project": "Moonsworth",
+      "website": "https://www.moonsworth.com"
+    },
+    {
+      "project": "Lunar Client",
+      "website": "https://www.lunarclient.com"
+    },
+    {
+      "project": "MCStats",
+      "website": "https://skins.mcstats.com"
+    },
+    {
+      "project": "ESL Gaming",
+      "website": "https://www.badlion.net"
+    },
+    {
+      "project": "Badlion Client",
+      "website": "https://client.badlion.net"
+    },
+    {
+      "project": "Badlion Store",
+      "website": "https://store.badlion.net"
+    },
+    {
+      "project": "Top.gg",
+      "website": "https://top.gg"
+    },
+    {
+      "project": "Top.gg Auctions",
+      "website": "https://auctions.top.gg"
+    },
+    {
+      "project": "The Pits",
+      "website": "https://www.thepits.it"
+    },
+    {
+      "project": "FN.Games",
+      "website": "https://fn.games"
+    },
+    {
+      "project": "Overcast Community",
+      "website": "https://oc.tc"
+    },
+    {
+      "project": "Markz3D",
+      "website": "https://www.markz3d.com"
+    },
+    {
+      "project": "FM SHOP",
+      "website": "https://www.fm-shop.it"
+    },
+    {
+      "project": "GyllieBot",
+      "website": "https://gylliebot.net"
+    }
+  ]
+}
