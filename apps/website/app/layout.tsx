@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next'
 import type { PropsWithChildren } from 'react'
 import '@/app/globals.css'
+import Navbar from '@/components/layout/navbar'
+import Footer from '@/components/layout/footer'
 
 export const metadata: Metadata = {
   title: {
@@ -53,8 +55,12 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en">
-      <body>
-        <main>{children}</main>
+      <body className="bg-sm-black text-sm-white relative m-0 flex min-h-screen w-full flex-col justify-between p-0">
+        <Navbar />
+        <main className="mx-auto w-full max-w-[1000px] px-10 py-32">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   )

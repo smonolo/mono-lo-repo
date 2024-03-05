@@ -8,7 +8,3 @@
 * {
   font-family: 'Switzer', sans-serif;
 }
-
-body {
-  @apply bg-sm-black text-sm-white m-0 min-h-screen w-full p-0;
-}
