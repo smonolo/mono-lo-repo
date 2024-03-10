@@ -1,7 +1,13 @@
+'use client'
+
 import data from '@/data/layout/navbar.json'
+import classNames from 'classnames'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export default function Navbar() {
+  const pathname = usePathname()
+
   return (
     <nav className="fixed left-1/2 top-5 mx-auto flex w-11/12 max-w-[1000px] -translate-x-1/2 items-center justify-between gap-x-5 rounded-2xl border border-solid border-neutral-800 bg-neutral-900 px-5 py-3 drop-shadow lg:w-full">
       <Link href="/" className="flex w-fit items-center gap-x-2">
@@ -16,7 +22,10 @@ export default function Navbar() {
             <Link
               key={key}
               href={value.url}
-              className="hover:text-sm-white text-sm text-neutral-300 transition-colors md:text-base"
+              className={classNames(
+                'hover:text-sm-white text-sm text-neutral-300 transition-colors md:text-base',
+                { 'text-sm-white': pathname === value.url }
+              )}
             >
               {value.text}
             </Link>

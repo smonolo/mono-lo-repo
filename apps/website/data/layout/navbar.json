@@ -1,8 +1,12 @@
 {
   "items": {
-    "work": {
+    "journey": {
       "text": "Journey",
       "url": "/journey"
+    },
+    "chaos": {
+      "text": "Chaos",
+      "url": "/chaos"
     }
   },
   "socials": {

@@ -2,70 +2,101 @@
   "items": [
     {
       "project": "Kampaay",
-      "website": "https://app.kampaay.com"
+      "company": "Kampaay S.R.L.",
+      "year": 2023,
+      "website": "https://app.kampaay.com",
+      "current": true
     },
     {
       "project": "EVNT Games",
+      "company": "EVNT Games LLC",
+      "year": 2023,
       "website": "https://evnt.games"
     },
     {
       "project": "MCL",
+      "company": "EVNT Games LLC",
+      "year": 2023,
       "website": "https://mcl.live"
     },
     {
       "project": "Moonsworth",
+      "company": "Moonsworth, LLC",
+      "year": 2022,
       "website": "https://www.moonsworth.com"
     },
     {
       "project": "Lunar Client",
+      "company": "Moonsworth, LLC",
+      "year": 2022,
       "website": "https://www.lunarclient.com"
     },
     {
       "project": "MCStats",
+      "company": "Moonsworth, LLC",
+      "year": 2022,
       "website": "https://skins.mcstats.com"
     },
     {
-      "project": "ESL Gaming",
+      "project": "Badlion",
+      "company": "ESL Gaming Online, Inc.",
+      "year": 2021,
       "website": "https://www.badlion.net"
     },
     {
       "project": "Badlion Client",
+      "company": "ESL Gaming Online, Inc.",
+      "year": 2021,
       "website": "https://client.badlion.net"
     },
     {
       "project": "Badlion Store",
+      "company": "ESL Gaming Online, Inc.",
+      "year": 2021,
       "website": "https://store.badlion.net"
     },
     {
       "project": "Top.gg",
+      "company": "Dbots BV",
+      "year": 2021,
       "website": "https://top.gg"
     },
     {
       "project": "Top.gg Auctions",
+      "company": "Dbots BV",
+      "year": 2021,
       "website": "https://auctions.top.gg"
     },
     {
       "project": "The Pits",
-      "website": "https://www.thepits.it"
+      "website": "https://www.thepits.it",
+      "year": 2024,
+      "current": true
     },
     {
       "project": "FN.Games",
+      "company": "EVNT Games LLC",
+      "year": 2023,
       "website": "https://fn.games"
     },
     {
       "project": "Overcast Community",
+      "year": 2022,
       "website": "https://oc.tc"
     },
     {
       "project": "Markz3D",
+      "year": 2023,
       "website": "https://www.markz3d.com"
     },
     {
       "project": "FM SHOP",
+      "year": 2024,
       "website": "https://www.fm-shop.it"
     },
     {
       "project": "GyllieBot",
+      "year": 2019,
       "website": "https://gylliebot.net"
     }
   ]
