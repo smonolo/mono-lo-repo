@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import Link from 'next/link'
 import { useMemo } from 'react'
 
@@ -22,7 +23,12 @@ export default function ProjectCard({
   )
 
   return (
-    <div className="flex w-full items-center justify-between gap-x-4 border-b border-solid border-neutral-800 px-5 py-4">
+    <div
+      className={classNames(
+        'flex w-full items-center justify-between gap-x-4 border-b border-solid px-5 py-4',
+        current ? 'border-blue-600 bg-blue-950/30' : 'border-neutral-800'
+      )}
+    >
       <div className="flex w-fit flex-col gap-y-0.5">
         <div className="flex w-fit items-center gap-x-2">
           <h4 className="font-medium">{project}</h4>
