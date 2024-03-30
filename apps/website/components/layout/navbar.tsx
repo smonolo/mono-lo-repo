@@ -9,9 +9,9 @@ export default function Navbar() {
   const pathname = usePathname()
 
   return (
-    <nav className="fixed left-1/2 top-5 mx-auto flex w-11/12 max-w-[1000px] -translate-x-1/2 items-center justify-between gap-x-5 rounded-2xl border border-solid border-neutral-800 bg-neutral-900 px-5 py-3 drop-shadow lg:w-full">
+    <nav className="fixed left-0 top-0 flex w-full items-center justify-between gap-x-5 border-b border-solid border-neutral-800 px-5 py-3 drop-shadow backdrop-blur-md lg:w-full">
       <Link href="/" className="flex w-fit items-center gap-x-2">
-        <div className="bg-sm-blue h-[20px] w-[20px] md:h-[25px] md:w-[25px]" />
+        <div className="bg-sm-blue h-[20px] w-[20px] rounded-sm md:h-[25px] md:w-[25px]" />
         <span className="text-sm-white text-sm font-medium md:text-base">
           Stefano Monolo
         </span>
