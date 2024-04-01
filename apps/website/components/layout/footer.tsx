@@ -7,7 +7,7 @@ export default function Footer() {
         © {new Date().getFullYear()} Stefano Monolo
       </span>
       <Link
-        href="https://github.com/smonolo/mono-lo-repo"
+        href="https://git.new/monorepo"
         target="_blank"
         className="hover:text-sm-white text-sm text-neutral-300 underline underline-offset-2 transition-colors"
       >
