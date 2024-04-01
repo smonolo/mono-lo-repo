@@ -8,3 +8,13 @@
 * {
   font-family: 'Switzer', sans-serif;
 }
+
+::-webkit-scrollbar {
+  width: 5px;
+  background-color: #121215;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #008cff;
+  border-radius: 3px;
+}

@@ -1,16 +1,6 @@
 import classNames from 'classnames'
 import Link from 'next/link'
-
-type Props = {
-  brand: string
-  company: string
-  website: string
-  position: string
-  startYear: number
-  endYear: number | string
-  description: string
-  projects?: string[]
-}
+import type { Experience } from '@/components/common/experiences/experiences-list'
 
 export default function ExperienceCard({
   brand,
@@ -21,7 +11,7 @@ export default function ExperienceCard({
   endYear,
   description,
   projects,
-}: Props) {
+}: Experience) {
   return (
     <div
       className={classNames(

@@ -7,6 +7,10 @@
     "chaos": {
       "text": "Chaos",
       "url": "/chaos"
+    },
+    "attempts": {
+      "text": "Attempts",
+      "url": "/attempts"
     }
   },
   "socials": {

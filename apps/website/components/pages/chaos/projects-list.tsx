@@ -8,17 +8,19 @@ type Props = {
 
 export default function ProjectsList({ filter }: Props) {
   const filteredItems = useMemo(() => {
+    const sortedItems = data.items.sort((a) => (a.current ? -1 : 1))
+
     if (filter) {
       const lowerFilter = filter.toLowerCase()
 
-      return data.items.filter((i) =>
+      return sortedItems.filter((i) =>
         [i.project, i.company, i.website].some((v) =>
           v?.toLowerCase().includes(lowerFilter)
         )
       )
     }
 
-    return data.items
+    return sortedItems
   }, [filter])
 
   return (
