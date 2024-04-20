@@ -93,7 +93,8 @@
     {
       "project": "Markz3D",
       "year": 2023,
-      "website": "https://www.markz3d.com"
+      "website": "https://www.markz3d.com",
+      "current": true
     },
     {
       "project": "FM SHOP",
