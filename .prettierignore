@@ -2,3 +2,5 @@
 node_modules
 dist
 .next
+.nuxt
+package-lock.json

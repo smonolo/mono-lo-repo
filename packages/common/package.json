@@ -1,9 +1,10 @@
 {
-  "name": "@smonolo/common",
+  "name": "common",
   "version": "1.0.0",
   "author": "Stefano Monolo <stefano@smnl.dev>",
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf ./dist && tsc"
-  }
+  },
+  "packageManager": "npm@10.8.1"
 }

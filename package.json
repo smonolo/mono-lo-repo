@@ -6,13 +6,16 @@
     "apps/*",
     "packages/*"
   ],
+  "packageManager": "npm@10.8.1",
   "scripts": {
     "format": "prettier . --write",
     "dev:cdn": "turbo dev --filter=cdn",
     "dev:website": "npm run build:common && turbo dev --filter=website",
+    "dev:resume": "npm run build:common && turbo dev --filter=resume",
     "dev": "npm run build:common && turbo dev",
     "build:cdn": "turbo build --filter=cdn",
     "build:website": "npm run build:common && turbo build --filter=website",
+    "build:resume": "npm run build:common && turbo build --filter=resume",
     "build:common": "turbo build --filter=common",
     "build": "npm run build:common && turbo build --filter=!common"
   },
