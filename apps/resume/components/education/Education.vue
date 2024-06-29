@@ -1,6 +1,6 @@
 <template>
   <section id="education">
-    <h3 class="text-2xl font-semibold">Education</h3>
+    <h3 class="text-xl font-semibold md:text-2xl">Education</h3>
     <div class="mt-4 flex flex-col gap-y-3">
       <EducationCard v-for="(edu, key) in education" :key :="edu" />
     </div>
@@ -8,7 +8,7 @@
       <div
         v-for="(lang, key) in languages"
         :key
-        class="w-full rounded-xl bg-[#f7f7f7] px-6 py-2 text-center"
+        class="w-full rounded-xl bg-[#f7f7f7] px-6 py-2 text-center text-sm md:text-base"
       >
         <span class="font-medium">{{ lang }}</span>
       </div>

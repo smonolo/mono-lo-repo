@@ -1,9 +1,11 @@
 <template>
   <div class="h-4 w-full bg-[#008cff]" />
-  <main class="mx-auto flex max-w-[1600px] flex-col gap-y-16 p-20">
+  <main
+    class="mx-auto flex max-w-[1600px] flex-col gap-y-10 p-8 lg:gap-y-16 lg:p-20"
+  >
     <Details />
     <Experience />
-    <div class="grid grid-cols-2 gap-x-5">
+    <div class="flex flex-col gap-x-5 gap-y-6 lg:grid lg:grid-cols-2">
       <Education />
       <Skills />
     </div>

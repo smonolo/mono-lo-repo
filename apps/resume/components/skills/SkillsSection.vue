@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h5 class="font-medium uppercase">{{ title }}</h5>
+    <h5 class="text-sm font-medium uppercase md:text-base">{{ title }}</h5>
     <div class="mt-2 flex flex-wrap gap-2">
       <span
         v-for="(skill, key) in skills"
         :key
-        class="w-fit rounded-lg px-3 py-1.5 font-medium"
+        class="w-fit rounded-lg px-3 py-1.5 text-sm font-medium md:text-base"
         :class="
           highlighted.includes(skill)
             ? 'bg-[#008cff] text-white'

@@ -1,7 +1,7 @@
 <template>
   <div class="w-full rounded-xl bg-[#f7f7f7] p-6">
-    <h5 class="text-xl font-semibold">{{ school }}</h5>
-    <span class="font-medium">{{ degree }}</span>
+    <h5 class="text-lg font-semibold md:text-xl">{{ school }}</h5>
+    <span class="text-sm font-medium md:text-base">{{ degree }}</span>
   </div>
 </template>
 

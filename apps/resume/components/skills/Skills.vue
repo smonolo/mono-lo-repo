@@ -1,6 +1,6 @@
 <template>
   <section id="skills">
-    <h3 class="text-2xl font-semibold">Skills</h3>
+    <h3 class="text-xl font-semibold md:text-2xl">Skills</h3>
     <div class="mt-4 flex flex-col gap-y-4">
       <SkillsSection v-for="(section, key) in sections" :key :="section" />
     </div>

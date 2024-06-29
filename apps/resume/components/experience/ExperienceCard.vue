@@ -1,15 +1,21 @@
 <template>
   <div class="w-full rounded-xl bg-[#f7f7f7] p-6">
-    <div class="flex w-full items-start justify-between">
+    <div
+      class="flex w-full flex-col items-start justify-between gap-2 lg:flex-row"
+    >
       <div class="w-fit">
-        <h5 class="text-xl font-semibold">{{ position }} at {{ company }}</h5>
-        <span class="font-medium">{{ period }} · {{ location }}</span>
+        <h5 class="text-lg font-semibold md:text-xl">
+          {{ position }} at {{ company }}
+        </h5>
+        <span class="text-sm font-medium md:text-base"
+          >{{ period }} · {{ location }}</span
+        >
       </div>
       <div class="flex w-fit items-center gap-x-2">
         <span
           v-for="(skill, key) in skills"
           :key
-          class="rounded-md bg-[#dddddd] px-2.5 py-0.5 text-sm font-semibold"
+          class="rounded-md bg-[#dddddd] px-2.5 py-0.5 text-xs font-semibold md:text-sm"
         >
           {{ skill }}
         </span>
@@ -19,7 +25,7 @@
       <li
         v-for="(achievement, key) in achievements"
         :key="key"
-        class="flex items-center gap-x-2"
+        class="flex items-center gap-x-2 text-sm md:text-base"
       >
         <span class="text-[#333333]">•</span>
         <span class="font-medium">{{ achievement }}</span>

@@ -1,16 +1,16 @@
 <template>
   <section id="details" class="w-full">
-    <h1 class="text-3xl font-semibold">Stefano Monolo</h1>
-    <span class="text-xl font-medium">
+    <h1 class="text-2xl font-semibold md:text-3xl">Stefano Monolo</h1>
+    <span class="text-lg font-medium md:text-xl">
       I am a software engineer passionate about the web and its technologies.
     </span>
-    <div class="mt-4 flex items-center gap-x-6">
+    <div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2">
       <a
         v-for="(link, key) in links"
         :key
         :href="link.url"
         :target="link.url.startsWith('https') ? '_blank' : '_self'"
-        class="flex items-center gap-x-2 text-xl font-medium"
+        class="flex items-center gap-x-2 text-lg font-medium md:text-xl"
       >
         <i :class="`bi bi-${link.icon}`" />
         <span>{{ link.text }}</span>
