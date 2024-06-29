@@ -5,13 +5,17 @@
       <span
         v-for="(skill, key) in skills"
         :key
-        class="w-fit rounded-lg px-3 py-1.5 text-sm font-medium md:text-base"
+        class="flex w-fit items-center gap-x-1 rounded-lg px-3 py-1.5 text-sm font-medium md:text-base"
         :class="
           highlighted.includes(skill)
             ? 'bg-[#008cff] text-white'
             : 'bg-[#dddddd]'
         "
       >
+        <i
+          v-if="highlighted.includes(skill)"
+          class="bi bi-star-fill text-xs md:text-sm"
+        />
         {{ skill }}
       </span>
     </div>

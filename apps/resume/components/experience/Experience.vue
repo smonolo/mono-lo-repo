@@ -1,6 +1,6 @@
 <template>
   <section id="experience">
-    <div class="flex items-center gap-x-4">
+    <div class="flex items-center gap-x-3">
       <h3 class="text-xl font-semibold md:text-2xl">Experience</h3>
       <span
         class="h-fit rounded-md bg-[#008cff] px-2.5 py-0.5 text-xs font-medium text-white md:text-sm"

@@ -7,11 +7,11 @@
         <h5 class="text-lg font-semibold md:text-xl">
           {{ position }} at {{ company }}
         </h5>
-        <span class="text-sm font-medium md:text-base"
-          >{{ period }} · {{ location }}</span
-        >
+        <span class="text-sm font-medium md:text-base">
+          {{ period }} · {{ location }}
+        </span>
       </div>
-      <div class="flex w-fit items-center gap-x-2">
+      <div class="flex w-fit flex-wrap items-center gap-1 md:gap-x-2">
         <span
           v-for="(skill, key) in skills"
           :key

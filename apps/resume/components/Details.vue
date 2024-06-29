@@ -45,6 +45,11 @@ const links: Link[] = [
     text: 'stemon',
   },
   {
+    icon: 'link-45deg',
+    url: 'https://smnl.dev',
+    text: 'smnl.dev',
+  },
+  {
     icon: 'telephone',
     url: 'tel:+393917422284',
     text: '+39 391 742 2284',
