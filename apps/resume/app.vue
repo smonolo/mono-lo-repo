@@ -18,4 +18,6 @@ import Education from '@/components/education/Education.vue'
 import Skills from '@/components/skills/Skills.vue'
 
 defineComponent({ name: 'App' })
+
+useHead({ title: 'Stefano Monolo' })
 </script>
