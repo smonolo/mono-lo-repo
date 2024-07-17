@@ -48,17 +48,6 @@ export default function Home() {
           </button>
         </Link>
       </div>
-      <p className="mt-6 text-sm text-neutral-300 md:text-base">
-        Want to know more? Take a look at my{' '}
-        <Link
-          href="https://prev.smnl.dev"
-          target="_blank"
-          className="text-sm-white hover:text-sm-blue underline underline-offset-2 transition-colors"
-        >
-          contentful site
-        </Link>{' '}
-        while this is under construction.
-      </p>
     </section>
   )
 }
