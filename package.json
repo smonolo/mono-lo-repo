@@ -3,21 +3,19 @@
   "version": "1.0.0",
   "author": "Stefano Monolo <stefano@smnl.dev>",
   "workspaces": [
-    "apps/*",
-    "packages/*"
+    "apps/*"
   ],
   "packageManager": "npm@10.8.1",
   "scripts": {
     "format": "prettier . --write",
     "dev:cdn": "turbo dev --filter=cdn",
-    "dev:website": "npm run build:common && turbo dev --filter=website",
-    "dev:resume": "npm run build:common && turbo dev --filter=resume",
-    "dev": "npm run build:common && turbo dev",
+    "dev:website": "turbo dev --filter=website",
+    "dev:resume": "turbo dev --filter=resume",
+    "dev": "turbo dev",
     "build:cdn": "turbo build --filter=cdn",
-    "build:website": "npm run build:common && turbo build --filter=website",
-    "build:resume": "npm run build:common && turbo build --filter=resume",
-    "build:common": "turbo build --filter=common",
-    "build": "npm run build:common && turbo build --filter=!common"
+    "build:website": "turbo build --filter=website",
+    "build:resume": "turbo build --filter=resume",
+    "build": "turbo build"
   },
   "devDependencies": {
     "prettier": "^3.2.5"
