@@ -8,11 +8,9 @@
   "packageManager": "npm@10.8.1",
   "scripts": {
     "format": "prettier . --write",
-    "dev:cdn": "turbo dev --filter=cdn",
     "dev:website": "turbo dev --filter=website",
     "dev:resume": "turbo dev --filter=resume",
     "dev": "turbo dev",
-    "build:cdn": "turbo build --filter=cdn",
     "build:website": "turbo build --filter=website",
     "build:resume": "turbo build --filter=resume",
     "build": "turbo build"
