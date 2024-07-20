@@ -57,7 +57,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
     <html lang="en">
       <body className="bg-sm-black text-sm-white relative m-0 flex min-h-screen w-full flex-col justify-between p-0">
         <Navbar />
-        <main className="mx-auto w-full max-w-[1000px] px-5 py-28 lg:px-0">
+        <main className="mx-auto w-full max-w-[1000px] px-5 py-20 md:py-28 lg:px-0">
           {children}
         </main>
         <Footer />

@@ -2,15 +2,18 @@
 
 import classNames from 'classnames'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 export default function Home() {
   const [checked, setChecked] = useState<boolean>(false)
 
-  const linkProps = {
-    href: checked ? 'https://resume.smnl.dev' : '',
-    target: checked ? '_blank' : '_self',
-  }
+  const linkProps = useMemo(
+    () => ({
+      href: checked ? 'https://resume.smnl.dev' : '',
+      target: checked ? '_blank' : '_self',
+    }),
+    [checked]
+  )
 
   return (
     <section>
@@ -39,7 +42,7 @@ export default function Home() {
         <Link {...linkProps} className="mt-4 block w-fit">
           <button
             className={classNames(
-              'bg-sm-black text-sm-whit rounded-lg px-4 py-2 font-medium transition-colors disabled:opacity-50',
+              'bg-sm-black text-sm-white z-10 rounded-lg px-4 py-2 font-medium transition-colors disabled:opacity-50',
               { 'hover:bg-sm-white hover:text-sm-black': checked }
             )}
             disabled={!checked}
