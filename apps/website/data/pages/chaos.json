@@ -1,11 +1,16 @@
 {
   "items": [
     {
+      "project": "OpenWater",
+      "year": 2024,
+      "website": "https://www.openwaterapp.com",
+      "current": true
+    },
+    {
       "project": "Kampaay",
       "company": "Kampaay S.R.L.",
       "year": 2023,
-      "website": "https://app.kampaay.com",
-      "current": true
+      "website": "https://app.kampaay.com"
     },
     {
       "project": "EVNT Games",

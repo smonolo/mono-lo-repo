@@ -5,7 +5,7 @@
       <span
         class="h-fit rounded-md bg-[#008cff] px-2.5 py-0.5 text-xs font-medium text-white md:text-sm"
       >
-        4 years
+        {{ new Date().getFullYear() - 2020 }} years
       </span>
     </div>
     <div class="mt-4 flex flex-col gap-y-3">
@@ -25,7 +25,7 @@ const experience: ExperienceCardProps[] = [
   {
     position: 'Frontend Engineer',
     company: 'Kampaay S.R.L.',
-    period: 'August 2023 - Present',
+    period: 'August 2023 - August 2024',
     location: 'Viale Cassala, 30, Milan, Italy',
     achievements: [
       'Designed and developed a modern and accessible platform used by 150+ businesses across Italy and Sweden',
