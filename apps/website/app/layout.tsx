@@ -3,6 +3,7 @@ import type { PropsWithChildren } from 'react'
 import '@/app/globals.css'
 import Navbar from '@/components/layout/navbar'
 import Footer from '@/components/layout/footer'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 export const metadata: Metadata = {
   title: {
@@ -56,6 +57,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en">
       <body className="bg-sm-black text-sm-white relative m-0 flex min-h-screen w-full flex-col justify-between p-0">
+        <GoogleAnalytics gaId="G-7BK0LLG38Q" />
         <Navbar />
         <main className="mx-auto w-full max-w-[1000px] px-5 py-20 md:py-28 lg:px-0">
           {children}
