@@ -53,7 +53,7 @@ const experience: ExperienceCardProps[] = [
   {
     position: 'Web Engineer',
     company: 'Moonsworth, LLC',
-    period: 'January 2021 - November 2022',
+    period: 'January 2022 - November 2022',
     location: 'Remote, Europe',
     achievements: [
       'Worked with designers and other engineers to release a new major version of a Minecraft launcher used by 100k+ users every day',
