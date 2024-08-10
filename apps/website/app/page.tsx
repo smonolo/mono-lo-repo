@@ -1,4 +1,3 @@
-import PagesList from '@/components/pages/home/pages-list'
 import ResumeCard from '@/components/pages/home/resume-card'
 
 export default function Home() {
@@ -10,7 +9,6 @@ export default function Home() {
         technologies.
       </p>
       <ResumeCard />
-      <PagesList />
     </section>
   )
 }
