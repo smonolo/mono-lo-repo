@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 type Props = {
   project: string
   company?: string
-  year?: number
+  year?: number | string
   website: string
   current?: boolean
 }
