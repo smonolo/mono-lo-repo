@@ -22,13 +22,13 @@ export default function ProjectCard({
   )
 
   return (
-    <div className="flex w-full items-center justify-between gap-x-4 border-b border-solid border-neutral-800 px-2 py-4">
+    <div className="flex w-full items-center justify-between gap-x-4 rounded-xl bg-neutral-800/40 px-5 py-4">
       <div className="flex w-fit flex-col gap-y-0.5">
         <div className="flex w-fit items-center gap-x-2">
           <h4 className="font-medium">{project}</h4>
           {current && (
-            <span className="h-fit rounded-full border border-solid border-blue-600 bg-blue-900 px-1.5 text-[10px] text-blue-300">
-              Current
+            <span className="h-fit rounded-full border border-blue-600 bg-blue-900 px-1.5 text-[10px] text-blue-300">
+              Ongoing
             </span>
           )}
         </div>

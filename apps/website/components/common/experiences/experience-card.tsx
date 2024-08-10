@@ -15,10 +15,10 @@ export default function ExperienceCard({
   return (
     <div
       className={classNames(
-        'w-full border-l-2 border-solid px-5',
+        'w-full rounded-2xl p-6 md:p-8',
         typeof endYear === 'string'
-          ? 'border-blue-600 bg-blue-950/30 py-5'
-          : 'border-neutral-700 py-3'
+          ? 'from-sm-blue/30 to-sm-blue/20 bg-gradient-to-b'
+          : 'bg-neutral-800/40'
       )}
     >
       <div className="flex items-baseline gap-x-1">
@@ -33,7 +33,7 @@ export default function ExperienceCard({
         </Link>
       </div>
       <span className="text-sm text-neutral-400">
-        {company}, {startYear} - {endYear}
+        {company} · {startYear}-{endYear}
       </span>
       <p className="mt-5 text-sm text-neutral-300">{description}</p>
       {!!projects?.length && (
@@ -41,7 +41,7 @@ export default function ExperienceCard({
           {projects?.map((project, index) => (
             <span
               key={index}
-              className="h-fit rounded-full border border-solid border-blue-600 bg-blue-900 px-1.5 text-xs font-medium text-blue-300"
+              className="h-fit rounded-full border border-blue-600 bg-blue-900 px-1.5 text-xs font-medium text-blue-300"
             >
               {project}
             </span>
