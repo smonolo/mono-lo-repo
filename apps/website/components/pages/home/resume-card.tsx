@@ -13,14 +13,14 @@ export default function ResumeCard() {
   }, [isChecked])
 
   return (
-    <div className="from-sm-blue/70 to-sm-blue/50 mt-6 rounded-xl bg-gradient-to-b px-10 py-8">
+    <div className="from-sm-blue/70 to-sm-blue/50 mt-8 rounded-2xl bg-gradient-to-b p-10">
       <h3 className="text-2xl font-semibold">Looking for my resume?</h3>
-      <p className="mt-2">
+      <p className="mt-3">
         You are (not) in the right place! I made a site for that, which
         represents exactly how the PDF version looks but with a bit of
         responsiveness for those who are always on the phone.
       </p>
-      <div className="mt-4 flex items-center gap-x-2">
+      <div className="mt-5 flex items-center gap-x-2">
         <input
           type="checkbox"
           onChange={(event) => setChecked(event.target.checked)}
@@ -32,8 +32,9 @@ export default function ResumeCard() {
       </div>
       <button
         className={classNames(
-          'bg-sm-black text-sm-white disabled:text-sm-white/50 disabled:bg-sm-black/50 z-10 mt-4 rounded-lg px-4 py-2 font-medium transition-colors',
-          { 'hover:bg-sm-white hover:text-sm-black': isChecked }
+          'bg-sm-black text-sm-white disabled:text-sm-white/50 disabled:bg-sm-black/50 z-10 mt-5 rounded-lg px-4 py-2 font-medium transition-colors',
+          { 'hover:bg-sm-white hover:text-sm-black': isChecked },
+          isChecked ? 'cursor-pointer' : 'cursor-not-allowed'
         )}
         disabled={!isChecked}
         onClick={goToResume}

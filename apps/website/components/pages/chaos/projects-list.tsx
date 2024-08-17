@@ -24,7 +24,7 @@ export default function ProjectsList({ filter }: Props) {
   }, [filter])
 
   return (
-    <div className="mt-6 flex w-full flex-col gap-y-3">
+    <div className="mt-10 flex w-full flex-col gap-y-3">
       {filteredItems.map((item, index) => (
         <ProjectCard key={index} {...item} />
       ))}

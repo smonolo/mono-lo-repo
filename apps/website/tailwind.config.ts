@@ -6,6 +6,10 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    fontFamily: {
+      display: ['Rowan', 'sans-serif'],
+      body: ['Switzer', 'sans-serif'],
+    },
     extend: {
       colors: {
         'sm-blue': '#008cff',

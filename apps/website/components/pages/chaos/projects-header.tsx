@@ -5,7 +5,7 @@ type Props = {
 export default function ProjectsHeader({ setFilter }: Props) {
   return (
     <div className="flex w-full items-center justify-between gap-x-4">
-      <h1 className="text-3xl font-bold md:text-4xl">Chaos</h1>
+      <h1 className="font-display text-3xl font-bold md:text-4xl">Chaos</h1>
       <input
         type="text"
         placeholder="Search..."
