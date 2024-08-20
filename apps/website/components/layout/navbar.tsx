@@ -12,7 +12,7 @@ export default function Navbar() {
 
   return (
     <nav className="fixed left-0 top-0 w-full border-b border-neutral-800 px-5 drop-shadow backdrop-blur-md lg:w-full">
-      <div className="mx-auto flex h-14 max-w-[1100px] items-center justify-between">
+      <div className="mx-auto flex h-14 max-w-[1000px] items-center justify-between md:h-16">
         <div className="flex w-full items-center">
           <Link href="/" className="flex w-fit items-center gap-x-2">
             <div className="bg-sm-blue h-[20px] w-[20px] rounded-sm md:h-[25px] md:w-[25px]" />
@@ -29,7 +29,7 @@ export default function Navbar() {
           onClick={() => setMenuOpen(false)}
         >
           <div
-            className="bg-sm-black absolute left-0 top-0 flex w-full flex-col-reverse gap-x-4 gap-y-4 border-b border-neutral-800 px-5 py-8 md:relative md:flex-row md:items-center md:justify-end md:border-none md:bg-transparent md:p-0"
+            className="bg-sm-black absolute left-0 top-0 flex w-full flex-col-reverse gap-x-5 gap-y-4 border-b border-neutral-800 px-5 py-8 md:relative md:flex-row md:items-center md:justify-end md:border-none md:bg-transparent md:p-0"
             onClick={(event) => event.stopPropagation()}
           >
             <ul className="flex w-fit items-center gap-x-3">
@@ -47,14 +47,14 @@ export default function Navbar() {
                 </li>
               ))}
             </ul>
-            <div className="hidden h-[20px] w-[1px] bg-neutral-800 md:block" />
-            <ul className="flex w-fit items-center gap-x-3">
+            <div className="hidden h-5 w-px bg-neutral-800 md:block" />
+            <ul className="flex w-fit items-center gap-x-5">
               {Object.entries(data.items).map(([key, value]) => (
                 <li key={key}>
                   <Link
                     href={value.url}
                     className={classNames(
-                      'hover:text-sm-white text-sm text-neutral-300 transition-colors md:text-base',
+                      'hover:text-sm-white text-sm font-medium text-neutral-300 transition-colors md:text-base',
                       { 'text-sm-white': pathname === value.url }
                     )}
                     onClick={() => setMenuOpen(false)}

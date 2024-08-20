@@ -9,7 +9,7 @@ export default function ProjectsHeader({ setFilter }: Props) {
       <input
         type="text"
         placeholder="Search..."
-        className="w-[220px] rounded-lg border border-neutral-800 bg-neutral-800/40 px-3 py-2 text-sm outline-none placeholder:text-neutral-500"
+        className="w-[220px] rounded-lg border border-neutral-700/40 bg-neutral-800/60 px-3 py-2 text-sm outline-none placeholder:text-neutral-500"
         onChange={(event) => setFilter(event.target.value)}
       />
     </div>
