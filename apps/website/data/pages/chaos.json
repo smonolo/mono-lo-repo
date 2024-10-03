@@ -3,8 +3,7 @@
     {
       "project": "OpenWater",
       "year": 2024,
-      "website": "https://www.openwaterapp.com",
-      "current": true
+      "website": "https://www.openwaterapp.com"
     },
     {
       "project": "Kampaay",
@@ -75,8 +74,7 @@
     {
       "project": "The Pits",
       "website": "https://www.thepits.it",
-      "year": 2024,
-      "current": true
+      "year": 2024
     },
     {
       "project": "FN.Games",

@@ -1,8 +1,17 @@
 {
   "experiences": [
     {
+      "brand": "WeRoad",
+      "company": "WeRoad S.r.l.",
+      "website": "https://www.weroad.com",
+      "position": "Frontend Engineer",
+      "startYear": 2024,
+      "endYear": "Present",
+      "description": "Contributed to the development of internal platforms used by travel coordinators and partners."
+    },
+    {
       "brand": "Kampaay",
-      "company": "Kampaay S.R.L.",
+      "company": "Kampaay S.r.l.",
       "website": "https://www.kampaay.com",
       "position": "Frontend Engineer",
       "startYear": 2023,

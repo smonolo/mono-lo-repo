@@ -24,8 +24,19 @@ defineComponent({ name: 'Experience' })
 const experience: ExperienceCardProps[] = [
   {
     position: 'Frontend Engineer',
-    company: 'Kampaay S.R.L.',
-    period: 'August 2023 - August 2024',
+    company: 'WeRoad S.r.l.',
+    period: 'September 2024 - Present',
+    location: 'Viale Cassala, 30, Milan, Italy',
+    achievements: [
+      'Developed and maintained an internal platform used by 2000+ travel coordinators around the world',
+      'Contributed to the development of an internal portal used by partners to create and manage tours',
+    ],
+    skills: ['TypeScript', 'Vue', 'Nuxt'],
+  },
+  {
+    position: 'Frontend Engineer',
+    company: 'Kampaay S.r.l.',
+    period: 'August 2023 - September 2024',
     location: 'Viale Cassala, 30, Milan, Italy',
     achievements: [
       'Designed and developed a modern and accessible platform used by 150+ businesses across Italy and Sweden',
