@@ -14,9 +14,9 @@ export default function Navbar() {
     <nav className="fixed left-0 top-0 w-full border-b border-neutral-800 px-5 drop-shadow backdrop-blur-md lg:w-full">
       <div className="mx-auto flex h-14 max-w-[1000px] items-center justify-between md:h-16">
         <div className="flex w-full items-center">
-          <Link href="/" className="flex w-fit items-center gap-x-2">
+          <Link href="/" className="group flex w-fit items-center gap-x-2">
             <div className="bg-sm-blue h-[20px] w-[20px] rounded-sm md:h-[25px] md:w-[25px]" />
-            <span className="text-sm-white text-sm font-medium md:text-base">
+            <span className="text-sm-white text-sm font-medium underline-offset-2 group-hover:underline md:text-base">
               Stefano Monolo
             </span>
           </Link>
@@ -41,20 +41,20 @@ export default function Navbar() {
                     onClick={() => setMenuOpen(false)}
                   >
                     <i
-                      className={`bi bi-${icon} hover:text-sm-white text-sm text-neutral-300 transition-colors`}
+                      className={`bi bi-${icon} hover:text-sm-white text-neutral-300 transition-colors`}
                     />
                   </Link>
                 </li>
               ))}
             </ul>
-            <div className="hidden h-5 w-px bg-neutral-800 md:block" />
+            <div className="hidden h-6 w-px bg-neutral-800 md:block" />
             <ul className="flex w-fit items-center gap-x-5">
               {Object.entries(data.items).map(([key, value]) => (
                 <li key={key}>
                   <Link
                     href={value.url}
                     className={classNames(
-                      'hover:text-sm-white text-sm font-medium text-neutral-300 transition-colors md:text-base',
+                      'hover:text-sm-white text-sm font-medium text-neutral-300 underline-offset-2 transition-colors hover:underline md:text-base',
                       { 'text-sm-white': pathname === value.url }
                     )}
                     onClick={() => setMenuOpen(false)}
