@@ -22,7 +22,7 @@
         <li
           v-for="(skill, key) in skills"
           :key
-          class="rounded-md bg-[#dddddd] px-2.5 py-0.5 text-xs font-semibold md:text-sm"
+          class="rounded-md bg-[#dddddd] px-2.5 py-0.5 text-xs font-medium md:text-sm"
         >
           {{ skill }}
         </li>

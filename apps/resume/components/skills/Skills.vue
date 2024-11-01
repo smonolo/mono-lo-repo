@@ -1,6 +1,11 @@
 <template>
   <section id="skills">
-    <h2 class="text-xl font-semibold md:text-2xl">Skills</h2>
+    <div class="flex w-full items-center justify-between gap-x-2">
+      <h2 class="text-xl font-semibold md:text-2xl">Skills</h2>
+      <p class="flex items-center gap-x-1 text-sm font-medium">
+        <i class="bi bi-star-fill text-[#008cff]" /> Preferred
+      </p>
+    </div>
     <ul class="mt-4 flex flex-col gap-y-4">
       <SkillsSection v-for="(section, key) in sections" :key :="section" />
     </ul>
@@ -32,7 +37,7 @@ const sections: SkillsSectionProps[] = [
       'Jest',
       'Vite',
     ],
-    highlighted: ['TypeScript', 'React', 'Vue'],
+    highlighted: ['TypeScript', 'React', 'Next.js', 'Vue', 'Nuxt'],
   },
   {
     title: 'Other',
@@ -46,15 +51,13 @@ const sections: SkillsSectionProps[] = [
       'Google Cloud',
       'Linux',
       'gRPC',
-      'REST',
       'Docker',
       'CI/CD',
       'MySQL',
       'PostgreSQL',
       'Git',
-      'Scrum',
     ],
-    highlighted: ['Node.js', 'AWS', 'REST', 'Git', 'Scrum'],
+    highlighted: ['Node.js', 'Go', 'Linux', 'Docker', 'Git'],
   },
 ]
 </script>
