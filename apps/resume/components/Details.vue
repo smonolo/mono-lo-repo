@@ -1,21 +1,21 @@
 <template>
   <section id="details" class="w-full">
     <h1 class="text-2xl font-semibold md:text-3xl">Stefano Monolo</h1>
-    <span class="text-lg font-medium md:text-xl">
+    <p class="text-lg font-medium md:text-xl">
       I am a software engineer passionate about the web and its technologies.
-    </span>
-    <div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2">
-      <a
-        v-for="(link, key) in links"
-        :key
-        :href="link.url"
-        :target="link.url.startsWith('https') ? '_blank' : '_self'"
-        class="flex items-center gap-x-2 text-lg font-medium md:text-xl"
-      >
-        <i :class="`bi bi-${link.icon}`" />
-        <span>{{ link.text }}</span>
-      </a>
-    </div>
+    </p>
+    <ul class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2">
+      <li v-for="(link, key) in links" :key>
+        <a
+          :href="link.url"
+          :target="link.url.startsWith('https') ? '_blank' : '_self'"
+          class="flex items-center gap-x-2 text-lg font-medium underline-offset-2 hover:underline md:text-xl"
+        >
+          <i :class="`bi bi-${link.icon}`" />
+          <span>{{ link.text }}</span>
+        </a>
+      </li>
+    </ul>
   </section>
 </template>
 

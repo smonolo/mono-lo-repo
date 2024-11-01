@@ -4,22 +4,29 @@
       class="flex w-full flex-col items-start justify-between gap-2 lg:flex-row"
     >
       <div class="w-fit">
-        <h5 class="text-lg font-semibold md:text-xl">
-          {{ position }} at {{ company }}
-        </h5>
-        <span class="text-sm font-medium md:text-base">
+        <h3 class="text-lg font-semibold md:text-xl">
+          {{ position }} at
+          <a
+            :href="url"
+            target="_blank"
+            class="underline-offset-2 hover:underline"
+          >
+            {{ company }}
+          </a>
+        </h3>
+        <p class="text-sm font-medium md:text-base">
           {{ period }} · {{ location }}
-        </span>
+        </p>
       </div>
-      <div class="flex w-fit flex-wrap items-center gap-1 md:gap-x-2">
-        <span
+      <ul class="flex w-fit flex-wrap items-center gap-1 md:gap-x-2">
+        <li
           v-for="(skill, key) in skills"
           :key
           class="rounded-md bg-[#dddddd] px-2.5 py-0.5 text-xs font-semibold md:text-sm"
         >
           {{ skill }}
-        </span>
-      </div>
+        </li>
+      </ul>
     </div>
     <ul class="mt-4">
       <li
@@ -28,7 +35,7 @@
         class="flex items-center gap-x-2 text-sm md:text-base"
       >
         <span class="text-[#333333]">•</span>
-        <span class="font-medium">{{ achievement }}</span>
+        <p class="font-medium">{{ achievement }}</p>
       </li>
     </ul>
   </div>
@@ -42,6 +49,7 @@ export type ExperienceCardProps = {
   location: string
   achievements: string[]
   skills: string[]
+  url: string
 }
 
 defineComponent({ name: 'ExperienceCard' })

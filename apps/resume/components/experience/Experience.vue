@@ -1,7 +1,7 @@
 <template>
   <section id="experience">
     <div class="flex items-center gap-x-3">
-      <h3 class="text-xl font-semibold md:text-2xl">Experience</h3>
+      <h2 class="text-xl font-semibold md:text-2xl">Experience</h2>
       <span
         class="h-fit rounded-md bg-[#008cff] px-2.5 py-0.5 text-xs font-medium text-white md:text-sm"
       >
@@ -32,6 +32,7 @@ const experience: ExperienceCardProps[] = [
       'Contributed to the development of an internal portal used by partners to create and manage tours',
     ],
     skills: ['TypeScript', 'Vue', 'Nuxt'],
+    url: 'https://www.weroad.com',
   },
   {
     position: 'Frontend Engineer',
@@ -46,6 +47,7 @@ const experience: ExperienceCardProps[] = [
       'Worked on R&D initiatives including code refactoring, migration to new technologies, gRPC research and AI features',
     ],
     skills: ['TypeScript', 'Vue', 'Nuxt', 'React'],
+    url: 'https://www.kampaay.com',
   },
   {
     position: 'Frontend Engineer',
@@ -60,6 +62,7 @@ const experience: ExperienceCardProps[] = [
       'Collaborated with external developers to integrate third-party services on gaming related products, such as Overwolf and Tebex',
     ],
     skills: ['TypeScript', 'React', 'Next.js'],
+    url: 'https://evnt.games',
   },
   {
     position: 'Web Engineer',
@@ -73,10 +76,11 @@ const experience: ExperienceCardProps[] = [
       'Helped designing new interfaces and layouts on Figma and taking technical decisions along with product managers and designers',
     ],
     skills: ['TypeScript', 'Python', 'Electron', 'React', 'Next.js'],
+    url: 'https://www.moonsworth.com',
   },
   {
     position: 'Product Engineer',
-    company: 'Medal B.V.',
+    company: 'Top.gg',
     period: 'November 2020 - June 2021',
     location: 'Remote, Europe',
     achievements: [
@@ -86,6 +90,7 @@ const experience: ExperienceCardProps[] = [
       'Improved existing moderation tools that allowed volunteer and paid staff to review 100+ new Discord bots every day',
     ],
     skills: ['TypeScript', 'Express', 'React', 'Next.js'],
+    url: 'https://www.top.gg',
   },
   {
     position: 'Web Engineer',
@@ -99,6 +104,7 @@ const experience: ExperienceCardProps[] = [
       'Reviewed and implemented user feedback and worked with backend developers to improve existing gRPC infrastructure and automation',
     ],
     skills: ['TypeScript', 'Python', 'Electron', 'React', 'Next.js'],
+    url: 'https://www.badlion.net',
   },
 ]
 </script>

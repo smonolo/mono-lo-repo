@@ -1,9 +1,9 @@
 <template>
   <section id="skills">
-    <h3 class="text-xl font-semibold md:text-2xl">Skills</h3>
-    <div class="mt-4 flex flex-col gap-y-4">
+    <h2 class="text-xl font-semibold md:text-2xl">Skills</h2>
+    <ul class="mt-4 flex flex-col gap-y-4">
       <SkillsSection v-for="(section, key) in sections" :key :="section" />
-    </div>
+    </ul>
   </section>
 </template>
 
