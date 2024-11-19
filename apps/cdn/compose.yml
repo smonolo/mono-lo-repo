@@ -1,0 +1,11 @@
+services:
+  cdn:
+    container_name: cdn
+    build: .
+    image: smonolo/cdn
+    ports:
+      - '49160:49160'
+    volumes:
+      - /home/ubuntu/dev/cdn/images:/images
+      - /home/ubuntu/dev/cdn/config:/config
+    env_file: '/home/ubuntu/dev/cdn/config/.env'
