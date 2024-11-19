@@ -30,7 +30,7 @@ export default function Navbar() {
         >
           <div
             className="bg-sm-black absolute left-0 top-0 flex w-full flex-col-reverse gap-x-5 gap-y-4 border-b border-neutral-800 px-5 py-8 md:relative md:flex-row md:items-center md:justify-end md:border-none md:bg-transparent md:p-0"
-            onClick={(event) => event.stopPropagation()}
+            onClick={event => event.stopPropagation()}
           >
             <ul className="flex w-fit items-center gap-x-3">
               {Object.entries(data.socials).map(([icon, url]) => (

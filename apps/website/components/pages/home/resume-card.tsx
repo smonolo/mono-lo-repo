@@ -26,7 +26,7 @@ export default function ResumeCard() {
         <input
           id="resume-checkbox"
           type="checkbox"
-          onChange={(event) => setChecked(event.target.checked)}
+          onChange={event => setChecked(event.target.checked)}
         />
         <label htmlFor="resume-checkbox" className="text-sm text-neutral-300">
           I understand that the resume does not have a dark theme, and that I

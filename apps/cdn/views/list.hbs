@@ -1,0 +1,46 @@
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <link rel='icon' href='https://cdn.smnl.it/VfxwQAzSdd.png' />
+    <title>CDN</title>
+    <link
+      href='https://api.fontshare.com/v2/css?f[]=switzer@1&display=swap'
+      rel='stylesheet'
+    />
+    <script src='https://cdn.tailwindcss.com'></script>
+    <script>
+      tailwind.config = { theme: { fontFamily: { body: ['Switzer',
+      'sans-serif'], } } }
+    </script>
+    <style type='text/tailwindcss'>
+      @layer base { th, td { @apply border border-white p-3 text-left
+      font-normal; } }
+    </style>
+  </head>
+  <body class='font-body bg-black text-white'>
+    <table class='w-full'>
+      <thead>
+        <tr>
+          <th>File</th>
+          <th>Size</th>
+          <th>Upload Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each files}}
+          {{#with this}}
+            <tr
+              class='cursor-pointer'
+              onclick="window.open('/{{fileName}}', '_blank')"
+            >
+              <td>{{fileName}}</td>
+              <td>{{size}}</td>
+              <td>{{birthTime}}</td>
+            </tr>
+          {{/with}}
+        {{/each}}
+      </tbody>
+    </table>
+  </body>
+</html>
