@@ -7,9 +7,6 @@ export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(AuthMiddleware)
-      .forRoutes(
-        { path: 'upload', method: RequestMethod.POST },
-        { path: ':fileName', method: RequestMethod.DELETE }
-      )
+      .forRoutes({ path: 'upload', method: RequestMethod.POST })
   }
 }

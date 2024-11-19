@@ -1,6 +1,5 @@
 import {
   Controller,
-  Delete,
   Get,
   HttpException,
   HttpStatus,
@@ -12,7 +11,7 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common'
-import { existsSync, readdirSync, statSync, unlinkSync } from 'fs'
+import { existsSync, readdirSync, statSync } from 'fs'
 import { uploadFolder } from './consts'
 import { join } from 'path'
 import { Response } from 'express'
@@ -57,9 +56,11 @@ export class AppController {
       throw new HttpException('Directory not found', HttpStatus.NOT_FOUND)
     }
 
+    let totalSize = 0
     const files = readdirSync(uploadFolder).map(fileName => {
       const filePath = join(uploadFolder, fileName)
       const stats = statSync(filePath)
+      totalSize += stats.size
 
       return {
         fileName,
@@ -68,26 +69,7 @@ export class AppController {
       }
     })
 
-    return { files }
-  }
-
-  @Delete(':fileName')
-  deleteFile(@Param('fileName') fileName: string) {
-    const filePath = join(uploadFolder, fileName)
-
-    if (!existsSync(filePath)) {
-      throw new HttpException('File not found', HttpStatus.NOT_FOUND)
-    }
-
-    try {
-      unlinkSync(filePath)
-      return { message: `File '${fileName}' deleted successfully` }
-    } catch (error) {
-      throw new HttpException(
-        'Failed to delete file',
-        HttpStatus.INTERNAL_SERVER_ERROR
-      )
-    }
+    return { files, totalSize: filesize(totalSize) }
   }
 
   @Get(':fileName')
