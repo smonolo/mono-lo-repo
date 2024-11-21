@@ -33,8 +33,9 @@ export class AppController {
     FileInterceptor('file', {
       storage: diskStorage({
         destination: uploadFolder,
-        filename: (_req, _file, cb) => {
-          cb(null, generateString())
+        filename: (_req, file, cb) => {
+          const extension = file.originalname.split('.').pop()
+          cb(null, `${generateString()}.${extension}`)
         },
       }),
     })
