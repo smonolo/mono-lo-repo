@@ -73,7 +73,7 @@ export class AppController {
           ),
         }
       })
-      .sort((a, b) => a.birthTime.getTime() - b.birthTime.getTime())
+      .sort((a, b) => b.birthTime.getTime() - a.birthTime.getTime())
 
     return { files, totalSize: filesize(totalSize) }
   }
