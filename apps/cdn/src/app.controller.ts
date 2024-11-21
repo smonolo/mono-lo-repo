@@ -49,7 +49,7 @@ export class AppController {
 
   @Get('list')
   @Render('list')
-  listFiles(@Query('authkey') authKey: string) {
+  listFiles(@Query('authKey') authKey: string) {
     authorizeRequest(authKey)
 
     if (!existsSync(uploadFolder)) {
