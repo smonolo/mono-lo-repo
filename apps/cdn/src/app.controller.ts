@@ -80,6 +80,7 @@ export class AppController {
       throw new HttpException('File not found', HttpStatus.NOT_FOUND)
     }
 
+    res.setHeader('Content-Disposition', 'inline')
     return res.sendFile(filePath)
   }
 }
