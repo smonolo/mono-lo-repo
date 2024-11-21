@@ -22,7 +22,7 @@ export class AuthMiddleware implements NestMiddleware {
   }
 
   use(req: any, _res: any, next: () => void) {
-    const authKey = req.headers['authKey']
+    const authKey = req.headers['authkey']
 
     if (!authKey || !this.validKeys.includes(authKey)) {
       throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED)
