@@ -8,4 +8,3 @@ services:
     volumes:
       - /home/ubuntu/dev/cdn/images:/images
       - /home/ubuntu/dev/cdn/config:/config
-    env_file: '/home/ubuntu/dev/cdn/config/.env'
