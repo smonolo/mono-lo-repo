@@ -15,7 +15,7 @@ import { existsSync, readdirSync, statSync } from 'fs'
 import { uploadFolder } from './consts'
 import { join } from 'path'
 import { Response } from 'express'
-import { authorizeRequest, generateString } from './utils'
+import { authorizeRequest, generateFileName } from './utils'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { diskStorage } from 'multer'
 import { filesize } from 'filesize'
@@ -35,7 +35,7 @@ export class AppController {
         destination: uploadFolder,
         filename: (_req, file, cb) => {
           const extension = file.originalname.split('.').pop()
-          cb(null, `${generateString()}.${extension}`)
+          cb(null, `${generateFileName()}.${extension}`)
         },
       }),
     })
