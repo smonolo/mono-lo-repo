@@ -34,6 +34,11 @@ export const isAllowedFile = (fileName: string) => {
   return allowedExtensions.includes(fileName.split('.').pop())
 }
 
-export const generateString = () => {
-  return Math.random().toString(36).substring(2, 12)
+export const generateFileName = (length = 10) => {
+  const characters =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+
+  return Array.from({ length }, () =>
+    characters.charAt(Math.floor(Math.random() * characters.length))
+  ).join('')
 }
