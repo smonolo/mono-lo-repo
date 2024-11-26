@@ -57,25 +57,33 @@ export class AppController {
       throw new HttpException('Directory not found', HttpStatus.NOT_FOUND)
     }
 
-    let totalSize = 0
     const files = readdirSync(uploadFolder)
-      .map(fileName => {
-        const filePath = join(uploadFolder, fileName)
-        const stats = statSync(filePath)
-        totalSize += stats.size
+    const mappedFiles = files.map((fileName, index) => {
+      const filePath = join(uploadFolder, fileName)
+      const stats = statSync(filePath)
 
-        return {
-          fileName,
-          size: filesize(stats.size),
-          birthTime: stats.birthtime,
-          formattedBirthTime: dayjs(stats.birthtime).format(
-            'DD/MM/YYYY HH:mm:ss'
-          ),
-        }
-      })
-      .sort((a, b) => b.birthTime.getTime() - a.birthTime.getTime())
+      return {
+        fileNumber: files.length - index,
+        fileName,
+        size: filesize(stats.size),
+        birthTime: stats.birthtime,
+        formattedBirthTime: dayjs(stats.birthtime).format(
+          'DD/MM/YYYY HH:mm:ss'
+        ),
+      }
+    })
 
-    return { files, totalSize: filesize(totalSize) }
+    const totalSize = mappedFiles.reduce(
+      (acc, file) => acc + statSync(join(uploadFolder, file.fileName)).size,
+      0
+    )
+
+    return {
+      files: mappedFiles.sort(
+        (a, b) => b.birthTime.getTime() - a.birthTime.getTime()
+      ),
+      totalSize: filesize(totalSize),
+    }
   }
 
   @Get(':fileName')
