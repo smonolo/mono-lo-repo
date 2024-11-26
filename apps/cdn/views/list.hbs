@@ -22,7 +22,8 @@
     <table class='w-full'>
       <thead>
         <tr>
-          <th>File {{files.length}}</th>
+          <th></th>
+          <th>Name {{files.length}}</th>
           <th>Size {{totalSize}}</th>
           <th>Upload Date</th>
         </tr>
@@ -34,6 +35,7 @@
               class='group cursor-pointer'
               onclick="window.open('/{{fileName}}', '_blank')"
             >
+              <td>{{@index}}</td>
               <td class='relative'>
                 {{fileName}}
                 <div
