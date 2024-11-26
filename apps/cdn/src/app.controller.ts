@@ -58,20 +58,25 @@ export class AppController {
     }
 
     const files = readdirSync(uploadFolder)
-    const mappedFiles = files.map((fileName, index) => {
-      const filePath = join(uploadFolder, fileName)
-      const stats = statSync(filePath)
+    const mappedFiles = files
+      .map(fileName => {
+        const filePath = join(uploadFolder, fileName)
+        const stats = statSync(filePath)
 
-      return {
+        return {
+          fileName,
+          size: filesize(stats.size),
+          birthTime: stats.birthtime,
+          formattedBirthTime: dayjs(stats.birthtime).format(
+            'DD/MM/YYYY HH:mm:ss'
+          ),
+        }
+      })
+      .sort((a, b) => b.birthTime.getTime() - a.birthTime.getTime())
+      .map((file, index) => ({
+        ...file,
         fileNumber: files.length - index,
-        fileName,
-        size: filesize(stats.size),
-        birthTime: stats.birthtime,
-        formattedBirthTime: dayjs(stats.birthtime).format(
-          'DD/MM/YYYY HH:mm:ss'
-        ),
-      }
-    })
+      }))
 
     const totalSize = mappedFiles.reduce(
       (acc, file) => acc + statSync(join(uploadFolder, file.fileName)).size,
@@ -79,9 +84,7 @@ export class AppController {
     )
 
     return {
-      files: mappedFiles.sort(
-        (a, b) => b.birthTime.getTime() - a.birthTime.getTime()
-      ),
+      files: mappedFiles,
       totalSize: filesize(totalSize),
     }
   }
