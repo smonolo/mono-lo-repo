@@ -1,3 +1,4 @@
+import DubReferral from '@/components/pages/home/dub-referral'
 import ResumeCard from '@/components/pages/home/resume-card'
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
         technologies.
       </p>
       <ResumeCard />
+      <DubReferral />
     </section>
   )
 }
