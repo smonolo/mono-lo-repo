@@ -16,9 +16,7 @@ export default function ExperienceCard({
     <div
       className={classNames(
         'w-full rounded-2xl p-6 md:p-8',
-        typeof endYear === 'string'
-          ? 'from-sm-blue/30 to-sm-blue/20 bg-gradient-to-b'
-          : 'bg-neutral-800/60'
+        typeof endYear === 'string' ? 'bg-sm-blue/20' : 'bg-neutral-800/60'
       )}
     >
       <div className="flex items-baseline gap-x-1">

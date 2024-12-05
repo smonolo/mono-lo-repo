@@ -74,7 +74,7 @@ export default function Navbar() {
             onClick={() => setMenuOpen(true)}
           >
             {Array.from({ length: 3 }).map((_, index) => (
-              <div key={index} className="bg-sm-white h-px w-6" />
+              <div key={index} className="bg-sm-white h-px w-5" />
             ))}
           </div>
         </div>

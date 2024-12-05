@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "author": "Stefano Monolo <stefano@smnl.dev>",
   "private": true,
+  "packageManager": "npm@10.9.2",
   "scripts": {
     "build": "nest build",
     "start": "nest start",

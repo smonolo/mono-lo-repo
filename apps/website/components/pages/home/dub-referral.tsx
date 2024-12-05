@@ -1,6 +1,6 @@
 export default function DubReferral() {
   return (
-    <div className="bg-sm-blue/60 mt-10 w-full rounded-2xl p-10 text-white md:p-12">
+    <div className="bg-sm-blue/20 mt-10 w-full rounded-2xl p-10 text-white md:p-12">
       <h2 className="font-display text-2xl font-bold">Need a link manager?</h2>
       <p className="mt-2">
         Well, I got invited to Dub&apos;s partners program and have a link to
