@@ -1,13 +1,14 @@
 import type { Control, ControlName } from '~/types/controls'
 import type { ButtonName } from '~/types/buttons'
+import { useControlsStore } from '~/stores/controls'
 
 export const useControls = () => {
   const router = useRouter()
-  const { controls, restoreControls, clearControls } = useControlsStore()
+  const controlsStore = useControlsStore()
 
   const redirectAndClear = (path: string) => {
     router.push(path)
-    clearControls()
+    controlsStore.clearControls()
   }
 
   const controlActions: Record<string, () => void> = {
@@ -16,7 +17,7 @@ export const useControls = () => {
     attempts: () => redirectAndClear('/attempts'),
     main: () => {
       router.push('/')
-      restoreControls('main')
+      controlsStore.restoreControls('main')
     },
   }
 
@@ -24,7 +25,7 @@ export const useControls = () => {
     property: keyof Control,
     value: ControlName | ButtonName
   ) => {
-    const control = controls.find(c => c[property] === value)
+    const control = controlsStore.controls.find(c => c[property] === value)
 
     if (!!control) {
       const action = controlActions[control.name]

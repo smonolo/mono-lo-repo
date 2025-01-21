@@ -1,7 +1,8 @@
 {
-  "name": "nuxt-app",
+  "name": "mfd",
   "private": true,
   "type": "module",
+  "author": "Stefano Monolo <stefano@smnl.dev>",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",

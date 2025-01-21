@@ -1,4 +1,3 @@
-import type { ButtonName } from '~/types/buttons'
 import type { Control, ControlName, ControlsConfig } from '~/types/controls'
 
 const defaultControls: Control[] = [
@@ -9,7 +8,7 @@ const defaultControls: Control[] = [
 ]
 
 const controlsConfig: Record<ControlsConfig, ControlName[]> = {
-  main: ['journey', 'chaos', 'attempts'],
+  main: ['journey', 'chaos', 'attempts', 'main'],
 }
 
 export const useControlsStore = defineStore('controls', () => {
@@ -31,11 +30,8 @@ export const useControlsStore = defineStore('controls', () => {
     controls.value = defaultControls.filter(c => controlNames.includes(c.name))
   }
 
-  const removeControl = (
-    property: keyof Control,
-    value: ControlName | ButtonName
-  ) => {
-    controls.value = controls.value.filter(c => c[property] !== value)
+  const removeControls = (key: keyof Control, values: string[]) => {
+    controls.value = controls.value.filter(c => !values.includes(c[key]))
   }
 
   const clearControls = () => {
@@ -46,7 +42,7 @@ export const useControlsStore = defineStore('controls', () => {
     controls,
     addControl,
     restoreControls,
-    removeControl,
+    removeControls,
     clearControls,
   }
 })

@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import ScreenControl from '~/components/screen/control.vue'
-import { useControlsStore } from '~/stores/controls'
 
 defineComponent({ name: 'ScreenControls' })
 
-const { controls } = useControlsStore()
 const { lowerButtons } = useButtons()
+const controlsStore = useControlsStore()
 </script>
 
 <template>
@@ -13,7 +12,7 @@ const { lowerButtons } = useButtons()
     <ScreenControl
       v-for="(button, key) in lowerButtons"
       :key
-      :control="controls.find(c => c.slot === button.name)"
+      :control="controlsStore.controls.find(c => c.slot === button.name)"
     />
   </div>
 </template>

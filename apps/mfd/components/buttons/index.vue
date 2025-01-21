@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import Button from '~/components/buttons/button.vue'
 import type {
-  Button as ButtonType,
   ButtonName,
+  Button as ButtonType,
   ButtonsDirection,
   ButtonsType,
 } from '~/types/buttons'
@@ -13,24 +13,19 @@ type Props = {
   buttons?: ButtonType[]
 }
 
+type Emits = {
+  trigger: [name: ButtonName]
+}
+
 defineComponent({ name: 'Buttons' })
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   type: 'functions',
   direction: 'horizontal',
   buttons: () => [],
 })
 
-const { triggerControl } = useControls()
-const { triggerButton } = useButtons()
-
-const trigger = (name: ButtonName) => {
-  if (props.type === 'controls') {
-    triggerControl('slot', name)
-  } else {
-    triggerButton(name)
-  }
-}
+defineEmits<Emits>()
 </script>
 
 <template>
@@ -47,7 +42,7 @@ const trigger = (name: ButtonName) => {
       :key
       :direction="direction"
       :button="button"
-      @trigger="trigger"
+      @trigger="$emit('trigger', button.name)"
     />
   </div>
 </template>
