@@ -11,10 +11,12 @@
     "dev:website": "turbo dev --filter=website",
     "dev:resume": "turbo dev --filter=resume",
     "dev:cdn": "turbo dev --filter=cdn",
+    "dev:mfd": "turbo dev --filter=mfd",
     "dev": "turbo dev",
     "build:website": "turbo build --filter=website",
     "build:resume": "turbo build --filter=resume",
     "build:dev": "turbo build --filter=cdn",
+    "build:mfd": "turbo build --filter=mfd",
     "build": "turbo build"
   },
   "devDependencies": {
