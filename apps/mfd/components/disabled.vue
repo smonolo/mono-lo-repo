@@ -9,7 +9,7 @@ defineComponent({ name: 'MobileDisabled' })
     <div class="flex w-fit flex-col gap-y-2 p-10 xl:p-0">
       <h1 class="text-2xl font-bold">Disabled on mobile</h1>
       <p>
-        I'm sorry, but this site is disable for devices with smaller displays.
+        I'm sorry, but this site is disabled for devices with smaller displays.
         Please use a tablet, laptop or desktop to view.
       </p>
     </div>
