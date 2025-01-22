@@ -1,3 +1,3 @@
-export type ScreenName = 'main' | 'version' | 'logs' | 'settings'
+export type ScreenName = 'main' | 'version' | 'settings'
 
 export type ScreenTheme = 'light' | 'dark'

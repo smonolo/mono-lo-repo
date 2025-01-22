@@ -19,7 +19,6 @@ export const useControls = () => {
       controlsStore.restoreControls('main')
     },
     version: () => setScreenAndClear('version'),
-    logs: () => setScreenAndClear('logs'),
     settings: () => setScreenAndClear('settings'),
   }
 

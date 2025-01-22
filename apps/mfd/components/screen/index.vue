@@ -22,7 +22,7 @@ useHead({ htmlAttrs })
   >
     <div class="h-[600px] p-2">
       <div class="flex h-full justify-between">
-        <div class="h-full w-full">
+        <div class="h-full w-full overflow-auto">
           <slot />
         </div>
         <div class="flex w-[200px] flex-col gap-y-4">

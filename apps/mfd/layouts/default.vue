@@ -15,7 +15,7 @@ const screenStore = useScreenStore()
   <div class="relative">
     <MobileDisabled />
     <div
-      class="hidden h-screen select-none items-center justify-center bg-black text-white xl:flex"
+      class="hidden h-screen select-none items-center justify-center bg-black text-sm text-white xl:flex"
     >
       <div class="flex h-[900px] w-[1100px]">
         <div class="flex h-full w-[900px] flex-col justify-between">

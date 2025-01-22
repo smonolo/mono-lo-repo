@@ -2,6 +2,11 @@
 import info from '~/package.json'
 
 defineComponent({ name: 'VersionScreen' })
+
+const deps = {
+  ...info.dependencies,
+  ...info.devDependencies,
+}
 </script>
 
 <template>
@@ -11,10 +16,21 @@ defineComponent({ name: 'VersionScreen' })
     >
       <span>Version</span>
     </div>
-    <div class="flex w-full items-center justify-center py-10">
+    <div class="p-10">
       <div>
-        <p>MFD v{{ info.version }}</p>
+        <p class="uppercase">{{ info.name }} {{ info.version }}</p>
         <p>Contact: {{ info.author }}</p>
+      </div>
+      <div class="mt-5 border border-slate-950 dark:border-slate-100">
+        <div class="border-b border-slate-950 p-2 dark:border-slate-100">
+          <span class="font-bold tracking-wide">Dependencies</span>
+        </div>
+        <div class="p-2">
+          <div v-for="(value, key) in deps" :key class="flex justify-between">
+            <p>{{ key }}</p>
+            <p>{{ value }}</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
