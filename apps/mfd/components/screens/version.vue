@@ -7,7 +7,6 @@ defineComponent({ name: 'VersionScreen' })
 const infoOptions = {
   name: { label: 'Name', value: info.name },
   version: { label: 'Version', value: info.version },
-  contact: { label: 'Contact', value: info.author },
 }
 
 const depsOptions = Object.fromEntries(

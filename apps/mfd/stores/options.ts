@@ -39,7 +39,7 @@ export const useOptionsStore = defineStore('options', () => {
     )
 
     if (selected) {
-      selected.action()
+      selected.action?.()
     }
   }
 

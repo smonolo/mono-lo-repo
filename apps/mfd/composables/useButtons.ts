@@ -34,7 +34,7 @@ export const useButtons = () => {
     {
       name: 'up-con',
       icon: 'bi bi-circle-half',
-      action: screenStore.toggleTheme,
+      action: screenStore.toggleContrast,
     },
     { name: 'up-ud', label: 'UD' },
   ]

@@ -23,7 +23,7 @@ export const useControls = () => {
       setScreen('settings')
       optionsStore.setOptions([
         { name: 'brightness', action: screenStore.increaseBrightness },
-        { name: 'theme', action: screenStore.toggleTheme },
+        { name: 'theme', action: screenStore.toggleContrast },
       ])
     },
   }

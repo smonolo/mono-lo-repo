@@ -4,7 +4,7 @@ export const useScreenStore = defineStore('screen', () => {
   const activeScreen = ref<ScreenName>('main')
   const functionsOnDisplay = ref<string[]>([])
   const brightness = ref<number>(1)
-  const theme = ref<ScreenTheme>('dark')
+  const contrast = ref<ScreenTheme>('dark')
 
   const setActiveScreen = (screen: ScreenName) => {
     activeScreen.value = screen
@@ -24,8 +24,8 @@ export const useScreenStore = defineStore('screen', () => {
     brightness.value = brightness.value >= 1 ? 0.2 : brightness.value + 0.2
   }
 
-  const toggleTheme = () => {
-    theme.value = theme.value === 'light' ? 'dark' : 'light'
+  const toggleContrast = () => {
+    contrast.value = contrast.value === 'light' ? 'dark' : 'light'
   }
 
   return {
@@ -35,7 +35,7 @@ export const useScreenStore = defineStore('screen', () => {
     toggleFunctionOnDisplay,
     brightness,
     increaseBrightness,
-    theme,
-    toggleTheme,
+    contrast,
+    toggleContrast,
   }
 })

@@ -9,5 +9,8 @@ defineComponent({ name: 'MainScreen' })
     >
       <span>Main</span>
     </div>
+    <div class="p-10">
+      <p>Welcome</p>
+    </div>
   </div>
 </template>

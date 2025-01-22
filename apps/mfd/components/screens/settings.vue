@@ -13,7 +13,7 @@ const displayOptions = computed(() => ({
   },
   theme: {
     label: 'Contrast',
-    value: screenStore.theme,
+    value: screenStore.contrast,
   },
 }))
 </script>
