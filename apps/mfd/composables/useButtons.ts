@@ -36,7 +36,29 @@ export const useButtons = () => {
       icon: 'bi bi-circle-half',
       action: screenStore.toggleContrast,
     },
-    { name: 'up-ud', label: 'UD' },
+    {
+      name: 'up-ud',
+      label: 'UD',
+      action: () => {
+        if (screenStore.display === 'about') {
+          optionsStore.clearOptions()
+        } else {
+          optionsStore.setOptions([
+            {
+              name: 'site',
+              action: () => window.open('https://smnl.dev'),
+            },
+            {
+              name: 'code',
+              action: () => window.open('https://git.new/monorepo'),
+            },
+          ])
+        }
+
+        screenStore.switchDisplay()
+        screenStore.setActiveScreen('main')
+      },
+    },
   ]
 
   const sideButtons: Button[] = [

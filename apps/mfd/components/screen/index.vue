@@ -15,7 +15,7 @@ useHead({ htmlAttrs })
 
 <template>
   <div
-    class="flex h-full flex-col justify-between text-slate-950 dark:text-slate-100"
+    class="flex h-full flex-col justify-between bg-slate-100 text-slate-950 dark:bg-slate-900 dark:text-slate-100"
     :style="{ opacity: screenStore.brightness }"
   >
     <div class="h-[600px] p-2">

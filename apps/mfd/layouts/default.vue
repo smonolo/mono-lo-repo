@@ -5,6 +5,7 @@ import { useButtons } from '~/composables/useButtons'
 import { useScreens } from '~/composables/useScreens'
 import { useScreenStore } from '~/stores/screen'
 import MobileDisabled from '~/components/disabled.vue'
+import About from '~/components/about.vue'
 
 const { upperButtons, lowerButtons, sideButtons } = useButtons()
 const { screensConfig } = useScreens()
@@ -22,12 +23,11 @@ const screenStore = useScreenStore()
           <section class="flex h-[100px] items-center justify-center">
             <Buttons :buttons="upperButtons" />
           </section>
-          <main
-            class="h-[680px] bg-slate-100 text-slate-100 dark:bg-slate-900 dark:text-slate-950"
-          >
-            <Screen>
+          <main class="h-[680px]">
+            <Screen v-if="screenStore.display === 'primary'">
               <component :is="screensConfig[screenStore.activeScreen]" />
             </Screen>
+            <About v-else-if="screenStore.display === 'about'" />
           </main>
           <section class="flex h-[100px] items-center justify-center">
             <Buttons type="controls" :buttons="lowerButtons" />

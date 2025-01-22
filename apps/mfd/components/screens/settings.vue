@@ -20,6 +20,6 @@ const displayOptions = computed(() => ({
 
 <template>
   <div class="p-10">
-    <OptionsCard header="Display" :options="displayOptions" />
+    <OptionsCard header="Screen" :options="displayOptions" />
   </div>
 </template>

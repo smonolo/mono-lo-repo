@@ -1,10 +1,11 @@
-import type { ScreenTheme, ScreenName } from '~/types/screen'
+import type { ScreenTheme, ScreenName, ScreenDisplay } from '~/types/screen'
 
 export const useScreenStore = defineStore('screen', () => {
   const activeScreen = ref<ScreenName>('main')
   const functionsOnDisplay = ref<string[]>([])
   const brightness = ref<number>(1)
   const contrast = ref<ScreenTheme>('dark')
+  const display = ref<ScreenDisplay>('primary')
 
   const setActiveScreen = (screen: ScreenName) => {
     activeScreen.value = screen
@@ -28,6 +29,10 @@ export const useScreenStore = defineStore('screen', () => {
     contrast.value = contrast.value === 'light' ? 'dark' : 'light'
   }
 
+  const switchDisplay = () => {
+    display.value = display.value === 'primary' ? 'about' : 'primary'
+  }
+
   return {
     activeScreen,
     setActiveScreen,
@@ -37,5 +42,7 @@ export const useScreenStore = defineStore('screen', () => {
     increaseBrightness,
     contrast,
     toggleContrast,
+    display,
+    switchDisplay,
   }
 })
