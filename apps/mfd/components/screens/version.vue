@@ -1,12 +1,21 @@
 <script setup lang="ts">
 import info from '~/package.json'
+import OptionsCard from '~/components/common/options-card.vue'
 
 defineComponent({ name: 'VersionScreen' })
 
-const deps = {
-  ...info.dependencies,
-  ...info.devDependencies,
+const infoOptions = {
+  name: { label: 'Name', value: info.name },
+  version: { label: 'Version', value: info.version },
+  contact: { label: 'Contact', value: info.author },
 }
+
+const depsOptions = Object.fromEntries(
+  Object.entries({
+    ...info.dependencies,
+    ...info.devDependencies,
+  }).map(([key, value]) => [key, { label: key, value }])
+)
 </script>
 
 <template>
@@ -16,22 +25,9 @@ const deps = {
     >
       <span>Version</span>
     </div>
-    <div class="p-10">
-      <div>
-        <p class="uppercase">{{ info.name }} {{ info.version }}</p>
-        <p>Contact: {{ info.author }}</p>
-      </div>
-      <div class="mt-5 border border-slate-950 dark:border-slate-100">
-        <div class="border-b border-slate-950 p-2 dark:border-slate-100">
-          <span class="font-bold tracking-wide">Dependencies</span>
-        </div>
-        <div class="p-2">
-          <div v-for="(value, key) in deps" :key class="flex justify-between">
-            <p>{{ key }}</p>
-            <p>{{ value }}</p>
-          </div>
-        </div>
-      </div>
+    <div class="flex flex-col gap-y-5 p-10">
+      <OptionsCard header="Info" :options="infoOptions" />
+      <OptionsCard header="Dependencies" :options="depsOptions" />
     </div>
   </div>
 </template>

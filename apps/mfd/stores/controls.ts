@@ -1,36 +1,27 @@
-import type { Control, ControlName, ControlsConfig } from '~/types/controls'
+import type { Control, ControlName } from '~/types/controls'
+import type { ScreenName } from '~/types/screen'
 
-const defaultControls: Control[] = [
-  { name: 'version', label: 'Ver', slot: 'lo-1' },
-  { name: 'settings', label: 'S', slot: 'lo-6' },
-  { name: 'main', label: 'Main', slot: 'lo-0' },
+const controlsList: Control[] = [
+  { name: 'version', label: 'Ver', slot: 'lo-0' },
+  { name: 'settings', label: 'S', slot: 'lo-5' },
+  { name: 'main', label: 'Main', slot: 'lo-9' },
 ]
 
-const controlsConfig: Record<ControlsConfig, ControlName[]> = {
+const controlsConfig: Record<ScreenName, ControlName[]> = {
   main: ['version', 'settings', 'main'],
+  version: ['main'],
+  settings: ['main'],
 }
 
 export const useControlsStore = defineStore('controls', () => {
-  const controls = ref<Control[]>([...defaultControls])
+  const controls = ref<Control[]>([
+    ...controlsList.filter(c => controlsConfig.main.includes(c.name)),
+  ])
 
-  const addControl = (control: Control) => {
-    const exists = controls.value.some(
-      c => c.name === control.name || c.slot === control.slot
-    )
+  const setControls = (screenName: ScreenName) => {
+    const controlNames = controlsConfig[screenName]
 
-    if (!exists) {
-      controls.value.push(control)
-    }
-  }
-
-  const restoreControls = (config: ControlsConfig) => {
-    const controlNames = controlsConfig[config]
-
-    controls.value = defaultControls.filter(c => controlNames.includes(c.name))
-  }
-
-  const removeControls = (key: keyof Control, values: string[]) => {
-    controls.value = controls.value.filter(c => !values.includes(c[key]))
+    controls.value = controlsList.filter(c => controlNames.includes(c.name))
   }
 
   const clearControls = () => {
@@ -39,9 +30,7 @@ export const useControlsStore = defineStore('controls', () => {
 
   return {
     controls,
-    addControl,
-    restoreControls,
-    removeControls,
+    setControls,
     clearControls,
   }
 })

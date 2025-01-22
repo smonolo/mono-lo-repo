@@ -3,23 +3,29 @@ import type { ButtonName } from '~/types/buttons'
 import { useControlsStore } from '~/stores/controls'
 import { useScreenStore } from '~/stores/screen'
 import type { ScreenName } from '~/types/screen'
+import { useOptionsStore } from '~/stores/options'
 
 export const useControls = () => {
   const controlsStore = useControlsStore()
   const screenStore = useScreenStore()
+  const optionsStore = useOptionsStore()
 
-  const setScreenAndClear = (screenName: ScreenName) => {
+  const setScreen = (screenName: ScreenName) => {
     screenStore.setActiveScreen(screenName)
-    controlsStore.clearControls()
+    controlsStore.setControls(screenName)
+    optionsStore.clearOptions()
   }
 
   const controlActions: Record<string, () => void> = {
-    main: () => {
-      screenStore.setActiveScreen('main')
-      controlsStore.restoreControls('main')
+    main: () => setScreen('main'),
+    version: () => setScreen('version'),
+    settings: () => {
+      setScreen('settings')
+      optionsStore.setOptions([
+        { name: 'brightness', action: screenStore.increaseBrightness },
+        { name: 'theme', action: screenStore.toggleTheme },
+      ])
     },
-    version: () => setScreenAndClear('version'),
-    settings: () => setScreenAndClear('settings'),
   }
 
   const triggerControl = (

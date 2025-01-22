@@ -7,5 +7,3 @@ export type Control = {
   label: string
   slot: ButtonName
 }
-
-export type ControlsConfig = 'main'
