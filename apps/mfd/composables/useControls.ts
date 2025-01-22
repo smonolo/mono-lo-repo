@@ -20,6 +20,7 @@ export const useControls = () => {
     },
     version: () => setScreenAndClear('version'),
     logs: () => setScreenAndClear('logs'),
+    settings: () => setScreenAndClear('settings'),
   }
 
   const triggerControl = (

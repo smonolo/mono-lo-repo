@@ -8,7 +8,7 @@ const controlsStore = useControlsStore()
 </script>
 
 <template>
-  <div class="flex h-[80px] border-t border-slate-100">
+  <div class="flex h-[80px] border-t border-slate-950 dark:border-slate-100">
     <ScreenControl
       v-for="(button, key) in lowerButtons"
       :key

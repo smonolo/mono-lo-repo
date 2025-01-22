@@ -22,7 +22,9 @@ const screenStore = useScreenStore()
           <section class="flex h-[100px] items-center justify-center">
             <Buttons :buttons="upperButtons" />
           </section>
-          <main class="h-[680px] bg-slate-900">
+          <main
+            class="h-[680px] bg-slate-100 text-slate-100 dark:bg-slate-900 dark:text-slate-950"
+          >
             <Screen>
               <component :is="screensConfig[screenStore.activeScreen]" />
             </Screen>

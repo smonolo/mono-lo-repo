@@ -8,12 +8,12 @@ defineComponent({ name: 'ScreenTime' })
   <div>
     <ClientOnly>
       <div
-        class="whitespace-nowrap border border-slate-100 px-1.5 py-0.5 text-center font-bold tracking-wide"
+        class="whitespace-nowrap border border-slate-950 px-1.5 py-0.5 text-center font-bold tracking-wide dark:border-slate-100"
       >
         {{ moment().format('dd, DD.MM.yyyy') }}
       </div>
       <div
-        class="whitespace-nowrap border-x border-b border-slate-100 px-1.5 py-0.5 text-center font-bold tracking-wide"
+        class="whitespace-nowrap border-x border-b border-slate-950 px-1.5 py-0.5 text-center font-bold tracking-wide dark:border-slate-100"
       >
         {{ moment().format('HH:mm:ss') }}
       </div>

@@ -5,7 +5,12 @@ export const useButtons = () => {
   const screenStore = useScreenStore()
 
   const upperButtons: Button[] = [
-    { name: 'up-bri-aus', icon: 'bi bi-sun', label: 'aus' },
+    {
+      name: 'up-bri-aus',
+      icon: 'bi bi-sun',
+      label: 'aus',
+      action: screenStore.increaseBrightness,
+    },
     {
       name: 'up-empty-1',
       action: () => screenStore.toggleFunctionOnDisplay('Empty'),
@@ -14,8 +19,16 @@ export const useButtons = () => {
     { name: 'up-st', label: 'St', big: true },
     { name: 'up-v-gt-0', label: 'V>0' },
     { name: 'up-v-eq-0', label: 'V=0' },
-    { name: 'up-bri', icon: 'bi bi-sun' },
-    { name: 'up-con', icon: 'bi bi-circle-half' },
+    {
+      name: 'up-bri',
+      icon: 'bi bi-sun',
+      action: screenStore.increaseBrightness,
+    },
+    {
+      name: 'up-con',
+      icon: 'bi bi-circle-half',
+      action: screenStore.toggleTheme,
+    },
     { name: 'up-ud', label: 'UD' },
   ]
 
@@ -37,7 +50,7 @@ export const useButtons = () => {
     { name: 'si-up', icon: 'bi bi-caret-up-fill', iconClass: 'text-2xl' },
     { name: 'si-do', icon: 'bi bi-caret-down-fill', iconClass: 'text-2xl' },
     { name: 'si-e', label: 'E', big: true },
-    { name: 'si-dot', icon: 'bi bi-circle-fill', iconClass: 'text-base' },
+    { name: 'si-dot', icon: 'bi bi-circle-fill', iconClass: 'text-sm' },
   ]
 
   const triggerButton = (name: ButtonName) => {
