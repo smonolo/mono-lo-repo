@@ -5,7 +5,7 @@ defineComponent({ name: 'ScreenTime' })
 </script>
 
 <template>
-  <div class="w-[160px]">
+  <div>
     <ClientOnly>
       <div
         class="whitespace-nowrap border border-slate-100 px-1.5 py-0.5 text-center font-bold tracking-wide"

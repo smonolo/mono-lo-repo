@@ -1,9 +1,15 @@
 import type { Button, ButtonName } from '~/types/buttons'
+import { useScreenStore } from '~/stores/screen'
 
 export const useButtons = () => {
+  const screenStore = useScreenStore()
+
   const upperButtons: Button[] = [
     { name: 'up-bri-aus', icon: 'bi bi-sun', label: 'aus' },
-    { name: 'up-empty-1' },
+    {
+      name: 'up-empty-1',
+      action: () => screenStore.toggleFunctionOnDisplay('Empty'),
+    },
     { name: 'up-i', label: 'i' },
     { name: 'up-st', label: 'St', big: true },
     { name: 'up-v-gt-0', label: 'V>0' },
@@ -35,7 +41,10 @@ export const useButtons = () => {
   ]
 
   const triggerButton = (name: ButtonName) => {
-    console.log(name)
+    const buttons = [...upperButtons, ...lowerButtons, ...sideButtons]
+    const action = buttons.find(button => button.name === name)?.action
+
+    action?.()
   }
 
   return { upperButtons, lowerButtons, sideButtons, triggerButton }

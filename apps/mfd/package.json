@@ -1,6 +1,7 @@
 {
   "name": "mfd",
   "private": true,
+  "version": "1.0.0",
   "type": "module",
   "author": "Stefano Monolo <stefano@smnl.dev>",
   "scripts": {

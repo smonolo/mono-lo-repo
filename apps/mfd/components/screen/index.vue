@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ScreenTime from '~/components/screen/time.vue'
 import ScreenControls from '~/components/screen/controls.vue'
+import ScreenFunctions from '~/components/screen/functions.vue'
 
 defineComponent({ name: 'Screen' })
 </script>
@@ -12,7 +13,10 @@ defineComponent({ name: 'Screen' })
         <div class="h-full w-full">
           <slot />
         </div>
-        <ScreenTime />
+        <div class="flex w-[200px] flex-col gap-y-4">
+          <ScreenTime />
+          <ScreenFunctions />
+        </div>
       </div>
     </div>
     <ScreenControls />

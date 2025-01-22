@@ -1,24 +1,25 @@
 import type { Control, ControlName } from '~/types/controls'
 import type { ButtonName } from '~/types/buttons'
 import { useControlsStore } from '~/stores/controls'
+import { useScreenStore } from '~/stores/screen'
+import type { ScreenName } from '~/types/screen'
 
 export const useControls = () => {
-  const router = useRouter()
   const controlsStore = useControlsStore()
+  const screenStore = useScreenStore()
 
-  const redirectAndClear = (path: string) => {
-    router.push(path)
+  const setScreenAndClear = (screenName: ScreenName) => {
+    screenStore.setActiveScreen(screenName)
     controlsStore.clearControls()
   }
 
   const controlActions: Record<string, () => void> = {
-    journey: () => redirectAndClear('/journey'),
-    chaos: () => redirectAndClear('/chaos'),
-    attempts: () => redirectAndClear('/attempts'),
     main: () => {
-      router.push('/')
+      screenStore.setActiveScreen('main')
       controlsStore.restoreControls('main')
     },
+    version: () => setScreenAndClear('version'),
+    logs: () => setScreenAndClear('logs'),
   }
 
   const triggerControl = (

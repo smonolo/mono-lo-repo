@@ -34,4 +34,5 @@ export type Button = {
   icon?: string
   iconClass?: string
   big?: boolean
+  action?: () => void
 }

@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import Buttons from '~/components/buttons/index.vue'
 import Screen from '~/components/screen/index.vue'
+import { useButtons } from '~/composables/useButtons'
+import { useScreens } from '~/composables/useScreens'
+import { useScreenStore } from '~/stores/screen'
 
 const { upperButtons, lowerButtons, sideButtons } = useButtons()
+const { screensConfig } = useScreens()
+const screenStore = useScreenStore()
 </script>
 
 <template>
@@ -16,7 +21,7 @@ const { upperButtons, lowerButtons, sideButtons } = useButtons()
         </section>
         <main class="h-[680px] bg-slate-900">
           <Screen>
-            <slot />
+            <component :is="screensConfig[screenStore.activeScreen]" />
           </Screen>
         </main>
         <section class="flex h-[100px] items-center justify-center">

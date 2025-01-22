@@ -1,6 +1,6 @@
 import type { ButtonName } from '~/types/buttons'
 
-export type ControlName = 'journey' | 'chaos' | 'attempts' | 'main'
+export type ControlName = 'version' | 'logs' | 'main'
 
 export type Control = {
   name: ControlName

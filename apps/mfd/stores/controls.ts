@@ -1,14 +1,13 @@
 import type { Control, ControlName, ControlsConfig } from '~/types/controls'
 
 const defaultControls: Control[] = [
-  { name: 'journey', label: 'Jo', slot: 'lo-1' },
-  { name: 'chaos', label: 'Chaos', slot: 'lo-2' },
-  { name: 'attempts', label: 'At', slot: 'lo-3' },
+  { name: 'version', label: 'Ver', slot: 'lo-1' },
+  { name: 'logs', label: 'Log', slot: 'lo-2' },
   { name: 'main', label: 'Main', slot: 'lo-0' },
 ]
 
 const controlsConfig: Record<ControlsConfig, ControlName[]> = {
-  main: ['journey', 'chaos', 'attempts', 'main'],
+  main: ['version', 'logs', 'main'],
 }
 
 export const useControlsStore = defineStore('controls', () => {
