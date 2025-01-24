@@ -1,6 +1,12 @@
 {
   "items": [
     {
+      "project": "MFD",
+      "year": 2025,
+      "website": "https://mfd.smnl.dev",
+      "current": true
+    },
+    {
       "project": "OpenWater",
       "year": 2024,
       "website": "https://www.openwaterapp.com"
