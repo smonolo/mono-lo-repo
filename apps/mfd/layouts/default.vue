@@ -6,8 +6,11 @@ import { useScreens } from '~/composables/useScreens'
 import { useScreenStore } from '~/stores/screen'
 import MobileDisabled from '~/components/disabled.vue'
 import About from '~/components/about.vue'
+import type { ViewComponent } from '~/types/buttons'
 
-const { upperButtons, lowerButtons, sideButtons } = useButtons()
+const mountedView = useTemplateRef<ViewComponent>('mountedView')
+const { upperButtons, sideButtons } = useButtons()
+const lowerButtons = useLowerButtons(mountedView)
 const { screensConfig } = useScreens()
 const screenStore = useScreenStore()
 </script>
@@ -24,8 +27,11 @@ const screenStore = useScreenStore()
             <Buttons :buttons="upperButtons" />
           </section>
           <main class="h-[680px]">
-            <Screen v-if="screenStore.display === 'primary'">
-              <component :is="screensConfig[screenStore.activeScreen]" />
+            <Screen v-if="screenStore.display === 'primary'" :lowerButtons>
+              <component
+                ref="mountedView"
+                :is="screensConfig[screenStore.activeScreen]"
+              />
             </Screen>
             <About v-else-if="screenStore.display === 'about'" />
           </main>

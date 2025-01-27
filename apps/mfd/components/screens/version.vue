@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import info from '~/package.json'
 import OptionsCard from '~/components/common/options-card.vue'
+import type { ViewComponent } from '~/types/buttons'
+import { useMainButtonConfig } from '~/composables/useMainButtonConfig'
 
 defineComponent({ name: 'VersionScreen' })
 
@@ -15,6 +17,12 @@ const depsOptions = Object.fromEntries(
     ...info.devDependencies,
   }).map(([key, value]) => [key, { label: key, value }])
 )
+
+defineExpose<ViewComponent>({
+  lowerButtonActions: {
+    lower9: useMainButtonConfig(),
+  },
+})
 </script>
 
 <template>
