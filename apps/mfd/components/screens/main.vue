@@ -1,21 +1,25 @@
 <script setup lang="ts">
-import type { ScreenComponent } from '~/types/buttons'
+import { useSideButtonsActions } from '~/composables/buttons/actions/useSideButtonsActions'
+import { useUpperButtonsActions } from '~/composables/buttons/actions/useUpperButtonsActions'
+import type { ScreenConfig } from '~/types/screen'
 
 defineComponent({ name: 'MainScreen' })
 
-const screenStore = useScreenStore()
+const { setActiveScreen } = useScreenStore()
 
-defineExpose<ScreenComponent>({
+defineExpose<ScreenConfig>({
+  upperButtonActions: useUpperButtonsActions(),
   lowerButtonActions: {
     lower0: {
       label: 'Ver',
-      onClick: () => screenStore.setActiveScreen('version'),
+      action: () => setActiveScreen('version'),
     },
     lower5: {
       label: 'S',
-      onClick: () => screenStore.setActiveScreen('settings'),
+      action: () => setActiveScreen('settings'),
     },
   },
+  sideButtonActions: useSideButtonsActions(),
 })
 </script>
 

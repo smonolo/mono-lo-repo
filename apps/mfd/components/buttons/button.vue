@@ -23,7 +23,7 @@ const getButtonSize = (button: Button) => {
   <div
     class="flex cursor-pointer flex-col justify-between break-all rounded-lg border-2 border-white p-1.5 text-xl leading-none"
     :class="getButtonSize(button)"
-    @click="button.action"
+    @click="button.action?.()"
   >
     <i v-if="!!button.icon" :class="[button.icon, button.iconClass]" />
     <span

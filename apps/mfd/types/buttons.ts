@@ -2,47 +2,25 @@ export type ButtonsType = 'functions' | 'controls'
 export type ButtonsDirection = 'horizontal' | 'vertical'
 
 export type UpperButtonName = `upper${string}`
-export type UpperButtonActions = {
-  onBriAusClick: () => void
-  onEmpty1Click: () => void
-  onIClick: () => void
-  onStClick: () => void
-  onVGt0Click: () => void
-  onVEq0Click: () => void
-  onBriClick: () => void
-  onConClick: () => void
-  onUDClick: () => void
-}
+export type UpperButtonActions = Partial<Record<UpperButtonName, ButtonConfig>>
 
 export type LowerButtonName = `lower${number}`
-export type LowerButtonConfig = { label: string; onClick: () => void }
-export type LowerButtonActions = Partial<
-  Record<LowerButtonName, LowerButtonConfig>
->
+export type LowerButtonActions = Partial<Record<LowerButtonName, ButtonConfig>>
 
 export type SideButtonName = `side${string}`
-export type SideButtonActions = {
-  onCClick: () => void
-  onUpClick: () => void
-  onDoClick: () => void
-  onEClick: () => void
-  onDotClick: () => void
-}
+export type SideButtonActions = Partial<Record<SideButtonName, ButtonConfig>>
 
 export type ButtonName = LowerButtonName | UpperButtonName | SideButtonName
 
-export type Button = {
-  name: ButtonName
+export type ButtonConfig = {
   label?: string
+  action: () => void
+}
+
+export type Button = Partial<ButtonConfig> & {
+  name: ButtonName
   screenLabel?: string
   icon?: string
   iconClass?: string
   big?: boolean
-  action?: () => void
-}
-
-export type ScreenComponent = {
-  upperButtonActions?: UpperButtonActions
-  sideButtonActions?: SideButtonActions
-  lowerButtonActions?: LowerButtonActions
 }

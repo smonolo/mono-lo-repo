@@ -1,22 +1,24 @@
 <script setup lang="ts">
 import { useScreenStore } from '~/stores/screen'
 import OptionsCard from '~/components/common/options-card.vue'
-import type { ScreenComponent } from '~/types/buttons'
+import type { ScreenConfig } from '~/types/screen'
 import { useMainButtonConfig } from '~/composables/buttons/configs/useMainButtonConfig'
 import { useOptionsStore } from '~/stores/options'
+import { useUpperButtonsActions } from '~/composables/buttons/actions/useUpperButtonsActions'
+import { useSideButtonsActions } from '~/composables/buttons/actions/useSideButtonsActions'
 
 defineComponent({ name: 'SettingsScreen' })
 
-defineExpose<ScreenComponent>({
-  lowerButtonActions: {
-    lower9: useMainButtonConfig(),
-  },
+defineExpose<ScreenConfig>({
+  upperButtonActions: useUpperButtonsActions(),
+  lowerButtonActions: { lower9: useMainButtonConfig() },
+  sideButtonActions: useSideButtonsActions(),
 })
 
 const screenStore = useScreenStore()
-const optionsStore = useOptionsStore()
+const { setOptions } = useOptionsStore()
 
-optionsStore.setOptions([
+setOptions([
   { name: 'brightness', action: screenStore.increaseBrightness },
   { name: 'theme', action: screenStore.toggleContrast },
 ])

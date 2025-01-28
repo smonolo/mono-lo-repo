@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import info from '~/package.json'
 import OptionsCard from '~/components/common/options-card.vue'
-import type { ScreenComponent } from '~/types/buttons'
+import type { ScreenConfig } from '~/types/screen'
 import { useMainButtonConfig } from '~/composables/buttons/configs/useMainButtonConfig'
+import { useUpperButtonsActions } from '~/composables/buttons/actions/useUpperButtonsActions'
+import { useSideButtonsActions } from '~/composables/buttons/actions/useSideButtonsActions'
 
 defineComponent({ name: 'VersionScreen' })
 
-defineExpose<ScreenComponent>({
-  lowerButtonActions: {
-    lower9: useMainButtonConfig(),
-  },
+defineExpose<ScreenConfig>({
+  upperButtonActions: useUpperButtonsActions(),
+  lowerButtonActions: { lower9: useMainButtonConfig() },
+  sideButtonActions: useSideButtonsActions(),
 })
 
 const infoOptions = {

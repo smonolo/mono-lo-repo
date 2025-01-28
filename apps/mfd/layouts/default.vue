@@ -4,15 +4,17 @@ import Screen from '~/components/screen/index.vue'
 import { useScreens } from '~/composables/useScreens'
 import { useScreenStore } from '~/stores/screen'
 import MobileDisabled from '~/components/disabled.vue'
-import type { ScreenComponent } from '~/types/buttons'
+import type { ScreenConfig } from '~/types/screen'
 import { useLowerButtons } from '~/composables/buttons/useLowerButtons'
 import { useUpperButtons } from '~/composables/buttons/useUpperButtons'
 import { useSideButtons } from '~/composables/buttons/useSideButtons'
 
-const activeScreen = useTemplateRef<ScreenComponent>('activeScreen')
-const upperButtons = useUpperButtons()
+const activeScreen = useTemplateRef<ScreenConfig>('activeScreen')
+
+const upperButtons = useUpperButtons(activeScreen)
 const lowerButtons = useLowerButtons(activeScreen)
-const sideButtons = useSideButtons()
+const sideButtons = useSideButtons(activeScreen)
+
 const { screensConfig } = useScreens()
 const screenStore = useScreenStore()
 </script>
