@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import Buttons from '~/components/buttons/index.vue'
 import Screen from '~/components/screen/index.vue'
-import { useButtons } from '~/composables/useButtons'
 import { useScreens } from '~/composables/useScreens'
 import { useScreenStore } from '~/stores/screen'
 import MobileDisabled from '~/components/disabled.vue'
-import About from '~/components/about.vue'
-import type { ViewComponent } from '~/types/buttons'
+import type { ScreenComponent } from '~/types/buttons'
+import { useLowerButtons } from '~/composables/buttons/useLowerButtons'
+import { useUpperButtons } from '~/composables/buttons/useUpperButtons'
+import { useSideButtons } from '~/composables/buttons/useSideButtons'
 
-const mountedView = useTemplateRef<ViewComponent>('mountedView')
-const { upperButtons, sideButtons } = useButtons()
-const lowerButtons = useLowerButtons(mountedView)
+const activeScreen = useTemplateRef<ScreenComponent>('activeScreen')
+const upperButtons = useUpperButtons()
+const lowerButtons = useLowerButtons(activeScreen)
+const sideButtons = useSideButtons()
 const { screensConfig } = useScreens()
 const screenStore = useScreenStore()
 </script>
@@ -29,11 +31,10 @@ const screenStore = useScreenStore()
           <main class="h-[680px]">
             <Screen v-if="screenStore.display === 'primary'" :lowerButtons>
               <component
-                ref="mountedView"
+                ref="activeScreen"
                 :is="screensConfig[screenStore.activeScreen]"
               />
             </Screen>
-            <About v-else-if="screenStore.display === 'about'" />
           </main>
           <section class="flex h-[100px] items-center justify-center">
             <Buttons type="controls" :buttons="lowerButtons" />

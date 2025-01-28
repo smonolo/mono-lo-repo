@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ScreenControl from '~/components/screen/control.vue'
+import ScreenControl from '~/components/screen/controls/control.vue'
 import type { Button } from '~/types/buttons'
 
 type Props = {

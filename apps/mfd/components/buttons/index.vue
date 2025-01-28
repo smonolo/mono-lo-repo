@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import Button from '~/components/buttons/button.vue'
 import type {
-  ButtonName,
   Button as ButtonType,
   ButtonsDirection,
   ButtonsType,
@@ -13,10 +12,6 @@ type Props = {
   buttons?: ButtonType[]
 }
 
-type Emits = {
-  trigger: [name: ButtonName]
-}
-
 defineComponent({ name: 'Buttons' })
 
 withDefaults(defineProps<Props>(), {
@@ -24,8 +19,6 @@ withDefaults(defineProps<Props>(), {
   direction: 'horizontal',
   buttons: () => [],
 })
-
-defineEmits<Emits>()
 </script>
 
 <template>
@@ -42,8 +35,6 @@ defineEmits<Emits>()
       :key
       :direction="direction"
       :button="button"
-      @trigger="$emit('trigger', button.name)"
-      @click="button.action"
     />
   </div>
 </template>

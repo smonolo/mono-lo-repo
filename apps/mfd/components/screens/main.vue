@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import type { ViewComponent } from '~/types/buttons'
+import type { ScreenComponent } from '~/types/buttons'
 
 defineComponent({ name: 'MainScreen' })
 
 const screenStore = useScreenStore()
 
-const goToVersionView = () => {
-  screenStore.setActiveScreen('version')
-}
-
-defineExpose<ViewComponent>({
+defineExpose<ScreenComponent>({
   lowerButtonActions: {
     lower0: {
       label: 'Ver',
-      onClick: goToVersionView,
+      onClick: () => screenStore.setActiveScreen('version'),
+    },
+    lower5: {
+      label: 'S',
+      onClick: () => screenStore.setActiveScreen('settings'),
     },
   },
 })

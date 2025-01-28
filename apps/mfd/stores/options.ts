@@ -9,27 +9,22 @@ export const useOptionsStore = defineStore('options', () => {
     selectedOption.value = newOptions[0].name
   }
 
-  const nextOption = () => {
-    if (!!options.value.length) {
+  const changeOption = (direction: 'next' | 'previous') => {
+    if (options.value.length) {
       const currentIndex = options.value.findIndex(
         option => option.name === selectedOption.value
       )
-      selectedOption.value =
-        options.value[
-          currentIndex === options.value.length - 1 ? 0 : currentIndex + 1
-        ].name
-    }
-  }
-
-  const previousOption = () => {
-    if (!!options.value.length) {
-      const currentIndex = options.value.findIndex(
-        option => option.name === selectedOption.value
-      )
-      selectedOption.value =
-        options.value[
-          currentIndex === 0 ? options.value.length - 1 : currentIndex - 1
-        ].name
+      if (direction === 'next') {
+        selectedOption.value =
+          options.value[
+            currentIndex === options.value.length - 1 ? 0 : currentIndex + 1
+          ].name
+      } else {
+        selectedOption.value =
+          options.value[
+            currentIndex === 0 ? options.value.length - 1 : currentIndex - 1
+          ].name
+      }
     }
   }
 
@@ -52,8 +47,7 @@ export const useOptionsStore = defineStore('options', () => {
     options,
     setOptions,
     selectedOption,
-    nextOption,
-    previousOption,
+    changeOption,
     triggerOption,
     clearOptions,
   }

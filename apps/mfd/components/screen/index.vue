@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ScreenClock from '~/components/screen/clock.vue'
-import ScreenControls from '~/components/screen/controls.vue'
+import ScreenControls from '~/components/screen/controls/index.vue'
 import ScreenFunctions from '~/components/screen/functions.vue'
 import { useScreenStore } from '~/stores/screen'
 import type { Button } from '~/types/buttons'
