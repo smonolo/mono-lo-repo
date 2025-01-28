@@ -3,8 +3,15 @@ import ScreenClock from '~/components/screen/clock.vue'
 import ScreenControls from '~/components/screen/controls.vue'
 import ScreenFunctions from '~/components/screen/functions.vue'
 import { useScreenStore } from '~/stores/screen'
+import type { Button } from '~/types/buttons'
+
+type Props = {
+  lowerButtons: Button[]
+}
 
 defineComponent({ name: 'Screen' })
+
+defineProps<Props>()
 
 const screenStore = useScreenStore()
 
@@ -29,6 +36,6 @@ useHead({ htmlAttrs })
         </div>
       </div>
     </div>
-    <ScreenControls />
+    <ScreenControls :lowerButtons />
   </div>
 </template>

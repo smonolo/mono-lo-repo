@@ -2,11 +2,6 @@ import type { Button, ButtonName } from '~/types/buttons'
 import { useScreenStore } from '~/stores/screen'
 import { useOptionsStore } from '~/stores/options'
 
-const lowerButtons: Button[] = Array.from({ length: 10 }, (_, i) => ({
-  name: `lo-${i}`,
-  label: `${i}`,
-}))
-
 export const useButtons = () => {
   const screenStore = useScreenStore()
   const optionsStore = useOptionsStore()
@@ -80,11 +75,11 @@ export const useButtons = () => {
   ]
 
   const triggerButton = (name: ButtonName) => {
-    const buttons = [...upperButtons, ...lowerButtons, ...sideButtons]
+    const buttons = [...upperButtons, ...sideButtons]
     const action = buttons.find(button => button.name === name)?.action
 
     action?.()
   }
 
-  return { upperButtons, lowerButtons, sideButtons, triggerButton }
+  return { upperButtons, sideButtons, triggerButton }
 }

@@ -43,6 +43,7 @@ defineEmits<Emits>()
       :direction="direction"
       :button="button"
       @trigger="$emit('trigger', button.name)"
+      @click="button.action"
     />
   </div>
 </template>
