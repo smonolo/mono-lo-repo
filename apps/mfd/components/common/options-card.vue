@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { useOptionsStore } from '~/stores/options'
+import type { Option } from '~/types/options'
 
 type Props = {
   header: string
-  options: Record<string, { label: string; value: string | number }>
+  options: Option[]
 }
 
 defineComponent({ name: 'OptionsCard' })
@@ -20,16 +21,16 @@ const optionsStore = useOptionsStore()
     </div>
     <div class="p-1">
       <div
-        v-for="(value, key, index) in options"
+        v-for="(option, index) in options"
         :key="index"
         class="flex justify-between p-1"
         :class="{
           'bg-slate-950 text-slate-100 dark:bg-slate-100 dark:text-slate-950':
-            optionsStore.selectedOption === key,
+            optionsStore.selectedOption === option.name,
         }"
       >
-        <span>{{ value.label }}</span>
-        <span>{{ value.value }}</span>
+        <span>{{ option.label }}</span>
+        <span>{{ option.value }}</span>
       </div>
     </div>
   </div>

@@ -18,25 +18,26 @@ defineExpose<ScreenConfig>({
 const screenStore = useScreenStore()
 const { setOptions } = useOptionsStore()
 
-setOptions([
-  { name: 'brightness', action: screenStore.increaseBrightness },
-  { name: 'theme', action: screenStore.toggleContrast },
-])
-
-const displayOptions = computed(() => ({
-  brightness: {
+const options = computed(() => [
+  {
+    name: 'brightness',
     label: 'Brightness',
     value: screenStore.brightness,
+    action: screenStore.increaseBrightness,
   },
-  theme: {
+  {
+    name: 'contrast',
     label: 'Contrast',
     value: screenStore.contrast,
+    action: screenStore.toggleContrast,
   },
-}))
+])
+
+setOptions(options.value)
 </script>
 
 <template>
   <div class="p-10">
-    <OptionsCard header="Screen" :options="displayOptions" />
+    <OptionsCard header="Screen" :options="options" />
   </div>
 </template>

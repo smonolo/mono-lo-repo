@@ -5,6 +5,7 @@ import type { ScreenConfig } from '~/types/screen'
 import { useMainButtonConfig } from '~/composables/buttons/configs/useMainButtonConfig'
 import { useUpperButtonsActions } from '~/composables/buttons/actions/useUpperButtonsActions'
 import { useSideButtonsActions } from '~/composables/buttons/actions/useSideButtonsActions'
+import { useOptionsStore } from '~/stores/options'
 
 defineComponent({ name: 'VersionScreen' })
 
@@ -14,17 +15,19 @@ defineExpose<ScreenConfig>({
   sideButtonActions: useSideButtonsActions(),
 })
 
-const infoOptions = {
-  name: { label: 'Name', value: info.name },
-  version: { label: 'Version', value: info.version },
-}
+const { setOptions } = useOptionsStore()
 
-const depsOptions = Object.fromEntries(
-  Object.entries({
-    ...info.dependencies,
-    ...info.devDependencies,
-  }).map(([key, value]) => [key, { label: key, value }])
-)
+const infoOptions = [
+  { name: 'name', label: 'Name', value: info.name },
+  { name: 'version', label: 'Version', value: info.version },
+]
+
+const depsOptions = Object.entries({
+  ...info.dependencies,
+  ...info.devDependencies,
+}).map(([key, value]) => ({ name: key, label: key, value }))
+
+setOptions([...infoOptions, ...depsOptions])
 </script>
 
 <template>
