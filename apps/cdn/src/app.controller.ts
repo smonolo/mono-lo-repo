@@ -6,7 +6,6 @@ import {
   Param,
   Post,
   Query,
-  Render,
   Res,
   UploadedFile,
   UseInterceptors,
@@ -49,7 +48,6 @@ export class AppController {
   }
 
   @Get('list')
-  @Render('list')
   listFiles(@Query('authKey') authKey: string) {
     authorizeRequest(authKey)
 

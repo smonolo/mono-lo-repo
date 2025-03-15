@@ -4,12 +4,15 @@ import { HttpException, HttpStatus } from '@nestjs/common'
 
 export const authorizeRequest = (authKey: string) => {
   if (!authKey) {
-    throw new HttpException('authKey is required', HttpStatus.BAD_REQUEST)
+    throw new HttpException(
+      'Authentication key is required',
+      HttpStatus.BAD_REQUEST
+    )
   }
 
   if (!existsSync(keysFile)) {
     throw new HttpException(
-      'keys file file not found',
+      'Keys file not found',
       HttpStatus.INTERNAL_SERVER_ERROR
     )
   }
@@ -26,7 +29,7 @@ export const authorizeRequest = (authKey: string) => {
   }
 
   if (!keys.includes(authKey)) {
-    throw new HttpException('Invalid authKey', HttpStatus.FORBIDDEN)
+    throw new HttpException('Invalid authentication key', HttpStatus.FORBIDDEN)
   }
 }
 
