@@ -66,10 +66,6 @@ export class AppController {
         }
       })
       .sort((a, b) => b.birthTime.getTime() - a.birthTime.getTime())
-      .map((file, index) => ({
-        ...file,
-        fileNumber: files.length - index,
-      }))
 
     const totalSize = mappedFiles.reduce(
       (acc, file) => acc + statSync(join(uploadFolder, file.fileName)).size,
