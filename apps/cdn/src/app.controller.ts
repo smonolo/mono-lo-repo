@@ -17,8 +17,6 @@ import { Response } from 'express'
 import { authorizeRequest, generateFileName } from './utils'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { diskStorage } from 'multer'
-import { filesize } from 'filesize'
-import * as dayjs from 'dayjs'
 
 @Controller()
 export class AppController {
@@ -63,11 +61,8 @@ export class AppController {
 
         return {
           fileName,
-          size: filesize(stats.size),
+          size: stats.size,
           birthTime: stats.birthtime,
-          formattedBirthTime: dayjs(stats.birthtime).format(
-            'DD/MM/YYYY HH:mm:ss'
-          ),
         }
       })
       .sort((a, b) => b.birthTime.getTime() - a.birthTime.getTime())
@@ -83,7 +78,7 @@ export class AppController {
 
     return {
       files: mappedFiles,
-      totalSize: filesize(totalSize),
+      totalSize: totalSize,
     }
   }
 
