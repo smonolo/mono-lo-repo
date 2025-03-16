@@ -82,7 +82,7 @@ export class AppController {
     return {
       files: paginatedFiles,
       totalSize: totalSize,
-      currentPage: page,
+      totalFiles: mappedFiles.length,
       totalPages: Math.ceil(mappedFiles.length / pageSize),
     }
   }
