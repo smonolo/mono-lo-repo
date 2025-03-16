@@ -46,7 +46,10 @@ export class AppController {
   }
 
   @Get('list')
-  listFiles(@Query('authKey') authKey: string) {
+  listFiles(
+    @Query('authKey') authKey: string,
+    @Query('page') page: number = 1
+  ) {
     authorizeRequest(authKey)
 
     if (!existsSync(uploadFolder)) {
@@ -67,14 +70,20 @@ export class AppController {
       })
       .sort((a, b) => b.birthTime.getTime() - a.birthTime.getTime())
 
+    const pageSize = 10
+    const startIndex = (page - 1) * pageSize
+    const paginatedFiles = mappedFiles.slice(startIndex, startIndex + pageSize)
+
     const totalSize = mappedFiles.reduce(
       (acc, file) => acc + statSync(join(uploadFolder, file.fileName)).size,
       0
     )
 
     return {
-      files: mappedFiles,
+      files: paginatedFiles,
       totalSize: totalSize,
+      currentPage: page,
+      totalPages: Math.ceil(mappedFiles.length / pageSize),
     }
   }
 
