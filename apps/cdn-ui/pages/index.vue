@@ -31,6 +31,12 @@ const fetchData = async () => {
 
 watch(page, fetchData, { immediate: true })
 
+const updatePage = (newPage: number) => {
+  if (newPage >= 1 && newPage <= (data.value?.totalPages || 1)) {
+    page.value = newPage
+  }
+}
+
 const openFile = (fileName: string) => {
   window.open(`https://cdn.smnl.it/${fileName}`)
 }
@@ -41,9 +47,21 @@ const openFile = (fileName: string) => {
     <table class="w-full">
       <thead>
         <tr>
-          <th>File ({{ data.totalFiles }})</th>
-          <th>Size ({{ filesize(data.totalSize) }})</th>
-          <th>Upload Date</th>
+          <th
+            class="border border-white p-3 text-left font-normal transition-colors group-hover:bg-[#008cff]"
+          >
+            File ({{ data.totalFiles }})
+          </th>
+          <th
+            class="border border-white p-3 text-left font-normal transition-colors group-hover:bg-[#008cff]"
+          >
+            Size ({{ filesize(data.totalSize) }})
+          </th>
+          <th
+            class="border border-white p-3 text-left font-normal transition-colors group-hover:bg-[#008cff]"
+          >
+            Upload Date
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -53,25 +71,35 @@ const openFile = (fileName: string) => {
           class="group cursor-pointer"
           @click="openFile(file.fileName)"
         >
-          <td>{{ file.fileName }}</td>
-          <td>{{ filesize(file.size) }}</td>
-          <td>{{ dayjs(file.birthTime).format('DD/MM/YYYY HH:mm:ss') }}</td>
+          <td
+            class="border border-white p-3 text-left font-normal transition-colors group-hover:bg-[#008cff]"
+          >
+            {{ file.fileName }}
+          </td>
+          <td
+            class="border border-white p-3 text-left font-normal transition-colors group-hover:bg-[#008cff]"
+          >
+            {{ filesize(file.size) }}
+          </td>
+          <td
+            class="border border-white p-3 text-left font-normal transition-colors group-hover:bg-[#008cff]"
+          >
+            {{ dayjs(file.birthTime).format('DD/MM/YYYY HH:mm:ss') }}
+          </td>
         </tr>
       </tbody>
     </table>
     <div class="mt-4 flex w-fit border border-white">
       <button
-        v-if="data.totalPages > 1 && page > 1"
         class="cursor-pointer p-3 hover:bg-white hover:text-black"
-        @click="page--"
+        @click="updatePage(page - 1)"
       >
         Previous
       </button>
       <span class="border-x border-white p-3">{{ page }}</span>
       <button
-        v-if="data.totalPages > 1 && page < data.totalPages"
         class="cursor-pointer p-3 hover:bg-white hover:text-black"
-        @click="page++"
+        @click="updatePage(page + 1)"
       >
         Next
       </button>

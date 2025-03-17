@@ -7,4 +7,11 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  app: {
+    head: {
+      bodyAttrs: {
+        class: 'bg-black p-10 text-white font-body',
+      },
+    },
+  },
 })

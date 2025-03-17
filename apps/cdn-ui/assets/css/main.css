@@ -1,12 +1,6 @@
+@import url('https://api.fontshare.com/v2/css?f[]=switzer@1&display=swap');
 @import 'tailwindcss';
 
-@layer base {
-  body {
-    @apply bg-black p-10 text-white;
-  }
-
-  th,
-  td {
-    @apply border border-white p-3 text-left font-normal transition-colors group-hover:bg-[#008cff];
-  }
+@theme {
+  --font-body: Switzer, sans-serif;
 }
