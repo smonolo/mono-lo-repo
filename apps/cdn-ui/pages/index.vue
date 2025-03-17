@@ -21,9 +21,11 @@ const page = ref(1)
 const data = ref<Response | null>(null)
 
 const fetchData = async () => {
-  const response = await fetch(
-    `https://cdn.smnl.it/list?authKey=${route.query.authKey}&page=${page.value}`
-  )
+  const response = await fetch(`https://cdn.smnl.it/list?page=${page.value}`, {
+    headers: {
+      authorization: route.query.authKey as string,
+    },
+  })
   data.value = await response.json()
 }
 

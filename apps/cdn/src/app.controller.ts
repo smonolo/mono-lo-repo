@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  Headers,
   HttpException,
   HttpStatus,
   Param,
@@ -10,13 +11,13 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common'
-import { existsSync, readdirSync, statSync } from 'fs'
-import { uploadFolder } from './consts'
-import { join } from 'path'
-import { Response } from 'express'
-import { authorizeRequest, generateFileName } from './utils'
 import { FileInterceptor } from '@nestjs/platform-express'
+import { Response } from 'express'
+import { existsSync, readdirSync, statSync } from 'fs'
 import { diskStorage } from 'multer'
+import { join } from 'path'
+import { uploadFolder } from './consts'
+import { authorizeRequest, generateFileName } from './utils'
 
 @Controller()
 export class AppController {
@@ -42,8 +43,8 @@ export class AppController {
 
   @Get('list')
   listFiles(
-    @Query('authKey') authKey: string,
-    @Query('page') page: number = 1
+    @Query('page') page: number = 1,
+    @Headers('authorization') authKey: string
   ) {
     authorizeRequest(authKey)
 
