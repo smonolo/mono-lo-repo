@@ -20,11 +20,6 @@ import { diskStorage } from 'multer'
 
 @Controller()
 export class AppController {
-  @Get()
-  index() {
-    return 'hi, you should know where to go'
-  }
-
   @Post('upload')
   @UseInterceptors(
     FileInterceptor('file', {
