@@ -16,7 +16,7 @@ const screenStore = useScreenStore()
 
 const htmlAttrs = computed(() => ({ class: screenStore.contrast }))
 
-useHead({ htmlAttrs })
+useHead(() => ({ htmlAttrs: htmlAttrs.value }))
 </script>
 
 <template>
