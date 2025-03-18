@@ -2,6 +2,7 @@ services:
   cdn:
     container_name: cdn
     build: .
+    restart: unless-stopped
     image: smonolo/cdn
     ports:
       - '49160:49160'
