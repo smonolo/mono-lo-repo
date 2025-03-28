@@ -7,5 +7,5 @@ services:
     ports:
       - '49160:49160'
     volumes:
-      - /mnt/vol1/dev/cdn/images:/images
-      - /home/ubuntu/dev/cdn/config:/config
+      - '${CDN_IMAGES_PATH}:/images'
+      - '${CDN_CONFIG_PATH}:/config'
