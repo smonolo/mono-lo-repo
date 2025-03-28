@@ -1,11 +1,25 @@
 services:
   cdn:
-    container_name: cdn
-    build: .
-    restart: unless-stopped
     image: smonolo/cdn
+    container_name: cdn
+    restart: unless-stopped
+    build: .
     ports:
       - '49160:49160'
     volumes:
       - '${CDN_IMAGES_PATH}:/images'
       - '${CDN_CONFIG_PATH}:/config'
+
+  caddy:
+    image: caddy:latest
+    container_name: cdn_caddy
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - './Caddyfile:/etc/caddy/Caddyfile'
+      - '${CADDY_DATA_PATH}:/data'
+      - '${CADDY_CONFIG_PATH}:/config'
+    depends_on:
+      - cdn

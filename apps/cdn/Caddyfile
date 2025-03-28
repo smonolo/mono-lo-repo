@@ -1,0 +1,3 @@
+cdn.smnl.it {
+  reverse_proxy cdn:49160
+}
