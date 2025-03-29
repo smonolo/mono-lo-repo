@@ -9,7 +9,7 @@ services:
     volumes:
       - '${CDN_IMAGES_PATH}:/images'
       - '${CDN_CONFIG_PATH}:/config'
-    network:
+    networks:
       - caddy_network
 
 networks:
