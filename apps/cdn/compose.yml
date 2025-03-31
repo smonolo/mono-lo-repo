@@ -1,6 +1,6 @@
 services:
   cdn:
-    image: smonolo/cdn
+    image: ghcr.io/smonolo/cdn:latest
     container_name: cdn
     restart: unless-stopped
     build: .
