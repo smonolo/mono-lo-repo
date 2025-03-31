@@ -3,7 +3,6 @@ services:
     image: ghcr.io/smonolo/cdn:latest
     container_name: cdn
     restart: unless-stopped
-    build: .
     ports:
       - '49160:49160'
     volumes:
