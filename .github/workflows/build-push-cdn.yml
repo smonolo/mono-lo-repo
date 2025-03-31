@@ -31,12 +31,5 @@ jobs:
         with:
           context: ./apps/cdn
           push: true
-          platforms: linux/arm64,linux/amd64
+          platforms: linux/arm64
           tags: ghcr.io/${{ github.repository_owner }}/cdn:latest
-
-      - uses: actions/delete-package-versions@v5
-        with:
-          package-name: cdn
-          package-type: container
-          min-versions-to-keep: 1
-          token: ${{ secrets.GITHUB_TOKEN }}
