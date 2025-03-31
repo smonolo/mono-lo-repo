@@ -28,11 +28,8 @@ jobs:
       - uses: docker/build-push-action@v6
         with:
           context: ./apps/cdn
-          file: ./apps/cdn/Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/cdn:latest
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository_owner }}/cdn:cache
-          cache-to: type=registry,ref=ghcr.io/${{ github.repository_owner }}/cdn:cache,mode=max
 
       - uses: actions/delete-package-versions@v5
         with:
