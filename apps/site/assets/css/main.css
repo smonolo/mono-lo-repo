@@ -1,1 +1,8 @@
 @import 'tailwindcss';
+
+@theme {
+  --font-heading: 'Cabinet Grotesk', sans-serif;
+  --font-display: 'Switzer', sans-serif;
+  --color-sm-black: #121215;
+  --color-sm-blue: #008cff;
+}
