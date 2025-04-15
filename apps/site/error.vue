@@ -15,12 +15,12 @@ const showErrorDetails = ref(false)
 <template>
   <div>
     <NuxtLayout>
-      <div class="space-y-8 py-20">
+      <div class="space-y-8 border-t border-gray-800 pt-16">
         <div class="space-y-4">
           <a
             :href="`https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/${error.statusCode}`"
             target="_blank"
-            class="font-heading block w-fit text-6xl font-black hover:underline"
+            class="font-heading block w-fit text-6xl font-semibold hover:underline"
           >
             {{ error.statusCode }}
           </a>
