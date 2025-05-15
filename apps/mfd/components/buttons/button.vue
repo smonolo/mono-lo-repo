@@ -6,8 +6,6 @@ type Props = {
   button: Button
 }
 
-defineComponent({ name: 'Button' })
-
 const props = defineProps<Props>()
 
 const getButtonSize = (button: Button) => {

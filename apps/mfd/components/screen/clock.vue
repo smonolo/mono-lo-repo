@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import moment from 'moment'
 
-defineComponent({ name: 'ScreenClock' })
-
 const currentTime = ref(new Date().getTime())
 
 let interval: NodeJS.Timeout

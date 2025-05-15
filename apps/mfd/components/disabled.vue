@@ -1,7 +1,3 @@
-<script setup lang="ts">
-defineComponent({ name: 'MobileDisabled' })
-</script>
-
 <template>
   <div
     class="absolute z-50 flex h-screen w-full items-center justify-center bg-black text-white xl:hidden"

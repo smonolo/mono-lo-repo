@@ -12,8 +12,6 @@ type Props = {
   buttons?: ButtonType[]
 }
 
-defineComponent({ name: 'Buttons' })
-
 withDefaults(defineProps<Props>(), {
   type: 'functions',
   direction: 'horizontal',

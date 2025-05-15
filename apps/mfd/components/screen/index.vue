@@ -8,8 +8,6 @@ type Props = {
   lowerButtons: Button[]
 }
 
-defineComponent({ name: 'Screen' })
-
 defineProps<Props>()
 
 const screenStore = useScreenStore()

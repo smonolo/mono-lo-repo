@@ -7,8 +7,6 @@ import { useOptionsStore } from '~/stores/options'
 import { useUpperButtonsActions } from '~/composables/buttons/actions/useUpperButtonsActions'
 import { useSideButtonsActions } from '~/composables/buttons/actions/useSideButtonsActions'
 
-defineComponent({ name: 'SettingsScreen' })
-
 defineExpose<ScreenConfig>({
   upperButtonActions: useUpperButtonsActions(),
   lowerButtonActions: { lower9: useMainButtonConfig() },

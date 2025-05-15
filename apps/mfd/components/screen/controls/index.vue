@@ -6,8 +6,6 @@ type Props = {
   lowerButtons: Button[]
 }
 
-defineComponent({ name: 'ScreenControls' })
-
 defineProps<Props>()
 </script>
 

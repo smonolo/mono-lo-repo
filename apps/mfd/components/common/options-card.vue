@@ -7,8 +7,6 @@ type Props = {
   options: Option[]
 }
 
-defineComponent({ name: 'OptionsCard' })
-
 defineProps<Props>()
 
 const optionsStore = useOptionsStore()

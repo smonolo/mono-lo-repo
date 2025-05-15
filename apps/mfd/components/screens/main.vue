@@ -2,8 +2,7 @@
 import { useSideButtonsActions } from '~/composables/buttons/actions/useSideButtonsActions'
 import { useUpperButtonsActions } from '~/composables/buttons/actions/useUpperButtonsActions'
 import type { ScreenConfig } from '~/types/screen'
-
-defineComponent({ name: 'MainScreen' })
+import { useScreenStore } from '~/stores/screen'
 
 const { setActiveScreen } = useScreenStore()
 
@@ -13,6 +12,10 @@ defineExpose<ScreenConfig>({
     lower0: {
       label: 'Ver',
       action: () => setActiveScreen('version'),
+    },
+    lower1: {
+      label: 'Fs',
+      action: () => setActiveScreen('files'),
     },
     lower5: {
       label: 'S',
