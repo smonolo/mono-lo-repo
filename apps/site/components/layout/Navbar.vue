@@ -50,7 +50,7 @@ const socials = [
         </div>
         <div class="h-5 w-px bg-gray-800" />
         <span class="font-mono text-sm text-gray-500">
-          {{ now.format('HH:mm:ss') }} CEST
+          {{ now.format('HH:mm:ss') }}
         </span>
       </div>
     </div>
