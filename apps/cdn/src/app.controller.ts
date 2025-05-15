@@ -16,8 +16,7 @@ import { Response } from 'express'
 import { existsSync, readdirSync, statSync } from 'fs'
 import { diskStorage } from 'multer'
 import { join } from 'path'
-import { uploadFolder } from './consts'
-import { authorizeRequest, generateFileName } from './utils'
+import { authorizeRequest, generateFileName, uploadFolder } from './utils'
 
 @Controller()
 export class AppController {

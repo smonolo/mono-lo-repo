@@ -1,6 +1,8 @@
+import { resolve } from 'path'
 import { existsSync, readFileSync } from 'fs'
-import { allowedExtensions, keysFile } from './consts'
 import { HttpException, HttpStatus } from '@nestjs/common'
+
+export const uploadFolder = resolve('/images')
 
 export const authorizeRequest = (authKey: string) => {
   if (!authKey) {
@@ -9,6 +11,8 @@ export const authorizeRequest = (authKey: string) => {
       HttpStatus.BAD_REQUEST
     )
   }
+
+  const keysFile = resolve('/config/keys.json')
 
   if (!existsSync(keysFile)) {
     throw new HttpException(
@@ -34,7 +38,7 @@ export const authorizeRequest = (authKey: string) => {
 }
 
 export const isAllowedFile = (fileName: string) => {
-  return allowedExtensions.includes(fileName.split('.').pop())
+  return ['jpg', 'jpeg', 'png', 'gif'].includes(fileName.split('.').pop())
 }
 
 export const generateFileName = (length = 10) => {
