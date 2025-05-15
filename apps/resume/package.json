@@ -11,7 +11,7 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
-  "packageManager": "npm@10.9.2",
+  "packageManager": "npm@11.2.0",
   "dependencies": {
     "nuxt": "^3.12.2",
     "vue": "latest"
