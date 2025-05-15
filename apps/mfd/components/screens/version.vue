@@ -7,11 +7,7 @@ import { useUpperButtonsActions } from '~/composables/buttons/actions/useUpperBu
 import { useSideButtonsActions } from '~/composables/buttons/actions/useSideButtonsActions'
 import { useOptionsStore } from '~/stores/options'
 
-defineExpose<ScreenConfig>({
-  upperButtonActions: useUpperButtonsActions(),
-  lowerButtonActions: { lower9: useMainButtonConfig() },
-  sideButtonActions: useSideButtonsActions(),
-})
+const section = ref<'info' | 'deps'>('info')
 
 const { setOptions } = useOptionsStore()
 
@@ -25,7 +21,31 @@ const depsOptions = Object.entries({
   ...info.devDependencies,
 }).map(([key, value]) => ({ name: key, label: key, value }))
 
-setOptions([...infoOptions, ...depsOptions])
+onMounted(() => {
+  setOptions(infoOptions)
+})
+
+defineExpose<ScreenConfig>({
+  upperButtonActions: useUpperButtonsActions(),
+  lowerButtonActions: {
+    lower0: {
+      label: 'Info',
+      action: () => {
+        setOptions(infoOptions)
+        section.value = 'info'
+      },
+    },
+    lower1: {
+      label: 'Deps',
+      action: () => {
+        setOptions(depsOptions)
+        section.value = 'deps'
+      },
+    },
+    lower9: useMainButtonConfig(),
+  },
+  sideButtonActions: useSideButtonsActions(),
+})
 </script>
 
 <template>
@@ -36,8 +56,16 @@ setOptions([...infoOptions, ...depsOptions])
       <span>Version</span>
     </div>
     <div class="flex flex-col gap-y-5 p-10">
-      <OptionsCard header="Info" :options="infoOptions" />
-      <OptionsCard header="Dependencies" :options="depsOptions" />
+      <OptionsCard
+        v-if="section === 'info'"
+        header="Info"
+        :options="infoOptions"
+      />
+      <OptionsCard
+        v-if="section === 'deps'"
+        header="Dependencies"
+        :options="depsOptions"
+      />
     </div>
   </div>
 </template>
