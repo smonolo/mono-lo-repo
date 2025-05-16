@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
+import timezone from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc'
 
-const now = ref(dayjs())
+dayjs.extend(utc)
+dayjs.extend(timezone)
+
+const now = ref(dayjs().tz('Europe/Rome'))
 
 let interval: NodeJS.Timeout
 
 onMounted(() => {
-  interval = setInterval(() => (now.value = dayjs()), 1000)
+  interval = setInterval(() => (now.value = dayjs().tz('Europe/Rome')), 1000)
 })
 
 onUnmounted(() => {
@@ -29,7 +34,7 @@ const socials = [
 </script>
 
 <template>
-  <nav class="fixed left-0 top-0 w-full backdrop-blur-lg">
+  <nav>
     <div
       class="flex max-w-full items-center justify-between px-4 py-8 md:mx-auto md:max-w-[600px] md:px-0"
     >
