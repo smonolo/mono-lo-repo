@@ -24,7 +24,7 @@ defineComponent({ name: 'Experience' })
 const experience: ExperienceCardProps[] = [
   {
     position: 'Frontend Engineer',
-    company: 'WeRoad S.r.l.',
+    company: 'WeRoad S.p.A.',
     period: 'September 2024 - Present',
     location: 'Viale Cassala, 30, Milan, Italy',
     achievements: [
