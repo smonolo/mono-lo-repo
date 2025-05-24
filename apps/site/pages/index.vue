@@ -10,7 +10,7 @@ const circles = [
 
 <template>
   <div class="space-y-10">
-    <hgroup class="space-y-2">
+    <hgroup class="space-y-2 md:px-[50px]">
       <h1 class="font-heading text-3xl font-semibold">
         Hi there, I'm Stefano.
       </h1>
@@ -27,7 +27,7 @@ const circles = [
         class="h-14 w-14 rounded bg-white transition-transform hover:scale-125"
       />
     </div>
-    <div class="space-y-4 text-gray-300">
+    <div class="space-y-4 text-gray-300 md:px-[50px]">
       <p>This banner has no utility. But it's a nice way to fill the site.</p>
       <p>
         I work at
@@ -99,7 +99,7 @@ const circles = [
         class="bg-sm-blue rounded-full transition-[width,height]"
       />
     </div>
-    <div class="space-y-4 text-gray-300">
+    <div class="space-y-4 text-gray-300 md:px-[50px]">
       <p>Another banner. But this one is white and has circles.</p>
       <p>
         This site used to have more content, but I removed it because there's
