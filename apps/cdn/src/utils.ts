@@ -3,6 +3,7 @@ import { existsSync, readFileSync } from 'fs'
 import { HttpException, HttpStatus } from '@nestjs/common'
 
 export const uploadFolder = resolve('/images')
+export const filesUploadFolder = resolve('/files')
 
 export const authorizeRequest = (authKey: string) => {
   if (!authKey) {

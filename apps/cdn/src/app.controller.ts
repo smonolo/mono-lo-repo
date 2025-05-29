@@ -16,7 +16,12 @@ import { Response } from 'express'
 import { existsSync, readdirSync, statSync } from 'fs'
 import { diskStorage } from 'multer'
 import { join } from 'path'
-import { authorizeRequest, generateFileName, uploadFolder } from './utils'
+import {
+  authorizeRequest,
+  filesUploadFolder,
+  generateFileName,
+  uploadFolder,
+} from './utils'
 
 @Controller()
 export class AppController {
@@ -82,8 +87,20 @@ export class AppController {
     }
   }
 
-  @Get(':fileName')
+  @Get('files/:fileName')
   getFile(@Param('fileName') fileName: string, @Res() res: Response) {
+    const filePath = join(filesUploadFolder, fileName)
+
+    if (!existsSync(filePath)) {
+      throw new HttpException('File not found', HttpStatus.NOT_FOUND)
+    }
+
+    res.setHeader('Content-Disposition', 'inline')
+    return res.sendFile(filePath)
+  }
+
+  @Get(':fileName')
+  getImage(@Param('fileName') fileName: string, @Res() res: Response) {
     const filePath = join(uploadFolder, fileName)
 
     if (!existsSync(filePath)) {
