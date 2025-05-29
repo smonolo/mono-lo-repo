@@ -7,6 +7,7 @@ services:
       - '49160:49160'
     volumes:
       - '${CDN_IMAGES_PATH}:/images'
+      - '${CDN_FILES_PATH}:/files'
       - '${CDN_CONFIG_PATH}:/config'
     networks:
       - caddy_network
