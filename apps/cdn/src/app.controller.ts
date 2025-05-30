@@ -42,7 +42,7 @@ export class AppController {
       throw new HttpException('No file uploaded', HttpStatus.BAD_REQUEST)
     }
 
-    return `https://cdn.smnl.it/${file.filename}`
+    return `https://cdn.smnl.dev/images/${file.filename}`
   }
 
   @Get('list')
