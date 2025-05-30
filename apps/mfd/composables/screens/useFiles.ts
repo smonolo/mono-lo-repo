@@ -6,7 +6,7 @@ export const useFiles = (logged: Ref<boolean>, page: Ref<number>) => {
     queryKey: ['filesScreen_files', logged, page],
     queryFn: async (): Promise<FilesResponse> => {
       const response = await fetch(
-        `https://cdn.smnl.it/list?page=${page.value}`,
+        `https://cdn.smnl.dev/list?page=${page.value}`,
         {
           headers: {
             authorization: localStorage.getItem('filesScreen_token') as string,
