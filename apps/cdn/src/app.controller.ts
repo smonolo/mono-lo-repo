@@ -18,9 +18,9 @@ import { diskStorage } from 'multer'
 import { join } from 'path'
 import {
   authorizeRequest,
-  filesUploadFolder,
+  directories,
   generateFileName,
-  uploadFolder,
+  imagesFolder,
 } from './utils'
 
 @Controller()
@@ -29,7 +29,7 @@ export class AppController {
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
-        destination: uploadFolder,
+        destination: imagesFolder,
         filename: (_req, file, cb) => {
           const extension = file.originalname.split('.').pop()
           cb(null, `${generateFileName()}.${extension}`)
@@ -52,14 +52,14 @@ export class AppController {
   ) {
     authorizeRequest(authKey)
 
-    if (!existsSync(uploadFolder)) {
+    if (!existsSync(imagesFolder)) {
       throw new HttpException('Directory not found', HttpStatus.NOT_FOUND)
     }
 
-    const files = readdirSync(uploadFolder)
+    const files = readdirSync(imagesFolder)
     const mappedFiles = files
       .map(fileName => {
-        const filePath = join(uploadFolder, fileName)
+        const filePath = join(imagesFolder, fileName)
         const stats = statSync(filePath)
 
         return {
@@ -75,7 +75,7 @@ export class AppController {
     const paginatedFiles = mappedFiles.slice(startIndex, startIndex + pageSize)
 
     const totalSize = mappedFiles.reduce(
-      (acc, file) => acc + statSync(join(uploadFolder, file.fileName)).size,
+      (acc, file) => acc + statSync(join(imagesFolder, file.fileName)).size,
       0
     )
 
@@ -87,9 +87,13 @@ export class AppController {
     }
   }
 
-  @Get('files/:fileName')
-  getFile(@Param('fileName') fileName: string, @Res() res: Response) {
-    const filePath = join(filesUploadFolder, fileName)
+  @Get(':directory/:fileName')
+  getFile(
+    @Param('directory') directory: string,
+    @Param('fileName') fileName: string,
+    @Res() res: Response
+  ) {
+    const filePath = join(directories[directory], fileName)
 
     if (!existsSync(filePath)) {
       throw new HttpException('File not found', HttpStatus.NOT_FOUND)
@@ -101,13 +105,6 @@ export class AppController {
 
   @Get(':fileName')
   getImage(@Param('fileName') fileName: string, @Res() res: Response) {
-    const filePath = join(uploadFolder, fileName)
-
-    if (!existsSync(filePath)) {
-      throw new HttpException('File not found', HttpStatus.NOT_FOUND)
-    }
-
-    res.setHeader('Content-Disposition', 'inline')
-    return res.sendFile(filePath)
+    res.redirect(`/images/${fileName}`)
   }
 }
