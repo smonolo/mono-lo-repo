@@ -69,7 +69,7 @@ const options = computed(() => {
     label: file.fileName,
     value: `${filesize(file.size)} - ${dayjs(file.birthTime).format('DD/MM/YYYY HH:mm')}`,
     action: () => {
-      window.open(`https://cdn.smnl.it/${file.fileName}`, '_blank')
+      window.open(`https://cdn.smnl.dev/images/${file.fileName}`, '_blank')
     },
   }))
 })
