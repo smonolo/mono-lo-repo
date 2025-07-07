@@ -50,8 +50,8 @@ const experience: ExperienceCardProps[] = [
     url: 'https://www.kampaay.com',
   },
   {
-    position: 'Frontend Engineer',
-    company: 'EVNT Games LLC',
+    position: 'Web Engineer',
+    company: 'Moonrock',
     period: 'November 2022 - March 2024',
     location: 'Remote, Europe',
     achievements: [
@@ -62,7 +62,7 @@ const experience: ExperienceCardProps[] = [
       'Collaborated with external developers to integrate third-party services on gaming related products, such as Overwolf and Tebex',
     ],
     skills: ['TypeScript', 'React', 'Next.js'],
-    url: 'https://evnt.games',
+    url: 'https://www.moonrock.biz',
   },
   {
     position: 'Web Engineer',
