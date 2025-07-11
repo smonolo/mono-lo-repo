@@ -15,7 +15,7 @@ const showErrorDetails = ref(false)
 <template>
   <div>
     <NuxtLayout>
-      <div class="space-y-8">
+      <div class="space-y-8 md:px-[50px]">
         <div class="space-y-4">
           <a
             :href="`https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/${error.statusCode}`"
