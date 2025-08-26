@@ -38,9 +38,10 @@ const circles = [
         >
           WeRoad
         </a>
-        as a software engineer. My job is to build and maintain the platform
-        that travel coordinators use every day to manage their trips. There are
-        more than 3.5k of them, and the platform is crucial to their business.
+        as a software engineer. I build and maintain two business-critical
+        internal platforms that serve 4k+ travel coordinators and 500+ partners
+        daily. I lead frontend development of my team and contribute to backend
+        systems as a full-stack engineer.
       </p>
       <p>
         I use
