@@ -28,7 +28,7 @@
         </li>
       </ul>
     </div>
-    <ul class="mt-4">
+    <ul v-if="!!achievements.length" class="mt-4">
       <li
         v-for="(achievement, key) in achievements"
         :key="key"

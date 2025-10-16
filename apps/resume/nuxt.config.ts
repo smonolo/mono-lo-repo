@@ -1,4 +1,5 @@
 export default defineNuxtConfig({
+  compatibilityDate: '2025-10-17',
   app: {
     head: {
       charset: 'utf-8',

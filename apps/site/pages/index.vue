@@ -32,16 +32,25 @@ const circles = [
       <p>
         I work at
         <a
+          href="https://www.klarna.com"
+          target="_blank"
+          class="text-white hover:text-[#ffa8cd]"
+          >Klarna</a
+        >
+        as a software engineer.
+      </p>
+      <p>
+        Previously, I worked at
+        <a
           href="https://www.weroad.com"
           target="_blank"
           class="text-white hover:text-[#ff4758]"
         >
-          WeRoad
-        </a>
-        as a software engineer. I build and maintain two business-critical
-        internal platforms that serve 4k+ travel coordinators and 500+ partners
-        daily. I lead frontend development of my team and contribute to backend
-        systems as a full-stack engineer.
+          WeRoad</a
+        >. I built and maintained two business-critical internal platforms that
+        served 4k+ travel coordinators and 500+ partners daily. I led frontend
+        development of my team and contribute to backend systems as a full-stack
+        engineer.
       </p>
       <p>
         I use
