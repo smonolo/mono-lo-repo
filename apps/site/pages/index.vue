@@ -6,6 +6,12 @@ const circles = [
   'w-4 h-4 group-hover:w-8 group-hover:h-8',
   'w-2 h-2 group-hover:w-10 group-hover:h-10',
 ]
+
+const showResumeSiteWarning = () => {
+  alert(
+    "Heads up: the resume site doesn't have dark mode. Your eyes might need a moment."
+  )
+}
 </script>
 
 <template>
@@ -32,71 +38,36 @@ const circles = [
       <p>
         I work at
         <a
-          href="https://www.klarna.com"
+          href="https://www.klarna.com/?ref=smnl.dev"
           target="_blank"
           class="text-white hover:text-[#ffa8cd]"
           >Klarna</a
         >
-        as a software engineer.
+        as a software engineer. I build and maintain services that help
+        customers in financial hardship get support, plus some stuff around
+        disputes, returns and refunds.
       </p>
       <p>
-        Previously, I worked at
+        Before that, I was at
         <a
-          href="https://www.weroad.com"
+          href="https://www.weroad.com/?ref=smnl.dev"
           target="_blank"
           class="text-white hover:text-[#ff4758]"
         >
           WeRoad</a
-        >. I built and maintained two business-critical internal platforms that
-        served 4k+ travel coordinators and 500+ partners daily. I led frontend
-        development of my team and contribute to backend systems as a full-stack
-        engineer.
+        >
+        where I built and maintained two internal platforms that around 4k
+        travel coordinators and 500+ partners used every day. I led the frontend
+        work on my team and also did backend stuff when needed.
       </p>
       <p>
-        I use
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-          class="text-white hover:text-[#42b883]"
-        >
-          Vue
-        </a>
-        and
-        <a
-          href="https://nuxt.com"
-          target="_blank"
-          class="text-white hover:text-[#42b883]"
-        >
-          Nuxt
-        </a>
-        every day, but most business and private sites I worked on were made
-        using
-        <a
-          href="https://react.dev"
-          target="_blank"
-          class="text-white hover:text-[#58c4dc]"
-        >
-          React</a
-        >. Before that, I officially started building sites and web apps using
-        <a
-          href="https://jquery.com"
-          target="_blank"
-          class="text-white hover:text-[#0769ad]"
-          >jQuery</a
-        >
-        and
-        <a
-          href="https://expressjs.com"
-          target="_blank"
-          class="text-white hover:text-gray-400"
-          >Express</a
-        >.
+        And there are a lot of other companies and projects I could mention, but
+        that's enough.
       </p>
       <p>
-        I'm also a big fan of setting up infrastructure and networks, and
-        building backend applications myself when I work on full stack projects.
-        I like using cloud providers, Linux-based machines and Docker to go from
-        zero to a working product with no hassle.
+        I also enjoy messing around with infrastructure and networks, and
+        building backend services when I'm working on full-stack stuff. Cloud
+        providers, VMs, containers—that kind of thing.
       </p>
     </div>
     <div
@@ -116,30 +87,21 @@ const circles = [
         another one for that. If you're looking for my resume and want to know
         more about me, you can find it at
         <a
-          href="https://resume.smnl.dev"
+          href="https://resume.smnl.dev/?ref=smnl.dev"
           target="_blank"
           class="hover:text-sm-blue text-white"
+          @click="showResumeSiteWarning"
           >resume.smnl.dev</a
         >.
       </p>
       <p>
-        I got invited to Dub's partners program and have a link to share. If you
-        need a URL shortener and link manager that is just great,
+        Got invited to Dub's partner program, so here's my referral link. If you
+        need a solid URL shortener and link manager,
         <a
           href="https://refer.dub.co/stefano"
           target="_blank"
           class="text-white hover:text-gray-400"
-          >try out Dub</a
-        >, you won't regret it.
-      </p>
-      <p>
-        If you're looking for a list of projects I'm working on or have worked
-        on, you can find it at
-        <a
-          href="https://old.smnl.dev"
-          target="_blank"
-          class="hover:text-sm-blue text-white"
-          >old.smnl.dev</a
+          >give Dub a shot</a
         >.
       </p>
       <p>
