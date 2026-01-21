@@ -27,7 +27,9 @@ const experience: ExperienceCardProps[] = [
     company: 'Klarna',
     period: 'October 2025 - Present',
     location: 'Via Giuseppe Mazzini, 9, Milan, Italy',
-    achievements: [],
+    achievements: [
+      'Building tools that support people facing financial difficulties in paying off debt, and developing systems for disputes, returns, and refunds.',
+    ],
     skills: ['TypeScript', 'React', 'React Native', 'Node.js', 'AWS', 'Kafka'],
     url: 'https://www.klarna.com',
   },
