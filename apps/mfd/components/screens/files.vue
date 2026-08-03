@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useSideButtonsActions } from '~/composables/buttons/actions/useSideButtonsActions'
-import { useUpperButtonsActions } from '~/composables/buttons/actions/useUpperButtonsActions'
 import { useMainButtonConfig } from '~/composables/buttons/configs/useMainButtonConfig'
 import { useFiles } from '~/composables/screens/useFiles'
 import type { ScreenConfig } from '~/types/screen'
@@ -16,7 +14,6 @@ const { data, isFetching } = useFiles(logged, page)
 const optionsStore = useOptionsStore()
 
 defineExpose<ScreenConfig>({
-  upperButtonActions: useUpperButtonsActions(),
   lowerButtonActions: {
     lower0: {
       label: 'Token',
@@ -56,7 +53,6 @@ defineExpose<ScreenConfig>({
     },
     lower9: useMainButtonConfig(),
   },
-  sideButtonActions: useSideButtonsActions(),
 })
 
 onMounted(() => (logged.value = !!localStorage.getItem('filesScreen_token')))
@@ -75,7 +71,7 @@ const options = computed(() => {
 })
 
 watch(options, opts => {
-  if (!!opts?.length) {
+  if (opts?.length) {
     optionsStore.setOptions(opts)
   }
 })

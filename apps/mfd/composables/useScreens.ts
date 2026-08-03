@@ -1,17 +1,23 @@
 import type { Component } from 'vue'
-import type { ScreenName } from '~/types/screen'
-import MainScreen from '~/components/screens/main.vue'
-import VersionScreen from '~/components/screens/version.vue'
-import SettingsScreen from '~/components/screens/settings.vue'
-import FilesScreen from '~/components/screens/files.vue'
 
 export const useScreens = () => {
-  const screensConfig: Record<ScreenName, Component> = {
-    main: MainScreen,
-    version: VersionScreen,
-    settings: SettingsScreen,
-    files: FilesScreen,
-  }
+  const screenModules = import.meta.glob<{ default: Component }>(
+    '~/components/screens/*.vue',
+    { eager: true }
+  )
+
+  const screensConfig = Object.entries(screenModules).reduce(
+    (acc, [path, module]) => {
+      const name = path.split('/').pop()?.replace('.vue', '')
+
+      if (name) {
+        acc[name] = module.default
+      }
+
+      return acc
+    },
+    {} as Record<string, Component>
+  )
 
   return { screensConfig }
 }

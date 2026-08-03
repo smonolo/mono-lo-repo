@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import { useSideButtonsActions } from '~/composables/buttons/actions/useSideButtonsActions'
-import { useUpperButtonsActions } from '~/composables/buttons/actions/useUpperButtonsActions'
 import type { ScreenConfig } from '~/types/screen'
 import { useScreenStore } from '~/stores/screen'
 
 const { setActiveScreen } = useScreenStore()
 
 defineExpose<ScreenConfig>({
-  upperButtonActions: useUpperButtonsActions(),
   lowerButtonActions: {
     lower0: {
       label: 'Ver',
@@ -22,7 +19,6 @@ defineExpose<ScreenConfig>({
       action: () => setActiveScreen('settings'),
     },
   },
-  sideButtonActions: useSideButtonsActions(),
 })
 </script>
 

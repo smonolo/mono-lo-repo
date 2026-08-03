@@ -5,11 +5,16 @@ export const useFiles = (logged: Ref<boolean>, page: Ref<number>) => {
   return useQuery({
     queryKey: ['filesScreen_files', logged, page],
     queryFn: async (): Promise<FilesResponse> => {
+      const token =
+        typeof window !== 'undefined'
+          ? localStorage.getItem('filesScreen_token')
+          : ''
+
       const response = await fetch(
         `https://cdn.smnl.dev/list?page=${page.value}`,
         {
           headers: {
-            authorization: localStorage.getItem('filesScreen_token') as string,
+            authorization: token || '',
           },
         }
       )

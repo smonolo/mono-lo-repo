@@ -1,4 +1,5 @@
 import type { ScreenTheme, ScreenName, ScreenDisplay } from '~/types/screen'
+import { useOptionsStore } from '~/stores/options'
 
 export const useScreenStore = defineStore('screen', () => {
   const activeScreen = ref<ScreenName>('main')
@@ -7,6 +8,9 @@ export const useScreenStore = defineStore('screen', () => {
   const display = ref<ScreenDisplay>('primary')
 
   const setActiveScreen = (screen: ScreenName) => {
+    const optionsStore = useOptionsStore()
+    optionsStore.clearOptions()
+
     activeScreen.value = screen
   }
 

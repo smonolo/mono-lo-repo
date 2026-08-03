@@ -3,13 +3,10 @@ import info from '~/package.json'
 import OptionsCard from '~/components/common/options-card.vue'
 import type { ScreenConfig } from '~/types/screen'
 import { useMainButtonConfig } from '~/composables/buttons/configs/useMainButtonConfig'
-import { useUpperButtonsActions } from '~/composables/buttons/actions/useUpperButtonsActions'
-import { useSideButtonsActions } from '~/composables/buttons/actions/useSideButtonsActions'
 import { useOptionsStore } from '~/stores/options'
 
 const section = ref<'info' | 'deps'>('info')
-
-const { setOptions } = useOptionsStore()
+const optionsStore = useOptionsStore()
 
 const infoOptions = [
   { name: 'name', label: 'Name', value: info.name },
@@ -21,30 +18,26 @@ const depsOptions = Object.entries({
   ...info.devDependencies,
 }).map(([key, value]) => ({ name: key, label: key, value }))
 
-onMounted(() => {
-  setOptions(infoOptions)
+watchEffect(() => {
+  optionsStore.setOptions(section.value === 'info' ? infoOptions : depsOptions)
 })
 
 defineExpose<ScreenConfig>({
-  upperButtonActions: useUpperButtonsActions(),
   lowerButtonActions: {
     lower0: {
       label: 'Info',
       action: () => {
-        setOptions(infoOptions)
         section.value = 'info'
       },
     },
     lower1: {
       label: 'Deps',
       action: () => {
-        setOptions(depsOptions)
         section.value = 'deps'
       },
     },
     lower9: useMainButtonConfig(),
   },
-  sideButtonActions: useSideButtonsActions(),
 })
 </script>
 
