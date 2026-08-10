@@ -1,7 +1,9 @@
 <template>
   <section id="details" class="w-full">
-    <h1 class="text-2xl font-semibold md:text-3xl">Stefano Monolo</h1>
-    <p class="text-lg font-medium md:text-xl">
+    <h1 class="text-2xl font-semibold text-[#111827] md:text-3xl">
+      Stefano Monolo
+    </h1>
+    <p class="mt-1 text-lg font-medium text-[#4b5563] md:text-xl">
       I am a software engineer passionate about the web and its technologies.
     </p>
     <ul class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2">
@@ -9,7 +11,7 @@
         <a
           :href="link.url"
           :target="link.url.startsWith('https') ? '_blank' : '_self'"
-          class="flex items-center gap-x-2 text-lg font-medium underline-offset-2 hover:underline md:text-xl"
+          class="flex items-center gap-x-2 text-lg font-medium text-[#111827] underline-offset-2 hover:text-[#008cff] hover:underline md:text-xl"
         >
           <i :class="`bi bi-${link.icon}`" />
           <span>{{ link.text }}</span>

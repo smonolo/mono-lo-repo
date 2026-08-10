@@ -28,14 +28,23 @@ const experience: ExperienceCardProps[] = [
     period: 'October 2025 - Present',
     location: 'Via Giuseppe Mazzini, 9, Milan, Italy',
     achievements: [
-      'Building tools that support people facing financial difficulties in paying off debt, and developing systems for disputes, returns, and refunds.',
+      'Building and maintaining core services for financial hardship and credit disputes, such as cases involving deceased customers or bankruptcy',
+      'Developing and supporting systems for standard disputes, returns, and refunds',
     ],
-    skills: ['TypeScript', 'React', 'React Native', 'Node.js', 'AWS', 'Kafka'],
+    skills: [
+      'TypeScript',
+      'React',
+      'React Native',
+      'Node.js',
+      'AWS',
+      'Kafka',
+      'AI Tooling',
+    ],
     url: 'https://www.klarna.com',
   },
   {
     position: 'Software Engineer',
-    company: 'WeRoad S.p.A.',
+    company: 'WeRoad',
     period: 'September 2024 - October 2025',
     location: 'Viale Cassala, 30, Milan, Italy',
     achievements: [
@@ -57,7 +66,7 @@ const experience: ExperienceCardProps[] = [
   },
   {
     position: 'Frontend Engineer',
-    company: 'Kampaay S.r.l.',
+    company: 'Kampaay',
     period: 'August 2023 - September 2024',
     location: 'Viale Cassala, 30, Milan, Italy',
     achievements: [
@@ -87,7 +96,7 @@ const experience: ExperienceCardProps[] = [
   },
   {
     position: 'Web Engineer',
-    company: 'Moonsworth, LLC',
+    company: 'Moonsworth',
     period: 'January 2022 - November 2022',
     location: 'Remote, Europe',
     achievements: [

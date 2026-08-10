@@ -4,3 +4,4 @@ dist
 .next
 .nuxt
 package-lock.json
+.output

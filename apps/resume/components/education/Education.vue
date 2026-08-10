@@ -4,15 +4,6 @@
     <ul class="mt-4 flex flex-col gap-y-3">
       <EducationCard v-for="(edu, key) in education" :key :="edu" />
     </ul>
-    <ul class="mt-3 grid grid-cols-2 gap-x-3">
-      <li
-        v-for="(lang, key) in languages"
-        :key
-        class="w-full rounded-xl bg-[#f7f7f7] px-6 py-2 text-center text-sm md:text-base"
-      >
-        <p class="font-medium">{{ lang }}</p>
-      </li>
-    </ul>
   </section>
 </template>
 
@@ -35,6 +26,4 @@ const education: EducationCardProps[] = [
     url: 'https://www.liceocavalleri.edu.it',
   },
 ]
-
-const languages: string[] = ['Italian', 'English']
 </script>

@@ -4,7 +4,7 @@
       class="flex w-full flex-col items-start justify-between gap-2 lg:flex-row"
     >
       <div class="w-fit">
-        <h3 class="text-lg font-semibold md:text-xl">
+        <h3 class="text-lg font-semibold text-[#111827] md:text-xl">
           {{ position }} at
           <a
             :href="url"
@@ -14,7 +14,7 @@
             {{ company }}
           </a>
         </h3>
-        <p class="text-sm font-medium md:text-base">
+        <p class="mt-0.5 text-sm font-medium text-[#6b7280] md:text-base">
           {{ period }} · {{ location }}
         </p>
       </div>
@@ -22,20 +22,20 @@
         <li
           v-for="(skill, key) in skills"
           :key
-          class="rounded-md bg-[#dddddd] px-2.5 py-0.5 text-xs font-medium md:text-sm"
+          class="rounded-md bg-[#dddddd] px-2.5 py-0.5 text-xs font-medium text-[#111827] md:text-sm"
         >
           {{ skill }}
         </li>
       </ul>
     </div>
-    <ul v-if="!!achievements.length" class="mt-4">
+    <ul v-if="!!achievements.length" class="mt-3 flex flex-col gap-y-0.5">
       <li
         v-for="(achievement, key) in achievements"
         :key="key"
-        class="flex items-center gap-x-2 text-sm md:text-base"
+        class="flex items-start gap-x-2 text-sm text-[#4b5563] md:text-base"
       >
-        <span class="text-[#333333]">•</span>
-        <p class="font-medium">{{ achievement }}</p>
+        <span class="text-[#6b7280]">•</span>
+        <p class="font-medium leading-snug">{{ achievement }}</p>
       </li>
     </ul>
   </div>

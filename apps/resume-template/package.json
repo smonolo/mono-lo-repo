@@ -1,0 +1,11 @@
+{
+  "name": "resume-template",
+  "version": "1.0.0",
+  "author": "Stefano Monolo <stefano@smnl.dev>",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "echo 'Static resume-template ready'",
+    "dev": "echo 'Static resume-template ready'"
+  }
+}

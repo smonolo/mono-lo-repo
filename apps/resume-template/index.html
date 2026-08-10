@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stefano Monolo - Senior Software Engineer Resume</title>
+    <meta
+      name="description"
+      content="Resume of Stefano Monolo, Senior Software Engineer specializing in frontend, backend, infrastructure, and web systems."
+    />
+    <meta name="author" content="Stefano Monolo" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap');
+      @page {
+        size: A4 portrait;
+        margin: 12mm;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          'Geist',
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          Helvetica,
+          Arial,
+          sans-serif;
+        font-size: 11px;
+        line-height: 1.4;
+        color: #1f2937;
+        background: white;
+        width: 100%;
+        max-width: 210mm;
+        margin: 0 auto;
+        padding: 0;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .container {
+        max-width: 100%;
+        padding: 0;
+      }
+
+      /* Header */
+      header.header {
+        text-align: center;
+        margin-bottom: 20px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .name {
+        font-size: 22px;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 8px;
+        letter-spacing: -0.025em;
+      }
+
+      .contact-info {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        font-size: 10px;
+        color: #4b5563;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .contact-item a {
+        color: #4b5563;
+        text-decoration: none;
+      }
+
+      .contact-item a:hover {
+        text-decoration: underline;
+        color: #111827;
+      }
+
+      /* Two Column Layout */
+      main.content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+
+      .left-column,
+      .right-column {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      /* Section Styles */
+      section.section {
+        break-inside: avoid;
+      }
+
+      .section-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: #111827;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border-bottom: 1px solid #e5e7eb;
+        padding-bottom: 4px;
+      }
+
+      /* Experience & Education */
+      .experience-item,
+      .education-item {
+        margin-bottom: 12px;
+        break-inside: avoid;
+      }
+
+      .item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 3px;
+      }
+
+      .position,
+      .degree {
+        font-weight: 600;
+        font-size: 11px;
+        color: #111827;
+        line-height: 1.3;
+      }
+
+      .company,
+      .school {
+        font-weight: 500;
+        font-size: 10px;
+        color: #4b5563;
+      }
+
+      .date {
+        font-size: 10px;
+        color: #6b7280;
+        font-weight: 400;
+        white-space: nowrap;
+      }
+
+      .description {
+        margin-top: 4px;
+        font-size: 10px;
+        line-height: 1.4;
+        color: #374151;
+      }
+
+      .description ul {
+        list-style: none;
+        padding-left: 0;
+      }
+
+      .description li {
+        margin-bottom: 3px;
+        font-size: 10px;
+        line-height: 1.4;
+      }
+
+      /* Skills */
+      .skills-list {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        font-size: 10px;
+        line-height: 1.4;
+        color: #374151;
+      }
+
+      .skill-category strong {
+        color: #111827;
+        font-weight: 600;
+      }
+
+      /* Projects */
+      .project-item {
+        margin-bottom: 10px;
+        break-inside: avoid;
+      }
+
+      .project-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 2px;
+      }
+
+      .project-title {
+        font-weight: 600;
+        font-size: 11px;
+        color: #111827;
+      }
+
+      .project-tech {
+        font-size: 9px;
+        color: #6b7280;
+      }
+
+      .project-description {
+        font-size: 10px;
+        line-height: 1.4;
+        color: #374151;
+      }
+
+      /* Languages */
+      .languages-line {
+        display: flex;
+        gap: 16px;
+        font-size: 10px;
+        color: #374151;
+      }
+
+      /* Print & PDF Export Optimizations */
+      @media print {
+        @page {
+          size: A4 portrait;
+          margin: 12mm;
+        }
+
+        html,
+        body {
+          width: 100%;
+          max-width: 100%;
+          margin: 0;
+          padding: 0;
+          background: white !important;
+          color: #1f2937 !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+
+        .container {
+          width: 100%;
+          max-width: 100%;
+        }
+
+        section.section {
+          page-break-inside: avoid !important;
+          break-inside: avoid !important;
+        }
+
+        .section-title {
+          page-break-after: avoid !important;
+          break-after: avoid !important;
+        }
+
+        .experience-item,
+        .education-item,
+        .project-item {
+          page-break-inside: avoid !important;
+          break-inside: avoid !important;
+        }
+
+        a {
+          color: inherit !important;
+          text-decoration: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header class="header" role="banner">
+        <h1 class="name">Stefano Monolo</h1>
+        <div class="contact-info">
+          <div class="contact-item">stmonolo@gmail.com</div>
+          <div class="contact-item">+39 391 742 2284</div>
+          <div class="contact-item">Milan, Italy</div>
+          <div class="contact-item">
+            <a href="https://smnl.dev" target="_blank" rel="noopener noreferrer"
+              >smnl.dev</a
+            >
+          </div>
+          <div class="contact-item">
+            <a
+              href="https://linkedin.com/in/stemon"
+              target="_blank"
+              rel="noopener noreferrer"
+              >linkedin.com/in/stemon</a
+            >
+          </div>
+          <div class="contact-item">
+            <a
+              href="https://github.com/smonolo"
+              target="_blank"
+              rel="noopener noreferrer"
+              >github.com/smonolo</a
+            >
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="content" role="main">
+        <!-- Left Column -->
+        <div class="left-column">
+          <!-- Experience -->
+          <section class="section" aria-label="Experience">
+            <h2 class="section-title">Experience</h2>
+
+            <div class="experience-item">
+              <div class="item-header">
+                <div class="position">Senior Software Engineer at Klarna</div>
+                <div class="date">Oct 2025 - Present</div>
+              </div>
+              <div class="description">
+                <ul>
+                  <li>
+                    Building and maintaining core services for financial
+                    hardship and credit disputes, such as cases involving
+                    deceased customers or bankruptcy, alongside systems for
+                    standard disputes, returns, and refunds, leveraging AI
+                    tooling and automated workflows to accelerate development
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="experience-item">
+              <div class="item-header">
+                <div class="position">Software Engineer at WeRoad</div>
+                <div class="date">Sep 2024 - Oct 2025</div>
+              </div>
+              <div class="description">
+                <ul>
+                  <li>
+                    Developed and maintained internal platforms used by 4000+
+                    travel coordinators and partners worldwide to manage tours
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="experience-item">
+              <div class="item-header">
+                <div class="position">Frontend Engineer at Kampaay</div>
+                <div class="date">Aug 2023 - Sep 2024</div>
+              </div>
+              <div class="description">
+                <ul>
+                  <li>
+                    Developed a modern platform serving 150+ businesses and an
+                    internal back office system used daily by 50+ employees
+                    across Italy and Sweden, while leading R&D initiatives for
+                    AI integration, performance optimization, and gRPC research
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="experience-item">
+              <div class="item-header">
+                <div class="position">Web Engineer at Moonrock</div>
+                <div class="date">Nov 2022 - Mar 2024</div>
+              </div>
+              <div class="description">
+                <ul>
+                  <li>
+                    Developed multiple gaming websites including a Twitch Rivals
+                    tournament platform and real-time viewer engagement sites
+                    reaching 5000+ concurrent users, while integrating
+                    third-party services and optimizing for SEO
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="experience-item">
+              <div class="item-header">
+                <div class="position">Web Engineer at Moonsworth</div>
+                <div class="date">Jan 2022 - Nov 2022</div>
+              </div>
+              <div class="description">
+                <ul>
+                  <li>
+                    Developed a new major version of a Minecraft launcher used
+                    by 100k+ daily users, while building UI component libraries
+                    and migrating marketing sites from Jekyll to Next.js,
+                    improving SEO and performance by 50%
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="experience-item">
+              <div class="item-header">
+                <div class="position">Product Engineer at Top.gg</div>
+                <div class="date">Nov 2020 - Jun 2021</div>
+              </div>
+              <div class="description">
+                <ul>
+                  <li>
+                    Migrated a Discord bots listing website (25k+ daily users)
+                    from Express to Next.js while collaborating with designers
+                    on a complete redesign. Maintained an invite-only auction
+                    platform and improved moderation tools handling 100+ daily
+                    bot submissions
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="experience-item">
+              <div class="item-header">
+                <div class="position">Web Engineer at ESL FACEIT Group</div>
+                <div class="date">Mar 2020 - Dec 2021</div>
+              </div>
+              <div class="description">
+                <ul>
+                  <li>
+                    Developed Badlion Client 3.0, a popular Minecraft launcher
+                    used by 50k+ daily users, while building internal tools and
+                    improving gRPC infrastructure across 4 different product
+                    codebases to enhance content creator engagement and automate
+                    daily tasks
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Right Column -->
+        <div class="right-column">
+          <!-- Skills -->
+          <section class="section" aria-label="Skills">
+            <h2 class="section-title">Skills</h2>
+            <div class="skills-list">
+              <div class="skill-category">
+                <strong>Backend:</strong> Node.js, Go, Python, Java, Kafka
+              </div>
+              <div class="skill-category">
+                <strong>AI & LLMs:</strong> LLMs, AI Agents, Prompt Engineering,
+                Agentic Workflows, OpenAI API
+              </div>
+              <div class="skill-category">
+                <strong>Frontend:</strong> TypeScript, Vue, Nuxt, React, React
+                Native, Next.js, Vitest, Playwright, HTML, CSS
+              </div>
+              <div class="skill-category">
+                <strong>Database:</strong> PostgreSQL, MySQL, MongoDB, Redis
+              </div>
+              <div class="skill-category">
+                <strong>DevOps:</strong> Docker, AWS, Google Cloud, CI/CD, Git,
+                Linux
+              </div>
+            </div>
+          </section>
+
+          <!-- Projects -->
+          <section class="section" aria-label="Projects">
+            <h2 class="section-title">Projects</h2>
+
+            <div class="project-item">
+              <div class="project-title">Open Source</div>
+              <div class="project-description">
+                Contributed to several open source projects, including Italian
+                government institutional websites.
+              </div>
+            </div>
+
+            <div class="project-item">
+              <div class="project-title">MXC</div>
+              <div class="project-description">
+                Built e-commerce and feedback sites for a popular FiveM
+                resources creator.
+              </div>
+            </div>
+
+            <div class="project-item">
+              <div class="project-title">Settings Hunt</div>
+              <div class="project-description">
+                Built a game settings sharing platform for uploading and sharing
+                config files and gaming guides.
+              </div>
+            </div>
+
+            <div class="project-item">
+              <div class="project-title">Breeng</div>
+              <div class="project-description">
+                Led a cross-functional team of 10 creating a multi-platform job
+                seeking application, managing engineering strategy and weekly
+                releases.
+              </div>
+            </div>
+          </section>
+
+          <!-- Education -->
+          <section class="section" aria-label="Education">
+            <h2 class="section-title">Education</h2>
+
+            <div class="education-item">
+              <div class="item-header">
+                <div class="degree">Bachelor of Technology</div>
+                <div class="school">Università del Piemonte Orientale</div>
+              </div>
+            </div>
+
+            <div class="education-item">
+              <div class="item-header">
+                <div class="degree">High School Diploma</div>
+                <div class="school">Liceo Scientifico Claudio Cavalleri</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Volunteering -->
+          <section class="section" aria-label="Volunteering">
+            <h2 class="section-title">Volunteering</h2>
+
+            <div class="experience-item">
+              <div class="item-header">
+                <div class="position">
+                  Volunteer at Protezione Civile Regione Lombardia
+                </div>
+              </div>
+              <div class="description">
+                Trained in emergency response, including wildfire fighting,
+                flood operations, high-risk scenarios, and rescue diving.
+              </div>
+            </div>
+          </section>
+
+          <!-- Languages -->
+          <section class="section" aria-label="Languages">
+            <h2 class="section-title">Languages</h2>
+            <div class="languages-line">
+              <span><strong>Italian:</strong> Native</span>
+              <span><strong>English:</strong> Fluent</span>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

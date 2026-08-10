@@ -1,17 +1,26 @@
 {
   "experiences": [
     {
-      "brand": "WeRoad",
-      "company": "WeRoad S.r.l.",
-      "website": "https://www.weroad.com",
-      "position": "Frontend Engineer",
-      "startYear": 2024,
+      "brand": "Klarna",
+      "company": "Klarna",
+      "website": "https://www.klarna.com",
+      "position": "Senior Software Engineer",
+      "startYear": 2025,
       "endYear": "Present",
+      "description": "Building and maintaining core services for financial hardship and credit disputes, such as cases involving deceased customers or bankruptcy. Supporting systems for standard disputes, returns, and refunds."
+    },
+    {
+      "brand": "WeRoad",
+      "company": "WeRoad",
+      "website": "https://www.weroad.com",
+      "position": "Software Engineer",
+      "startYear": 2024,
+      "endYear": 2025,
       "description": "Contributed to the development of internal platforms used by travel coordinators and partners. Worked on migrating platforms to new technologies while keeping the same user experience and functionalities."
     },
     {
       "brand": "Kampaay",
-      "company": "Kampaay S.r.l.",
+      "company": "Kampaay",
       "website": "https://www.kampaay.com",
       "position": "Frontend Engineer",
       "startYear": 2023,
@@ -30,7 +39,7 @@
     },
     {
       "brand": "Moonsworth",
-      "company": "Moonsworth, LLC",
+      "company": "Moonsworth",
       "website": "https://www.moonsworth.com",
       "position": "Web Engineer",
       "startYear": 2021,
@@ -40,7 +49,7 @@
     },
     {
       "brand": "Top.gg",
-      "company": "Dbots BV",
+      "company": "Top.gg",
       "website": "https://top.gg",
       "position": "Product Engineer",
       "startYear": 2020,
@@ -54,7 +63,7 @@
       "position": "Web Engineer",
       "startYear": 2020,
       "endYear": 2021,
-      "description": "Redesigned a game launcher that's used by 50k+ users on a daily basis. Migrated the user interface to a completely new design system and integrated new features such as a client-side cheat detection software developed by ESEA. Also migrated various websites to Next and reorganized a monorepo containing a few projects."
+      "description": "Redesigned a game launcher that's used by 50k+ users on a daily basis. Migrated the user interface to a completely new design system and integrated new features such as a client-side cheat detection software developed by ESEA. Migrated various websites to Next and reorganized a monorepo containing a few projects."
     }
   ]
 }

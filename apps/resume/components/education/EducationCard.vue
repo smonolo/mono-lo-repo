@@ -3,11 +3,13 @@
     <a
       :href="url"
       target="_blank"
-      class="text-lg font-semibold underline-offset-2 hover:underline md:text-xl"
+      class="text-lg font-semibold text-[#111827] underline-offset-2 hover:underline md:text-xl"
     >
       {{ school }}
     </a>
-    <p class="text-sm font-medium md:text-base">{{ degree }}</p>
+    <p class="mt-1 text-sm font-medium text-[#4b5563] md:text-base">
+      {{ degree }}
+    </p>
   </li>
 </template>
 

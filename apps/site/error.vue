@@ -10,6 +10,10 @@ const props = defineProps<Props>()
 useHead({ title: `${props.error.statusCode} | Stefano Monolo` })
 
 const showErrorDetails = ref(false)
+
+const handleClearError = () => {
+  clearError({ redirect: '/' })
+}
 </script>
 
 <template>
@@ -20,6 +24,7 @@ const showErrorDetails = ref(false)
           <a
             :href="`https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/${error.statusCode}`"
             target="_blank"
+            rel="noopener noreferrer"
             class="font-heading block w-fit text-6xl font-semibold hover:underline"
           >
             {{ error.statusCode }}
@@ -42,13 +47,12 @@ const showErrorDetails = ref(false)
             {{ error.message }}
           </p>
         </div>
-        <NuxtLink to="/">
-          <button
-            class="bg-sm-blue text-sm-black hover:bg-sm-blue/90 w-full cursor-pointer rounded-lg px-3 py-2 font-medium transition-colors"
-          >
-            Got it, take me back home
-          </button>
-        </NuxtLink>
+        <button
+          class="bg-sm-blue text-sm-black hover:bg-sm-blue/90 w-full cursor-pointer rounded-lg px-3 py-2 font-medium transition-colors"
+          @click="handleClearError"
+        >
+          Got it, take me back home
+        </button>
       </div>
     </NuxtLayout>
   </div>
