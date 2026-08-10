@@ -1,4 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "ignoreCommand": "if [ \"$VERCEL_ENV\" != \"production\" ]; then exit 0; fi; npx turbo-ignore"
+  "outputDirectory": ".",
+  "buildCommand": "",
+  "ignoreCommand": "if [ \"$VERCEL_ENV\" != \"production\" ]; then exit 0; fi; git diff --quiet HEAD^ HEAD ."
 }

@@ -1,5 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "nodeVersion": "24.x",
-  "ignoreCommand": "if [ \"$VERCEL_ENV\" != \"production\" ]; then exit 0; fi; npx turbo-ignore"
+  "ignoreCommand": "if [ \"$VERCEL_ENV\" != \"production\" ]; then exit 0; fi; git diff --quiet HEAD^ HEAD ."
 }
