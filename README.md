@@ -16,14 +16,15 @@ A high-performance TypeScript monorepo orchestrated with **Turborepo** and **npm
 
 The repository contains the following workspace projects in the [`apps/`](./apps) directory:
 
-| Application   | Path                             | Framework / Tech Stack                             | Description                                          |
-| :------------ | :------------------------------- | :------------------------------------------------- | :--------------------------------------------------- |
-| **`cdn`**     | [`apps/cdn`](./apps/cdn)         | NestJS 10, RxJS, Express                           | Backend REST API & media asset CDN microservice      |
-| **`cdn-ui`**  | [`apps/cdn-ui`](./apps/cdn-ui)   | Nuxt 3, Vue 3, Tailwind CSS v4, Vue Query          | Admin dashboard UI for managing CDN files and assets |
-| **`site`**    | [`apps/site`](./apps/site)       | Nuxt 3, Vue 3, Tailwind CSS v4, Nuxt Icons & Fonts | Personal website & digital portfolio                 |
-| **`website`** | [`apps/website`](./apps/website) | Next.js 14, React 18, TypeScript, Tailwind CSS v3  | Web application built with Next.js                   |
-| **`resume`**  | [`apps/resume`](./apps/resume)   | Nuxt 3, Vue 3, Tailwind CSS v3                     | Interactive CV / Online Resume                       |
-| **`mfd`**     | [`apps/mfd`](./apps/mfd)         | Nuxt 3, Vue 3, Pinia, Vue Query, Tailwind CSS v3   | Multi-Function Dashboard application                 |
+| Application           | Path                                             | Framework / Tech Stack                             | Description                                           |
+| :-------------------- | :----------------------------------------------- | :------------------------------------------------- | :---------------------------------------------------- |
+| **`cdn`**             | [`apps/cdn`](./apps/cdn)                         | NestJS 10, RxJS, Express                           | Backend REST API & media asset CDN microservice       |
+| **`cdn-ui`**          | [`apps/cdn-ui`](./apps/cdn-ui)                   | Nuxt 3, Vue 3, Tailwind CSS v4, Vue Query          | Admin dashboard UI for managing CDN files and assets  |
+| **`site`**            | [`apps/site`](./apps/site)                       | Nuxt 3, Vue 3, Tailwind CSS v4, Nuxt Icons & Fonts | Personal website & digital portfolio                  |
+| **`website`**         | [`apps/website`](./apps/website)                 | Next.js 14, React 18, TypeScript, Tailwind CSS v3  | Web application built with Next.js                    |
+| **`resume`**          | [`apps/resume`](./apps/resume)                   | Nuxt 3, Vue 3, Tailwind CSS v3                     | Interactive CV / Online Resume                        |
+| **`resume-template`** | [`apps/resume-template`](./apps/resume-template) | HTML5, CSS3                                        | ATS-optimized static single-page HTML resume template |
+| **`mfd`**             | [`apps/mfd`](./apps/mfd)                         | Nuxt 3, Vue 3, Pinia, Vue Query, Tailwind CSS v3   | Multi-Function Dashboard application                  |
 
 ---
 
@@ -37,6 +38,7 @@ graph TD
         SITE["site (Nuxt 3 + Tailwind v4)"]
         WEBSITE["website (Next.js 14 + React)"]
         RESUME["resume (Nuxt 3)"]
+        RESUME_TEMP["resume-template (Static HTML/CSS)"]
         MFD["mfd (Nuxt 3 + Pinia)"]
         CDN_UI["cdn-ui (Nuxt 3 + Tailwind v4)"]
     end
@@ -85,14 +87,15 @@ npm run dev
 
 Or run a specific application:
 
-| Application | Command               |
-| :---------- | :-------------------- |
-| **CDN API** | `npm run dev:cdn`     |
-| **CDN UI**  | `npm run dev:cdn-ui`  |
-| **Site**    | `npm run dev:site`    |
-| **Website** | `npm run dev:website` |
-| **Resume**  | `npm run dev:resume`  |
-| **MFD**     | `npm run dev:mfd`     |
+| Application         | Command                       |
+| :------------------ | :---------------------------- |
+| **CDN API**         | `npm run dev:cdn`             |
+| **CDN UI**          | `npm run dev:cdn-ui`          |
+| **Site**            | `npm run dev:site`            |
+| **Website**         | `npm run dev:website`         |
+| **Resume**          | `npm run dev:resume`          |
+| **Resume Template** | `npm run dev:resume-template` |
+| **MFD**             | `npm run dev:mfd`             |
 
 ### Building for Production
 
@@ -105,12 +108,13 @@ npm run build
 Or build a specific application:
 
 ```bash
-npm run build:cdn-ui  # Build CDN UI
-npm run build:site    # Build Site
-npm run build:website # Build Website
-npm run build:resume  # Build Resume
-npm run build:mfd     # Build MFD
-npm run build:dev     # Build CDN API
+npm run build:cdn-ui          # Build CDN UI
+npm run build:site            # Build Site
+npm run build:website         # Build Website
+npm run build:resume          # Build Resume
+npm run build:resume-template # Build Resume Template
+npm run build:mfd             # Build MFD
+npm run build:dev             # Build CDN API
 ```
 
 ### Code Formatting
@@ -143,6 +147,7 @@ mono-lo-repo/
 │   ├── cdn-ui/                  # Nuxt 3 admin interface for CDN
 │   ├── mfd/                     # Nuxt 3 multi-function dashboard
 │   ├── resume/                  # Nuxt 3 online CV / resume
+│   ├── resume-template/         # ATS-optimized static HTML resume template
 │   ├── site/                    # Nuxt 3 personal website & portfolio
 │   └── website/                 # Next.js 14 web app
 ├── package.json                 # Root dependencies & Turborepo scripts
