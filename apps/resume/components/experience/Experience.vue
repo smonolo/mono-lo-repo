@@ -81,7 +81,7 @@ const experience: ExperienceCardProps[] = [
   },
   {
     position: 'Web Engineer',
-    company: 'Moonrock',
+    company: 'EVNT Games',
     period: 'November 2022 - March 2024',
     location: 'Remote, Europe',
     achievements: [
@@ -92,7 +92,7 @@ const experience: ExperienceCardProps[] = [
       'Collaborated with external developers to integrate third-party services on gaming related products, such as Overwolf and Tebex',
     ],
     skills: ['TypeScript', 'React', 'Next.js'],
-    url: 'https://www.moonrock.biz',
+    url: 'https://evnt.games',
   },
   {
     position: 'Web Engineer',
