@@ -9,6 +9,7 @@
     <ul class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2">
       <li v-for="(link, key) in links" :key>
         <a
+          v-if="link.url"
           :href="link.url"
           :target="link.url.startsWith('https') ? '_blank' : '_self'"
           class="flex items-center gap-x-2 text-lg font-medium text-[#111827] underline-offset-2 hover:text-[#008cff] hover:underline md:text-xl"
@@ -16,6 +17,13 @@
           <i :class="`bi bi-${link.icon}`" />
           <span>{{ link.text }}</span>
         </a>
+        <div
+          v-else
+          class="flex items-center gap-x-2 text-lg font-medium text-[#111827] md:text-xl"
+        >
+          <i :class="`bi bi-${link.icon}`" />
+          <span>{{ link.text }}</span>
+        </div>
       </li>
     </ul>
   </section>
@@ -24,7 +32,7 @@
 <script setup lang="ts">
 type Link = {
   icon: string
-  url: string
+  url?: string
   text: string
 }
 
@@ -52,13 +60,7 @@ const links: Link[] = [
     text: 'smnl.dev',
   },
   {
-    icon: 'telephone',
-    url: 'tel:+393917422284',
-    text: '+39 391 742 2284',
-  },
-  {
     icon: 'pin-map',
-    url: 'https://maps.app.goo.gl/ocGf5twwchq9JD2f8',
     text: 'Milan, Italy',
   },
 ]

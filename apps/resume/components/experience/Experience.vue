@@ -65,7 +65,7 @@ const experience: ExperienceCardProps[] = [
     url: 'https://www.weroad.com',
   },
   {
-    position: 'Frontend Engineer',
+    position: 'Software Engineer',
     company: 'Kampaay',
     period: 'August 2023 - September 2024',
     location: 'Viale Cassala, 30, Milan, Italy',
