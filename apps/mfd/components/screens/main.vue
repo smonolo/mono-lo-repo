@@ -10,6 +10,14 @@ defineExpose<ScreenConfig>({
       label: 'Ver',
       action: () => setActiveScreen('version'),
     },
+    lower1: {
+      label: 'Ath',
+      action: () => setActiveScreen('auth'),
+    },
+    lower2: {
+      label: 'Mc',
+      action: () => setActiveScreen('mc'),
+    },
     lower5: {
       label: 'Set',
       action: () => setActiveScreen('settings'),
