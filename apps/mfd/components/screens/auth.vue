@@ -21,7 +21,7 @@ onMounted(() => {
 })
 
 const lowerActions = reactive({
-  lower8: {
+  lower0: {
     label: 'In',
     action: () => {
       if (authStore.isAuthenticated) {
@@ -35,7 +35,7 @@ const lowerActions = reactive({
 })
 
 watchEffect(() => {
-  lowerActions.lower8.label = authStore.isAuthenticated ? 'Out' : 'In'
+  lowerActions.lower0.label = authStore.isAuthenticated ? 'Out' : 'In'
 })
 
 defineExpose<ScreenConfig>({
