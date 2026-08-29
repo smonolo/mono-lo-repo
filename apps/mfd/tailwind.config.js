@@ -8,7 +8,12 @@ export default {
     './error.vue',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        mono: ['"Geist Mono"', 'monospace'],
+        sans: ['"Geist Mono"', 'monospace'],
+      },
+    },
   },
   plugins: [],
   darkMode: ['selector'],
