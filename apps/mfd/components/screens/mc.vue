@@ -5,6 +5,7 @@ import { useOptionsStore } from '~/stores/options'
 import { useMainButtonConfig } from '~/composables/buttons/configs/useMainButtonConfig'
 import OptionsCard from '~/components/common/options-card.vue'
 import type { ScreenConfig } from '~/types/screen'
+import type { Option } from '~/types/options'
 
 type PlayerData = {
   uuid: string
@@ -21,10 +22,27 @@ type PlayerData = {
   world: string
 }
 
-type MinecraftApiResponse = {
+type MinecraftPlayersResponse = {
   online: boolean
   players: PlayerData[]
   count: number
+  error?: string
+}
+
+type MinecraftStatusResponse = {
+  online: boolean
+  onlinePlayers: number
+  maxPlayers: number
+  version: string
+  minecraftVersion: string
+  tps: number
+  mspt: number
+  memory?: {
+    usedMb: number
+    allocatedMb: number
+    maxMb: number
+  }
+  uptimeSeconds: number
   error?: string
 }
 
@@ -33,22 +51,47 @@ const screenStore = useScreenStore()
 const optionsStore = useOptionsStore()
 
 const loading = ref<boolean>(false)
-const serverData = ref<MinecraftApiResponse | null>(null)
-const selectedPlayer = ref<PlayerData | null>(null)
+const playersData = ref<MinecraftPlayersResponse | null>(null)
+const statusData = ref<MinecraftStatusResponse | null>(null)
+const errorMessage = ref<string | null>(null)
 
-const fetchPlayers = async () => {
+const fetchServerData = async () => {
   if (!authStore.isAdmin) return
   loading.value = true
+  errorMessage.value = null
   try {
-    const data = await $fetch<MinecraftApiResponse>('/api/minecraft/players')
-    serverData.value = data
-  } catch (err: any) {
-    serverData.value = {
-      online: false,
-      players: [],
-      count: 0,
-      error: err.data?.statusMessage || 'Failed to connect to Minecraft API',
+    const [players, status] = await Promise.all([
+      $fetch<MinecraftPlayersResponse>('/api/minecraft/players').catch(
+        err => ({
+          online: false,
+          players: [],
+          count: 0,
+          error: err.data?.error || err.message,
+        })
+      ),
+      $fetch<MinecraftStatusResponse>('/api/minecraft/status').catch(err => ({
+        online: false,
+        onlinePlayers: 0,
+        maxPlayers: 0,
+        version: '',
+        minecraftVersion: '',
+        tps: 0,
+        mspt: 0,
+        uptimeSeconds: 0,
+        error: err.data?.error || err.message,
+      })),
+    ])
+
+    playersData.value = players
+    statusData.value = status
+
+    if (!players.online && players.error) {
+      errorMessage.value = players.error
+    } else if (!status.online && status.error) {
+      errorMessage.value = status.error
     }
+  } catch (err: any) {
+    errorMessage.value = err.data?.error || err.message || 'Failed to connect to Minecraft API'
   } finally {
     loading.value = false
   }
@@ -57,7 +100,7 @@ const fetchPlayers = async () => {
 onMounted(async () => {
   await authStore.fetchSession()
   if (authStore.isAdmin) {
-    await fetchPlayers()
+    await fetchServerData()
   }
 })
 
@@ -65,7 +108,7 @@ defineExpose<ScreenConfig>({
   lowerButtonActions: {
     lower0: {
       label: 'Ref',
-      action: fetchPlayers,
+      action: fetchServerData,
     },
     lower8: {
       label: 'Ath',
@@ -75,28 +118,70 @@ defineExpose<ScreenConfig>({
   },
 })
 
-const options = computed(() => {
-  if (!serverData.value || !serverData.value.players.length) {
+const formatUptime = (seconds: number): string => {
+  const h = Math.floor(seconds / 3600)
+  const m = Math.floor((seconds % 3600) / 60)
+  return `${h}h ${m}m`
+}
+
+const statusOptions = computed<Option[]>(() => {
+  if (!statusData.value || !statusData.value.online) return []
+  const s = statusData.value
+  const opts: Option[] = [
+    {
+      name: 'tps',
+      label: 'TPS',
+      value: `${s.tps.toFixed(2)} (${s.mspt}ms)`,
+    },
+    {
+      name: 'players_count',
+      label: 'Players',
+      value: `${s.onlinePlayers} / ${s.maxPlayers}`,
+    },
+  ]
+
+  if (s.memory) {
+    opts.push({
+      name: 'memory',
+      label: 'Memory',
+      value: `${s.memory.usedMb}MB / ${s.memory.maxMb}MB`,
+    })
+  }
+
+  if (s.uptimeSeconds) {
+    opts.push({
+      name: 'uptime',
+      label: 'Uptime',
+      value: formatUptime(s.uptimeSeconds),
+    })
+  }
+
+  return opts
+})
+
+const playerOptions = computed<Option[]>(() => {
+  if (!playersData.value || !playersData.value.players.length) {
     return []
   }
 
-  return serverData.value.players.map(p => {
+  return playersData.value.players.map(p => {
     const rankPrefix = p.rank.prefix ? `${p.rank.prefix} ` : ''
     const afkTag = p.afk ? ' [AFK]' : ''
     return {
       name: p.uuid,
       label: `${rankPrefix}${p.username}${afkTag}`,
       value: `${p.ping}ms (${p.world})`,
-      action: () => {
-        selectedPlayer.value = p
-      },
     }
   })
 })
 
+const allOptions = computed<Option[]>(() => {
+  return [...statusOptions.value, ...playerOptions.value]
+})
+
 watchEffect(() => {
-  if (options.value.length) {
-    optionsStore.setOptions(options.value)
+  if (allOptions.value.length) {
+    optionsStore.setOptions(allOptions.value)
   }
 })
 </script>
@@ -126,23 +211,25 @@ watchEffect(() => {
     <div v-else class="p-10 space-y-4">
       <!-- Server offline warning -->
       <div
-        v-if="serverData && !serverData.online"
+        v-if="errorMessage || (statusData && !statusData.online)"
         class="border border-red-500 p-4 text-red-500 dark:border-red-400 dark:text-red-400 space-y-1"
       >
         <p class="font-bold tracking-wide">Server Unreachable</p>
-        <p>{{ serverData.error || 'The Paper server is currently offline or unreachable.' }}</p>
+        <p>{{ errorMessage || 'The Paper server is currently offline or unreachable.' }}</p>
       </div>
 
-      <!-- Online players list -->
-      <div v-else-if="serverData && serverData.online">
+      <!-- Online Status Cards -->
+      <div v-else-if="statusData && statusData.online" class="space-y-4">
+        <OptionsCard header="Server Status" :options="statusOptions" />
+
+        <div v-if="playerOptions.length">
+          <OptionsCard header="Online Players" :options="playerOptions" />
+        </div>
         <div
-          v-if="serverData.players.length === 0"
-          class="border border-slate-950 p-4 dark:border-slate-100"
+          v-else
+          class="border border-slate-950 p-4 dark:border-slate-100 text-sm"
         >
           <span>No players currently online</span>
-        </div>
-        <div v-else>
-          <OptionsCard header="Online Players" :options="options" />
         </div>
       </div>
 
