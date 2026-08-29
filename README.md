@@ -4,27 +4,35 @@
 [![Package Manager](https://img.shields.io/badge/npm-v11.2.0-cb3837?style=flat-square&logo=npm)](https://www.npmjs.com/)
 [![Nuxt 3](https://img.shields.io/badge/Nuxt-3.x-00DC82?style=flat-square&logo=nuxt.js)](https://nuxt.com/)
 [![Next.js 14](https://img.shields.io/badge/Next.js-14.x-000000?style=flat-square&logo=next.js)](https://nextjs.org/)
-[![NestJS](https://img.shields.io/badge/NestJS-10.x-E0234E?style=flat-square&logo=nestjs)](https://nestjs.com/)
+[![Java 21](https://img.shields.io/badge/Java-21-ED8B00?style=flat-square&logo=openjdk)](https://openjdk.org/)
+[![PaperMC](https://img.shields.io/badge/PaperMC-1.21-1f2937?style=flat-square)](https://papermc.io/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v3_|_v4-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 
-A high-performance TypeScript monorepo orchestrated with **Turborepo** and **npm workspaces**, housing personal web applications, interactive dashboards, portfolios, and backend microservices maintained by **Stefano Monolo**.
+A high-performance polyglot monorepo orchestrated with **Turborepo** and **npm workspaces**, housing personal web applications, interactive dashboards, portfolios, Minecraft server plugins, and backend microservices maintained by **Stefano Monolo**.
 
 ---
 
-## 🚀 Applications & Microservices
+## 🚀 Workspaces & Projects
 
-The repository contains the following workspace projects in the [`apps/`](./apps) directory:
+### Applications (`apps/`)
 
-| Application           | Path                                             | Framework / Tech Stack                             | Description                                           |
-| :-------------------- | :----------------------------------------------- | :------------------------------------------------- | :---------------------------------------------------- |
-| **`cdn`**             | [`apps/cdn`](./apps/cdn)                         | NestJS 10, RxJS, Express                           | Backend REST API & media asset CDN microservice       |
-| **`cdn-ui`**          | [`apps/cdn-ui`](./apps/cdn-ui)                   | Nuxt 3, Vue 3, Tailwind CSS v4, Vue Query          | Admin dashboard UI for managing CDN files and assets  |
-| **`site`**            | [`apps/site`](./apps/site)                       | Nuxt 3, Vue 3, Tailwind CSS v4, Nuxt Icons & Fonts | Personal website & digital portfolio                  |
-| **`website`**         | [`apps/website`](./apps/website)                 | Next.js 14, React 18, TypeScript, Tailwind CSS v3  | Web application built with Next.js                    |
-| **`resume`**          | [`apps/resume`](./apps/resume)                   | Nuxt 3, Vue 3, Tailwind CSS v3                     | Interactive CV / Online Resume                        |
-| **`resume-template`** | [`apps/resume-template`](./apps/resume-template) | HTML5, CSS3                                        | ATS-optimized static single-page HTML resume template |
-| **`mfd`**             | [`apps/mfd`](./apps/mfd)                         | Nuxt 3, Vue 3, Pinia, Vue Query, Tailwind CSS v3   | Multi-Function Dashboard application                  |
+| Application           | Path                                             | Framework / Tech Stack                             | Description                                            |
+| :-------------------- | :----------------------------------------------- | :------------------------------------------------- | :----------------------------------------------------- |
+| **`minecraft`**       | [`apps/minecraft`](./apps/minecraft)             | Next.js 14, React 18, Tailwind CSS v3, TypeScript  | Minecraft player profiles, stats & server leaderboards |
+| **`cdn`**             | [`apps/cdn`](./apps/cdn)                         | NestJS 10, RxJS, Express                           | Backend REST API & media asset CDN microservice        |
+| **`cdn-ui`**          | [`apps/cdn-ui`](./apps/cdn-ui)                   | Nuxt 3, Vue 3, Tailwind CSS v4, Vue Query          | Admin dashboard UI for managing CDN files and assets   |
+| **`site`**            | [`apps/site`](./apps/site)                       | Nuxt 3, Vue 3, Tailwind CSS v4, Nuxt Icons & Fonts | Personal website & digital portfolio                   |
+| **`website`**         | [`apps/website`](./apps/website)                 | Next.js 14, React 18, TypeScript, Tailwind CSS v3  | Web application built with Next.js                     |
+| **`resume`**          | [`apps/resume`](./apps/resume)                   | Nuxt 3, Vue 3, Tailwind CSS v3                     | Interactive CV / Online Resume                         |
+| **`resume-template`** | [`apps/resume-template`](./apps/resume-template) | HTML5, CSS3                                        | ATS-optimized static single-page HTML resume template  |
+| **`mfd`**             | [`apps/mfd`](./apps/mfd)                         | Nuxt 3, Vue 3, Pinia, Vue Query, Tailwind CSS v3   | Multi-Function Dashboard application                   |
+
+### Plugins (`plugins/`)
+
+| Plugin            | Path                                           | Language / Platform                      | Description                                                                     |
+| :---------------- | :--------------------------------------------- | :--------------------------------------- | :------------------------------------------------------------------------------ |
+| **`smessential`** | [`plugins/smessential`](./plugins/smessential) | Java 21, PaperMC 1.21, Gradle, ShadowJar | Minecraft essentials plugin with REST API, stats tracking, ranks & map displays |
 
 ---
 
@@ -35,6 +43,7 @@ graph TD
     Root["mono-lo-repo (Turborepo + npm)"]
 
     subgraph Frontends["Frontend Applications"]
+        MINECRAFT["minecraft (Next.js 14)"]
         SITE["site (Nuxt 3 + Tailwind v4)"]
         WEBSITE["website (Next.js 14 + React)"]
         RESUME["resume (Nuxt 3)"]
@@ -43,12 +52,15 @@ graph TD
         CDN_UI["cdn-ui (Nuxt 3 + Tailwind v4)"]
     end
 
-    subgraph Backends["Backend Microservices"]
+    subgraph Backends["Backends & Plugins"]
         CDN["cdn (NestJS API)"]
+        SMESSENTIAL["smessential (PaperMC / Java)"]
     end
 
     Root --> Frontends
     Root --> Backends
+    MINECRAFT -. Stats API .-> SMESSENTIAL
+    MFD -. Admin API .-> SMESSENTIAL
     CDN_UI -. Management API .-> CDN
 ```
 
@@ -60,6 +72,7 @@ graph TD
 
 - **Node.js**: `^20.0.0` or later
 - **Package Manager**: `npm@11.2.0` (enforced via `packageManager` field)
+- **Java Development Kit**: `JDK 21+` & `Gradle` (for Minecraft plugin builds)
 
 ### Installation
 
@@ -89,6 +102,7 @@ Or run a specific application:
 
 | Application         | Command                       |
 | :------------------ | :---------------------------- |
+| **Minecraft**       | `npm run dev:minecraft`       |
 | **CDN API**         | `npm run dev:cdn`             |
 | **CDN UI**          | `npm run dev:cdn-ui`          |
 | **Site**            | `npm run dev:site`            |
@@ -105,9 +119,11 @@ Build all workspace apps:
 npm run build
 ```
 
-Or build a specific application:
+Or build a specific workspace:
 
 ```bash
+npm run build:minecraft       # Build Minecraft web app
+npm run build:smessential     # Build SMEssential Paper plugin JAR
 npm run build:cdn-ui          # Build CDN UI
 npm run build:site            # Build Site
 npm run build:website         # Build Website
@@ -146,10 +162,13 @@ mono-lo-repo/
 │   ├── cdn/                     # NestJS backend API / CDN microservice
 │   ├── cdn-ui/                  # Nuxt 3 admin interface for CDN
 │   ├── mfd/                     # Nuxt 3 multi-function dashboard
+│   ├── minecraft/               # Next.js 14 Minecraft stats & leaderboards site
 │   ├── resume/                  # Nuxt 3 online CV / resume
 │   ├── resume-template/         # ATS-optimized static HTML resume template
 │   ├── site/                    # Nuxt 3 personal website & portfolio
 │   └── website/                 # Next.js 14 web app
+├── plugins/
+│   └── smessential/             # PaperMC 1.21 Minecraft server plugin (Java 21 / Gradle)
 ├── package.json                 # Root dependencies & Turborepo scripts
 ├── turbo.json                   # Turborepo task pipeline configuration
 ├── .prettierrc                  # Code formatting configuration
