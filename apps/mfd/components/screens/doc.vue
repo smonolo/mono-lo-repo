@@ -14,7 +14,7 @@ onMounted(() => {
 defineExpose<ScreenConfig>({
   lowerButtonActions: {
     lower8: {
-      label: 'Tst',
+      label: 'Test',
       action: () => screenStore.setActiveScreen('test'),
     },
     lower9: useMainButtonConfig(),
@@ -30,15 +30,15 @@ defineExpose<ScreenConfig>({
       <span>Documentation</span>
     </div>
 
-    <!-- Unauthenticated / Non-Admin View -->
-    <div v-if="!authStore.isAdmin" class="p-10 space-y-4">
+    <!-- Unauthorized View -->
+    <div v-if="!authStore.hasScreenPermission('doc')" class="p-10 space-y-4">
       <div class="border border-slate-950 p-4 dark:border-slate-100 space-y-2">
         <p class="font-bold tracking-wide">Restricted System</p>
         <p>
-          Administrator authorization is required to access system documentation.
+          Authorization is required to access system documentation.
         </p>
         <p>
-          Please navigate to the Auth screen to sign in with an authorized Google account.
+          Please navigate to the Auth screen to sign in with an authorized account.
         </p>
       </div>
     </div>

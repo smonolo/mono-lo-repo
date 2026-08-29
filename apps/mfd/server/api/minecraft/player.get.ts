@@ -1,10 +1,20 @@
-import { defineEventHandler } from 'h3'
+import { defineEventHandler, getQuery, createError } from 'h3'
 import { requireAdmin } from '~/server/utils/session'
-import type { MinecraftPlayersResponse } from '~/types/minecraft'
+import type { SinglePlayerResponse } from '~/types/minecraft'
 
 export default defineEventHandler(async event => {
   // 1. Enforce admin-only authentication
   requireAdmin(event)
+
+  const query = getQuery(event)
+  const uuid = query.uuid as string
+
+  if (!uuid) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Missing uuid query parameter',
+    })
+  }
 
   const config = useRuntimeConfig()
   const rawApiUrl =
@@ -19,11 +29,11 @@ export default defineEventHandler(async event => {
     process.env.NUXT_SMESSENTIAL_API_SECRET ||
     (config.smessentialApiSecret as string) ||
     'smessential-secret-key'
-  const apiSecret = rawSecret.trim().replace(/^["']|["']$/g)
+  const apiSecret = rawSecret.trim().replace(/^["']|["']$/g, '')
 
   try {
-    const response = await $fetch<MinecraftPlayersResponse>(
-      `${apiUrl}/api/players/online`,
+    const response = await $fetch<SinglePlayerResponse>(
+      `${apiUrl}/api/player?uuid=${encodeURIComponent(uuid)}`,
       {
         headers: {
           Authorization: `Bearer ${apiSecret}`,
@@ -32,23 +42,17 @@ export default defineEventHandler(async event => {
       }
     )
 
-    return {
-      online: true,
-      players: response.players || [],
-      count: response.count || (response.players ? response.players.length : 0),
-    }
+    return response
   } catch (err: any) {
     const errorMsg =
       err?.data?.error ||
       err?.data?.statusMessage ||
       err?.message ||
-      'Minecraft server is offline or unreachable'
+      'Failed to fetch player details from server'
 
     return {
       online: false,
       error: errorMsg,
-      players: [],
-      count: 0,
     }
   }
 })

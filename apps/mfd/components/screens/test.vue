@@ -22,22 +22,27 @@ defineExpose<ScreenConfig>({
 })
 
 const options = computed<Option[]>(() => {
-  if (!authStore.isAdmin) return []
+  if (!authStore.hasScreenPermission('test')) return []
 
-  return [
-    {
+  const opts: Option[] = []
+
+  if (authStore.hasScreenPermission('doc')) {
+    opts.push({
       name: 'test_doc',
       label: 'Documentation (Long Text)',
-      value: 'View Page',
       action: () => screenStore.setActiveScreen('doc'),
-    },
-    {
+    })
+  }
+
+  if (authStore.hasScreenPermission('diag')) {
+    opts.push({
       name: 'test_diag',
       label: 'Diagnostics (Long Options)',
-      value: 'View Page',
       action: () => screenStore.setActiveScreen('diag'),
-    },
-  ]
+    })
+  }
+
+  return opts
 })
 
 watchEffect(() => {
@@ -55,20 +60,20 @@ watchEffect(() => {
       <span>Test Suites</span>
     </div>
 
-    <!-- Unauthenticated / Non-Admin View -->
-    <div v-if="!authStore.isAdmin" class="p-10 space-y-4">
+    <!-- Unauthorized View -->
+    <div v-if="!authStore.hasScreenPermission('test')" class="p-10 space-y-4">
       <div class="border border-slate-950 p-4 dark:border-slate-100 space-y-2">
         <p class="font-bold tracking-wide">Restricted System</p>
         <p>
-          Administrator authorization is required to access diagnostic test suites.
+          Authorization is required to access diagnostic test suites.
         </p>
         <p>
-          Please navigate to the Auth screen to sign in with an authorized Google account.
+          Please navigate to the Auth screen to sign in with an authorized account.
         </p>
       </div>
     </div>
 
-    <!-- Authenticated Admin View -->
+    <!-- Authenticated View -->
     <div v-else class="p-10 space-y-4">
       <OptionsCard header="Test Pages" :options="options" />
     </div>

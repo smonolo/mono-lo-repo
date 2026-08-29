@@ -7,17 +7,19 @@ import type { ScreenConfig } from '~/types/screen'
 
 const authStore = useAuthStore()
 const optionsStore = useOptionsStore()
+const googleBtnRef = ref<HTMLElement | null>(null)
 
-const triggerGooglePrompt = () => {
-  if (typeof window !== 'undefined' && window.google?.accounts?.id) {
-    authStore.initGoogleAuth()
-    window.google.accounts.id.prompt()
+const initAuth = () => {
+  if (googleBtnRef.value) {
+    authStore.renderGoogleButton(googleBtnRef.value)
   }
 }
 
 onMounted(() => {
   authStore.fetchSession()
-  authStore.initGoogleAuth()
+  nextTick(() => {
+    initAuth()
+  })
 })
 
 const lowerActions = reactive({
@@ -27,7 +29,7 @@ const lowerActions = reactive({
       if (authStore.isAuthenticated) {
         authStore.logout()
       } else {
-        triggerGooglePrompt()
+        authStore.triggerGoogleSignIn(googleBtnRef.value)
       }
     },
   },
@@ -99,6 +101,12 @@ watchEffect(() => {
       </div>
 
       <OptionsCard header="Account" :options="options" />
+
+      <div
+        id="google-signin-hidden-btn"
+        ref="googleBtnRef"
+        style="position: fixed; top: -9999px; left: -9999px; opacity: 0; pointer-events: auto;"
+      />
     </div>
   </div>
 </template>

@@ -1,4 +1,5 @@
-import type { AuthUser } from '~/types/auth'
+import type { AuthUser, AuthRole } from '~/types/auth'
+import { canAccessScreen, type ScreenName } from '~/config/permissions'
 
 declare global {
   interface Window {
@@ -22,6 +23,11 @@ export const useAuthStore = defineStore('auth', () => {
 
   const isAuthenticated = computed(() => !!user.value)
   const isAdmin = computed(() => user.value?.role === 'admin')
+  const currentRole = computed<AuthRole>(() => user.value?.role || 'guest')
+
+  const hasScreenPermission = (screen: ScreenName | string): boolean => {
+    return canAccessScreen(screen, currentRole.value)
+  }
 
   const fetchSession = async () => {
     isLoading.value = true
@@ -73,8 +79,8 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  const initGoogleAuth = (onSuccess?: () => void) => {
-    if (typeof window === 'undefined' || !window.google) return
+  const renderGoogleButton = (parent: HTMLElement, onSuccess?: () => void) => {
+    if (typeof window === 'undefined' || !window.google?.accounts?.id) return
 
     const config = useRuntimeConfig()
     const clientId = config.public.googleClientId
@@ -91,7 +97,32 @@ export const useAuthStore = defineStore('auth', () => {
           }
         }
       },
+      ux_mode: 'popup',
     })
+
+    window.google.accounts.id.renderButton(parent, {
+      type: 'standard',
+      theme: 'outline',
+      size: 'large',
+    })
+  }
+
+  const triggerGoogleSignIn = (parentContainer?: HTMLElement | null) => {
+    const el =
+      parentContainer || document.getElementById('google-signin-hidden-btn')
+    if (el) {
+      const btn =
+        (el.querySelector('div[role="button"]') as HTMLElement) ||
+        (el.querySelector('button') as HTMLElement) ||
+        (el.firstElementChild as HTMLElement)
+      if (btn) {
+        btn.click()
+        return
+      }
+    }
+    if (typeof window !== 'undefined' && window.google?.accounts?.id) {
+      window.google.accounts.id.prompt()
+    }
   }
 
   return {
@@ -100,9 +131,12 @@ export const useAuthStore = defineStore('auth', () => {
     authError,
     isAuthenticated,
     isAdmin,
+    currentRole,
+    hasScreenPermission,
     fetchSession,
     loginWithCredential,
     logout,
-    initGoogleAuth,
+    renderGoogleButton,
+    triggerGoogleSignIn,
   }
 })

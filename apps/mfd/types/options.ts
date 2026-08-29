@@ -1,6 +1,6 @@
 export type Option = {
   name: string
   label: string
-  value: any
+  value?: any
   action?: () => void
 }

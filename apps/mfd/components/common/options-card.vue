@@ -65,7 +65,15 @@ watch(
         }"
       >
         <span>{{ option.label }}</span>
-        <span>{{ option.value }}</span>
+        <span
+          v-if="
+            option.value !== undefined &&
+            option.value !== null &&
+            option.value !== ''
+          "
+        >
+          {{ option.value }}
+        </span>
       </div>
     </div>
   </div>

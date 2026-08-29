@@ -1,5 +1,6 @@
 import type { ScreenTheme, ScreenName, ScreenDisplay } from '~/types/screen'
 import { useOptionsStore } from '~/stores/options'
+import { useAuthStore } from '~/stores/auth'
 
 export const useScreenStore = defineStore('screen', () => {
   const activeScreen = ref<ScreenName>('main')
@@ -10,6 +11,12 @@ export const useScreenStore = defineStore('screen', () => {
   const setActiveScreen = (screen: ScreenName) => {
     const optionsStore = useOptionsStore()
     optionsStore.clearOptions()
+
+    const authStore = useAuthStore()
+    if (screen !== 'main' && !authStore.hasScreenPermission(screen)) {
+      activeScreen.value = 'main'
+      return
+    }
 
     activeScreen.value = screen
   }
