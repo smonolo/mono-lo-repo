@@ -11,6 +11,16 @@ declare global {
           renderButton: (parent: HTMLElement, options: any) => void
           cancel: () => void
         }
+        oauth2: {
+          initTokenClient: (config: {
+            client_id: string
+            scope: string
+            callback: (response: { access_token?: string; error?: any }) => void
+            error_callback?: (err: any) => void
+          }) => {
+            requestAccessToken: (options?: { prompt?: string }) => void
+          }
+        }
       }
     }
   }
@@ -68,6 +78,27 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  const loginWithAccessToken = async (accessToken: string) => {
+    isLoading.value = true
+    authError.value = null
+    try {
+      const res = await $fetch<{ ok: boolean; user: AuthUser }>(
+        '/api/auth/google',
+        {
+          method: 'POST',
+          body: { accessToken },
+        }
+      )
+      user.value = res.user
+      return true
+    } catch (err: any) {
+      authError.value = err.data?.statusMessage || err.message || 'Login failed'
+      return false
+    } finally {
+      isLoading.value = false
+    }
+  }
+
   const logout = async () => {
     isLoading.value = true
     try {
@@ -79,49 +110,47 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  const renderGoogleButton = (parent: HTMLElement, onSuccess?: () => void) => {
-    if (typeof window === 'undefined' || !window.google?.accounts?.id) return
+  const triggerGooglePopup = (onSuccess?: () => void) => {
+    if (typeof window === 'undefined' || !window.google?.accounts?.oauth2) {
+      authError.value = 'Google authentication library is loading'
+      return
+    }
 
     const config = useRuntimeConfig()
     const clientId = config.public.googleClientId
 
-    if (!clientId) return
-
-    window.google.accounts.id.initialize({
-      client_id: clientId,
-      callback: async (response: { credential: string }) => {
-        if (response.credential) {
-          const ok = await loginWithCredential(response.credential)
-          if (ok && onSuccess) {
-            onSuccess()
-          }
-        }
-      },
-      ux_mode: 'popup',
-    })
-
-    window.google.accounts.id.renderButton(parent, {
-      type: 'standard',
-      theme: 'outline',
-      size: 'large',
-    })
-  }
-
-  const triggerGoogleSignIn = (parentContainer?: HTMLElement | null) => {
-    const el =
-      parentContainer || document.getElementById('google-signin-hidden-btn')
-    if (el) {
-      const btn =
-        (el.querySelector('div[role="button"]') as HTMLElement) ||
-        (el.querySelector('button') as HTMLElement) ||
-        (el.firstElementChild as HTMLElement)
-      if (btn) {
-        btn.click()
-        return
-      }
+    if (!clientId) {
+      authError.value = 'Missing Google Client ID configuration'
+      return
     }
-    if (typeof window !== 'undefined' && window.google?.accounts?.id) {
-      window.google.accounts.id.prompt()
+
+    try {
+      const tokenClient = window.google.accounts.oauth2.initTokenClient({
+        client_id: clientId,
+        scope: 'openid email profile',
+        callback: async tokenResponse => {
+          if (tokenResponse.error) {
+            authError.value =
+              typeof tokenResponse.error === 'string'
+                ? tokenResponse.error
+                : 'Authentication failed or was cancelled'
+            return
+          }
+          if (tokenResponse.access_token) {
+            const ok = await loginWithAccessToken(tokenResponse.access_token)
+            if (ok && onSuccess) {
+              onSuccess()
+            }
+          }
+        },
+        error_callback: () => {
+          authError.value = 'Google sign-in popup closed or blocked'
+        },
+      })
+
+      tokenClient.requestAccessToken({ prompt: 'select_account' })
+    } catch (err: any) {
+      authError.value = err.message || 'Failed to open Google sign-in window'
     }
   }
 
@@ -135,8 +164,8 @@ export const useAuthStore = defineStore('auth', () => {
     hasScreenPermission,
     fetchSession,
     loginWithCredential,
+    loginWithAccessToken,
     logout,
-    renderGoogleButton,
-    triggerGoogleSignIn,
+    triggerGooglePopup,
   }
 })

@@ -7,19 +7,9 @@ import type { ScreenConfig } from '~/types/screen'
 
 const authStore = useAuthStore()
 const optionsStore = useOptionsStore()
-const googleBtnRef = ref<HTMLElement | null>(null)
-
-const initAuth = () => {
-  if (googleBtnRef.value) {
-    authStore.renderGoogleButton(googleBtnRef.value)
-  }
-}
 
 onMounted(() => {
   authStore.fetchSession()
-  nextTick(() => {
-    initAuth()
-  })
 })
 
 const lowerActions = reactive({
@@ -29,7 +19,7 @@ const lowerActions = reactive({
       if (authStore.isAuthenticated) {
         authStore.logout()
       } else {
-        authStore.triggerGoogleSignIn(googleBtnRef.value)
+        authStore.triggerGooglePopup()
       }
     },
   },
@@ -101,12 +91,6 @@ watchEffect(() => {
       </div>
 
       <OptionsCard header="Account" :options="options" />
-
-      <div
-        id="google-signin-hidden-btn"
-        ref="googleBtnRef"
-        style="position: fixed; top: -9999px; left: -9999px; opacity: 0; pointer-events: auto;"
-      />
     </div>
   </div>
 </template>
