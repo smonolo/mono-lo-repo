@@ -29,7 +29,8 @@ const copyUuid = async () => {
 }
 
 const refreshPlayerData = async () => {
-  if (!authStore.hasScreenPermission('player') || !playerStore.selectedUuid) return
+  if (!authStore.hasScreenPermission('player') || !playerStore.selectedUuid)
+    return
   await playerStore.fetchPlayerDetails()
 }
 
@@ -74,31 +75,6 @@ const allPlayerRanks = computed<RankData[]>(() => {
   }
   return list
 })
-
-const getMinecraftColor = (colorStr?: string): string => {
-  if (!colorStr) return '#FFFFFF'
-  if (colorStr.startsWith('#')) return colorStr
-  const upper = colorStr.toUpperCase()
-  const map: Record<string, string> = {
-    BLACK: '#000000',
-    DARK_BLUE: '#0000AA',
-    DARK_GREEN: '#00AA00',
-    DARK_AQUA: '#00AAAA',
-    DARK_RED: '#AA0000',
-    DARK_PURPLE: '#AA00AA',
-    GOLD: '#FFAA00',
-    GRAY: '#AAAAAA',
-    DARK_GRAY: '#555555',
-    BLUE: '#5555FF',
-    GREEN: '#55FF55',
-    AQUA: '#55FFFF',
-    RED: '#FF5555',
-    LIGHT_PURPLE: '#FF55FF',
-    YELLOW: '#FFFF55',
-    WHITE: '#FFFFFF',
-  }
-  return map[upper] || '#FFFFFF'
-}
 
 const formatDate = (timestamp?: number): string => {
   if (!timestamp || timestamp <= 0) return 'Never'
@@ -156,20 +132,12 @@ const infoOptions = computed<Option[]>(() => {
     },
   ]
 
-  if (p.online) {
+  if (p.online && p.ping !== undefined && p.ping !== null) {
     opts.push({
-      name: 'prof_world_ping',
-      label: 'World/Ping',
-      value: `${p.world} (${p.ping}ms)`,
+      name: 'prof_ping',
+      label: 'Ping',
+      value: `${p.ping}ms`,
     })
-
-    if (p.health !== undefined && p.food !== undefined) {
-      opts.push({
-        name: 'prof_vitals',
-        label: 'Vitals (HP/Food)',
-        value: `${p.health}/20 HP • ${p.food} Food`,
-      })
-    }
   }
 
   return opts
@@ -247,69 +215,72 @@ watchEffect(() => {
 
 <template>
   <div class="h-full w-full">
-    <div
-      class="w-fit border border-slate-950 px-1.5 py-0.5 font-bold tracking-wide dark:border-slate-100"
-    >
-      <span>Player Profile</span>
-    </div>
-
-    <div v-if="!authStore.hasScreenPermission('player')" class="p-10 space-y-4">
-      <div class="border border-slate-950 p-4 dark:border-slate-100 space-y-2">
+    <div v-if="!authStore.hasScreenPermission('player')" class="space-y-4">
+      <div class="space-y-2 border border-slate-950 p-4 dark:border-slate-100">
         <p class="font-bold tracking-wide">Restricted System</p>
+        <p>Authorization is required to access player telemetry.</p>
         <p>
-          Authorization is required to access player telemetry.
-        </p>
-        <p>
-          Please navigate to the Auth screen to sign in with an authorized account.
+          Please navigate to the Auth screen to sign in with an authorized
+          account.
         </p>
       </div>
     </div>
 
-    <div v-else-if="!playerStore.selectedUuid" class="p-10 space-y-4">
-      <div class="border border-slate-950 p-4 dark:border-slate-100 space-y-2">
+    <div v-else-if="!playerStore.selectedUuid" class="space-y-4">
+      <div class="space-y-2 border border-slate-950 p-4 dark:border-slate-100">
         <p class="font-bold tracking-wide">No Player Selected</p>
         <p>Select a player from the Minecraft screen to view their profile.</p>
       </div>
     </div>
 
-    <div v-else-if="playerStore.loading" class="p-10 space-y-4">
+    <div v-else-if="playerStore.loading" class="space-y-4">
       <div class="border border-slate-950 p-4 dark:border-slate-100">
         <span>Loading player telemetry & statistics...</span>
       </div>
     </div>
 
-    <div v-else-if="playerStore.error" class="p-10 space-y-4">
-      <div class="border border-red-500 p-4 text-red-500 dark:border-red-400 dark:text-red-400 space-y-1">
+    <div v-else-if="playerStore.error" class="space-y-4">
+      <div
+        class="space-y-1 border border-red-500 p-4 text-red-500 dark:border-red-400 dark:text-red-400"
+      >
         <p class="font-bold tracking-wide">Error Loading Profile</p>
         <p>{{ playerStore.error }}</p>
       </div>
     </div>
 
-    <div v-else-if="player" class="p-10 space-y-6">
-      <div class="grid grid-cols-2 gap-6 items-start">
+    <div v-else-if="player" class="space-y-6">
+      <div class="grid grid-cols-2 items-start gap-6">
         <div class="space-y-4">
-          <div class="border border-slate-950 p-4 dark:border-slate-100 flex items-center gap-x-4">
+          <div
+            class="flex items-center gap-x-4 border border-slate-950 p-4 dark:border-slate-100"
+          >
             <img
               :src="`https://skins.mcstats.com/face/${player.uuid}`"
               :alt="player.username"
               class="h-16 w-16 shrink-0"
-              style="image-rendering: pixelated;"
+              style="image-rendering: pixelated"
               loading="lazy"
             />
 
-            <div class="space-y-2 min-w-0">
-              <p class="font-bold tracking-wide truncate">
+            <div class="min-w-0 space-y-2">
+              <p class="truncate font-bold tracking-wide">
                 {{ player.username }}
               </p>
 
-              <div v-if="allPlayerRanks.length" class="flex flex-wrap items-center gap-2">
+              <div
+                v-if="allPlayerRanks.length"
+                class="flex flex-wrap items-center gap-2"
+              >
                 <span
                   v-for="r in allPlayerRanks"
                   :key="r.id"
                   class="border px-1.5 py-0.5 font-bold tracking-wide"
                   :style="{
-                    borderColor: getMinecraftColor(r.color),
-                    color: getMinecraftColor(r.color),
+                    borderColor: getMinecraftRankColor(
+                      r.color,
+                      screenStore.contrast
+                    ),
+                    color: getMinecraftRankColor(r.color, screenStore.contrast),
                   }"
                 >
                   {{ r.name }}

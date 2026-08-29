@@ -18,27 +18,47 @@ onMounted(() => {
   authStore.fetchSession()
 })
 
-const htmlAttrs = computed(() => ({ class: screenStore.contrast }))
+const screenTitles: Record<string, string> = {
+  main: 'Main',
+  version: 'Version',
+  settings: 'Settings',
+  auth: 'Authentication',
+  mc: 'Minecraft',
+  player: 'Player Profile',
+  test: 'Test Suites',
+  doc: 'Documentation',
+  diag: 'System Diagnostics',
+  mixed: 'Mixed Content Test',
+}
 
-useHead(() => ({ htmlAttrs: htmlAttrs.value }))
+const currentTitle = computed(
+  () => screenTitles[screenStore.activeScreen] || screenStore.activeScreen
+)
 </script>
 
 <template>
   <div
-    class="flex h-full flex-col justify-between bg-slate-100 text-slate-950 dark:bg-slate-900 dark:text-slate-100 pointer-events-none select-none"
+    class="pointer-events-none flex h-full select-none flex-col justify-between bg-slate-100 text-slate-950 dark:bg-slate-900 dark:text-slate-100"
     :style="{ opacity: screenStore.brightness }"
     @wheel.prevent.stop
   >
     <div class="h-[600px] overflow-hidden p-2">
-      <div class="flex h-full justify-between">
-        <div
-          id="screen-viewport"
-          class="h-full w-full overflow-auto no-scrollbar scroll-smooth"
-          @wheel.prevent.stop
-        >
-          <slot />
+      <div class="flex h-full justify-between gap-x-4">
+        <div class="flex h-full flex-1 flex-col gap-y-4 overflow-hidden">
+          <div
+            class="w-full border border-slate-950 px-1.5 py-0.5 font-bold tracking-wide dark:border-slate-100"
+          >
+            <span>{{ currentTitle }}</span>
+          </div>
+          <div
+            id="screen-viewport"
+            class="no-scrollbar h-full w-full overflow-auto scroll-smooth"
+            @wheel.prevent.stop
+          >
+            <slot />
+          </div>
         </div>
-        <div class="flex w-[200px] flex-col gap-y-4">
+        <div class="flex w-[200px] shrink-0 flex-col gap-y-4">
           <ScreenClock />
           <ClientOnly>
             <div

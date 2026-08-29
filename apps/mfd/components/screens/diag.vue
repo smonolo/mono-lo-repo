@@ -42,7 +42,8 @@ const displayOptions = computed<Option[]>(() => [
     label: 'Target Frame Rate',
     value: `${fpsTarget.value} FPS`,
     action: () => {
-      fpsTarget.value = fpsTarget.value === 60 ? 120 : fpsTarget.value === 120 ? 30 : 60
+      fpsTarget.value =
+        fpsTarget.value === 60 ? 120 : fpsTarget.value === 120 ? 30 : 60
     },
   },
   {
@@ -172,27 +173,20 @@ watchEffect(() => {
 
 <template>
   <div class="h-full w-full">
-    <div
-      class="w-fit border border-slate-950 px-1.5 py-0.5 font-bold tracking-wide dark:border-slate-100"
-    >
-      <span>System Diagnostics</span>
-    </div>
-
     <!-- Unauthorized View -->
-    <div v-if="!authStore.hasScreenPermission('diag')" class="p-10 space-y-4">
-      <div class="border border-slate-950 p-4 dark:border-slate-100 space-y-2">
+    <div v-if="!authStore.hasScreenPermission('diag')" class="space-y-4">
+      <div class="space-y-2 border border-slate-950 p-4 dark:border-slate-100">
         <p class="font-bold tracking-wide">Restricted System</p>
+        <p>Authorization is required to access system diagnostics.</p>
         <p>
-          Authorization is required to access system diagnostics.
-        </p>
-        <p>
-          Please navigate to the Auth screen to sign in with an authorized account.
+          Please navigate to the Auth screen to sign in with an authorized
+          account.
         </p>
       </div>
     </div>
 
     <!-- Authenticated Admin View -->
-    <div v-else class="p-10 space-y-6">
+    <div v-else class="space-y-6">
       <OptionsCard header="Display Subsystem" :options="displayOptions" />
       <OptionsCard header="Network & Transport" :options="networkOptions" />
       <OptionsCard header="Core Architecture" :options="subsystemOptions" />

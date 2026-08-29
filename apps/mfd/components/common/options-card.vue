@@ -50,7 +50,9 @@ watch(
 
 <template>
   <div class="border border-slate-950 dark:border-slate-100">
-    <div class="flex justify-between items-center border-b border-slate-950 p-2 dark:border-slate-100">
+    <div
+      class="flex items-center justify-between border-b border-slate-950 p-2 dark:border-slate-100"
+    >
       <span class="font-bold tracking-wide">{{ header }}</span>
     </div>
     <div class="p-1">
@@ -64,7 +66,17 @@ watch(
             optionsStore.selectedOption === option.name,
         }"
       >
-        <span>{{ option.label }}</span>
+        <span
+          :style="
+            optionsStore.selectedOption === option.name
+              ? {}
+              : option.color
+                ? { color: option.color }
+                : {}
+          "
+        >
+          {{ option.label }}
+        </span>
         <span
           v-if="
             option.value !== undefined &&

@@ -28,14 +28,12 @@ const fetchServerData = async () => {
   errorMessage.value = null
   try {
     const [players, status] = await Promise.all([
-      $fetch<MinecraftPlayersResponse>('/api/minecraft/players').catch(
-        err => ({
-          online: false,
-          players: [],
-          count: 0,
-          error: err.data?.error || err.message,
-        })
-      ),
+      $fetch<MinecraftPlayersResponse>('/api/minecraft/players').catch(err => ({
+        online: false,
+        players: [],
+        count: 0,
+        error: err.data?.error || err.message,
+      })),
       $fetch<MinecraftStatusResponse>('/api/minecraft/status').catch(err => ({
         online: false,
         onlinePlayers: 0,
@@ -58,7 +56,8 @@ const fetchServerData = async () => {
       errorMessage.value = status.error
     }
   } catch (err: any) {
-    errorMessage.value = err.data?.error || err.message || 'Failed to connect to Minecraft API'
+    errorMessage.value =
+      err.data?.error || err.message || 'Failed to connect to Minecraft API'
   } finally {
     loading.value = false
   }
@@ -143,13 +142,15 @@ const playerOptions = computed<Option[]>(() => {
   }
 
   return playersData.value.players.map(p => {
-    const rankPrefix = p.rank.prefix ? `${p.rank.prefix} ` : ''
+    const rankPrefix = p.rank?.prefix ? `${p.rank.prefix} ` : ''
     const afkTag = p.online && p.afk ? ' [AFK]' : ''
     const statusVal = p.online ? `Online (${p.ping}ms)` : 'Offline'
+    const color = getMinecraftRankColor(p.rank?.color, screenStore.contrast)
     return {
       name: p.uuid,
       label: `${rankPrefix}${p.username}${afkTag}`,
       value: statusVal,
+      color,
       action: () => {
         playerStore.selectPlayer(p.uuid)
         screenStore.setActiveScreen('player')
@@ -171,34 +172,34 @@ watchEffect(() => {
 
 <template>
   <div class="h-full w-full">
-    <div
-      class="w-fit border border-slate-950 px-1.5 py-0.5 font-bold tracking-wide dark:border-slate-100"
-    >
-      <span>Minecraft</span>
-    </div>
-
     <!-- Unauthorized View -->
-    <div v-if="!authStore.hasScreenPermission('mc')" class="p-10 space-y-4">
-      <div class="border border-slate-950 p-4 dark:border-slate-100 space-y-2">
+    <div v-if="!authStore.hasScreenPermission('mc')" class="space-y-4">
+      <div class="space-y-2 border border-slate-950 p-4 dark:border-slate-100">
         <p class="font-bold tracking-wide">Restricted System</p>
         <p>
           Authorization is required to access live Minecraft server telemetry.
         </p>
         <p>
-          Please navigate to the Auth screen to sign in with an authorized account.
+          Please navigate to the Auth screen to sign in with an authorized
+          account.
         </p>
       </div>
     </div>
 
     <!-- Authenticated View -->
-    <div v-else class="p-10 space-y-4">
+    <div v-else class="space-y-4">
       <!-- Server offline warning -->
       <div
         v-if="errorMessage || (statusData && !statusData.online)"
-        class="border border-red-500 p-4 text-red-500 dark:border-red-400 dark:text-red-400 space-y-1"
+        class="space-y-1 border border-red-500 p-4 text-red-500 dark:border-red-400 dark:text-red-400"
       >
         <p class="font-bold tracking-wide">Server Unreachable</p>
-        <p>{{ errorMessage || 'The Paper server is currently offline or unreachable.' }}</p>
+        <p>
+          {{
+            errorMessage ||
+            'The Paper server is currently offline or unreachable.'
+          }}
+        </p>
       </div>
 
       <!-- Online Status Cards -->
@@ -208,10 +209,7 @@ watchEffect(() => {
         <div v-if="playerOptions.length">
           <OptionsCard header="Players" :options="playerOptions" />
         </div>
-        <div
-          v-else
-          class="border border-slate-950 dark:border-slate-100"
-        >
+        <div v-else class="border border-slate-950 dark:border-slate-100">
           <div class="border-b border-slate-950 p-2 dark:border-slate-100">
             <span class="font-bold tracking-wide">Players</span>
           </div>
@@ -222,7 +220,10 @@ watchEffect(() => {
       </div>
 
       <!-- Loading state -->
-      <div v-else-if="loading" class="border border-slate-950 p-4 dark:border-slate-100">
+      <div
+        v-else-if="loading"
+        class="border border-slate-950 p-4 dark:border-slate-100"
+      >
         <span>Querying server telemetry...</span>
       </div>
     </div>

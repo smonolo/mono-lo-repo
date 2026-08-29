@@ -10,6 +10,7 @@ export type ScreenName =
   | 'test'
   | 'doc'
   | 'diag'
+  | 'mixed'
 
 export const ROLE_PERMISSIONS: Record<AuthRole, ScreenName[]> = {
   admin: [
@@ -22,19 +23,10 @@ export const ROLE_PERMISSIONS: Record<AuthRole, ScreenName[]> = {
     'test',
     'doc',
     'diag',
+    'mixed',
   ],
-  user: [
-    'main',
-    'version',
-    'settings',
-    'auth',
-  ],
-  guest: [
-    'main',
-    'version',
-    'settings',
-    'auth',
-  ],
+  user: ['main', 'version', 'settings', 'auth'],
+  guest: ['main', 'version', 'settings', 'auth'],
 }
 
 export const canAccessScreen = (

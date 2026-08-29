@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute z-50 flex h-screen w-full items-center justify-center bg-black text-white xl:hidden"
+    class="absolute z-50 flex h-screen w-full items-center justify-center bg-neutral-800 text-white xl:hidden"
   >
     <div class="flex w-fit flex-col gap-y-2 p-10 xl:p-0">
       <h1 class="text-2xl font-bold">Disabled on mobile</h1>

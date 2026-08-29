@@ -19,7 +19,7 @@ const getButtonSize = (button: Button) => {
 
 <template>
   <div
-    class="flex cursor-pointer flex-col justify-between break-all rounded-lg border-2 border-white p-1.5 text-xl leading-none"
+    class="flex cursor-pointer flex-col justify-between break-all rounded-lg border-2 border-white bg-black p-1.5 text-xl leading-none"
     :class="getButtonSize(button)"
     @click="button.action?.()"
   >

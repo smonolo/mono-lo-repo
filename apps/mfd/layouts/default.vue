@@ -3,6 +3,7 @@ import Buttons from '~/components/buttons/index.vue'
 import Screen from '~/components/screen/index.vue'
 import { useScreens } from '~/composables/useScreens'
 import { useScreenStore } from '~/stores/screen'
+import { useAuthStore } from '~/stores/auth'
 import MobileDisabled from '~/components/disabled.vue'
 import type { ScreenConfig } from '~/types/screen'
 import { useLowerButtons } from '~/composables/buttons/useLowerButtons'
@@ -17,21 +18,47 @@ const sideButtons = useSideButtons(activeScreen)
 
 const { screensConfig } = useScreens()
 const screenStore = useScreenStore()
+const authStore = useAuthStore()
+
+const isLoading = ref(true)
+
+const htmlAttrs = computed(() => ({ class: screenStore.contrast }))
+useHead(() => ({ htmlAttrs: htmlAttrs.value }))
+
+onMounted(async () => {
+  try {
+    await Promise.allSettled([
+      authStore.fetchSession(),
+      new Promise(resolve => setTimeout(resolve, 800)),
+    ])
+  } finally {
+    isLoading.value = false
+  }
+})
 </script>
 
 <template>
   <div class="relative">
     <MobileDisabled />
     <div
-      class="hidden h-screen select-none items-center justify-center bg-black text-sm text-white xl:flex"
+      class="hidden h-screen select-none items-center justify-center bg-neutral-800 text-sm text-white xl:flex"
     >
-      <div class="flex h-[900px] w-[1100px]">
+      <div class="flex h-[900px] w-[1030px]">
         <div class="flex h-full w-[900px] flex-col justify-between">
           <section class="flex h-[100px] items-center justify-center">
             <Buttons :buttons="upperButtons" />
           </section>
           <main class="h-[680px]">
-            <Screen v-if="screenStore.display === 'primary'" :lowerButtons>
+            <div
+              v-if="isLoading"
+              class="pointer-events-none flex h-full w-full select-none items-center justify-center bg-slate-900 text-white"
+              :style="{ opacity: screenStore.brightness }"
+            >
+              <span class="text-3xl font-bold tracking-wider text-white">
+                Loading...
+              </span>
+            </div>
+            <Screen v-else-if="screenStore.display === 'primary'" :lowerButtons>
               <component
                 ref="activeScreen"
                 :is="screensConfig[screenStore.activeScreen]"
@@ -42,7 +69,7 @@ const screenStore = useScreenStore()
             <Buttons type="controls" :buttons="lowerButtons" />
           </section>
         </div>
-        <aside class="flex w-[200px]">
+        <aside class="flex w-[130px]">
           <Buttons direction="vertical" :buttons="sideButtons" />
         </aside>
       </div>

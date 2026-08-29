@@ -31,7 +31,8 @@ export const usePlayerStore = defineStore('player', () => {
         error.value = res.error || 'Player profile not found'
       }
     } catch (err: any) {
-      error.value = err.data?.statusMessage || err.message || 'Failed to load player'
+      error.value =
+        err.data?.statusMessage || err.message || 'Failed to load player'
     } finally {
       loading.value = false
     }

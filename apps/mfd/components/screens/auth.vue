@@ -75,22 +75,14 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div class="h-full w-full">
+  <div class="space-y-4">
     <div
-      class="w-fit border border-slate-950 px-1.5 py-0.5 font-bold tracking-wide dark:border-slate-100"
+      v-if="authStore.authError"
+      class="border border-red-500 p-2 text-red-500 dark:border-red-400 dark:text-red-400"
     >
-      <span>Authentication</span>
+      <span>AUTH ERROR: {{ authStore.authError }}</span>
     </div>
 
-    <div class="p-10 space-y-4">
-      <div
-        v-if="authStore.authError"
-        class="border border-red-500 p-2 text-red-500 dark:border-red-400 dark:text-red-400"
-      >
-        <span>AUTH ERROR: {{ authStore.authError }}</span>
-      </div>
-
-      <OptionsCard header="Account" :options="options" />
-    </div>
+    <OptionsCard header="Account" :options="options" />
   </div>
 </template>
