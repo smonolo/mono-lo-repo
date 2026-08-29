@@ -10,8 +10,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        mono: ['"Geist Mono"', 'monospace'],
-        sans: ['"Geist Mono"', 'monospace'],
+        mono: ['"JetBrains Mono"', 'monospace'],
+        sans: ['"JetBrains Mono"', 'monospace'],
       },
     },
   },
