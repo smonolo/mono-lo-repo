@@ -21,14 +21,28 @@ const setItemRef = (name: string, el: any) => {
 watch(
   () => optionsStore.selectedOption,
   newSelected => {
-    if (newSelected && itemRefs.value[newSelected]) {
-      nextTick(() => {
+    if (!newSelected) return
+
+    nextTick(() => {
+      // If we are at the very first option across the entire screen, scroll all the way to the top
+      const isFirstGlobalOption =
+        optionsStore.options.length > 0 &&
+        optionsStore.options[0].name === newSelected
+
+      const container = document.getElementById('screen-viewport')
+
+      if (isFirstGlobalOption && container) {
+        container.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        })
+      } else if (itemRefs.value[newSelected]) {
         itemRefs.value[newSelected]?.scrollIntoView({
           block: 'nearest',
           behavior: 'smooth',
         })
-      })
-    }
+      }
+    })
   },
   { flush: 'post' }
 )

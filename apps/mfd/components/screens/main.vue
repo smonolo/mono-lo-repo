@@ -24,7 +24,11 @@ defineExpose<ScreenConfig>({
       label: 'Mc',
       action: () => setActiveScreen('mc'),
     },
-    lower5: {
+    lower3: {
+      label: 'Tst',
+      action: () => setActiveScreen('test'),
+    },
+    lower9: {
       label: 'Set',
       action: () => setActiveScreen('settings'),
     },
