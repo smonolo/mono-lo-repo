@@ -6,9 +6,19 @@ export default defineEventHandler(async event => {
   requireAdmin(event)
 
   const config = useRuntimeConfig()
-  const apiUrl =
-    (config.smessentialApiUrl || 'http://127.0.0.1:25580').replace(/\/$/, '')
-  const apiSecret = config.smessentialApiSecret || 'smessential-secret-key'
+  const rawApiUrl =
+    process.env.SMESSENTIAL_API_URL ||
+    process.env.NUXT_SMESSENTIAL_API_URL ||
+    (config.smessentialApiUrl as string) ||
+    'http://127.0.0.1:25580'
+  const apiUrl = rawApiUrl.trim().replace(/^["']|["']$/g, '').replace(/\/$/, '')
+
+  const rawSecret =
+    process.env.SMESSENTIAL_API_SECRET ||
+    process.env.NUXT_SMESSENTIAL_API_SECRET ||
+    (config.smessentialApiSecret as string) ||
+    'smessential-secret-key'
+  const apiSecret = rawSecret.trim().replace(/^["']|["']$/g, '')
 
   try {
     const response = await $fetch<{
@@ -32,7 +42,7 @@ export default defineEventHandler(async event => {
       headers: {
         Authorization: `Bearer ${apiSecret}`,
       },
-      timeout: 3000,
+      timeout: 5000,
     })
 
     return {
@@ -41,11 +51,18 @@ export default defineEventHandler(async event => {
       count: response.count || (response.players ? response.players.length : 0),
     }
   } catch (err: any) {
+    const errorMsg =
+      err?.data?.error ||
+      err?.data?.statusMessage ||
+      err?.message ||
+      'Minecraft server is offline or unreachable'
+
     return {
       online: false,
-      error: 'Minecraft server is offline or unreachable',
+      error: errorMsg,
       players: [],
       count: 0,
     }
   }
 })
+
