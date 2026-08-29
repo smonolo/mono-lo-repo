@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background-color: #262626;
+  color: #ffffff;
+}
+
+body {
+  background-color: #121215;
+  color: #ffffff;
+}
+
+input,
+input:focus,
+input:focus-visible,
+input:active {
+  outline: none !important;
+  outline-color: transparent !important;
+  box-shadow: none !important;
+  caret-color: #ffffff !important;
+  accent-color: #525252 !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #121215 inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+}

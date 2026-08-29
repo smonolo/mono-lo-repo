@@ -8,6 +8,9 @@
     "build": {},
     "website#build": {
       "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "minecraft#build": {
+      "outputs": [".next/**", "!.next/cache/**"]
     }
   },
   "ui": "tui"

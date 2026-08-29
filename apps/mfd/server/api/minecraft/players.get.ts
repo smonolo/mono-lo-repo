@@ -12,7 +12,10 @@ export default defineEventHandler(async event => {
     process.env.NUXT_SMESSENTIAL_API_URL ||
     (config.smessentialApiUrl as string) ||
     'http://127.0.0.1:25580'
-  const apiUrl = rawApiUrl.trim().replace(/^["']|["']$/g, '').replace(/\/$/, '')
+  const apiUrl = rawApiUrl
+    .trim()
+    .replace(/^["']|["']$/g, '')
+    .replace(/\/$/, '')
 
   const rawSecret =
     process.env.SMESSENTIAL_API_SECRET ||

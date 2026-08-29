@@ -53,7 +53,12 @@ export const getAdminEmails = (): string[] => {
     ''
   return raw
     .split(',')
-    .map(e => e.trim().replace(/^["']|["']$/g, '').toLowerCase())
+    .map(e =>
+      e
+        .trim()
+        .replace(/^["']|["']$/g, '')
+        .toLowerCase()
+    )
     .filter(Boolean)
 }
 
@@ -82,10 +87,7 @@ export const getUserSession = (event: H3Event): AuthUser | null => {
   return user
 }
 
-export const setSessionCookie = (
-  event: H3Event,
-  user: AuthUser
-): void => {
+export const setSessionCookie = (event: H3Event, user: AuthUser): void => {
   const config = useRuntimeConfig()
   const secret =
     process.env.SESSION_SECRET ||
@@ -126,4 +128,3 @@ export const requireAdmin = (event: H3Event): AuthUser => {
   }
   return user
 }
-

@@ -13,8 +13,8 @@
     "dev:resume-template": "turbo dev --filter=resume-template",
     "dev:cdn": "turbo dev --filter=cdn",
     "dev:mfd": "turbo dev --filter=mfd",
-    "dev:cdn-ui": "turbo dev --filter=cdn-ui",
     "dev:site": "turbo dev --filter=site",
+    "dev:minecraft": "turbo dev --filter=minecraft",
     "dev": "turbo dev",
     "build:website": "turbo build --filter=website",
     "build:resume": "turbo build --filter=resume",
@@ -23,6 +23,7 @@
     "build:mfd": "turbo build --filter=mfd",
     "build:cdn-ui": "turbo build --filter=cdn-ui",
     "build:site": "turbo build --filter=site",
+    "build:minecraft": "turbo build --filter=minecraft",
     "build": "turbo build"
   },
   "devDependencies": {
