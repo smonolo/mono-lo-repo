@@ -1,0 +1,12 @@
+{
+  "name": "smessential",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "gradle build",
+    "shadowJar": "gradle shadowJar",
+    "spotlessApply": "gradle spotlessApply",
+    "spotlessCheck": "gradle spotlessCheck",
+    "clean": "gradle clean"
+  }
+}

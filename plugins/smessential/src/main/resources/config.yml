@@ -1,0 +1,27 @@
+# SMEssential Configuration
+#
+# Database settings for PostgreSQL connection.
+# Values support environment variable expansion using ${ENV_VAR} or ${ENV_VAR:default}.
+# For production, you can either configure these values in your server's runtime config
+# (plugins/SMEssential/config.yml) or pass them via environment variables.
+
+database:
+  host: '${DB_HOST:127.0.0.1}'
+  port: '${DB_PORT:5432}'
+  database: '${DB_NAME:postgres}'
+  schema: '${DB_SCHEMA:minecraft}'
+  username: '${DB_USER:minecraft}'
+  password: '${DB_PASSWORD:password}'
+  ssl: '${DB_SSL:false}'
+  pool:
+    maximum-pool-size: '${DB_POOL_MAX:3}'
+    minimum-idle: '${DB_POOL_MIN_IDLE:1}'
+    connection-timeout-ms: 3000
+    idle-timeout-ms: 600000
+    max-lifetime-ms: 1800000
+
+api:
+  enabled: '${API_ENABLED:true}'
+  host: '${API_HOST:0.0.0.0}'
+  port: '${API_PORT:25580}'
+  secret: '${API_SECRET:smessential-secret-key}'

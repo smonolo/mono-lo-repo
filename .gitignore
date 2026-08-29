@@ -2,7 +2,16 @@ node_modules
 .idea
 .vscode
 .turbo
-build/**
-dist/**
-.next/**
+build
+dist
+.next
+.output
 .env*
+
+# Java & Gradle
+*.jar
+*.war
+*.ear
+*.class
+.gradle
+bin

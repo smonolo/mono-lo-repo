@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "author": "Stefano Monolo <stefano@smnl.dev>",
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "plugins/*"
   ],
   "packageManager": "npm@11.2.0",
   "scripts": {
@@ -24,6 +25,7 @@
     "build:cdn-ui": "turbo build --filter=cdn-ui",
     "build:site": "turbo build --filter=site",
     "build:minecraft": "turbo build --filter=minecraft",
+    "build:smessential": "turbo build --filter=smessential",
     "build": "turbo build"
   },
   "devDependencies": {

@@ -1,0 +1,55 @@
+name: SMEssential
+version: '1.0'
+main: dev.smnl.smessential.SMEssential
+api-version: '1.21'
+description: Essential commands for Paper server.
+permissions:
+  smessential.*:
+    description: Grants all SMEssential permissions
+    default: false
+    children:
+      smessential.command.list: true
+      smessential.command.help: true
+      smessential.command.administration: true
+      smessential.command.moderation: true
+      smessential.command.ping: true
+      smessential.command.afk: true
+      smessential.command.msg: true
+      smessential.command.support: true
+      smessential.command.team: true
+      smessential.command.stats: true
+      smessential.whitelist.bypass: true
+  smessential.command.stats:
+    description: Allows execution of the stats command
+    default: true
+  smessential.command.team:
+    description: Allows execution of the team command
+    default: false
+
+  smessential.command.list:
+    description: Allows execution of the list command
+    default: false
+  smessential.command.help:
+    description: Allows execution of the help command
+    default: false
+  smessential.command.administration:
+    description: Allows execution of administration commands
+    default: false
+  smessential.command.moderation:
+    description: Allows execution of moderation commands
+    default: false
+  smessential.command.ping:
+    description: Allows execution of the ping command
+    default: false
+  smessential.command.afk:
+    description: Allows toggling AFK status
+    default: true
+  smessential.command.msg:
+    description: Allows execution of private messaging commands
+    default: false
+  smessential.command.support:
+    description: Allows sending support requests to staff
+    default: false
+  smessential.whitelist.bypass:
+    description: Allows bypassing the whitelist
+    default: false

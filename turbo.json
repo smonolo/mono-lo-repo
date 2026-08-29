@@ -11,6 +11,9 @@
     },
     "minecraft#build": {
       "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "smessential#build": {
+      "outputs": ["build/libs/**"]
     }
   },
   "ui": "tui"
