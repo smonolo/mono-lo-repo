@@ -244,7 +244,7 @@ public final class SMEssential extends JavaPlugin {
 
     httpServerService =
         new dev.smnl.smessential.service.HttpServerService(
-            this, rankService, afkService, userService);
+            this, rankService, afkService, userService, statisticService);
     httpServerService.setup();
 
     getLogger().info("SMEssential v" + getPluginMeta().getVersion() + " has been enabled!");

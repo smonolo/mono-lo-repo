@@ -1,7 +1,9 @@
 import type {
+  LeaderboardsResponse,
   MinecraftPlayersResponse,
   PlayerData,
   SinglePlayerResponse,
+  StatisticLeaderboard,
 } from '@/types/minecraft'
 
 export function getApiConfig() {
@@ -208,6 +210,44 @@ export async function fetchPlayer(query: string): Promise<PlayerData | null> {
       } catch {}
 
       return null
+    }
+  )
+}
+
+export async function fetchLeaderboards(): Promise<LeaderboardsResponse> {
+  return cachedFetch<LeaderboardsResponse>(
+    'leaderboards_all',
+    30000, // 30 seconds cache
+    async () => {
+      const { apiUrl, apiSecret } = getApiConfig()
+
+      try {
+        const res = await fetchWithTimeout(`${apiUrl}/api/leaderboards`, {
+          headers: { Authorization: `Bearer ${apiSecret}` },
+        })
+
+        if (!res.ok) {
+          return {
+            online: false,
+            leaderboards: [],
+            error: `HTTP ${res.status}`,
+          }
+        }
+
+        const data = await res.json()
+        return {
+          online: true,
+          leaderboards: Array.isArray(data.leaderboards)
+            ? (data.leaderboards as StatisticLeaderboard[])
+            : [],
+        }
+      } catch (err: any) {
+        return {
+          online: false,
+          leaderboards: [],
+          error: err?.message || 'Failed to load leaderboards from server',
+        }
+      }
     }
   )
 }

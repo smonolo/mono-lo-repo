@@ -63,3 +63,27 @@ export type MinecraftPlayersResponse = {
   onlineCount?: number
   error?: string
 }
+
+export type LeaderboardEntry = {
+  rank: number
+  position?: number
+  uuid: string
+  username: string
+  score: number
+  formattedValue: string
+  rankData?: RankData
+  playerRank?: RankData
+}
+
+export type StatisticLeaderboard = {
+  key: string
+  name: string
+  description: string
+  top: LeaderboardEntry[]
+}
+
+export type LeaderboardsResponse = {
+  online: boolean
+  leaderboards: StatisticLeaderboard[]
+  error?: string
+}

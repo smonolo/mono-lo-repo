@@ -49,14 +49,23 @@ export default function Navbar() {
   return (
     <header className="bg-sm-black w-full border-b border-gray-800">
       <div className="mx-auto flex h-14 w-full items-center justify-between px-4 md:px-8">
-        <Link
-          href="/"
-          className="flex items-center gap-x-2 transition-opacity hover:opacity-80"
-          aria-label="Minecraft Home"
-        >
-          <div className="bg-sm-blue h-6 w-6 rounded" />
-          <span className="text-sm font-medium text-white">Minecraft</span>
-        </Link>
+        <div className="flex items-center gap-x-6">
+          <Link
+            href="/"
+            className="flex items-center gap-x-2 transition-opacity hover:opacity-80"
+            aria-label="Minecraft Home"
+          >
+            <div className="bg-sm-blue h-6 w-6 rounded" />
+            <span className="text-sm font-medium text-white">Minecraft</span>
+          </Link>
+
+          <Link
+            href="/leaderboards"
+            className="text-xs font-medium text-neutral-400 transition-colors hover:text-white sm:text-sm"
+          >
+            Leaderboards
+          </Link>
+        </div>
 
         <div className="flex items-center gap-x-3 sm:gap-x-5">
           {onlineCount !== null && (

@@ -9,6 +9,7 @@ import com.sun.net.httpserver.HttpServer;
 import dev.smnl.smessential.SMEssential;
 import dev.smnl.smessential.database.DatabaseManager.UserData;
 import dev.smnl.smessential.model.Rank;
+import dev.smnl.smessential.model.StatisticType;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import org.bukkit.Bukkit;
@@ -36,6 +38,7 @@ public class HttpServerService {
   private final RankService rankService;
   private final AfkService afkService;
   private final UserService userService;
+  private final StatisticService statisticService;
   private HttpServer server;
   private ExecutorService executor;
 
@@ -44,15 +47,25 @@ public class HttpServerService {
   private int port;
   private String secret;
 
+  // Rate limiting and caching to safeguard in-game tick performance
+  private final Map<String, RateLimitTracker> rateLimitMap = new ConcurrentHashMap<>();
+  private final Map<String, CachedPayload> payloadCache = new ConcurrentHashMap<>();
+
+  private record RateLimitTracker(long windowStart, int count) {}
+
+  private record CachedPayload(long timestamp, byte[] data) {}
+
   public HttpServerService(
       @NotNull SMEssential plugin,
       @NotNull RankService rankService,
       @NotNull AfkService afkService,
-      @NotNull UserService userService) {
+      @NotNull UserService userService,
+      @NotNull StatisticService statisticService) {
     this.plugin = plugin;
     this.rankService = rankService;
     this.afkService = afkService;
     this.userService = userService;
+    this.statisticService = statisticService;
   }
 
   public void setup() {
@@ -70,6 +83,8 @@ public class HttpServerService {
       server.createContext("/api/status", new StatusHandler());
       server.createContext("/api/players", new PlayersListHandler());
       server.createContext("/api/player", new SinglePlayerHandler());
+      server.createContext("/api/leaderboards", new LeaderboardsHandler());
+      server.createContext("/api/leaderboard", new LeaderboardsHandler());
 
       server.start();
       plugin.getLogger().info("SMEssential HTTP API listening on " + host + ":" + port);
@@ -89,6 +104,8 @@ public class HttpServerService {
     if (executor != null) {
       executor.shutdownNow();
     }
+    payloadCache.clear();
+    rateLimitMap.clear();
   }
 
   public void reload() {
@@ -134,6 +151,30 @@ public class HttpServerService {
     return val;
   }
 
+  private boolean isRateLimited(@NotNull HttpExchange exchange) {
+    InetSocketAddress remote = exchange.getRemoteAddress();
+    if (remote == null || remote.getAddress() == null) {
+      return false;
+    }
+    String ip = remote.getAddress().getHostAddress();
+    if ("127.0.0.1".equals(ip) || "0:0:0:0:0:0:0:1".equals(ip) || "localhost".equals(ip)) {
+      return false;
+    }
+
+    long now = System.currentTimeMillis();
+    RateLimitTracker tracker =
+        rateLimitMap.compute(
+            ip,
+            (k, v) -> {
+              if (v == null || (now - v.windowStart()) > 60000L) {
+                return new RateLimitTracker(now, 1);
+              }
+              return new RateLimitTracker(v.windowStart(), v.count() + 1);
+            });
+
+    return tracker.count() > 120;
+  }
+
   private boolean authenticate(@NotNull HttpExchange exchange) {
     if (secret == null || secret.isBlank()) {
       return true;
@@ -150,23 +191,35 @@ public class HttpServerService {
   private void sendJsonResponse(
       @NotNull HttpExchange exchange, int statusCode, @NotNull JsonObject json) throws IOException {
     byte[] bytes = GSON.toJson(json).getBytes(StandardCharsets.UTF_8);
+    sendRawBytesResponse(exchange, statusCode, bytes);
+  }
+
+  private void sendRawBytesResponse(@NotNull HttpExchange exchange, int statusCode, byte[] bytes)
+      throws IOException {
     exchange.getResponseHeaders().set("Content-Type", "application/json; charset=UTF-8");
     exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
     exchange.getResponseHeaders().set("Access-Control-Allow-Methods", "GET, OPTIONS");
     exchange
         .getResponseHeaders()
-        .set("Access-Control-Allow-Headers", "Authorization, Content-Type");
+        .set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+    if (statusCode == 204) {
+      exchange.sendResponseHeaders(204, -1);
+      exchange.close();
+      return;
+    }
+
     exchange.sendResponseHeaders(statusCode, bytes.length);
     try (OutputStream os = exchange.getResponseBody()) {
       os.write(bytes);
     }
   }
 
-  private int getSafeStat(OfflinePlayer player, Statistic stat) {
+  private long getSafeStat(OfflinePlayer player, Statistic statistic) {
     try {
-      return player.getStatistic(stat);
-    } catch (Throwable ignored) {
-      return 0;
+      return player.getStatistic(statistic);
+    } catch (Exception e) {
+      return 0L;
     }
   }
 
@@ -178,6 +231,13 @@ public class HttpServerService {
         return;
       }
 
+      if (isRateLimited(exchange)) {
+        JsonObject err = new JsonObject();
+        err.addProperty("error", "Too Many Requests");
+        sendJsonResponse(exchange, 429, err);
+        return;
+      }
+
       if (!authenticate(exchange)) {
         JsonObject err = new JsonObject();
         err.addProperty("error", "Unauthorized");
@@ -185,16 +245,28 @@ public class HttpServerService {
         return;
       }
 
+      long now = System.currentTimeMillis();
+      CachedPayload cached = payloadCache.get("status");
+      if (cached != null && (now - cached.timestamp()) < 3000L) {
+        sendRawBytesResponse(exchange, 200, cached.data());
+        return;
+      }
+
       JsonObject root = new JsonObject();
       root.addProperty("online", true);
-      root.addProperty("onlinePlayers", Bukkit.getOnlinePlayers().size());
+      root.addProperty("serverName", Bukkit.getServer().getName());
+      root.addProperty("version", Bukkit.getVersion());
+      root.addProperty("bukkitVersion", Bukkit.getBukkitVersion());
+      root.addProperty("motd", Bukkit.getMotd());
       root.addProperty("maxPlayers", Bukkit.getMaxPlayers());
-      root.addProperty("version", plugin.getPluginMeta().getVersion());
-      root.addProperty("minecraftVersion", Bukkit.getMinecraftVersion());
+      root.addProperty("onlinePlayers", Bukkit.getOnlinePlayers().size());
 
       double[] tps = Bukkit.getTPS();
-      root.addProperty("tps", Math.min(20.0, Math.round(tps[0] * 100.0) / 100.0));
-      root.addProperty("mspt", Math.round(Bukkit.getAverageTickTime() * 10.0) / 10.0);
+      JsonArray tpsArray = new JsonArray();
+      for (double t : tps) {
+        tpsArray.add(Math.round(t * 100.0) / 100.0);
+      }
+      root.add("tps", tpsArray);
 
       Runtime rt = Runtime.getRuntime();
       long usedMem = (rt.totalMemory() - rt.freeMemory()) / (1024 * 1024);
@@ -211,7 +283,9 @@ public class HttpServerService {
           java.lang.management.ManagementFactory.getRuntimeMXBean().getUptime() / 1000;
       root.addProperty("uptimeSeconds", uptimeSeconds);
 
-      sendJsonResponse(exchange, 200, root);
+      byte[] bytes = GSON.toJson(root).getBytes(StandardCharsets.UTF_8);
+      payloadCache.put("status", new CachedPayload(now, bytes));
+      sendRawBytesResponse(exchange, 200, bytes);
     }
   }
 
@@ -223,10 +297,24 @@ public class HttpServerService {
         return;
       }
 
+      if (isRateLimited(exchange)) {
+        JsonObject err = new JsonObject();
+        err.addProperty("error", "Too Many Requests");
+        sendJsonResponse(exchange, 429, err);
+        return;
+      }
+
       if (!authenticate(exchange)) {
         JsonObject err = new JsonObject();
         err.addProperty("error", "Unauthorized");
         sendJsonResponse(exchange, 401, err);
+        return;
+      }
+
+      long now = System.currentTimeMillis();
+      CachedPayload cached = payloadCache.get("players_list");
+      if (cached != null && (now - cached.timestamp()) < 10000L) {
+        sendRawBytesResponse(exchange, 200, cached.data());
         return;
       }
 
@@ -317,7 +405,10 @@ public class HttpServerService {
       root.add("players", playersArray);
       root.addProperty("count", playersArray.size());
       root.addProperty("onlineCount", onlineCount);
-      sendJsonResponse(exchange, 200, root);
+
+      byte[] bytes = GSON.toJson(root).getBytes(StandardCharsets.UTF_8);
+      payloadCache.put("players_list", new CachedPayload(now, bytes));
+      sendRawBytesResponse(exchange, 200, bytes);
     }
   }
 
@@ -326,6 +417,13 @@ public class HttpServerService {
     public void handle(HttpExchange exchange) throws IOException {
       if ("OPTIONS".equalsIgnoreCase(exchange.getRequestMethod())) {
         sendJsonResponse(exchange, 204, new JsonObject());
+        return;
+      }
+
+      if (isRateLimited(exchange)) {
+        JsonObject err = new JsonObject();
+        err.addProperty("error", "Too Many Requests");
+        sendJsonResponse(exchange, 429, err);
         return;
       }
 
@@ -359,6 +457,14 @@ public class HttpServerService {
         JsonObject err = new JsonObject();
         err.addProperty("error", "Missing uuid or name parameter");
         sendJsonResponse(exchange, 400, err);
+        return;
+      }
+
+      long now = System.currentTimeMillis();
+      String cacheKey = "player_" + targetId.toLowerCase();
+      CachedPayload cached = payloadCache.get(cacheKey);
+      if (cached != null && (now - cached.timestamp()) < 15000L) {
+        sendRawBytesResponse(exchange, 200, cached.data());
         return;
       }
 
@@ -476,7 +582,137 @@ public class HttpServerService {
       JsonObject root = new JsonObject();
       root.addProperty("online", true);
       root.add("player", p);
-      sendJsonResponse(exchange, 200, root);
+
+      byte[] bytes = GSON.toJson(root).getBytes(StandardCharsets.UTF_8);
+      payloadCache.put(cacheKey, new CachedPayload(now, bytes));
+      sendRawBytesResponse(exchange, 200, bytes);
     }
+  }
+
+  private class LeaderboardsHandler implements HttpHandler {
+    @Override
+    public void handle(HttpExchange exchange) throws IOException {
+      if ("OPTIONS".equalsIgnoreCase(exchange.getRequestMethod())) {
+        sendJsonResponse(exchange, 204, new JsonObject());
+        return;
+      }
+
+      if (isRateLimited(exchange)) {
+        JsonObject err = new JsonObject();
+        err.addProperty("error", "Too Many Requests");
+        sendJsonResponse(exchange, 429, err);
+        return;
+      }
+
+      if (!authenticate(exchange)) {
+        JsonObject err = new JsonObject();
+        err.addProperty("error", "Unauthorized");
+        sendJsonResponse(exchange, 401, err);
+        return;
+      }
+
+      String query = exchange.getRequestURI().getQuery();
+      String requestedStat = null;
+      if (query != null) {
+        for (String param : query.split("&")) {
+          String[] pair = param.split("=", 2);
+          if (pair.length == 2
+              && ("stat".equalsIgnoreCase(pair[0]) || "type".equalsIgnoreCase(pair[0]))) {
+            requestedStat = pair[1].trim();
+            break;
+          }
+        }
+      }
+
+      long now = System.currentTimeMillis();
+      String cacheKey =
+          "leaderboards_" + (requestedStat != null ? requestedStat.toLowerCase() : "all");
+      CachedPayload cached = payloadCache.get(cacheKey);
+      if (cached != null && (now - cached.timestamp()) < 15000L) {
+        sendRawBytesResponse(exchange, 200, cached.data());
+        return;
+      }
+
+      JsonObject root = new JsonObject();
+      root.addProperty("online", true);
+
+      if (requestedStat != null && !requestedStat.isBlank()) {
+        StatisticType type = StatisticType.fromKey(requestedStat);
+        if (type == null) {
+          JsonObject err = new JsonObject();
+          err.addProperty("error", "Invalid statistic type: " + requestedStat);
+          sendJsonResponse(exchange, 400, err);
+          return;
+        }
+        root.add("leaderboard", buildLeaderboardJson(type, 10));
+        byte[] bytes = GSON.toJson(root).getBytes(StandardCharsets.UTF_8);
+        payloadCache.put(cacheKey, new CachedPayload(now, bytes));
+        sendRawBytesResponse(exchange, 200, bytes);
+        return;
+      }
+
+      JsonArray list = new JsonArray();
+      for (StatisticType type : StatisticType.values()) {
+        list.add(buildLeaderboardJson(type, 10));
+      }
+      root.add("leaderboards", list);
+
+      byte[] bytes = GSON.toJson(root).getBytes(StandardCharsets.UTF_8);
+      payloadCache.put(cacheKey, new CachedPayload(now, bytes));
+      sendRawBytesResponse(exchange, 200, bytes);
+    }
+  }
+
+  private JsonObject buildLeaderboardJson(StatisticType type, int limit) {
+    JsonObject obj = new JsonObject();
+    obj.addProperty("key", type.getKey());
+    obj.addProperty("name", type.getDisplayName());
+    obj.addProperty("description", type.getDescription());
+
+    JsonArray topArray = new JsonArray();
+    if (statisticService != null) {
+      List<Map.Entry<UUID, Long>> top = statisticService.getTopPlayers(type, limit);
+      int rankNum = 1;
+      for (Map.Entry<UUID, Long> entry : top) {
+        UUID uuid = entry.getKey();
+        long score = entry.getValue();
+
+        UserData uData = userService != null ? userService.getUser(uuid) : null;
+        Player onlinePlayer = Bukkit.getPlayer(uuid);
+        String username =
+            onlinePlayer != null
+                ? onlinePlayer.getName()
+                : (uData != null ? uData.username() : Bukkit.getOfflinePlayer(uuid).getName());
+        if (username == null || username.isBlank()) {
+          username = uuid.toString().substring(0, 8);
+        }
+
+        JsonObject item = new JsonObject();
+        item.addProperty("position", rankNum);
+        item.addProperty("rank", rankNum);
+        rankNum++;
+        item.addProperty("uuid", uuid.toString());
+        item.addProperty("username", username);
+        item.addProperty("score", score);
+        item.addProperty("formattedValue", type.formatValue(score));
+
+        if (rankService != null) {
+          Rank rank = rankService.getDisplayRank(uuid);
+          if (rank != null) {
+            JsonObject r = new JsonObject();
+            r.addProperty("id", rank.getId());
+            r.addProperty("name", rank.getName());
+            r.addProperty("color", rank.getColor());
+            item.add("rankData", r);
+            item.add("playerRank", r);
+          }
+        }
+
+        topArray.add(item);
+      }
+    }
+
+    obj.add("top", topArray);
+    return obj;
   }
 }

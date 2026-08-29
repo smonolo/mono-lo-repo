@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -20,6 +21,9 @@ import org.jetbrains.annotations.Nullable;
 public class StatisticService {
 
   private UserService userService;
+  private final Map<StatisticType, CachedTopPlayers> topPlayersCache = new ConcurrentHashMap<>();
+
+  private record CachedTopPlayers(long timestamp, List<Map.Entry<UUID, Long>> list) {}
 
   public StatisticService() {}
 
@@ -84,6 +88,12 @@ public class StatisticService {
       return Collections.emptyList();
     }
 
+    long now = System.currentTimeMillis();
+    CachedTopPlayers cached = topPlayersCache.get(type);
+    if (cached != null && (now - cached.timestamp()) < 15000L && cached.list().size() >= limit) {
+      return cached.list().stream().limit(limit).toList();
+    }
+
     Set<UUID> allUuids = new HashSet<>();
     if (userService != null) {
       allUuids.addAll(userService.getAllUsers().keySet());
@@ -92,11 +102,15 @@ public class StatisticService {
       allUuids.add(online.getUniqueId());
     }
 
-    return allUuids.stream()
-        .map(uuid -> Map.entry(uuid, getStatistic(uuid, type)))
-        .filter(e -> e.getValue() > 0)
-        .sorted(Map.Entry.<UUID, Long>comparingByValue(Comparator.reverseOrder()))
-        .limit(limit)
-        .toList();
+    List<Map.Entry<UUID, Long>> fresh =
+        allUuids.stream()
+            .map(uuid -> Map.entry(uuid, getStatistic(uuid, type)))
+            .filter(e -> e.getValue() > 0)
+            .sorted(Map.Entry.<UUID, Long>comparingByValue(Comparator.reverseOrder()))
+            .limit(Math.max(limit, 25))
+            .toList();
+
+    topPlayersCache.put(type, new CachedTopPlayers(now, fresh));
+    return fresh.stream().limit(limit).toList();
   }
 }
