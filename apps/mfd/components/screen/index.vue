@@ -24,7 +24,10 @@ useHead(() => ({ htmlAttrs: htmlAttrs.value }))
   >
     <div class="h-[600px] overflow-hidden p-2">
       <div class="flex h-full justify-between">
-        <div class="h-full w-full overflow-auto">
+        <div
+          id="screen-viewport"
+          class="h-full w-full overflow-auto no-scrollbar scroll-smooth"
+        >
           <slot />
         </div>
         <div class="flex w-[200px] flex-col gap-y-4">

@@ -223,13 +223,18 @@ watchEffect(() => {
         <OptionsCard header="Server Status" :options="statusOptions" />
 
         <div v-if="playerOptions.length">
-          <OptionsCard header="Online Players" :options="playerOptions" />
+          <OptionsCard header="Players Online" :options="playerOptions" />
         </div>
         <div
           v-else
-          class="border border-slate-950 p-4 dark:border-slate-100 text-sm"
+          class="border border-slate-950 dark:border-slate-100"
         >
-          <span>No players currently online</span>
+          <div class="border-b border-slate-950 p-2 dark:border-slate-100">
+            <span class="font-bold tracking-wide">Players Online</span>
+          </div>
+          <div class="p-3 text-sm">
+            <span>No players currently online</span>
+          </div>
         </div>
       </div>
 
