@@ -44,14 +44,42 @@ export const verifySession = (
   }
 }
 
+export const getAdminEmails = (): string[] => {
+  const config = useRuntimeConfig()
+  const raw =
+    process.env.ADMIN_EMAIL ||
+    process.env.NUXT_ADMIN_EMAIL ||
+    (config.adminEmail as string) ||
+    ''
+  return raw
+    .split(',')
+    .map(e => e.trim().replace(/^["']|["']$/g, '').toLowerCase())
+    .filter(Boolean)
+}
+
+export const checkIsAdmin = (email?: string | null): boolean => {
+  if (!email) return false
+  const adminEmails = getAdminEmails()
+  const normalized = email.trim().toLowerCase()
+  return adminEmails.includes(normalized)
+}
+
 export const getUserSession = (event: H3Event): AuthUser | null => {
   const cookie = getCookie(event, SESSION_COOKIE_NAME)
   if (!cookie) return null
 
   const config = useRuntimeConfig()
   const secret =
-    config.sessionSecret || 'mfd-session-secret-change-in-production'
-  return verifySession(cookie, secret)
+    process.env.SESSION_SECRET ||
+    process.env.NUXT_SESSION_SECRET ||
+    config.sessionSecret ||
+    'mfd-session-secret-change-in-production'
+  const user = verifySession(cookie, secret)
+  if (!user) return null
+
+  // Dynamically ensure role is always accurate to current ADMIN_EMAIL
+  user.role = checkIsAdmin(user.email) ? 'admin' : 'user'
+  return user
 }
 
 export const setSessionCookie = (
@@ -60,7 +88,11 @@ export const setSessionCookie = (
 ): void => {
   const config = useRuntimeConfig()
   const secret =
-    config.sessionSecret || 'mfd-session-secret-change-in-production'
+    process.env.SESSION_SECRET ||
+    process.env.NUXT_SESSION_SECRET ||
+    config.sessionSecret ||
+    'mfd-session-secret-change-in-production'
+  user.role = checkIsAdmin(user.email) ? 'admin' : 'user'
   const signed = signSession(user, secret)
 
   setCookie(event, SESSION_COOKIE_NAME, signed, {
@@ -94,3 +126,4 @@ export const requireAdmin = (event: H3Event): AuthUser => {
   }
   return user
 }
+

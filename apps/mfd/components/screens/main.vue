@@ -1,8 +1,14 @@
 <script setup lang="ts">
 import type { ScreenConfig } from '~/types/screen'
 import { useScreenStore } from '~/stores/screen'
+import { useAuthStore } from '~/stores/auth'
 
 const { setActiveScreen } = useScreenStore()
+const authStore = useAuthStore()
+
+onMounted(() => {
+  authStore.fetchSession()
+})
 
 defineExpose<ScreenConfig>({
   lowerButtonActions: {
@@ -33,8 +39,12 @@ defineExpose<ScreenConfig>({
     >
       <span>Main</span>
     </div>
-    <div class="p-10">
+    <div class="p-10 space-y-2">
       <p>Welcome</p>
+      <p v-if="authStore.isAuthenticated && authStore.user">
+        You are logged in as {{ authStore.user.name }} ({{ authStore.user.email }})
+      </p>
     </div>
   </div>
 </template>
+

@@ -7,7 +7,6 @@ import type { ScreenConfig } from '~/types/screen'
 
 const authStore = useAuthStore()
 const optionsStore = useOptionsStore()
-const googleButtonRef = ref<HTMLElement | null>(null)
 
 const triggerGooglePrompt = () => {
   if (typeof window !== 'undefined' && window.google?.accounts?.id) {
@@ -16,39 +15,40 @@ const triggerGooglePrompt = () => {
   }
 }
 
-const renderGoogleButton = () => {
-  if (
-    typeof window !== 'undefined' &&
-    window.google?.accounts?.id &&
-    googleButtonRef.value
-  ) {
-    authStore.initGoogleAuth()
-    try {
-      window.google.accounts.id.renderButton(googleButtonRef.value, {
-        theme: 'filled_black',
-        size: 'medium',
-        type: 'standard',
-        text: 'signin_with',
-      })
-    } catch {
-    }
-  }
-}
-
 onMounted(() => {
   authStore.fetchSession()
-  setTimeout(() => {
-    renderGoogleButton()
-  }, 300)
+  authStore.initGoogleAuth()
+})
+
+const lowerButtonActions = computed(() => {
+  if (authStore.isAuthenticated) {
+    return {
+      lower8: {
+        label: 'Out',
+        action: () => authStore.logout(),
+      },
+      lower9: useMainButtonConfig(),
+    }
+  }
+
+  return {
+    lower8: {
+      label: 'In',
+      action: triggerGooglePrompt,
+    },
+    lower9: useMainButtonConfig(),
+  }
 })
 
 defineExpose<ScreenConfig>({
   lowerButtonActions: {
     lower8: {
-      label: 'Out',
+      label: 'In',
       action: () => {
         if (authStore.isAuthenticated) {
           authStore.logout()
+        } else {
+          triggerGooglePrompt()
         }
       },
     },
@@ -56,12 +56,22 @@ defineExpose<ScreenConfig>({
   },
 })
 
+watchEffect(() => {
+  // Update button label dynamically based on auth status
+  const exposeConfig = (getCurrentInstance()?.exposed as ScreenConfig)
+  if (exposeConfig?.lowerButtonActions?.lower8) {
+    exposeConfig.lowerButtonActions.lower8.label = authStore.isAuthenticated
+      ? 'Out'
+      : 'In'
+  }
+})
+
 const options = computed(() => {
   if (authStore.isAuthenticated && authStore.user) {
     return [
       {
-        name: 'user',
-        label: 'Account',
+        name: 'name',
+        label: 'Name',
         value: authStore.user.name,
       },
       {
@@ -73,12 +83,6 @@ const options = computed(() => {
         name: 'role',
         label: 'Role',
         value: authStore.user.role === 'admin' ? 'Administrator' : 'Standard',
-      },
-      {
-        name: 'logout',
-        label: 'Action',
-        value: '[ Sign Out ]',
-        action: () => authStore.logout(),
       },
     ]
   }
@@ -94,12 +98,6 @@ const options = computed(() => {
       label: 'Access Level',
       value: 'Guest',
     },
-    {
-      name: 'login',
-      label: 'Action',
-      value: '[ Sign In with Google ]',
-      action: triggerGooglePrompt,
-    },
   ]
 })
 
@@ -113,31 +111,18 @@ watchEffect(() => {
     <div
       class="w-fit border border-slate-950 px-1.5 py-0.5 font-bold tracking-wide dark:border-slate-100"
     >
-      <span>Identity & Authentication</span>
+      <span>Authentication</span>
     </div>
 
-    <div class="p-8 space-y-4">
+    <div class="p-10 space-y-4">
       <div
         v-if="authStore.authError"
-        class="border border-red-500 bg-red-950/20 p-2 text-xs text-red-500"
+        class="border border-red-500 p-2 text-red-500 dark:border-red-400 dark:text-red-400"
       >
         <span>AUTH ERROR: {{ authStore.authError }}</span>
       </div>
 
-      <OptionsCard
-        :header="authStore.isAuthenticated ? 'Active Session' : 'Google Identity'"
-        :options="options"
-      />
-
-      <div
-        v-if="!authStore.isAuthenticated"
-        class="mt-4 flex flex-col items-center justify-center p-3 border border-dashed border-slate-800"
-      >
-        <span class="text-xs text-slate-500 dark:text-slate-400 mb-2"
-          >GOOGLE AUTHENTICATION PROVIDER</span
-        >
-        <div ref="googleButtonRef" class="min-h-[40px] flex items-center justify-center"></div>
-      </div>
+      <OptionsCard header="Account" :options="options" />
     </div>
   </div>
 </template>

@@ -1,5 +1,5 @@
 import { defineEventHandler, readBody, createError } from 'h3'
-import { setSessionCookie } from '~/server/utils/session'
+import { setSessionCookie, checkIsAdmin } from '~/server/utils/session'
 import type { AuthUser } from '~/types/auth'
 
 export default defineEventHandler(async event => {
@@ -44,9 +44,7 @@ export default defineEventHandler(async event => {
       })
     }
 
-    const adminEmail = (config.adminEmail || '').trim().toLowerCase()
-    const userEmail = tokenInfo.email.trim().toLowerCase()
-    const isAdmin = adminEmail.length > 0 && userEmail === adminEmail
+    const isAdmin = checkIsAdmin(tokenInfo.email)
 
     const user: AuthUser = {
       email: tokenInfo.email,
