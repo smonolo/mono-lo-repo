@@ -97,7 +97,6 @@ public class LeaderboardService implements Listener {
       rankService.addGlobalUpdateListener(this::refreshAllDisplays);
     }
 
-    // Clean up any legacy TextDisplays from previous versions in all loaded worlds
     for (World world : Bukkit.getWorlds()) {
       for (TextDisplay display : world.getEntitiesByClass(TextDisplay.class)) {
         if (display.getPersistentDataContainer().has(leaderboardKey, PersistentDataType.STRING)) {
@@ -106,11 +105,8 @@ public class LeaderboardService implements Listener {
       }
     }
 
-    // Initial spawn / find in loaded worlds
     Bukkit.getScheduler().runTask(plugin, this::refreshAllDisplays);
 
-    // Periodic content check (every 10 seconds / 200 ticks) - only re-renders if stats actually
-    // changed
     this.refreshTask =
         Bukkit.getScheduler().runTaskTimer(plugin, this::periodicContentCheck, 200L, 200L);
   }
@@ -517,46 +513,39 @@ public class LeaderboardService implements Listener {
       g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
       g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-      // Background - Dark obsidian / slate
       g.setColor(new java.awt.Color(20, 22, 28));
       g.fillRect(0, 0, totalW, totalH);
 
-      // Subtle Slate Border
       g.setColor(new java.awt.Color(35, 38, 48));
       g.drawRect(0, 0, totalW - 1, totalH - 1);
 
-      // Header Banner
       int headerH = (int) Math.min(64, Math.max(26, 24 + ((height - 1) * 14)));
       g.setColor(new java.awt.Color(28, 36, 52));
       g.fillRect(1, 1, totalW - 2, headerH);
 
-      // Header Title: "LEADERBOARD"
       int titleFontSize = Math.min(22, Math.max(9, 8 + (width * 2) + (height * 2)));
       g.setFont(new Font("SansSerif", Font.BOLD, titleFontSize));
-      g.setColor(new java.awt.Color(85, 170, 255)); // HQ Blue
+      g.setColor(new java.awt.Color(85, 170, 255));
       String title = "LEADERBOARD";
       FontMetrics fmTitle = g.getFontMetrics();
       int titleX = (totalW - fmTitle.stringWidth(title)) / 2;
       int titleY = (int) (headerH * 0.45);
       g.drawString(title, titleX, titleY);
 
-      // Subtitle: "Top <limit> • <Stat>"
       String statName = data != null ? data.statType().getDisplayName() : "Stats";
       int limit = data != null ? data.limit() : 10;
       String subtitle = "Top " + limit + " • " + statName;
       int subFontSize = Math.min(15, Math.max(7, 6 + width + height));
       g.setFont(new Font("SansSerif", Font.BOLD, subFontSize));
-      g.setColor(new java.awt.Color(255, 180, 50)); // Gold
+      g.setColor(new java.awt.Color(255, 180, 50));
       FontMetrics fmSub = g.getFontMetrics();
       int subX = (totalW - fmSub.stringWidth(subtitle)) / 2;
       int subY = (int) (headerH * 0.85);
       g.drawString(subtitle, subX, subY);
 
-      // Header Divider Line
       g.setColor(new java.awt.Color(45, 50, 65));
       g.drawLine(1, headerH + 1, totalW - 2, headerH + 1);
 
-      // Entries & Column layout - 1 column per 128px tile width
       List<Map.Entry<UUID, Long>> topPlayers =
           data != null
               ? statisticService.getTopPlayers(data.statType(), limit)
@@ -598,7 +587,6 @@ public class LeaderboardService implements Listener {
             int cellW = colW - 4;
             int cellY = bodyY + (r * rowHeight);
 
-            // Alternating row background
             java.awt.Color rowBg =
                 switch (rank) {
                   case 1 -> new java.awt.Color(38, 36, 26);
@@ -614,26 +602,23 @@ public class LeaderboardService implements Listener {
 
             int textBaseY = cellY + ((rowHeight + fmRow.getAscent() - fmRow.getDescent()) / 2);
 
-            // Rank Badge
             java.awt.Color rankColor =
                 switch (rank) {
-                  case 1 -> new java.awt.Color(255, 215, 0); // Gold
-                  case 2 -> new java.awt.Color(220, 220, 220); // Silver
-                  case 3 -> new java.awt.Color(205, 130, 60); // Bronze
-                  default -> new java.awt.Color(140, 145, 160); // Slate
+                  case 1 -> new java.awt.Color(255, 215, 0);
+                  case 2 -> new java.awt.Color(220, 220, 220);
+                  case 3 -> new java.awt.Color(205, 130, 60);
+                  default -> new java.awt.Color(140, 145, 160);
                 };
             g.setColor(rankColor);
             String rankStr = "#" + rank;
             g.drawString(rankStr, cellX + 3, textBaseY);
 
-            // Value calculation to determine space for player name
             String formattedVal =
                 data != null
                     ? data.statType().formatValue(entry.getValue())
                     : String.valueOf(entry.getValue());
             int valWidth = fmRow.stringWidth(formattedVal);
 
-            // Player Name & Color
             PlayerDisplayInfo pInfo = resolvePlayerInfo(entry.getKey());
             g.setColor(pInfo.color());
             String name = pInfo.name();
@@ -648,13 +633,11 @@ public class LeaderboardService implements Listener {
             }
             g.drawString(name, nameStartX, textBaseY);
 
-            // Render Value right-aligned
             g.setColor(
                 rank == 1 ? new java.awt.Color(255, 220, 100) : new java.awt.Color(255, 255, 255));
             g.drawString(formattedVal, cellX + cellW - 4 - valWidth, textBaseY);
           }
 
-          // Column divider line between tiles
           if (c > 0) {
             g.setColor(new java.awt.Color(45, 50, 65));
             g.drawLine(colX, bodyY, colX, bodyY + bodyH);

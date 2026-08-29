@@ -20,7 +20,6 @@ public class TeamInviteGUIManager {
 
     String inviterName = inviter.getName();
 
-    // Slot 4: Inviter Skull
     ItemBuilder headItem =
         ItemBuilder.of(Material.PLAYER_HEAD)
             .skullOwner(inviter)
@@ -28,7 +27,6 @@ public class TeamInviteGUIManager {
             .lore("Invited you to join their team.");
     gui.setItem(4, headItem.build(), null);
 
-    // Slot 11: Accept
     gui.setItem(
         11,
         ItemBuilder.of(Material.LIME_CONCRETE)
@@ -40,7 +38,6 @@ public class TeamInviteGUIManager {
           teamService.acceptInvite(target, inviter.getName());
         });
 
-    // Slot 15: Decline
     gui.setItem(
         15,
         ItemBuilder.of(Material.RED_CONCRETE)
@@ -52,7 +49,6 @@ public class TeamInviteGUIManager {
           teamService.declineInvite(target, inviter.getName());
         });
 
-    // Slot 26: Close button
     gui.setCloseButton();
 
     gui.open(target);

@@ -28,19 +28,16 @@ public class InvseeGUIManager {
       @NotNull GUIWindow gui, @NotNull Player staff, @NotNull Player target) {
     PlayerInventory inv = target.getInventory();
 
-    // Top 3 rows (Slots 0 to 26): Main Inventory storage (Slots 9 to 35)
     for (int i = 9; i <= 35; i++) {
       ItemStack item = inv.getItem(i);
       gui.setItem(i - 9, item != null ? item.clone() : null, null);
     }
 
-    // Row 4 (Slots 27 to 35): Hotbar (Slots 0 to 8)
     for (int i = 0; i <= 8; i++) {
       ItemStack item = inv.getItem(i);
       gui.setItem(27 + i, item != null ? item.clone() : null, null);
     }
 
-    // Row 5 Equipment (Slots 36 to 40)
     ItemStack helmet = inv.getHelmet();
     gui.setItem(
         36,
@@ -91,7 +88,6 @@ public class InvseeGUIManager {
                 .build(),
         null);
 
-    // Slot 41: Location Info
     Location loc = target.getLocation();
     String worldName = loc.getWorld() != null ? loc.getWorld().getName() : "Unknown";
     gui.setItem(
@@ -104,7 +100,6 @@ public class InvseeGUIManager {
             .build(),
         null);
 
-    // Slot 42: Player Status
     List<String> statusLore = new ArrayList<>();
     statusLore.add("Health: " + Math.round(target.getHealth()) + " HP");
     statusLore.add("Food: " + target.getFoodLevel() + "/20");
@@ -120,7 +115,6 @@ public class InvseeGUIManager {
             .build(),
         null);
 
-    // Slot 43: Ender Chest Switch
     gui.setItem(
         43,
         ItemBuilder.of(Material.ENDER_CHEST)
@@ -129,7 +123,6 @@ public class InvseeGUIManager {
             .build(),
         event -> openEnderChestGUI(staff, target));
 
-    // Slot 44: Refresh
     gui.setItem(
         44,
         ItemBuilder.of(Material.SUNFLOWER)
@@ -144,7 +137,6 @@ public class InvseeGUIManager {
           }
         });
 
-    // Filler panes for Row 6
     ItemStack filler =
         ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE).name(" ", NamedTextColor.BLACK).build();
     for (int slot = 45; slot <= 52; slot++) {
@@ -166,7 +158,7 @@ public class InvseeGUIManager {
 
   private void renderEnderChestGUI(
       @NotNull GUIWindow gui, @NotNull Player staff, @NotNull Player target) {
-    // 27 Ender Chest slots (Slots 0 to 26)
+
     for (int i = 0; i < 27; i++) {
       ItemStack item = target.getEnderChest().getItem(i);
       gui.setItem(i, item != null ? item.clone() : null, null);
@@ -178,7 +170,6 @@ public class InvseeGUIManager {
       gui.setItem(slot, filler, null);
     }
 
-    // Slot 31: Switch back to Inventory
     gui.setItem(
         31,
         ItemBuilder.of(Material.CHEST)
@@ -187,7 +178,6 @@ public class InvseeGUIManager {
             .build(),
         event -> openInventoryGUI(staff, target));
 
-    // Slot 32: Refresh
     gui.setItem(
         32,
         ItemBuilder.of(Material.SUNFLOWER)

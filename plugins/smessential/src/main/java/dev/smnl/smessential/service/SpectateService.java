@@ -73,7 +73,7 @@ public class SpectateService implements Listener {
   public void toggleSpectating(@NotNull Player staff, @Nullable Player target) {
     if (staff.getGameMode() == GameMode.SPECTATOR || isSpectating(staff.getUniqueId())) {
       if (target != null) {
-        // Already in spectator mode, but target specified -> teleport to target
+
         staff.teleport(target.getLocation());
         Component msg =
             Component.text("Spectating ", NamedTextColor.GRAY)

@@ -174,7 +174,6 @@ public class FreezeService implements Listener {
     String message = event.getMessage().trim().toLowerCase();
     String command = message.split("\\s+")[0];
 
-    // Allowed communication and help commands while frozen
     if (command.equals("/msg")
         || command.equals("/reply")
         || command.equals("/r")

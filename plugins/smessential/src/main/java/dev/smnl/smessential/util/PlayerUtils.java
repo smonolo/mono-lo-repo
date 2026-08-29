@@ -189,7 +189,7 @@ public final class PlayerUtils {
   }
 
   private static @NotNull String resolveVersionName(@NotNull Player player) {
-    // 1. Try ViaVersion reflection if available
+
     try {
       Class<?> viaClass = Class.forName("com.viaversion.viaversion.api.Via");
       Object viaAPI = viaClass.getMethod("getAPI").invoke(null);
@@ -213,14 +213,12 @@ public final class PlayerUtils {
     } catch (Throwable ignored) {
     }
 
-    // 2. Map known protocol integers
     int protocol = player.getProtocolVersion();
     String mapped = mapProtocolToVersion(protocol);
     if (mapped != null) {
       return mapped;
     }
 
-    // 3. Fallback to server's Minecraft version
     String mcVer = Bukkit.getMinecraftVersion();
     if (mcVer != null && !mcVer.isBlank()) {
       return mcVer;

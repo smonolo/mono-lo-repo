@@ -36,7 +36,6 @@ public class ServerInfoCommand extends EssentialCommand {
         MessageFormatter.format(
             getToolName(), "Server & Performance Overview:", MessageType.INFO, false));
 
-    // 1. TPS & MSPT
     double[] tps = Bukkit.getTPS();
     double mspt = Bukkit.getAverageTickTime();
 
@@ -59,7 +58,6 @@ public class ServerInfoCommand extends EssentialCommand {
             .append(msptComp);
     builder.append(Component.newline()).append(perfLine);
 
-    // 2. Memory (RAM)
     Runtime runtime = Runtime.getRuntime();
     long maxMemory = runtime.maxMemory();
     long totalMemory = runtime.totalMemory();
@@ -94,7 +92,6 @@ public class ServerInfoCommand extends EssentialCommand {
                     NamedTextColor.DARK_GRAY));
     builder.append(Component.newline()).append(memLine);
 
-    // 3. Software, Java & Uptime
     long uptimeMs = ManagementFactory.getRuntimeMXBean().getUptime();
     String uptimeStr = formatUptime(uptimeMs);
     String javaVersion = System.getProperty("java.version", "Unknown");
@@ -112,7 +109,6 @@ public class ServerInfoCommand extends EssentialCommand {
             .append(Component.text(uptimeStr, NamedTextColor.WHITE));
     builder.append(Component.newline()).append(sysLine);
 
-    // 4. Hardware & System Load
     OperatingSystemMXBean osMxBean = ManagementFactory.getOperatingSystemMXBean();
     int availableProcessors = osMxBean.getAvailableProcessors();
     String osName = osMxBean.getName();
@@ -142,7 +138,6 @@ public class ServerInfoCommand extends EssentialCommand {
                     NamedTextColor.DARK_GRAY));
     builder.append(Component.newline()).append(hwLine);
 
-    // 5. Worlds
     builder
         .append(Component.newline())
         .append(

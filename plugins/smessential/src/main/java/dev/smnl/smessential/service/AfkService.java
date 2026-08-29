@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class AfkService implements Listener {
 
-  private static final long AFK_TIMEOUT_MS = 300_000L; // 5 minutes
+  private static final long AFK_TIMEOUT_MS = 300_000L;
 
   private final JavaPlugin plugin;
   private final Map<UUID, Long> lastActivity = new ConcurrentHashMap<>();
@@ -44,7 +44,6 @@ public class AfkService implements Listener {
       lastActivity.put(player.getUniqueId(), now);
     }
 
-    // Periodic check every 5 seconds (100 ticks)
     Bukkit.getScheduler().runTaskTimer(plugin, this::checkAfkStatus, 100L, 100L);
   }
 

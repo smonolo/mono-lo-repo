@@ -42,7 +42,6 @@ public class PunishGUIManager {
 
     GUIWindow gui = new GUIWindow("Moderation", 36);
 
-    // Slot 10: Mute | Unmute
     if (isMuted) {
       gui.setItem(
           10,
@@ -67,7 +66,6 @@ public class PunishGUIManager {
           });
     }
 
-    // Slot 12: Kick
     gui.setItem(
         12,
         Material.LEATHER_BOOTS,
@@ -79,7 +77,6 @@ public class PunishGUIManager {
           executeKick(staff, targetName, reason);
         });
 
-    // Slot 14: Ban | Unban
     if (isBanned) {
       gui.setItem(
           14,
@@ -104,7 +101,6 @@ public class PunishGUIManager {
           });
     }
 
-    // Slot 16: Check Active Punishments
     gui.setItem(
         16,
         Material.BOOK,
@@ -116,7 +112,6 @@ public class PunishGUIManager {
           executeCheckPunishments(staff, targetName);
         });
 
-    // Slot 35: Close Button
     gui.setCloseButton();
 
     gui.open(staff);

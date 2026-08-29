@@ -52,7 +52,6 @@ public class SidebarManager implements Listener {
   public void setup() {
     Bukkit.getPluginManager().registerEvents(this, plugin);
 
-    // Repeating sync timer to ensure accurate updates
     Bukkit.getScheduler().runTaskTimer(plugin, this::updateAll, 20L, 20L);
 
     updateAll();
@@ -272,18 +271,15 @@ public class SidebarManager implements Listener {
 
   public static @NotNull NamedTextColor resolveBiomeColor(@NotNull String key) {
     return switch (key) {
-      // Nether
       case "nether_wastes" -> NamedTextColor.RED;
       case "crimson_forest" -> NamedTextColor.DARK_RED;
       case "warped_forest" -> NamedTextColor.DARK_AQUA;
       case "soul_sand_valley" -> NamedTextColor.AQUA;
       case "basalt_deltas" -> NamedTextColor.DARK_GRAY;
 
-      // The End
       case "the_end", "end_highlands", "end_midlands", "small_end_islands", "end_barrens" ->
           NamedTextColor.DARK_PURPLE;
 
-      // Icy / Cold / Peaks
       case "snowy_plains",
               "ice_spikes",
               "snowy_taiga",
@@ -297,7 +293,6 @@ public class SidebarManager implements Listener {
               "deep_frozen_ocean" ->
           NamedTextColor.WHITE;
 
-      // Oceans / Rivers / Aquatic
       case "ocean",
               "deep_ocean",
               "warm_ocean",
@@ -308,15 +303,12 @@ public class SidebarManager implements Listener {
               "river" ->
           NamedTextColor.AQUA;
 
-      // Cherry & Mushroom
       case "cherry_grove", "mushroom_fields" -> NamedTextColor.LIGHT_PURPLE;
 
-      // Caves
       case "deep_dark" -> NamedTextColor.DARK_AQUA;
       case "dripstone_caves" -> NamedTextColor.GRAY;
       case "lush_caves" -> NamedTextColor.GREEN;
 
-      // Forests & Taigas & Swamps
       case "forest",
               "dark_forest",
               "birch_forest",
@@ -328,18 +320,14 @@ public class SidebarManager implements Listener {
               "mangrove_swamp" ->
           NamedTextColor.DARK_GREEN;
 
-      // Jungle & Flower Forest & Meadows & Plains
       case "jungle", "sparse_jungle", "bamboo_jungle", "flower_forest", "meadow", "plains" ->
           NamedTextColor.GREEN;
 
-      // Desert & Beaches & Sunflowers
       case "desert", "beach", "sunflower_plains" -> NamedTextColor.YELLOW;
 
-      // Savanna & Badlands
       case "savanna", "savanna_plateau", "windswept_savanna" -> NamedTextColor.GOLD;
       case "badlands", "eroded_badlands", "wooded_badlands" -> NamedTextColor.RED;
 
-      // Mountains & Hills & Stony
       case "windswept_hills",
               "windswept_gravelly_hills",
               "windswept_forest",

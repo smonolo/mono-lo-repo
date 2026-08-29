@@ -63,7 +63,7 @@ public class WeatherCommand extends EssentialCommand {
       return;
     }
 
-    int duration = durationTicks != null ? durationTicks : 6000; // 5 minutes default
+    int duration = durationTicks != null ? durationTicks : 6000;
 
     switch (type) {
       case "clear", "sun", "sunny" -> {

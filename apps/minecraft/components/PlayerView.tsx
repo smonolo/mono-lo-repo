@@ -1,7 +1,5 @@
 'use client'
 
-/* eslint-disable @next/next/no-img-element */
-
 import type { PlayerData, RankData } from '@/types/minecraft'
 import {
   formatDate,
@@ -67,7 +65,6 @@ export default function PlayerView({ player }: Props) {
 
   return (
     <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-[220px_1fr] md:gap-10">
-      {/* Left Column / Top Section on Mobile */}
       <div className="flex flex-col space-y-4">
         <div className="flex items-center gap-x-4 md:flex-col md:items-start md:gap-x-0 md:space-y-4">
           <img
@@ -126,7 +123,6 @@ export default function PlayerView({ player }: Props) {
         </div>
       </div>
 
-      {/* Right Column / Stats Section */}
       <Card>
         <CardHeader>
           <CardTitle>Stats</CardTitle>

@@ -1,7 +1,5 @@
 'use client'
 
-/* eslint-disable @next/next/no-img-element */
-
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
@@ -150,14 +148,13 @@ export default function SearchBar({
           className={
             isLarge
               ? 'w-full rounded-lg border border-neutral-800 bg-white/[0.02] px-4 py-3.5 text-base text-white placeholder-neutral-500 transition-colors focus:border-neutral-600 focus:outline-none focus:ring-0 focus:ring-offset-0'
-              : 'w-36 rounded border border-neutral-800 bg-white/[0.02] px-2.5 py-1.5 text-xs text-white placeholder-neutral-500 transition-colors focus:border-neutral-600 focus:outline-none focus:ring-0 focus:ring-offset-0 sm:w-56 sm:px-3 sm:text-sm'
+              : 'w-full rounded border border-neutral-800 bg-white/[0.02] px-2.5 py-1.5 text-xs text-white placeholder-neutral-500 transition-colors focus:border-neutral-600 focus:outline-none focus:ring-0 focus:ring-offset-0 sm:px-3 sm:text-sm'
           }
         />
       </form>
 
-      {/* Suggestion Dropdown */}
       {isOpen && filteredPlayers.length > 0 && (
-        <div className="absolute left-0 right-0 top-full z-50 mt-1 max-h-72 overflow-y-auto rounded-lg border border-neutral-800 bg-[#151518] py-1 shadow-2xl backdrop-blur-sm">
+        <div className="absolute right-0 top-full z-50 mt-1 max-h-72 w-full min-w-[200px] max-w-[calc(100vw-24px)] overflow-y-auto rounded-lg border border-neutral-800 bg-[#151518] py-1 shadow-2xl backdrop-blur-sm">
           {filteredPlayers.map((player, idx) => {
             const isSelected = idx === selectedIndex
             return (

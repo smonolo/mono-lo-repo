@@ -34,9 +34,7 @@ public class StatisticService {
     this.userService = userService;
   }
 
-  public void setup(@NotNull JavaPlugin plugin) {
-    // Native statistics: no database table setup or async DB sync required
-  }
+  public void setup(@NotNull JavaPlugin plugin) {}
 
   public void setup(@NotNull JavaPlugin plugin, @NotNull UserService userService) {
     this.userService = userService;

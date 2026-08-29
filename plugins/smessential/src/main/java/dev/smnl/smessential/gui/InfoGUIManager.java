@@ -69,7 +69,6 @@ public class InfoGUIManager {
     boolean canFly = target.getAllowFlight();
     boolean isBedrock = PlayerUtils.isBedrockPlayer(target);
 
-    // Row 1, Center (Slot 4): Player Skull with Info Tooltip
     List<Component> skullLore = new ArrayList<>();
     if (dev.smnl.smessential.SMEssential.getInstance() != null
         && dev.smnl.smessential.SMEssential.getInstance().getRankService() != null) {
@@ -148,8 +147,6 @@ public class InfoGUIManager {
             .componentLore(skullLore);
     gui.setItem(4, headItem.build(), null);
 
-    // Row 2 Moderation Actions:
-    // Slot 10: View Inventory
     if (invseeGUIManager != null) {
       gui.setItem(
           10,
@@ -162,7 +159,6 @@ public class InfoGUIManager {
           });
     }
 
-    // Slot 11: Punish GUI
     gui.setItem(
         11,
         ItemBuilder.of(Material.ANVIL)
@@ -174,7 +170,6 @@ public class InfoGUIManager {
           punishGUIManager.openPunishGUI(staff, target.getName(), "Other");
         });
 
-    // Slot 12: Teleport To Player
     gui.setItem(
         12,
         ItemBuilder.of(Material.ENDER_PEARL)
@@ -191,7 +186,6 @@ public class InfoGUIManager {
           staff.sendMessage(MessageFormatter.formatInfo("Moderation", msg));
         });
 
-    // Slot 13: Teleport Player Here
     gui.setItem(
         13,
         ItemBuilder.of(Material.ENDER_EYE)
@@ -213,7 +207,6 @@ public class InfoGUIManager {
           target.sendMessage(MessageFormatter.formatInfo("Moderation", msgTarget));
         });
 
-    // Slot 14: Freeze / Unfreeze
     gui.setItem(
         14,
         ItemBuilder.of(isFrozen ? Material.PACKED_ICE : Material.ICE)
@@ -229,7 +222,6 @@ public class InfoGUIManager {
           renderInfoGUI(gui, staff, target);
         });
 
-    // Slot 15: Toggle Flight
     gui.setItem(
         15,
         ItemBuilder.of(Material.FEATHER)
@@ -262,7 +254,6 @@ public class InfoGUIManager {
           renderInfoGUI(gui, staff, target);
         });
 
-    // Slot 16: Copy UUID
     gui.setItem(
         16,
         ItemBuilder.of(Material.NAME_TAG)
@@ -286,7 +277,6 @@ public class InfoGUIManager {
                                       "Click to copy UUID to clipboard", NamedTextColor.GRAY)))));
         });
 
-    // Row 3: Close Button
     gui.setCloseButton();
   }
 }

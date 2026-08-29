@@ -48,7 +48,7 @@ public class StatsGUIManager {
 
   private void renderStatsGUI(
       @NotNull GUIWindow gui, @NotNull Player viewer, @NotNull OfflinePlayer target) {
-    // Row 1 Center (Slot 4): Target Player Skull
+
     List<Component> skullLore = new ArrayList<>();
 
     String targetName =
@@ -107,11 +107,10 @@ public class StatsGUIManager {
             .componentLore(skullLore);
     gui.setItem(4, headItem.build(), null);
 
-    // Slot layout for statistics
     int[] slots = {
-      10, 11, 12, 13, 14, 15, 16, // Row 2
-      19, 20, 21, 22, 23, 24, 25, // Row 3
-      28, 29, 30, 31 // Row 4
+      10, 11, 12, 13, 14, 15, 16,
+      19, 20, 21, 22, 23, 24, 25,
+      28, 29, 30, 31
     };
 
     StatisticType[] types = StatisticType.values();
@@ -138,7 +137,6 @@ public class StatsGUIManager {
           null);
     }
 
-    // Row 6: Close Button
     gui.setCloseButton();
   }
 }

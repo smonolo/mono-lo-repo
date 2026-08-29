@@ -47,7 +47,6 @@ public class TabListManager implements Listener {
       rankService.addGlobalUpdateListener(this::updateAll);
     }
 
-    // Repeating sync timer to ensure accurate ping, player count & rank updates
     Bukkit.getScheduler().runTaskTimer(plugin, this::updateAll, 20L, 20L);
 
     updateAll();

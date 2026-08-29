@@ -32,7 +32,7 @@ public class TeamService implements Listener {
   private static final long INVITE_EXPIRATION_MS = 60_000L;
 
   private final Map<UUID, Team> playerTeams = new ConcurrentHashMap<>();
-  // Target UUID -> Map of Inviter UUID -> Expiration timestamp
+
   private final Map<UUID, Map<UUID, Long>> pendingInvites = new ConcurrentHashMap<>();
 
   private JavaPlugin plugin;
@@ -51,7 +51,6 @@ public class TeamService implements Listener {
     this.sidebarManager = sidebarManager;
     Bukkit.getPluginManager().registerEvents(this, plugin);
 
-    // Periodic cleanup of expired invites
     Bukkit.getScheduler().runTaskTimer(plugin, this::cleanupExpiredInvites, 100L, 100L);
   }
 
@@ -171,7 +170,7 @@ public class TeamService implements Listener {
         }
       }
     } else {
-      // Find latest valid unexpired invite
+
       long latestTime = 0;
       for (Map.Entry<UUID, Long> entry : invites.entrySet()) {
         if (entry.getValue() > now && entry.getValue() > latestTime) {
@@ -353,7 +352,7 @@ public class TeamService implements Listener {
 
   private void checkTeamDisband(@NotNull Team team) {
     if (team.size() < 2) {
-      // Disband remaining members
+
       for (UUID memberUuid : team.getMembers()) {
         playerTeams.remove(memberUuid);
         Player member = Bukkit.getPlayer(memberUuid);
@@ -448,7 +447,7 @@ public class TeamService implements Listener {
     if (event.getEntity() instanceof Player player) {
       Team team = getTeam(player.getUniqueId());
       if (team != null && plugin != null) {
-        // Run next tick to allow damage to apply to health
+
         Bukkit.getScheduler().runTask(plugin, () -> updateTeamSidebars(team));
       }
     }

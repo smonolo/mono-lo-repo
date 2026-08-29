@@ -39,7 +39,6 @@ public class DatabaseInfoCommand extends EssentialCommand {
         MessageFormatter.format(
             getToolName(), "Database & Connection Overview:", MessageType.INFO, false));
 
-    // 1. Status & Engine
     Component statusComp =
         info.connected()
             ? Component.text("Connected", NamedTextColor.GREEN)
@@ -54,7 +53,6 @@ public class DatabaseInfoCommand extends EssentialCommand {
             .append(Component.text("PostgreSQL", NamedTextColor.WHITE));
     builder.append(Component.newline()).append(statusLine);
 
-    // 2. Endpoint & Schema
     Component endpointLine =
         Component.text("- ", NamedTextColor.DARK_GRAY)
             .append(Component.text("Endpoint: ", NamedTextColor.GRAY))
@@ -66,7 +64,6 @@ public class DatabaseInfoCommand extends EssentialCommand {
             .append(Component.text(info.schema(), NamedTextColor.GOLD));
     builder.append(Component.newline()).append(endpointLine);
 
-    // 3. User & SSL
     Component userLine =
         Component.text("- ", NamedTextColor.DARK_GRAY)
             .append(Component.text("User: ", NamedTextColor.GRAY))
@@ -79,7 +76,6 @@ public class DatabaseInfoCommand extends EssentialCommand {
                     info.ssl() ? NamedTextColor.GREEN : NamedTextColor.GRAY));
     builder.append(Component.newline()).append(userLine);
 
-    // 4. Connection Pool (HikariCP)
     Component poolLine =
         Component.text("- ", NamedTextColor.DARK_GRAY)
             .append(Component.text("Pool (HikariCP): ", NamedTextColor.GRAY))
@@ -97,7 +93,6 @@ public class DatabaseInfoCommand extends EssentialCommand {
                     NamedTextColor.DARK_GRAY));
     builder.append(Component.newline()).append(poolLine);
 
-    // 5. Latency / Ping
     NamedTextColor pingColor;
     if (!info.connected() || info.pingMs() < 0) {
       pingColor = NamedTextColor.RED;

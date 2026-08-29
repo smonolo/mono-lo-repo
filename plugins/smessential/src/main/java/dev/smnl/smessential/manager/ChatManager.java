@@ -162,10 +162,6 @@ public class ChatManager implements Listener {
 
     event.renderer((source, sourceDisplayName, message, viewer) -> finalChatMessage);
 
-    // Bedrock (Geyser/Floodgate) clients cannot parse custom prefixes and colors in player chat
-    // packets (TextPacket.Type.CHAT).
-    // Send rendered chat directly as system message (TextPacket.Type.RAW) to all Bedrock viewers
-    // and remove them from event.viewers().
     Set<Audience> viewers = event.viewers();
     Set<Player> bedrockViewers = new HashSet<>();
     for (Audience viewer : viewers) {

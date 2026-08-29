@@ -1,7 +1,5 @@
 'use client'
 
-/* eslint-disable @next/next/no-img-element */
-
 import Link from 'next/link'
 import { useState } from 'react'
 import type { StatisticLeaderboard } from '@/types/minecraft'
@@ -76,7 +74,6 @@ export default function LeaderboardsView({ leaderboards }: Props) {
 
   return (
     <div className="space-y-8">
-      {/* Category Pills */}
       <div className="flex flex-wrap items-center gap-2">
         {categories.map(cat => {
           const isActive = cat.id === selectedCategory
@@ -96,7 +93,6 @@ export default function LeaderboardsView({ leaderboards }: Props) {
         })}
       </div>
 
-      {/* Leaderboards Grid */}
       {displayedLeaderboards.length > 0 ? (
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           {displayedLeaderboards.map(board => (

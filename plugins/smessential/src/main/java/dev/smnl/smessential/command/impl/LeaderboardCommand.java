@@ -132,8 +132,7 @@ public class LeaderboardCommand extends EssentialCommand {
     BoardSize size = new BoardSize(1, 1);
 
     if (args.length >= 6 && isCoordinate(args[3])) {
-      // Coordinates provided explicitly: /leaderboard create <id> <stat> <x> <y> <z> [world] [size]
-      // [limit]
+
       World targetWorld = null;
       int nextArg = 6;
       if (args.length > nextArg
@@ -182,7 +181,7 @@ public class LeaderboardCommand extends EssentialCommand {
         }
       }
     } else {
-      // In-game wall target creation: /leaderboard create <id> <stat> [size] [limit]
+
       if (!(sender instanceof Player player)) {
         sendError(
             sender,

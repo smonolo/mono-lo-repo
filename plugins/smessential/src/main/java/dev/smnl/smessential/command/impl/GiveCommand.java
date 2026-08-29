@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class GiveCommand extends EssentialCommand {
 
-  private static final int MAX_AMOUNT = 64 * 36; // Full inventory maximum (2304)
+  private static final int MAX_AMOUNT = 64 * 36;
   private static final List<String> ITEM_NAMES = new ArrayList<>();
 
   static {

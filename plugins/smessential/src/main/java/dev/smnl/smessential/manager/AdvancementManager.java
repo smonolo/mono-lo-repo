@@ -33,7 +33,6 @@ public class AdvancementManager implements Listener {
     Advancement advancement = event.getAdvancement();
     AdvancementDisplay display = advancement.getDisplay();
 
-    // Do not announce if display is missing or configured not to announce to chat
     if (display == null || !display.doesAnnounceToChat()) {
       event.message(null);
       return;

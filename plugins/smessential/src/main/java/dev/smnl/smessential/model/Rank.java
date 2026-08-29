@@ -184,7 +184,7 @@ public class Rank implements Comparable<Rank> {
     if (permissions.contains(lower)) {
       return true;
     }
-    // Check wildcard patterns
+
     for (String perm : permissions) {
       if (perm.endsWith(".*")) {
         String base = perm.substring(0, perm.length() - 2);
@@ -258,7 +258,7 @@ public class Rank implements Comparable<Rank> {
 
   @Override
   public int compareTo(@NotNull Rank other) {
-    // Higher weight comes first
+
     int cmp = Integer.compare(other.weight, this.weight);
     if (cmp != 0) return cmp;
     return this.id.compareToIgnoreCase(other.id);

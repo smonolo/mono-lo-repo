@@ -1,10 +1,12 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import SearchBar from '@/components/SearchBar'
 
 export default function Navbar() {
+  const pathname = usePathname()
   const [onlineCount, setOnlineCount] = useState<number | null>(null)
   const [isOnline, setIsOnline] = useState<boolean>(true)
 
@@ -46,30 +48,38 @@ export default function Navbar() {
     }
   }, [])
 
+  const isLeaderboards = pathname?.startsWith('/leaderboards')
+
   return (
     <header className="bg-sm-black w-full border-b border-gray-800">
-      <div className="mx-auto flex h-14 w-full items-center justify-between px-4 md:px-8">
-        <div className="flex items-center gap-x-6">
+      <div className="mx-auto flex h-14 w-full items-center justify-between gap-x-2 px-3 sm:px-6 md:px-8">
+        <div className="flex items-center gap-x-3 sm:gap-x-5">
           <Link
             href="/"
-            className="flex items-center gap-x-2 transition-opacity hover:opacity-80"
+            className="flex shrink-0 items-center gap-x-2 transition-opacity hover:opacity-80"
             aria-label="Minecraft Home"
           >
-            <div className="bg-sm-blue h-6 w-6 rounded" />
-            <span className="text-sm font-medium text-white">Minecraft</span>
+            <div className="bg-sm-blue h-5 w-5 rounded sm:h-6 sm:w-6" />
+            <span className="text-xs font-medium text-white sm:text-sm">
+              Minecraft
+            </span>
           </Link>
 
           <Link
             href="/leaderboards"
-            className="text-xs font-medium text-neutral-400 transition-colors hover:text-white sm:text-sm"
+            className={`shrink-0 text-xs font-medium transition-colors sm:text-sm ${
+              isLeaderboards
+                ? 'text-white'
+                : 'text-neutral-400 hover:text-white'
+            }`}
           >
             Leaderboards
           </Link>
         </div>
 
-        <div className="flex items-center gap-x-3 sm:gap-x-5">
+        <div className="flex items-center gap-x-2 sm:gap-x-4">
           {onlineCount !== null && (
-            <div className="flex items-center gap-x-1.5 text-xs text-gray-400">
+            <div className="flex shrink-0 items-center gap-x-1.5 text-xs text-gray-400">
               <span
                 className={`h-2 w-2 rounded-full ${
                   isOnline && onlineCount > 0
@@ -81,15 +91,15 @@ export default function Navbar() {
               />
               <span>
                 {onlineCount}{' '}
-                <span className="hidden sm:inline">
+                <span className="hidden md:inline">
                   {onlineCount === 1 ? 'player' : 'players'} online
                 </span>
               </span>
             </div>
           )}
 
-          <div className="w-36 sm:w-56">
-            <SearchBar size="sm" placeholder="Search username..." />
+          <div className="xs:w-36 w-28 shrink-0 sm:w-48 md:w-56">
+            <SearchBar size="sm" placeholder="Search..." />
           </div>
         </div>
       </div>

@@ -41,7 +41,6 @@ public class SleepManager implements Listener {
     Player player = event.getPlayer();
     World world = player.getWorld();
 
-    // Delayed by 1 tick so Bukkit updates sleeping state
     Bukkit.getScheduler()
         .runTask(
             plugin,

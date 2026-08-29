@@ -87,12 +87,10 @@ public class RankPermissible extends PermissibleBase {
     String lower = name.trim().toLowerCase(Locale.ROOT);
     Set<String> perms = rankService.getEffectivePermissionsForPlayer(player.getUniqueId());
 
-    // 1. Explicit direct negation in rank (e.g. -smessential.command.msg)
     if (perms.contains("-" + lower)) {
       return false;
     }
 
-    // 2. Wildcard negation in rank (e.g. -plugman.*)
     for (String perm : perms) {
       String p = perm.trim().toLowerCase(Locale.ROOT);
       if (p.startsWith("-")) {
@@ -114,22 +112,18 @@ public class RankPermissible extends PermissibleBase {
       }
     }
 
-    // 3. Rank permission check (exact, wildcard foo.*, foo*, or superuser *)
     if (rankService.hasPermission(player, lower)) {
       return true;
     }
 
-    // 4. For smessential.* permissions: if rank doesn't grant it, deny it
     if (lower.startsWith("smessential.")) {
       return false;
     }
 
-    // 5. Check super for attachment-specific or other plugin permissions
     if (super.isPermissionSet(name)) {
       return super.hasPermission(name);
     }
 
-    // 6. Check Bukkit registered permissions default
     Permission perm = Bukkit.getPluginManager().getPermission(name);
     if (perm != null) {
       if (perm.getDefault() == PermissionDefault.TRUE) {

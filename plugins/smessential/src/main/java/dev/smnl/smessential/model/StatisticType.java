@@ -192,7 +192,7 @@ public enum StatisticType {
         return type;
       }
     }
-    // Check aliases
+
     return switch (normalized) {
       case "playtime", "time_played", "played" -> PLAY_TIME;
       case "death" -> DEATHS;

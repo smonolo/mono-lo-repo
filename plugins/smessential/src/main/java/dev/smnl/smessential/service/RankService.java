@@ -39,7 +39,6 @@ public class RankService implements Listener {
   private final Map<UUID, String> playerCustomDisplayRanks = new ConcurrentHashMap<>();
   private final Map<UUID, PermissionAttachment> attachments = new ConcurrentHashMap<>();
 
-  // High-performance zero-GC in-memory caches
   private final Map<UUID, Rank> playerDisplayRankCache = new ConcurrentHashMap<>();
   private final Map<UUID, Set<String>> playerEffectivePermissionsCache = new ConcurrentHashMap<>();
   private final Map<String, Set<String>> rankEffectivePermissionsCache = new ConcurrentHashMap<>();
@@ -61,7 +60,6 @@ public class RankService implements Listener {
 
     Bukkit.getPluginManager().registerEvents(this, plugin);
 
-    // Apply permissions for all current online players
     for (Player player : Bukkit.getOnlinePlayers()) {
       applyPermissions(player);
     }
@@ -86,10 +84,9 @@ public class RankService implements Listener {
   }
 
   private void loadFromDatabase() {
-    // Load ranks from database
+
     Map<String, Rank> loadedRanks = databaseManager.loadAllRanks();
 
-    // Load direct permissions
     Map<String, Set<String>> loadedPerms = databaseManager.loadAllRankPermissions();
     for (Map.Entry<String, Set<String>> entry : loadedPerms.entrySet()) {
       Rank rank = loadedRanks.get(entry.getKey());
@@ -98,7 +95,6 @@ public class RankService implements Listener {
       }
     }
 
-    // Load inheritance (Primary ranks only)
     Map<String, Set<String>> loadedInheritance = databaseManager.loadAllRankInheritance();
     for (Map.Entry<String, Set<String>> entry : loadedInheritance.entrySet()) {
       Rank rank = loadedRanks.get(entry.getKey());
@@ -117,12 +113,10 @@ public class RankService implements Listener {
     this.ranks.clear();
     this.ranks.putAll(loadedRanks);
 
-    // Initial default ranks if none in DB
     if (this.ranks.isEmpty()) {
       createInitialDefaultRanks();
     }
 
-    // Load player assigned ranks from unified user ranks table
     this.playerPrimaryRanks.clear();
     this.playerSecondaryRanks.clear();
     Map<UUID, Set<String>> allUserRanks = databaseManager.loadAllUserRanks();
@@ -142,7 +136,6 @@ public class RankService implements Listener {
       }
     }
 
-    // Load custom player display ranks
     this.playerCustomDisplayRanks.clear();
     Map<UUID, String> allUserDisplayRanks = databaseManager.loadAllUserDisplayRanks();
     for (Map.Entry<UUID, String> entry : allUserDisplayRanks.entrySet()) {
@@ -200,7 +193,7 @@ public class RankService implements Listener {
             "[Admin]",
             100,
             false,
-            false, // Secondary rank
+            false,
             Set.of("smessential.command.administration", "*"));
     ranks.put(adminRank.getId(), adminRank);
     databaseManager.saveRank(adminRank);
@@ -252,7 +245,7 @@ public class RankService implements Listener {
         return rank;
       }
     }
-    // Fallback: lowest weight primary rank
+
     return ranks.values().stream()
         .filter(Rank::isPrimary)
         .min((r1, r2) -> Integer.compare(r1.getWeight(), r2.getWeight()))
@@ -342,7 +335,7 @@ public class RankService implements Listener {
         playerDisplayRankCache.put(uuid, customRank);
         return customRank;
       } else {
-        // Player no longer has this rank or rank was deleted
+
         playerCustomDisplayRanks.remove(uuid);
         if (plugin != null) {
           Bukkit.getScheduler()
@@ -461,7 +454,6 @@ public class RankService implements Listener {
       }
     }
 
-    // Validate custom display rank
     String customDisplay = playerCustomDisplayRanks.get(uuid);
     if (customDisplay != null && !hasRankAssigned(uuid, customDisplay)) {
       playerCustomDisplayRanks.remove(uuid);
@@ -637,10 +629,8 @@ public class RankService implements Listener {
           .runTaskAsynchronously(plugin, () -> databaseManager.deleteRank(lowerId));
     }
 
-    // Remove from custom display ranks
     playerCustomDisplayRanks.entrySet().removeIf(e -> e.getValue().equalsIgnoreCase(lowerId));
 
-    // Re-evaluate affected primary players
     Rank defaultRank = getDefaultRank();
     for (Map.Entry<UUID, String> entry : playerPrimaryRanks.entrySet()) {
       if (entry.getValue().equalsIgnoreCase(lowerId)) {
@@ -657,12 +647,10 @@ public class RankService implements Listener {
       }
     }
 
-    // Remove from all secondary sets
     for (Set<String> secSet : playerSecondaryRanks.values()) {
       secSet.remove(lowerId);
     }
 
-    // Recalculate all players
     recalculateAllOnlinePlayers();
     return true;
   }
@@ -709,7 +697,7 @@ public class RankService implements Listener {
     if (rank == null || parent == null) {
       return false;
     }
-    // Only primary ranks can participate in inheritance
+
     if (!rank.isPrimary() || !parent.isPrimary()) {
       return false;
     }
@@ -840,12 +828,11 @@ public class RankService implements Listener {
   }
 
   private boolean evaluatePermissionSet(@NotNull Set<String> perms, @NotNull String lower) {
-    // 1. Explicit direct negation
+
     if (perms.contains("-" + lower)) {
       return false;
     }
 
-    // 2. Wildcard negation check (e.g. -plugman.* or -smessential.command.*)
     for (String perm : perms) {
       String p = perm.trim().toLowerCase(Locale.ROOT);
       if (p.startsWith("-")) {
@@ -867,17 +854,14 @@ public class RankService implements Listener {
       }
     }
 
-    // 3. Superuser wildcard
     if (perms.contains("*") || perms.contains("'*'") || perms.contains("\"*\"")) {
       return true;
     }
 
-    // 4. Exact match
     if (perms.contains(lower)) {
       return true;
     }
 
-    // 5. Wildcard match (e.g. plugman.*, smessential.*, smessential.command.*)
     for (String perm : perms) {
       String p = perm.trim().toLowerCase(Locale.ROOT);
       if (p.startsWith("-")) continue;
@@ -960,7 +944,6 @@ public class RankService implements Listener {
       } catch (Throwable ignored) {
       }
 
-      // Gather all registered permissions and command permissions for wildcard matching
       Set<String> registered = new HashSet<>();
       for (Permission p : Bukkit.getPluginManager().getPermissions()) {
         registered.add(p.getName());
@@ -982,7 +965,6 @@ public class RankService implements Listener {
         }
       }
 
-      // Add common / well-known plugin permission nodes for PlugMan and vanilla commands
       registered.addAll(
           List.of(
               "plugman.admin",
@@ -1016,7 +998,6 @@ public class RankService implements Listener {
         boolean negate = trimmed.startsWith("-");
         String actualPerm = negate ? trimmed.substring(1).trim() : trimmed;
 
-        // Set the permission itself in attachment
         attachment.setPermission(actualPerm, !negate);
 
         if (actualPerm.endsWith(".*")) {
@@ -1181,7 +1162,6 @@ public class RankService implements Listener {
 
     Player player = event.getPlayer();
 
-    // Check namespace minecraft:
     if (root.startsWith("minecraft:")) {
       String subCmd = root.substring("minecraft:".length());
       String perm = "minecraft.command." + subCmd;
@@ -1195,7 +1175,6 @@ public class RankService implements Listener {
       }
     }
 
-    // Check namespace bukkit:
     if (root.startsWith("bukkit:")) {
       String subCmd = root.substring("bukkit:".length());
       String perm = "bukkit.command." + subCmd;
@@ -1209,7 +1188,6 @@ public class RankService implements Listener {
       }
     }
 
-    // Check vanilla command root
     if (VANILLA_MINECRAFT_COMMANDS.contains(root)) {
       String perm = "minecraft.command." + root;
       if (!hasPermission(player, perm)) {

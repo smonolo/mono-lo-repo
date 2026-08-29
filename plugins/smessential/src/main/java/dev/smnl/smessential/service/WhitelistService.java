@@ -373,7 +373,7 @@ public class WhitelistService implements Listener {
 
     WhitelistData entry = findWhitelistEntry(uuid, username);
     if (entry != null) {
-      // Sync missing uuid or username if it wasn't populated yet or changed
+
       boolean needsSync =
           entry.uuid() == null
               || entry.username() == null
@@ -394,7 +394,6 @@ public class WhitelistService implements Listener {
       return;
     }
 
-    // Check staff / bypass permissions via RankService
     if (rankService != null) {
       Rank rank = rankService.getPlayerRank(uuid);
       if (rankService.hasPermission(rank, "smessential.whitelist.bypass")) {

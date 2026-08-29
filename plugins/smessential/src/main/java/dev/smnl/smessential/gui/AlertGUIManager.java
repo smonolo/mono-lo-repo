@@ -27,7 +27,6 @@ public class AlertGUIManager {
 
     GUIWindow gui = new GUIWindow("Alert", 27);
 
-    // Slot 11: Top Banner (Toggle active/inactive like mute/unmute)
     if (hasActive) {
       String current = alertService.getBannerAlert();
       ItemBuilder clearItem =
@@ -59,9 +58,8 @@ public class AlertGUIManager {
           });
     }
 
-    // Only render Chat and All if a message is provided
     if (!message.isBlank()) {
-      // Slot 13: Chat (always sends to chat)
+
       gui.setItem(
           13,
           ItemBuilder.of(AlertTarget.CHAT.getMaterial())
@@ -74,7 +72,6 @@ public class AlertGUIManager {
             player.sendMessage(MessageFormatter.formatInfo("Administration", "Alert sent."));
           });
 
-      // Slot 15: All (sends to chat and sets/overwrites top banner)
       String allLore =
           hasActive
               ? "Sends alert to chat and overwrites active top banner"
@@ -92,7 +89,6 @@ public class AlertGUIManager {
           });
     }
 
-    // Close button
     gui.setCloseButton();
     gui.open(player);
   }

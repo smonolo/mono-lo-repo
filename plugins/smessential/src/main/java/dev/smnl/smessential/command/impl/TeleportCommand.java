@@ -36,7 +36,6 @@ public class TeleportCommand extends EssentialCommand {
       return;
     }
 
-    // Case 1: /teleport <player>
     if (args.length == 1) {
       if (!(sender instanceof Player player)) {
         sendError(sender, "Usage: /teleport <player1> <player2>");
@@ -56,7 +55,6 @@ public class TeleportCommand extends EssentialCommand {
       return;
     }
 
-    // Case 2: /teleport <player1> <player2>
     if (args.length == 2) {
       Player target1 = PlayerUtils.findOnlinePlayer(args[0]);
       if (target1 == null) {
@@ -86,7 +84,6 @@ public class TeleportCommand extends EssentialCommand {
       return;
     }
 
-    // Case 3: /teleport <x> <y> <z>
     if (args.length == 3) {
       if (!(sender instanceof Player player)) {
         sendError(sender, "Usage: /teleport <player> <x> <y> <z>");
@@ -112,7 +109,6 @@ public class TeleportCommand extends EssentialCommand {
       return;
     }
 
-    // Case 4: /teleport <player> <x> <y> <z>
     if (args.length == 4) {
       Player target = PlayerUtils.findOnlinePlayer(args[0]);
       if (target == null) {

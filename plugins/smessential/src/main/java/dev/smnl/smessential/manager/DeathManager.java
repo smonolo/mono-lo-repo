@@ -114,19 +114,16 @@ public class DeathManager implements Listener {
     Entity causingEntity = resolveCausingEntity(damageSource, lastDamage);
     Entity directEntity = resolveDirectEntity(damageSource, lastDamage);
 
-    // 1. Direct or indirect Player Kill
     if (killer != null || causingEntity instanceof Player) {
       Player attackingPlayer = killer != null ? killer : (Player) causingEntity;
       return buildPlayerKillMessage(
           victimDisplay, attackingPlayer, directEntity, cause, damageSource);
     }
 
-    // 2. Mob / Non-Player Entity Kill
     if (causingEntity != null) {
       return buildMobKillMessage(victimDisplay, causingEntity, directEntity, cause, damageSource);
     }
 
-    // 3. Environmental / Natural Causes
     return buildEnvironmentalDeathMessage(victimDisplay, cause, damageSource);
   }
 

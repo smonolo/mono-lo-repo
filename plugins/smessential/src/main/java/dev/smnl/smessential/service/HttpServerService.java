@@ -47,7 +47,6 @@ public class HttpServerService {
   private int port;
   private String secret;
 
-  // Rate limiting and caching to safeguard in-game tick performance
   private final Map<String, RateLimitTracker> rateLimitMap = new ConcurrentHashMap<>();
   private final Map<String, CachedPayload> payloadCache = new ConcurrentHashMap<>();
 
