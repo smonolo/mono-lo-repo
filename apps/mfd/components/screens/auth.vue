@@ -20,50 +20,26 @@ onMounted(() => {
   authStore.initGoogleAuth()
 })
 
-const lowerButtonActions = computed(() => {
-  if (authStore.isAuthenticated) {
-    return {
-      lower8: {
-        label: 'Out',
-        action: () => authStore.logout(),
-      },
-      lower9: useMainButtonConfig(),
-    }
-  }
-
-  return {
-    lower8: {
-      label: 'In',
-      action: triggerGooglePrompt,
+const lowerActions = reactive({
+  lower8: {
+    label: 'In',
+    action: () => {
+      if (authStore.isAuthenticated) {
+        authStore.logout()
+      } else {
+        triggerGooglePrompt()
+      }
     },
-    lower9: useMainButtonConfig(),
-  }
-})
-
-defineExpose<ScreenConfig>({
-  lowerButtonActions: {
-    lower8: {
-      label: 'In',
-      action: () => {
-        if (authStore.isAuthenticated) {
-          authStore.logout()
-        } else {
-          triggerGooglePrompt()
-        }
-      },
-    },
-    lower9: useMainButtonConfig(),
   },
+  lower9: useMainButtonConfig(),
 })
 
 watchEffect(() => {
-  // Update button label dynamically based on auth status
-  const exposeConfig = (getCurrentInstance()?.exposed as ScreenConfig)
-  if (exposeConfig?.lowerButtonActions?.lower8) {
-    exposeConfig.lowerButtonActions.lower8.label = authStore.isAuthenticated
-      ? 'Out'
-      : 'In'
-  }
+  lowerActions.lower8.label = authStore.isAuthenticated ? 'Out' : 'In'
+})
+
+defineExpose<ScreenConfig>({
+  lowerButtonActions: lowerActions,
 })
 
 const options = computed(() => {
