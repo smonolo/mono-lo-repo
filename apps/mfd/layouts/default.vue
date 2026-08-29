@@ -41,10 +41,12 @@ onMounted(async () => {
   <div class="relative">
     <MobileDisabled />
     <div
-      class="hidden h-screen select-none items-center justify-center bg-neutral-800 text-sm text-white xl:flex"
+      class="hidden min-h-screen select-none items-center justify-center bg-neutral-800 px-6 py-16 text-sm text-white xl:flex"
     >
-      <div class="flex h-[900px] w-[1030px]">
-        <div class="flex h-full w-[900px] flex-col justify-between">
+      <div
+        class="flex rounded-3xl bg-black px-36 py-16 shadow-2xl ring-1 ring-neutral-950"
+      >
+        <div class="flex h-[880px] w-[900px] flex-col justify-between">
           <section class="flex h-[100px] items-center justify-center">
             <Buttons :buttons="upperButtons" />
           </section>
@@ -69,7 +71,7 @@ onMounted(async () => {
             <Buttons type="controls" :buttons="lowerButtons" />
           </section>
         </div>
-        <aside class="flex w-[130px]">
+        <aside class="flex w-[150px]">
           <Buttons direction="vertical" :buttons="sideButtons" />
         </aside>
       </div>
