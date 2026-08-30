@@ -29,13 +29,10 @@ export default defineNuxtConfig({
   runtimeConfig: {
     adminEmail: process.env.ADMIN_EMAIL || '',
     sessionSecret: process.env.SESSION_SECRET || '',
-    smessentialApiUrl: process.env.SMESSENTIAL_API_URL || '',
-    smessentialApiSecret: process.env.SMESSENTIAL_API_SECRET || '',
+    minecraftApiUrl:
+      process.env.MINECRAFT_API_URL || 'https://minecraft-api.smnl.dev',
     public: {
-      googleClientId:
-        process.env.NUXT_PUBLIC_GOOGLE_CLIENT_ID ||
-        process.env.GOOGLE_CLIENT_ID ||
-        '',
+      googleClientId: process.env.GOOGLE_CLIENT_ID || '',
     },
   },
   postcss: {

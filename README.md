@@ -4,6 +4,7 @@
 [![Package Manager](https://img.shields.io/badge/npm-v11.2.0-cb3837?style=flat-square&logo=npm)](https://www.npmjs.com/)
 [![Nuxt 3](https://img.shields.io/badge/Nuxt-3.x-00DC82?style=flat-square&logo=nuxt.js)](https://nuxt.com/)
 [![Next.js 14](https://img.shields.io/badge/Next.js-14.x-000000?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![NestJS](https://img.shields.io/badge/NestJS-10.x-E0234E?style=flat-square&logo=nestjs)](https://nestjs.com/)
 [![Java 21](https://img.shields.io/badge/Java-21-ED8B00?style=flat-square&logo=openjdk)](https://openjdk.org/)
 [![PaperMC](https://img.shields.io/badge/PaperMC-1.21-1f2937?style=flat-square)](https://papermc.io/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v3_|_v4-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
@@ -15,11 +16,12 @@ A high-performance polyglot monorepo orchestrated with **Turborepo** and **npm w
 
 ## 🚀 Workspaces & Projects
 
-### Applications (`apps/`)
+### Applications & Microservices (`apps/`)
 
 | Application           | Path                                             | Framework / Tech Stack                             | Description                                            |
 | :-------------------- | :----------------------------------------------- | :------------------------------------------------- | :----------------------------------------------------- |
 | **`minecraft`**       | [`apps/minecraft`](./apps/minecraft)             | Next.js 14, React 18, Tailwind CSS v3, TypeScript  | Minecraft player profiles, stats & server leaderboards |
+| **`minecraft-api`**   | [`apps/minecraft-api`](./apps/minecraft-api)     | NestJS 10, PostgreSQL (`pg`), Throttler, RxJS      | Gateway API (`minecraft-api.smnl.dev`) for Minecraft   |
 | **`cdn`**             | [`apps/cdn`](./apps/cdn)                         | NestJS 10, RxJS, Express                           | Backend REST API & media asset CDN microservice        |
 | **`cdn-ui`**          | [`apps/cdn-ui`](./apps/cdn-ui)                   | Nuxt 3, Vue 3, Tailwind CSS v4, Vue Query          | Admin dashboard UI for managing CDN files and assets   |
 | **`site`**            | [`apps/site`](./apps/site)                       | Nuxt 3, Vue 3, Tailwind CSS v4, Nuxt Icons & Fonts | Personal website & digital portfolio                   |
@@ -52,16 +54,23 @@ graph TD
         CDN_UI["cdn-ui (Nuxt 3 + Tailwind v4)"]
     end
 
-    subgraph Backends["Backends & Plugins"]
+    subgraph Gateways["Gateway APIs & Microservices"]
         CDN["cdn (NestJS API)"]
+        MC_API["minecraft-api (NestJS Gateway)"]
+    end
+
+    subgraph StorageAndPlugin["Data & Game Servers"]
+        PG[("PostgreSQL Database")]
         SMESSENTIAL["smessential (PaperMC / Java)"]
     end
 
     Root --> Frontends
-    Root --> Backends
-    MINECRAFT -. Stats API .-> SMESSENTIAL
-    MFD -. Admin API .-> SMESSENTIAL
+    Root --> Gateways
+    MINECRAFT -. Stats API .-> MC_API
+    MFD -. Admin API .-> MC_API
     CDN_UI -. Management API .-> CDN
+    MC_API -->|Direct DB Queries| PG
+    MC_API -->|Cached Telemetry/Live State| SMESSENTIAL
 ```
 
 ---
@@ -102,7 +111,8 @@ Or run a specific application:
 
 | Application         | Command                       |
 | :------------------ | :---------------------------- |
-| **Minecraft**       | `npm run dev:minecraft`       |
+| **Minecraft Web**   | `npm run dev:minecraft`       |
+| **Minecraft API**   | `npm run dev:minecraft-api`   |
 | **CDN API**         | `npm run dev:cdn`             |
 | **CDN UI**          | `npm run dev:cdn-ui`          |
 | **Site**            | `npm run dev:site`            |
@@ -122,15 +132,16 @@ npm run build
 Or build a specific workspace:
 
 ```bash
-npm run build:minecraft       # Build Minecraft web app
-npm run build:smessential     # Build SMEssential Paper plugin JAR
-npm run build:cdn-ui          # Build CDN UI
-npm run build:site            # Build Site
-npm run build:website         # Build Website
-npm run build:resume          # Build Resume
+npm run build:minecraft     # Build Minecraft web app
+npm run build:minecraft-api # Build Minecraft Gateway API
+npm run build:smessential   # Build SMEssential Paper plugin JAR
+npm run build:cdn-ui        # Build CDN UI
+npm run build:site          # Build Site
+npm run build:website       # Build Website
+npm run build:resume        # Build Resume
 npm run build:resume-template # Build Resume Template
-npm run build:mfd             # Build MFD
-npm run build:dev             # Build CDN API
+npm run build:mfd           # Build MFD
+npm run build:dev           # Build CDN API
 ```
 
 ### Code Formatting
@@ -163,6 +174,7 @@ mono-lo-repo/
 │   ├── cdn-ui/                  # Nuxt 3 admin interface for CDN
 │   ├── mfd/                     # Nuxt 3 multi-function dashboard
 │   ├── minecraft/               # Next.js 14 Minecraft stats & leaderboards site
+│   ├── minecraft-api/           # NestJS Gateway API (minecraft-api.smnl.dev)
 │   ├── resume/                  # Nuxt 3 online CV / resume
 │   ├── resume-template/         # ATS-optimized static HTML resume template
 │   ├── site/                    # Nuxt 3 personal website & portfolio

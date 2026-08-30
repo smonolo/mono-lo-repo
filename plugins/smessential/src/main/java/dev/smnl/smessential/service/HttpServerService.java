@@ -79,6 +79,12 @@ public class HttpServerService {
       server = HttpServer.create(new InetSocketAddress(host, port), 0);
       server.setExecutor(executor);
 
+      server.createContext("/v1/status", new StatusHandler());
+      server.createContext("/v1/players", new PlayersListHandler());
+      server.createContext("/v1/player", new SinglePlayerHandler());
+      server.createContext("/v1/leaderboards", new LeaderboardsHandler());
+      server.createContext("/v1/leaderboard", new LeaderboardsHandler());
+
       server.createContext("/api/status", new StatusHandler());
       server.createContext("/api/players", new PlayersListHandler());
       server.createContext("/api/player", new SinglePlayerHandler());
@@ -312,7 +318,7 @@ public class HttpServerService {
 
       long now = System.currentTimeMillis();
       CachedPayload cached = payloadCache.get("players_list");
-      if (cached != null && (now - cached.timestamp()) < 10000L) {
+      if (cached != null && (now - cached.timestamp()) < 3000L) {
         sendRawBytesResponse(exchange, 200, cached.data());
         return;
       }
@@ -327,7 +333,7 @@ public class HttpServerService {
       }
 
       List<JsonObject> playerObjects = new ArrayList<>();
-      int onlineCount = 0;
+      int onlineCount = Bukkit.getOnlinePlayers().size();
 
       for (UUID uuid : allUuids) {
         Player onlinePlayer = Bukkit.getPlayer(uuid);

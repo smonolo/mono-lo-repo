@@ -12,6 +12,9 @@
     "minecraft#build": {
       "outputs": [".next/**", "!.next/cache/**"]
     },
+    "minecraft-api#build": {
+      "outputs": ["dist/**"]
+    },
     "smessential#build": {
       "outputs": ["build/libs/**"]
     }

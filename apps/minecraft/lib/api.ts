@@ -8,24 +8,15 @@ import type {
 
 export function getApiConfig() {
   const rawApiUrl =
-    process.env.SMESSENTIAL_API_URL ||
-    process.env.NEXT_PUBLIC_SMESSENTIAL_API_URL ||
-    'http://127.0.0.1:25580'
+    process.env.MINECRAFT_API_URL || 'https://minecraft-api.smnl.dev'
   const apiUrl = rawApiUrl
     .trim()
     .replace(/^["']|["']$/g, '')
     .replace(/\/$/, '')
 
-  const rawSecret =
-    process.env.SMESSENTIAL_API_SECRET ||
-    process.env.NEXT_PUBLIC_SMESSENTIAL_API_SECRET ||
-    'smessential-secret-key'
-  const apiSecret = rawSecret.trim().replace(/^["']|["']$/g, '')
-
-  return { apiUrl, apiSecret }
+  return { apiUrl }
 }
 
-// In-memory cache & request deduplication to protect SMEssential Minecraft plugin
 type CacheEntry<T> = {
   data: T
   expiresAt: number
@@ -58,7 +49,6 @@ async function cachedFetch<T>(
     })
     .catch(err => {
       inFlightRequests.delete(key)
-      // Stale-if-error fallback
       if (cached) {
         return cached.data
       }
@@ -78,6 +68,7 @@ async function fetchWithTimeout(
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs)
   try {
     const res = await fetch(url, {
+      cache: 'no-store',
       ...options,
       signal: controller.signal,
     })
@@ -90,14 +81,12 @@ async function fetchWithTimeout(
 export async function fetchOnlinePlayers(): Promise<MinecraftPlayersResponse> {
   return cachedFetch<MinecraftPlayersResponse>(
     'players_list',
-    15000, // 15 seconds cache
+    3000,
     async () => {
-      const { apiUrl, apiSecret } = getApiConfig()
+      const { apiUrl } = getApiConfig()
 
       try {
-        const res = await fetchWithTimeout(`${apiUrl}/api/players`, {
-          headers: { Authorization: `Bearer ${apiSecret}` },
-        })
+        const res = await fetchWithTimeout(`${apiUrl}/v1/players`)
 
         if (!res.ok) {
           return {
@@ -128,7 +117,7 @@ export async function fetchOnlinePlayers(): Promise<MinecraftPlayersResponse> {
           players: [],
           count: 0,
           onlineCount: 0,
-          error: err?.message || 'Minecraft server is offline or unreachable',
+          error: err?.message || 'Failed to reach Minecraft server',
         }
       }
     }
@@ -138,29 +127,24 @@ export async function fetchOnlinePlayers(): Promise<MinecraftPlayersResponse> {
 export async function fetchPlayerByUuid(
   uuid: string
 ): Promise<PlayerData | null> {
+  if (!uuid) return null
   const cacheKey = `player_uuid_${uuid.toLowerCase()}`
-  return cachedFetch<PlayerData | null>(
-    cacheKey,
-    30000, // 30 seconds cache
-    async () => {
-      const { apiUrl, apiSecret } = getApiConfig()
 
-      try {
-        const res = await fetchWithTimeout(
-          `${apiUrl}/api/player?uuid=${encodeURIComponent(uuid)}`,
-          {
-            headers: { Authorization: `Bearer ${apiSecret}` },
-          }
-        )
+  return cachedFetch<PlayerData | null>(cacheKey, 30000, async () => {
+    const { apiUrl } = getApiConfig()
 
-        if (!res.ok) return null
-        const data: SinglePlayerResponse = await res.json()
-        return data?.player || null
-      } catch {
-        return null
-      }
+    try {
+      const res = await fetchWithTimeout(
+        `${apiUrl}/v1/player?uuid=${encodeURIComponent(uuid)}`
+      )
+
+      if (!res.ok) return null
+      const data: SinglePlayerResponse = await res.json()
+      return data?.player || null
+    } catch {
+      return null
     }
-  )
+  })
 }
 
 export async function fetchPlayer(query: string): Promise<PlayerData | null> {
@@ -177,54 +161,43 @@ export async function fetchPlayer(query: string): Promise<PlayerData | null> {
   }
 
   const cacheKey = `player_name_${trimmed.toLowerCase()}`
-  return cachedFetch<PlayerData | null>(
-    cacheKey,
-    30000, // 30 seconds cache
-    async () => {
-      const { apiUrl, apiSecret } = getApiConfig()
+  return cachedFetch<PlayerData | null>(cacheKey, 30000, async () => {
+    const { apiUrl } = getApiConfig()
 
-      // 1. Direct name query on SMEssential backend API
-      try {
-        const res = await fetchWithTimeout(
-          `${apiUrl}/api/player?name=${encodeURIComponent(trimmed)}`,
-          {
-            headers: { Authorization: `Bearer ${apiSecret}` },
-          }
-        )
-        if (res.ok) {
-          const data: SinglePlayerResponse = await res.json()
-          if (data?.player) return data.player
-        }
-      } catch {}
+    try {
+      const res = await fetchWithTimeout(
+        `${apiUrl}/v1/player?name=${encodeURIComponent(trimmed)}`
+      )
+      if (res.ok) {
+        const data: SinglePlayerResponse = await res.json()
+        if (data?.player) return data.player
+      }
+    } catch {}
 
-      // 2. Check players list from SMEssential
-      try {
-        const playersData = await fetchOnlinePlayers()
-        const match = playersData.players?.find(
-          p => p.username.toLowerCase() === trimmed.toLowerCase()
-        )
-        if (match?.uuid) {
-          const player = await fetchPlayerByUuid(match.uuid)
-          if (player) return player
-        }
-      } catch {}
+    try {
+      const playersData = await fetchOnlinePlayers()
+      const match = playersData.players?.find(
+        p => p.username.toLowerCase() === trimmed.toLowerCase()
+      )
+      if (match?.uuid) {
+        const player = await fetchPlayerByUuid(match.uuid)
+        if (player) return player
+      }
+    } catch {}
 
-      return null
-    }
-  )
+    return null
+  })
 }
 
 export async function fetchLeaderboards(): Promise<LeaderboardsResponse> {
   return cachedFetch<LeaderboardsResponse>(
     'leaderboards_all',
-    30000, // 30 seconds cache
+    30000,
     async () => {
-      const { apiUrl, apiSecret } = getApiConfig()
+      const { apiUrl } = getApiConfig()
 
       try {
-        const res = await fetchWithTimeout(`${apiUrl}/api/leaderboards`, {
-          headers: { Authorization: `Bearer ${apiSecret}` },
-        })
+        const res = await fetchWithTimeout(`${apiUrl}/v1/leaderboards`)
 
         if (!res.ok) {
           return {
