@@ -46,7 +46,10 @@ permissions:
     default: true
   smessential.command.msg:
     description: Allows execution of private messaging commands
-    default: false
+    default: true
+  smessential.command.seed:
+    description: Allows execution of the seed command
+    default: true
   smessential.command.support:
     description: Allows sending support requests to staff
     default: false

@@ -149,7 +149,7 @@ public class InfoGUIManager {
 
     if (invseeGUIManager != null) {
       gui.setItem(
-          10,
+          11,
           ItemBuilder.of(Material.CHEST)
               .name("View Inventory", NamedTextColor.GOLD)
               .lore("Click to view inventory and equipment silently")
@@ -160,7 +160,7 @@ public class InfoGUIManager {
     }
 
     gui.setItem(
-        11,
+        12,
         ItemBuilder.of(Material.ANVIL)
             .name("Punish", NamedTextColor.GOLD)
             .lore("Click to open punishment menu")
@@ -171,7 +171,7 @@ public class InfoGUIManager {
         });
 
     gui.setItem(
-        12,
+        13,
         ItemBuilder.of(Material.ENDER_PEARL)
             .name("Teleport To", NamedTextColor.GOLD)
             .lore("Click to teleport to " + target.getName())
@@ -187,7 +187,7 @@ public class InfoGUIManager {
         });
 
     gui.setItem(
-        13,
+        14,
         ItemBuilder.of(Material.ENDER_EYE)
             .name("Teleport Here", NamedTextColor.GOLD)
             .lore("Click to teleport " + target.getName() + " to you")
@@ -205,21 +205,6 @@ public class InfoGUIManager {
                   .append(PlayerUtils.getGeneralDisplayName(staff))
                   .append(Component.text(".", NamedTextColor.GRAY));
           target.sendMessage(MessageFormatter.formatInfo("Moderation", msgTarget));
-        });
-
-    gui.setItem(
-        14,
-        ItemBuilder.of(isFrozen ? Material.PACKED_ICE : Material.ICE)
-            .name(
-                isFrozen ? "Unfreeze" : "Freeze",
-                isFrozen ? NamedTextColor.GREEN : NamedTextColor.GOLD)
-            .lore(
-                isFrozen ? "Status: FROZEN" : "Status: NORMAL",
-                "Click to " + (isFrozen ? "unfreeze" : "freeze") + " player")
-            .build(),
-        event -> {
-          freezeService.toggleFreeze(target);
-          renderInfoGUI(gui, staff, target);
         });
 
     gui.setItem(

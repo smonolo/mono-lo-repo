@@ -24,6 +24,7 @@ import dev.smnl.smessential.command.impl.PingCommand;
 import dev.smnl.smessential.command.impl.PunishCommand;
 import dev.smnl.smessential.command.impl.RankCommand;
 import dev.smnl.smessential.command.impl.ReplyCommand;
+import dev.smnl.smessential.command.impl.SeedCommand;
 import dev.smnl.smessential.command.impl.ServerInfoCommand;
 import dev.smnl.smessential.command.impl.SpectateCommand;
 import dev.smnl.smessential.command.impl.StaffChatCommand;
@@ -230,6 +231,7 @@ public final class SMEssential extends JavaPlugin {
         new WeatherCommand(),
         new TimeCommand(),
         new DifficultyCommand(),
+        new SeedCommand(),
         new GamemodeCommand(),
         new GamemodeCommand.QuickCreative(),
         new GamemodeCommand.QuickSurvival(),

@@ -17,7 +17,7 @@ type Props = {
 }
 
 type TypeFilter = 'ALL' | 'BAN' | 'MUTE' | 'KICK' | 'WARN' | 'FREEZE'
-type StatusFilter = 'ALL' | 'ACTIVE' | 'EXPIRED' | 'PARDONED'
+type StatusFilter = 'ALL' | 'ACTIVE' | 'ISSUED' | 'EXPIRED' | 'PARDONED'
 
 export default function PunishmentsView({ initialPunishments }: Props) {
   const [search, setSearch] = useState<string>('')
@@ -105,6 +105,7 @@ export default function PunishmentsView({ initialPunishments }: Props) {
   const statusOptions: { id: StatusFilter; label: string }[] = [
     { id: 'ALL', label: 'All Status' },
     { id: 'ACTIVE', label: 'Active Only' },
+    { id: 'ISSUED', label: 'Issued' },
     { id: 'EXPIRED', label: 'Expired' },
     { id: 'PARDONED', label: 'Pardoned' },
   ]
@@ -274,6 +275,8 @@ export default function PunishmentsView({ initialPunishments }: Props) {
                         <td className="whitespace-nowrap px-4 py-3 text-neutral-400">
                           {p.expires_at && p.expires_at > 0
                             ? formatDate(p.expires_at)
+                            : status === 'ISSUED'
+                            ? 'N/A'
                             : 'Permanent'}
                         </td>
                         <td className="px-4 py-3">

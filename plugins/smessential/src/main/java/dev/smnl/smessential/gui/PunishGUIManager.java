@@ -1,17 +1,11 @@
 package dev.smnl.smessential.gui;
 
 import dev.smnl.smessential.database.DatabaseManager;
-import dev.smnl.smessential.database.DatabaseManager.BanData;
-import dev.smnl.smessential.database.DatabaseManager.MuteData;
 import dev.smnl.smessential.service.BanService;
 import dev.smnl.smessential.service.FreezeService;
 import dev.smnl.smessential.service.MuteService;
 import dev.smnl.smessential.util.MessageFormatter;
-import dev.smnl.smessential.util.MessageFormatter.MessageType;
 import dev.smnl.smessential.util.PlayerUtils;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -22,9 +16,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class PunishGUIManager {
-
-  private static final DateTimeFormatter DATE_FORMATTER =
-      DateTimeFormatter.ofPattern("dd-MM-yyyy").withZone(ZoneId.systemDefault());
 
   private final MuteService muteService;
   private final BanService banService;
@@ -144,7 +135,7 @@ public class PunishGUIManager {
     }
 
     gui.setItem(
-        20,
+        22,
         Material.PAPER,
         "Warn",
         NamedTextColor.GOLD,
@@ -152,17 +143,6 @@ public class PunishGUIManager {
         event -> {
           staff.closeInventory();
           executeWarn(staff, targetName, reason);
-        });
-
-    gui.setItem(
-        22,
-        Material.BOOK,
-        "Active Punishments",
-        NamedTextColor.GOLD,
-        null,
-        event -> {
-          staff.closeInventory();
-          executeCheckPunishments(staff, targetName);
         });
 
     gui.setCloseButton();
@@ -374,88 +354,5 @@ public class PunishGUIManager {
             .append(targetComp)
             .append(Component.text(" has been unbanned.", NamedTextColor.GRAY));
     staff.sendMessage(MessageFormatter.formatInfo("Moderation", unbanMsg));
-  }
-
-  private @NotNull String resolveIssuerName(@Nullable String issuer) {
-    if (issuer == null || issuer.isBlank() || issuer.equalsIgnoreCase("CONSOLE")) {
-      return "Console";
-    }
-    try {
-      UUID issuerUuid = UUID.fromString(issuer);
-      if (dev.smnl.smessential.SMEssential.getInstance() != null
-          && dev.smnl.smessential.SMEssential.getInstance().getUserService() != null) {
-        var ud =
-            dev.smnl.smessential.SMEssential.getInstance().getUserService().getUser(issuerUuid);
-        if (ud != null && ud.username() != null && !ud.username().isBlank()) {
-          return ud.username();
-        }
-      }
-      Player online = Bukkit.getPlayer(issuerUuid);
-      if (online != null) {
-        return online.getName();
-      }
-    } catch (IllegalArgumentException ignored) {
-    }
-    return issuer;
-  }
-
-  private void executeCheckPunishments(Player staff, String targetName) {
-    Player targetOnline = PlayerUtils.findOnlinePlayer(targetName);
-    Component targetComp =
-        targetOnline != null
-            ? PlayerUtils.getStaffVisibleDisplayName(targetOnline)
-            : Component.text(targetName, NamedTextColor.GRAY);
-
-    UUID uuid = resolveTargetUuid(targetName, targetOnline);
-    MuteData muteData = uuid != null ? muteService.getMuteData(uuid) : null;
-    BanData banData = uuid != null ? banService.getBanData(uuid) : null;
-
-    if (muteData == null && banData == null) {
-      Component noPunish =
-          Component.empty()
-              .append(targetComp)
-              .append(Component.text(" has no active punishments.", NamedTextColor.GRAY));
-      staff.sendMessage(MessageFormatter.formatInfo("Moderation", noPunish));
-      return;
-    }
-
-    net.kyori.adventure.text.TextComponent.Builder builder = Component.text();
-    builder.append(Component.newline());
-    builder.append(
-        MessageFormatter.format(
-            "Moderation",
-            Component.text("Active punishments for ", NamedTextColor.GRAY)
-                .append(targetComp)
-                .append(Component.text(":", NamedTextColor.GRAY)),
-            MessageType.INFO));
-
-    if (muteData != null) {
-      String dateStr = DATE_FORMATTER.format(Instant.ofEpochMilli(muteData.createdAt()));
-      String issuerDisplay = resolveIssuerName(muteData.issuer());
-      Component muteLine =
-          Component.text("- ", NamedTextColor.DARK_GRAY)
-              .append(Component.text("Mute: ", NamedTextColor.WHITE))
-              .append(
-                  Component.text(
-                      muteData.reason() + " on " + dateStr + " by " + issuerDisplay,
-                      NamedTextColor.GRAY));
-      builder.append(Component.newline()).append(muteLine);
-    }
-
-    if (banData != null) {
-      String dateStr = DATE_FORMATTER.format(Instant.ofEpochMilli(banData.createdAt()));
-      String issuerDisplay = resolveIssuerName(banData.issuer());
-      Component banLine =
-          Component.text("- ", NamedTextColor.DARK_GRAY)
-              .append(Component.text("Ban: ", NamedTextColor.WHITE))
-              .append(
-                  Component.text(
-                      banData.reason() + " on " + dateStr + " by " + issuerDisplay,
-                      NamedTextColor.GRAY));
-      builder.append(Component.newline()).append(banLine);
-    }
-
-    builder.append(Component.newline());
-    staff.sendMessage(builder.build());
   }
 }

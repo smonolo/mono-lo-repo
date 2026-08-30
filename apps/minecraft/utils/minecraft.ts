@@ -99,7 +99,11 @@ export const formatWorldName = (raw?: string): string => {
 export const getPunishmentStatus = (
   p: Punishment,
   referenceNow: number = Date.now()
-): 'ACTIVE' | 'EXPIRED' | 'PARDONED' => {
+): 'ACTIVE' | 'EXPIRED' | 'PARDONED' | 'ISSUED' => {
+  const upper = (p.type || '').toUpperCase()
+  if (upper.includes('WARN') || upper.includes('KICK')) {
+    return 'ISSUED'
+  }
   if (p.unpunished_at && p.unpunished_at > 0) {
     return 'PARDONED'
   }
@@ -135,11 +139,13 @@ export const getPunishmentTypeBadge = (
 }
 
 export const getPunishmentStatusBadge = (
-  status: 'ACTIVE' | 'EXPIRED' | 'PARDONED'
+  status: 'ACTIVE' | 'EXPIRED' | 'PARDONED' | 'ISSUED'
 ): { label: string; color: string } => {
   switch (status) {
     case 'ACTIVE':
       return { label: 'Active', color: '#EF4444' }
+    case 'ISSUED':
+      return { label: 'Issued', color: '#3B82F6' }
     case 'PARDONED':
       return { label: 'Pardoned', color: '#10B981' }
     case 'EXPIRED':

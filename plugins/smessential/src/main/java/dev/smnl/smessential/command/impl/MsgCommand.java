@@ -17,12 +17,12 @@ public class MsgCommand extends EssentialCommand {
 
   public MsgCommand(@NotNull MessageService messageService) {
     super(
+        "Msg",
         "Message",
-        "Moderation",
         "Sends a private message to a player",
         "smessential.command.msg",
         false,
-        new String[] {"tell", "w", "whisper"});
+        new String[] {"message", "tell", "w", "whisper"});
     this.messageService = messageService;
   }
 

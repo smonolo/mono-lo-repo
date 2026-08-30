@@ -289,6 +289,8 @@ export default function PlayerView({ player }: Props) {
                             <td className="whitespace-nowrap px-4 py-3 text-neutral-400">
                               {p.expires_at && p.expires_at > 0
                                 ? formatDate(p.expires_at)
+                                : status === 'ISSUED'
+                                ? 'N/A'
                                 : 'Permanent'}
                             </td>
                             <td className="px-4 py-3">
