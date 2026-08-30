@@ -76,9 +76,12 @@ const allPlayerRanks = computed<RankData[]>(() => {
   return list
 })
 
-const formatDate = (timestamp?: number): string => {
-  if (!timestamp || timestamp <= 0) return 'Never'
-  return moment(timestamp).format('DD.MM.YYYY HH:mm')
+const formatDate = (timestamp?: number | string | null): string => {
+  if (!timestamp) return 'Never'
+  const num = typeof timestamp === 'string' ? Number(timestamp) : timestamp
+  if (typeof num !== 'number' || isNaN(num) || num <= 0) return 'Never'
+  const m = moment(num)
+  return m.isValid() ? m.format('DD.MM.YYYY HH:mm') : 'Never'
 }
 
 const formatDuration = (seconds?: number): string => {

@@ -1,8 +1,10 @@
 package dev.smnl.smessential.gui;
 
+import dev.smnl.smessential.database.DatabaseManager;
 import dev.smnl.smessential.database.DatabaseManager.BanData;
 import dev.smnl.smessential.database.DatabaseManager.MuteData;
 import dev.smnl.smessential.service.BanService;
+import dev.smnl.smessential.service.FreezeService;
 import dev.smnl.smessential.service.MuteService;
 import dev.smnl.smessential.util.MessageFormatter;
 import dev.smnl.smessential.util.MessageFormatter.MessageType;
@@ -26,10 +28,22 @@ public class PunishGUIManager {
 
   private final MuteService muteService;
   private final BanService banService;
+  private final FreezeService freezeService;
+  private final DatabaseManager databaseManager;
 
-  public PunishGUIManager(@NotNull MuteService muteService, @NotNull BanService banService) {
+  public PunishGUIManager(
+      @NotNull MuteService muteService,
+      @NotNull BanService banService,
+      @Nullable FreezeService freezeService,
+      @Nullable DatabaseManager databaseManager) {
     this.muteService = muteService;
     this.banService = banService;
+    this.freezeService = freezeService;
+    this.databaseManager = databaseManager;
+  }
+
+  public PunishGUIManager(@NotNull MuteService muteService, @NotNull BanService banService) {
+    this(muteService, banService, null, null);
   }
 
   public void openPunishGUI(
@@ -39,6 +53,10 @@ public class PunishGUIManager {
 
     boolean isMuted = targetUuid != null && muteService.isMuted(targetUuid);
     boolean isBanned = targetUuid != null && banService.isBanned(targetUuid);
+    boolean isFrozen =
+        targetOnline != null
+            && freezeService != null
+            && freezeService.isFrozen(targetOnline.getUniqueId());
 
     GUIWindow gui = new GUIWindow("Moderation", 36);
 
@@ -101,8 +119,43 @@ public class PunishGUIManager {
           });
     }
 
+    if (isFrozen) {
+      gui.setItem(
+          16,
+          Material.PACKED_ICE,
+          "Unfreeze",
+          NamedTextColor.GREEN,
+          null,
+          event -> {
+            staff.closeInventory();
+            executeUnfreeze(staff, targetName);
+          });
+    } else {
+      gui.setItem(
+          16,
+          Material.ICE,
+          "Freeze",
+          NamedTextColor.GOLD,
+          null,
+          event -> {
+            staff.closeInventory();
+            executeFreeze(staff, targetName, reason);
+          });
+    }
+
     gui.setItem(
-        16,
+        20,
+        Material.PAPER,
+        "Warn",
+        NamedTextColor.GOLD,
+        null,
+        event -> {
+          staff.closeInventory();
+          executeWarn(staff, targetName, reason);
+        });
+
+    gui.setItem(
+        22,
         Material.BOOK,
         "Active Punishments",
         NamedTextColor.GOLD,
@@ -194,12 +247,82 @@ public class PunishGUIManager {
           MessageFormatter.formatError("Moderation", "'" + targetName + "' is not online."));
       return;
     }
+    if (databaseManager != null) {
+      databaseManager.savePunishment(
+          target.getUniqueId().toString(),
+          "KICK",
+          target.getName(),
+          reason,
+          staff.getUniqueId().toString(),
+          System.currentTimeMillis(),
+          0L);
+    }
     target.kick(BanService.createKickScreen(reason));
     Component kickMsg =
         Component.empty()
             .append(PlayerUtils.getGeneralDisplayName(target))
             .append(Component.text(" has been kicked.", NamedTextColor.GRAY));
     Bukkit.getServer().sendMessage(MessageFormatter.formatInfo("Moderation", kickMsg));
+  }
+
+  private void executeWarn(Player staff, String targetName, String reason) {
+    Player target = PlayerUtils.findOnlinePlayer(targetName);
+    if (target == null) {
+      staff.sendMessage(
+          MessageFormatter.formatError("Moderation", "'" + targetName + "' is not online."));
+      return;
+    }
+    if (databaseManager != null) {
+      databaseManager.savePunishment(
+          target.getUniqueId().toString(),
+          "WARN",
+          target.getName(),
+          reason,
+          staff.getUniqueId().toString(),
+          System.currentTimeMillis(),
+          0L);
+    }
+    target.sendMessage(
+        MessageFormatter.formatError("Moderation", "You have been warned for " + reason + "."));
+    Component warnMsg =
+        Component.empty()
+            .append(PlayerUtils.getGeneralDisplayName(target))
+            .append(Component.text(" has been warned.", NamedTextColor.GRAY));
+    Bukkit.getServer().sendMessage(MessageFormatter.formatInfo("Moderation", warnMsg));
+  }
+
+  private void executeFreeze(Player staff, String targetName, String reason) {
+    Player target = PlayerUtils.findOnlinePlayer(targetName);
+    if (target == null) {
+      staff.sendMessage(
+          MessageFormatter.formatError("Moderation", "'" + targetName + "' is not online."));
+      return;
+    }
+    if (freezeService != null) {
+      freezeService.freezePlayer(target, staff.getUniqueId().toString(), reason);
+    }
+    Component freezeMsg =
+        Component.empty()
+            .append(PlayerUtils.getGeneralDisplayName(target))
+            .append(Component.text(" has been frozen.", NamedTextColor.GRAY));
+    Bukkit.getServer().sendMessage(MessageFormatter.formatInfo("Moderation", freezeMsg));
+  }
+
+  private void executeUnfreeze(Player staff, String targetName) {
+    Player target = PlayerUtils.findOnlinePlayer(targetName);
+    if (target == null) {
+      staff.sendMessage(
+          MessageFormatter.formatError("Moderation", "'" + targetName + "' is not online."));
+      return;
+    }
+    if (freezeService != null) {
+      freezeService.unfreezePlayer(target, staff.getUniqueId().toString());
+    }
+    Component unfreezeMsg =
+        Component.empty()
+            .append(PlayerUtils.getGeneralDisplayName(target))
+            .append(Component.text(" has been unfrozen.", NamedTextColor.GRAY));
+    Bukkit.getServer().sendMessage(MessageFormatter.formatInfo("Moderation", unfreezeMsg));
   }
 
   private void executeBan(Player staff, String targetName, String reason) {

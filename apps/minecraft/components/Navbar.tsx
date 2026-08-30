@@ -5,6 +5,8 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import SearchBar from '@/components/SearchBar'
 
+import { fetchPlayersClient } from '@/lib/client-players'
+
 export default function Navbar() {
   const pathname = usePathname()
   const [onlineCount, setOnlineCount] = useState<number | null>(null)
@@ -14,21 +16,18 @@ export default function Navbar() {
   useEffect(() => {
     let active = true
 
-    const fetchPlayers = async () => {
+    const fetchPlayers = async (force = false) => {
       try {
-        const res = await fetch('/api/players', { cache: 'no-store' })
-        if (res.ok) {
-          const data = await res.json()
-          if (active) {
-            const count =
-              typeof data.onlineCount === 'number'
-                ? data.onlineCount
-                : Array.isArray(data.players)
-                  ? data.players.filter((p: any) => p.online).length
-                  : 0
-            setOnlineCount(count)
-            setIsOnline(data.online !== false)
-          }
+        const data = await fetchPlayersClient(force)
+        if (active) {
+          const count =
+            typeof data.onlineCount === 'number'
+              ? data.onlineCount
+              : Array.isArray(data.players)
+                ? data.players.filter((p: any) => p.online).length
+                : 0
+          setOnlineCount(count)
+          setIsOnline(data.online !== false)
         }
       } catch {
         if (active) {
@@ -38,10 +37,10 @@ export default function Navbar() {
       }
     }
 
-    fetchPlayers()
+    fetchPlayers(false)
     const interval = setInterval(() => {
       if (typeof document !== 'undefined' && document.hidden) return
-      fetchPlayers()
+      fetchPlayers(true)
     }, 10000)
     return () => {
       active = false
@@ -76,16 +75,26 @@ export default function Navbar() {
   const navLinks = [
     { label: 'Home', href: '/', active: pathname === '/' },
     {
+      label: 'Players',
+      href: '/players',
+      active: pathname?.startsWith('/players'),
+    },
+    {
       label: 'Leaderboards',
       href: '/leaderboards',
       active: pathname?.startsWith('/leaderboards'),
+    },
+    {
+      label: 'Punishments',
+      href: '/punishments',
+      active: pathname?.startsWith('/punishments'),
     },
   ]
 
   return (
     <>
       <header className="bg-sm-black w-full border-b border-gray-800">
-        <div className="mx-auto flex h-14 w-full items-center justify-between gap-x-2 px-3 sm:px-6 md:px-8">
+        <div className="mx-auto flex h-14 w-full items-center justify-between gap-x-2 px-4 sm:px-6 md:px-8">
           <Link
             href="/"
             className="flex shrink-0 items-center gap-x-2 transition-opacity hover:opacity-80"

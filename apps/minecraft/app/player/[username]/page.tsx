@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import PlayerView from '@/components/PlayerView'
@@ -10,7 +11,7 @@ type Props = {
   }
 }
 
-export const revalidate = 30
+export const revalidate = 5
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const username = decodeURIComponent(params.username)
@@ -75,7 +76,9 @@ export default async function PlayerPage({ params }: Props) {
 
   return (
     <div className="space-y-8">
-      <PlayerView player={player} />
+      <Suspense fallback={null}>
+        <PlayerView player={player} />
+      </Suspense>
     </div>
   )
 }

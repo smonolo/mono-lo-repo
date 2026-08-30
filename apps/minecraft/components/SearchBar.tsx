@@ -11,31 +11,7 @@ type Props = {
   autoFocus?: boolean
 }
 
-let globalPlayersCache: PlayerSummary[] | null = null
-let globalPlayersPromise: Promise<PlayerSummary[]> | null = null
-
-async function getCachedPlayersList(): Promise<PlayerSummary[]> {
-  if (globalPlayersCache) return globalPlayersCache
-  if (globalPlayersPromise) return globalPlayersPromise
-
-  const promise: Promise<PlayerSummary[]> = fetch('/api/players')
-    .then(res => (res.ok ? res.json() : { players: [] }))
-    .then(data => {
-      const players = Array.isArray(data.players)
-        ? (data.players as PlayerSummary[])
-        : []
-      globalPlayersCache = players
-      globalPlayersPromise = null
-      return players
-    })
-    .catch(() => {
-      globalPlayersPromise = null
-      return []
-    })
-
-  globalPlayersPromise = promise
-  return promise
-}
+import { getClientPlayersList } from '@/lib/client-players'
 
 export default function SearchBar({
   size = 'sm',
@@ -44,24 +20,24 @@ export default function SearchBar({
 }: Props) {
   const router = useRouter()
   const [query, setQuery] = useState('')
-  const [allPlayers, setAllPlayers] = useState<PlayerSummary[]>(
-    () => globalPlayersCache || []
-  )
+  const [allPlayers, setAllPlayers] = useState<PlayerSummary[]>([])
   const [isOpen, setIsOpen] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState<number>(-1)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    let active = true
-    if (!globalPlayersCache) {
-      getCachedPlayersList().then(players => {
-        if (active) setAllPlayers(players)
+  const ensurePlayersLoaded = () => {
+    if (!allPlayers.length) {
+      getClientPlayersList().then(players => {
+        setAllPlayers(players)
       })
     }
-    return () => {
-      active = false
+  }
+
+  useEffect(() => {
+    if (autoFocus) {
+      ensurePlayersLoaded()
     }
-  }, [])
+  }, [autoFocus])
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -119,7 +95,11 @@ export default function SearchBar({
   const isLarge = size === 'lg'
 
   return (
-    <div ref={containerRef} className="relative w-full">
+    <div
+      ref={containerRef}
+      className="relative w-full"
+      onMouseEnter={ensurePlayersLoaded}
+    >
       <form onSubmit={handleSubmit} className="w-full">
         <input
           type="text"
@@ -127,11 +107,13 @@ export default function SearchBar({
           id="search-query"
           value={query}
           onChange={e => {
+            ensurePlayersLoaded()
             setQuery(e.target.value)
             setIsOpen(true)
             setSelectedIndex(-1)
           }}
           onFocus={() => {
+            ensurePlayersLoaded()
             if (query.trim()) setIsOpen(true)
           }}
           onKeyDown={handleKeyDown}

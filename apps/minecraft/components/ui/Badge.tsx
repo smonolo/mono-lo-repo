@@ -1,4 +1,5 @@
 import type { HTMLAttributes, PropsWithChildren } from 'react'
+import { getMinecraftRankColor } from '@/utils/minecraft'
 
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   color?: string
@@ -12,10 +13,12 @@ export function Badge({
   style,
   ...props
 }: PropsWithChildren<BadgeProps>) {
-  const dynamicStyle = color
+  const hexColor = color ? getMinecraftRankColor(color) : undefined
+
+  const dynamicStyle = hexColor
     ? {
-        backgroundColor: `${color}20`,
-        color,
+        backgroundColor: `${hexColor}20`,
+        color: hexColor,
         ...style,
       }
     : style

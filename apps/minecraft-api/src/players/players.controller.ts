@@ -49,12 +49,20 @@ export class PlayersController {
       const live = onlineMap.get(user.uuid.toLowerCase())
       const isOnline = !!live?.online
 
+      const liveLastLogin = live?.lastLogin ? Number(live.lastLogin) : 0
+      const dbLastJoin = user.last_join ? Number(user.last_join) : 0
+      const lastLogin =
+        isOnline && liveLastLogin > 0
+          ? liveLastLogin
+          : dbLastJoin > 0
+            ? dbLastJoin
+            : Date.now()
+
       playerSummaries.push({
         uuid: user.uuid,
         username: user.username,
         online: isOnline,
-        lastLogin:
-          isOnline && live?.lastLogin ? live.lastLogin : user.last_join,
+        lastLogin,
         rank: live?.rank || defaultRank,
         ping: live?.ping || 0,
         afk: !!live?.afk,
@@ -68,7 +76,7 @@ export class PlayersController {
           uuid: p.uuid,
           username: p.username,
           online: !!p.online,
-          lastLogin: p.lastLogin || Date.now(),
+          lastLogin: Number(p.lastLogin) || Date.now(),
           rank: p.rank || defaultRank,
           ping: p.ping || 0,
           afk: !!p.afk,
@@ -88,8 +96,7 @@ export class PlayersController {
       online: true,
       players: playerSummaries,
       count: playerSummaries.length,
-      onlineCount:
-        pluginData.onlineCount || playerSummaries.filter(p => p.online).length,
+      onlineCount: playerSummaries.filter(p => p.online).length,
     }
   }
 
@@ -125,10 +132,19 @@ export class PlayersController {
     }
 
     const uuid = dbUser?.uuid || pluginPlayer?.uuid || query
-    const [assignedRanks, displayRank] = await Promise.all([
+    const username = dbUser?.username || pluginPlayer?.username || query
+
+    const [assignedRanks, displayRank, allPunishments] = await Promise.all([
       this.databaseService.getUserRanks(uuid),
       this.databaseService.getUserDisplayRank(uuid),
+      this.databaseService.getPunishments(),
     ])
+
+    const punishments = allPunishments.filter(
+      p =>
+        (p.uuid && p.uuid.toLowerCase() === uuid.toLowerCase()) ||
+        (p.username && p.username.toLowerCase() === username.toLowerCase())
+    )
 
     const primaryRank = assignedRanks.find(r => r.is_primary) ||
       pluginPlayer?.primaryRank || {
@@ -140,13 +156,28 @@ export class PlayersController {
 
     const activeDisplayRank = displayRank || pluginPlayer?.rank || primaryRank
 
+    const rawFirstJoin = Number(dbUser?.first_join) || 0
+    const rawPluginFirst = Number(pluginPlayer?.firstLogin) || 0
+    const rawLastJoin = Number(dbUser?.last_join) || 0
+    const rawPluginLast = Number(pluginPlayer?.lastLogin) || 0
+
+    let firstLogin = rawFirstJoin > 0 ? rawFirstJoin : rawPluginFirst
+    let lastLogin = rawPluginLast > 0 ? rawPluginLast : rawLastJoin
+
+    if (firstLogin <= 0 && lastLogin > 0) {
+      firstLogin = lastLogin
+    }
+    if (lastLogin <= 0 && firstLogin > 0) {
+      lastLogin = firstLogin
+    }
+
     const player = {
       uuid,
-      username: dbUser?.username || pluginPlayer?.username || query,
-      displayName: pluginPlayer?.displayName || dbUser?.username || query,
+      username,
+      displayName: pluginPlayer?.displayName || username,
       online: !!pluginPlayer?.online,
-      firstLogin: dbUser?.first_join || pluginPlayer?.firstLogin || 0,
-      lastLogin: pluginPlayer?.lastLogin || dbUser?.last_join || 0,
+      firstLogin,
+      lastLogin,
       ping: pluginPlayer?.ping || 0,
       afk: !!pluginPlayer?.afk,
       world: pluginPlayer?.world || 'Offline',
@@ -160,6 +191,7 @@ export class PlayersController {
         assignedRanks.length > 0
           ? assignedRanks
           : pluginPlayer?.ranks || [primaryRank],
+      punishments,
       stats: pluginPlayer?.stats || {
         playTimeSeconds: 0,
         deaths: 0,

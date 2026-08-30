@@ -2,6 +2,8 @@ import type {
   LeaderboardsResponse,
   MinecraftPlayersResponse,
   PlayerData,
+  Punishment,
+  PunishmentsResponse,
   SinglePlayerResponse,
   StatisticLeaderboard,
 } from '@/types/minecraft'
@@ -78,6 +80,36 @@ async function fetchWithTimeout(
   }
 }
 
+const normalizeUuid = (u?: string) =>
+  u ? u.replace(/-/g, '').toLowerCase() : ''
+
+async function enrichPlayerPunishments(
+  player: PlayerData | null
+): Promise<PlayerData | null> {
+  if (!player) return null
+  try {
+    const punishmentsData = await fetchPunishments()
+    const targetNormUuid = normalizeUuid(player.uuid)
+    const targetUsername = player.username.toLowerCase()
+
+    const playerPunishments = punishmentsData.punishments.filter(p => {
+      const pNormUuid = normalizeUuid(p.uuid)
+      const pUsername = (p.username || '').toLowerCase()
+      return (
+        (targetNormUuid && pNormUuid === targetNormUuid) ||
+        (targetUsername && pUsername === targetUsername)
+      )
+    })
+
+    return {
+      ...player,
+      punishments: playerPunishments,
+    }
+  } catch {
+    return player
+  }
+}
+
 export async function fetchOnlinePlayers(): Promise<MinecraftPlayersResponse> {
   return cachedFetch<MinecraftPlayersResponse>(
     'players_list',
@@ -130,21 +162,27 @@ export async function fetchPlayerByUuid(
   if (!uuid) return null
   const cacheKey = `player_uuid_${uuid.toLowerCase()}`
 
-  return cachedFetch<PlayerData | null>(cacheKey, 30000, async () => {
-    const { apiUrl } = getApiConfig()
+  const player = await cachedFetch<PlayerData | null>(
+    cacheKey,
+    10000,
+    async () => {
+      const { apiUrl } = getApiConfig()
 
-    try {
-      const res = await fetchWithTimeout(
-        `${apiUrl}/v1/player?uuid=${encodeURIComponent(uuid)}`
-      )
+      try {
+        const res = await fetchWithTimeout(
+          `${apiUrl}/v1/player?uuid=${encodeURIComponent(uuid)}`
+        )
 
-      if (!res.ok) return null
-      const data: SinglePlayerResponse = await res.json()
-      return data?.player || null
-    } catch {
-      return null
+        if (!res.ok) return null
+        const data: SinglePlayerResponse = await res.json()
+        return data?.player || null
+      } catch {
+        return null
+      }
     }
-  })
+  )
+
+  return enrichPlayerPunishments(player)
 }
 
 export async function fetchPlayer(query: string): Promise<PlayerData | null> {
@@ -161,32 +199,38 @@ export async function fetchPlayer(query: string): Promise<PlayerData | null> {
   }
 
   const cacheKey = `player_name_${trimmed.toLowerCase()}`
-  return cachedFetch<PlayerData | null>(cacheKey, 30000, async () => {
-    const { apiUrl } = getApiConfig()
+  const player = await cachedFetch<PlayerData | null>(
+    cacheKey,
+    10000,
+    async () => {
+      const { apiUrl } = getApiConfig()
 
-    try {
-      const res = await fetchWithTimeout(
-        `${apiUrl}/v1/player?name=${encodeURIComponent(trimmed)}`
-      )
-      if (res.ok) {
-        const data: SinglePlayerResponse = await res.json()
-        if (data?.player) return data.player
-      }
-    } catch {}
+      try {
+        const res = await fetchWithTimeout(
+          `${apiUrl}/v1/player?name=${encodeURIComponent(trimmed)}`
+        )
+        if (res.ok) {
+          const data: SinglePlayerResponse = await res.json()
+          if (data?.player) return data.player
+        }
+      } catch {}
 
-    try {
-      const playersData = await fetchOnlinePlayers()
-      const match = playersData.players?.find(
-        p => p.username.toLowerCase() === trimmed.toLowerCase()
-      )
-      if (match?.uuid) {
-        const player = await fetchPlayerByUuid(match.uuid)
-        if (player) return player
-      }
-    } catch {}
+      try {
+        const playersData = await fetchOnlinePlayers()
+        const match = playersData.players?.find(
+          p => p.username.toLowerCase() === trimmed.toLowerCase()
+        )
+        if (match?.uuid) {
+          const player = await fetchPlayerByUuid(match.uuid)
+          if (player) return player
+        }
+      } catch {}
 
-    return null
-  })
+      return null
+    }
+  )
+
+  return enrichPlayerPunishments(player)
 }
 
 export async function fetchLeaderboards(): Promise<LeaderboardsResponse> {
@@ -219,6 +263,42 @@ export async function fetchLeaderboards(): Promise<LeaderboardsResponse> {
           online: false,
           leaderboards: [],
           error: err?.message || 'Failed to load leaderboards from server',
+        }
+      }
+    }
+  )
+}
+
+export async function fetchPunishments(): Promise<PunishmentsResponse> {
+  return cachedFetch<PunishmentsResponse>(
+    'punishments_all',
+    15000,
+    async () => {
+      const { apiUrl } = getApiConfig()
+
+      try {
+        const res = await fetchWithTimeout(`${apiUrl}/v1/punishments`)
+
+        if (!res.ok) {
+          return {
+            online: false,
+            punishments: [],
+            error: `HTTP ${res.status}`,
+          }
+        }
+
+        const data = await res.json()
+        return {
+          online: true,
+          punishments: Array.isArray(data.punishments)
+            ? (data.punishments as Punishment[])
+            : [],
+        }
+      } catch (err: any) {
+        return {
+          online: false,
+          punishments: [],
+          error: err?.message || 'Failed to load punishments from server',
         }
       }
     }

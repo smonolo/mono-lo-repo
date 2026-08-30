@@ -175,10 +175,11 @@ public final class SMEssential extends JavaPlugin {
     BanService banService = new BanService(databaseManager);
     banService.setup(this);
 
-    PunishGUIManager punishGUIManager = new PunishGUIManager(muteService, banService);
-
-    FreezeService freezeService = new FreezeService();
+    FreezeService freezeService = new FreezeService(databaseManager);
     freezeService.setup(this);
+
+    PunishGUIManager punishGUIManager =
+        new PunishGUIManager(muteService, banService, freezeService, databaseManager);
 
     TeamService teamService = new TeamService();
     teamService.setup(this, sidebarManager);

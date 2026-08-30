@@ -2,8 +2,8 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="w-full">
-      <div className="mx-auto flex w-full max-w-5xl items-center justify-between border-t border-gray-800 px-4 py-8 text-sm text-gray-300 md:w-[60%] md:px-0">
+    <footer className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="flex w-full items-center justify-between border-t border-neutral-800 py-4 text-xs text-neutral-400">
         <p>© {currentYear} Stefano Monolo.</p>
         <p className="underline transition-colors hover:text-white">
           <a

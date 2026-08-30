@@ -58,12 +58,14 @@ export class PluginService {
     return promise
   }
 
-  private async fetchFromPlugin<T>(endpoint: string): Promise<T | null> {
+  private async executeFetch<T>(
+    path: string
+  ): Promise<{ data: T | null; status: number }> {
     const controller = new AbortController()
-    const timeoutId = setTimeout(() => controller.abort(), 3500)
+    const timeoutId = setTimeout(() => controller.abort(), 5000)
 
     try {
-      const url = `${this.apiUrl}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`
+      const url = `${this.apiUrl}${path.startsWith('/') ? path : `/${path}`}`
       const res = await fetch(url, {
         headers: {
           Authorization: `Bearer ${this.apiSecret}`,
@@ -71,15 +73,47 @@ export class PluginService {
         signal: controller.signal,
       })
 
-      if (!res.ok) {
-        return null
+      if (res.ok) {
+        const data = (await res.json()) as T
+        return { data, status: res.status }
       }
-      return (await res.json()) as T
-    } catch {
-      return null
+
+      this.logger.warn(
+        `Plugin API responded with HTTP ${res.status} for ${url}`
+      )
+      return { data: null, status: res.status }
+    } catch (err: any) {
+      this.logger.warn(
+        `Failed to connect to Plugin API (${path}): ${err?.message || err}`
+      )
+      return { data: null, status: 0 }
     } finally {
       clearTimeout(timeoutId)
     }
+  }
+
+  private async fetchFromPlugin<T>(endpoint: string): Promise<T | null> {
+    const primary = await this.executeFetch<T>(endpoint)
+    if (primary.data !== null) {
+      return primary.data
+    }
+
+    if (primary.status === 404) {
+      const fallbackEndpoint = endpoint.startsWith('/v1/')
+        ? endpoint.replace(/^\/v1\//, '/api/')
+        : endpoint.startsWith('/api/')
+          ? endpoint.replace(/^\/api\//, '/v1/')
+          : null
+
+      if (fallbackEndpoint) {
+        const fallback = await this.executeFetch<T>(fallbackEndpoint)
+        if (fallback.data !== null) {
+          return fallback.data
+        }
+      }
+    }
+
+    return null
   }
 
   async getStatus(): Promise<any> {

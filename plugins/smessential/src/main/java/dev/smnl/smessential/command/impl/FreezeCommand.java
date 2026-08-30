@@ -32,7 +32,7 @@ public class FreezeCommand extends EssentialCommand {
   protected void run(
       @NotNull CommandSourceStack stack, @NotNull CommandSender sender, @NotNull String[] args) {
     if (args.length < 1) {
-      sendUsage(sender, "/freeze <player>");
+      sendUsage(sender, "/freeze <player> [reason]");
       return;
     }
 
@@ -46,7 +46,10 @@ public class FreezeCommand extends EssentialCommand {
       return;
     }
 
-    boolean isNowFrozen = freezeService.toggleFreeze(target);
+    String staffUuid = (sender instanceof Player p) ? p.getUniqueId().toString() : "CONSOLE";
+    String reason = args.length >= 2 ? joinArgs(args, 1) : "Staff Investigation";
+
+    boolean isNowFrozen = freezeService.toggleFreeze(target, staffUuid, reason);
     String stateMsg = isNowFrozen ? "frozen." : "unfrozen.";
 
     Component msg =

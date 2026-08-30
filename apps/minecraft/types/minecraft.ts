@@ -37,6 +37,7 @@ export type PlayerData = {
   primaryRank?: RankData
   ranks?: RankData[]
   stats?: PlayerStats
+  punishments?: Punishment[]
 }
 
 export type PlayerSummary = {
@@ -85,5 +86,25 @@ export type StatisticLeaderboard = {
 export type LeaderboardsResponse = {
   online: boolean
   leaderboards: StatisticLeaderboard[]
+  error?: string
+}
+
+export type Punishment = {
+  id: string
+  uuid: string
+  type: string
+  username: string
+  reason: string
+  issuer: string
+  issuerUuid?: string
+  created_at: number
+  expires_at: number
+  unpunished_at: number
+  unpunished_by?: string
+}
+
+export type PunishmentsResponse = {
+  online: boolean
+  punishments: Punishment[]
   error?: string
 }

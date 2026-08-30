@@ -333,7 +333,7 @@ public class HttpServerService {
       }
 
       List<JsonObject> playerObjects = new ArrayList<>();
-      int onlineCount = Bukkit.getOnlinePlayers().size();
+      int onlineCount = 0;
 
       for (UUID uuid : allUuids) {
         Player onlinePlayer = Bukkit.getPlayer(uuid);
