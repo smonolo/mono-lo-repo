@@ -6,6 +6,7 @@ import type { PlayerSummary } from '@/types/minecraft'
 import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 import { formatDate, formatWorldName } from '@/utils/minecraft'
+import { getClientPlayersList } from '@/lib/client-players'
 
 type Props = {
   initialPlayers: PlayerSummary[]
@@ -15,18 +16,33 @@ type Props = {
 type StatusFilter = 'ALL' | 'ONLINE' | 'OFFLINE'
 
 export default function PlayersView({ initialPlayers }: Props) {
+  const [players, setPlayers] = useState<PlayerSummary[]>(initialPlayers)
   const [search, setSearch] = useState<string>('')
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('ALL')
   const [rankFilter, setRankFilter] = useState<string>('ALL')
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [pageSize, setPageSize] = useState<number>(15)
 
+  useEffect(() => {
+    setPlayers(initialPlayers)
+  }, [initialPlayers])
+
+  useEffect(() => {
+    if (initialPlayers.length === 0) {
+      getClientPlayersList().then(fetched => {
+        if (fetched && fetched.length > 0) {
+          setPlayers(fetched)
+        }
+      })
+    }
+  }, [initialPlayers])
+
   const stats = useMemo(() => {
-    const total = initialPlayers.length
+    const total = players.length
     let online = 0
     let offline = 0
 
-    for (const p of initialPlayers) {
+    for (const p of players) {
       if (p.online) {
         online++
       } else {
@@ -35,11 +51,11 @@ export default function PlayersView({ initialPlayers }: Props) {
     }
 
     return { total, online, offline }
-  }, [initialPlayers])
+  }, [players])
 
   const availableRanks = useMemo(() => {
     const map = new Map<string, { id: string; name: string; color: string }>()
-    for (const p of initialPlayers) {
+    for (const p of players) {
       if (p.rank?.name) {
         map.set(p.rank.id || p.rank.name, {
           id: p.rank.id || p.rank.name,
@@ -49,12 +65,12 @@ export default function PlayersView({ initialPlayers }: Props) {
       }
     }
     return Array.from(map.values())
-  }, [initialPlayers])
+  }, [players])
 
   const filteredPlayers = useMemo(() => {
     const q = search.trim().toLowerCase()
 
-    return initialPlayers.filter(p => {
+    return players.filter(p => {
       if (statusFilter === 'ONLINE' && !p.online) return false
       if (statusFilter === 'OFFLINE' && p.online) return false
 
@@ -71,7 +87,7 @@ export default function PlayersView({ initialPlayers }: Props) {
 
       return true
     })
-  }, [initialPlayers, search, statusFilter, rankFilter])
+  }, [players, search, statusFilter, rankFilter])
 
   useEffect(() => {
     setCurrentPage(1)

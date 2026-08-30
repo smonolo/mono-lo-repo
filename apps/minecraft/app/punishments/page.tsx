@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import PunishmentsView from '@/components/PunishmentsView'
 import { fetchPunishments } from '@/lib/api'
 
-export const revalidate = 15
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export const metadata: Metadata = {
   title: 'Punishments',

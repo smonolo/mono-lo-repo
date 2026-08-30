@@ -6,7 +6,8 @@ import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 import { fetchOnlinePlayers } from '@/lib/api'
 
-export const revalidate = 15
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export const metadata: Metadata = {
   title: 'Home',

@@ -11,7 +11,8 @@ type Props = {
   }
 }
 
-export const revalidate = 5
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const username = decodeURIComponent(params.username)

@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import LeaderboardsView from '@/components/LeaderboardsView'
 import { fetchLeaderboards } from '@/lib/api'
 
-export const revalidate = 30
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export const metadata: Metadata = {
   title: 'Leaderboards',
