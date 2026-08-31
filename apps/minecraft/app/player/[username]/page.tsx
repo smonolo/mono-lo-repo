@@ -6,16 +6,17 @@ import SearchBar from '@/components/SearchBar'
 import { fetchPlayer } from '@/lib/api'
 
 type Props = {
-  params: {
+  params: Promise<{
     username: string
-  }
+  }>
 }
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const username = decodeURIComponent(params.username)
+  const { username: rawUsername } = await params
+  const username = decodeURIComponent(rawUsername)
   return {
     title: username,
     description: `Minecraft profile, statistics, and telemetry for ${username}`,
@@ -39,7 +40,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function PlayerPage({ params }: Props) {
-  const username = decodeURIComponent(params.username)
+  const { username: rawUsername } = await params
+  const username = decodeURIComponent(rawUsername)
   const player = await fetchPlayer(username)
 
   if (!player) {

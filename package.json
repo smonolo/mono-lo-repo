@@ -34,5 +34,24 @@
   "devDependencies": {
     "prettier": "^3.2.5",
     "turbo": "^2.10.12"
+  },
+  "overrides": {
+    "ajv": "^8.17.2",
+    "body-parser": "^1.20.6",
+    "brace-expansion": "^1.1.18",
+    "file-type": "^22.0.2",
+    "glob": "^10.4.6",
+    "multer": "^2.1.2",
+    "picomatch": "^4.0.4",
+    "postcss": "^8.5.23",
+    "qs": "^6.15.2",
+    "tmp": "^0.2.6",
+    "webpack": "^5.104.0"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "esbuild@0.25.2": true,
+    "fsevents@2.3.3": true,
+    "vue-demi@0.14.10": true
   }
 }

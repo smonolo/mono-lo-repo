@@ -276,8 +276,8 @@ export default function PunishmentsView({ initialPunishments }: Props) {
                           {p.expires_at && p.expires_at > 0
                             ? formatDate(p.expires_at)
                             : status === 'ISSUED'
-                            ? 'N/A'
-                            : 'Permanent'}
+                              ? 'N/A'
+                              : 'Permanent'}
                         </td>
                         <td className="px-4 py-3">
                           <Badge color={statusBadge.color}>
