@@ -90,20 +90,15 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
   }
 
   private initPool() {
-    const connectionString = process.env.DATABASE_URL
-    if (connectionString) {
-      this.pool = new Pool({ connectionString })
-    } else {
-      this.pool = new Pool({
-        host: process.env.POSTGRES_HOST || '127.0.0.1',
-        port: parseInt(process.env.POSTGRES_PORT || '5432', 10),
-        user: process.env.POSTGRES_USER || 'postgres',
-        password: process.env.POSTGRES_PASSWORD || 'postgres',
-        database: process.env.POSTGRES_DB || 'minecraft',
-        max: 10,
-        idleTimeoutMillis: 30000,
-      })
-    }
+    this.pool = new Pool({
+      host: process.env.POSTGRES_HOST || '127.0.0.1',
+      port: parseInt(process.env.POSTGRES_PORT || '5432', 10),
+      user: process.env.POSTGRES_USER || 'postgres',
+      password: process.env.POSTGRES_PASSWORD || 'postgres',
+      database: process.env.POSTGRES_DB || 'minecraft',
+      max: 10,
+      idleTimeoutMillis: 30000,
+    })
 
     this.pool.on('error', err => {
       this.logger.warn(`PostgreSQL Pool Error: ${err.message}`)

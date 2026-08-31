@@ -1,11 +1,35 @@
 {
   "$schema": "https://v2-10-12.turborepo.dev/schema.json",
+  "globalEnv": [
+    "NODE_ENV"
+  ],
+  "globalPassThroughEnv": [
+    "CI",
+    "VERCEL",
+    "VERCEL_ENV",
+    "VERCEL_URL",
+    "VERCEL_PROJECT_PRODUCTION_URL",
+    "VERCEL_BRANCH_URL",
+    "VERCEL_GIT_*"
+  ],
   "tasks": {
     "dev": {
       "cache": false,
       "persistent": true
     },
-    "build": {},
+    "build": {
+      "env": [
+        "NEXT_PUBLIC_*",
+        "NUXT_*",
+        "VITE_*",
+        "ADMIN_EMAIL",
+        "GOOGLE_CLIENT_ID",
+        "MINECRAFT_API_URL",
+        "POSTGRES_*",
+        "SESSION_SECRET",
+        "SMESSENTIAL_*"
+      ]
+    },
     "website#build": {
       "outputs": [".next/**", "!.next/cache/**"]
     },
