@@ -36,7 +36,6 @@ import dev.smnl.smessential.command.impl.TimeCommand;
 import dev.smnl.smessential.command.impl.WeatherCommand;
 import dev.smnl.smessential.command.impl.WhitelistCommand;
 import dev.smnl.smessential.database.DatabaseManager;
-import dev.smnl.smessential.gui.AlertGUIManager;
 import dev.smnl.smessential.gui.GUIManager;
 import dev.smnl.smessential.gui.InfoGUIManager;
 import dev.smnl.smessential.gui.InvseeGUIManager;
@@ -159,16 +158,13 @@ public final class SMEssential extends JavaPlugin {
     MotdManager motdManager = new MotdManager(this);
     motdManager.setup();
 
-    AlertService alertService = new AlertService(databaseManager);
-    alertService.setup(this);
+    AlertService alertService = new AlertService();
 
     ChatManager chatManager = new ChatManager(this, sidebarManager, rankService);
     chatManager.setup();
 
     GUIManager guiManager = new GUIManager(this);
     guiManager.setup();
-
-    AlertGUIManager alertGUIManager = new AlertGUIManager(alertService);
 
     MuteService muteService = new MuteService(databaseManager);
     muteService.setup(this);
@@ -211,7 +207,7 @@ public final class SMEssential extends JavaPlugin {
         new PingCommand(),
         new StatsCommand(statsGUIManager, userService),
         new AfkCommand(afkService),
-        new AlertCommand(alertGUIManager, alertService),
+        new AlertCommand(alertService),
         new PunishCommand(punishGUIManager),
         new FreezeCommand(freezeService),
         new SpectateCommand(spectateService),

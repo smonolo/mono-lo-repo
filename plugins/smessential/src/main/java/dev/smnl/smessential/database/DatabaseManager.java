@@ -364,38 +364,6 @@ public class DatabaseManager {
     }
   }
 
-  public void saveAlert(@NotNull String target, @Nullable String message) {
-    if (message == null || message.isBlank()) {
-      deleteAlert(target);
-      return;
-    }
-    String sql =
-        "INSERT INTO smessential_alerts (target, message) VALUES (?, ?) "
-            + "ON CONFLICT(target) DO UPDATE SET message = EXCLUDED.message;";
-    executeUpdate(sql, target.toUpperCase(), message);
-  }
-
-  public void deleteAlert(@NotNull String target) {
-    executeUpdate("DELETE FROM smessential_alerts WHERE UPPER(target) = UPPER(?);", target);
-  }
-
-  public @Nullable String getAlert(@NotNull String target) {
-    if (dataSource == null || dataSource.isClosed()) return null;
-    String sql = "SELECT message FROM smessential_alerts WHERE UPPER(target) = UPPER(?);";
-    try (Connection connection = dataSource.getConnection();
-        PreparedStatement pstmt = connection.prepareStatement(sql)) {
-      pstmt.setString(1, target);
-      try (ResultSet rs = pstmt.executeQuery()) {
-        if (rs.next()) {
-          return rs.getString("message");
-        }
-      }
-    } catch (SQLException e) {
-      plugin.getLogger().severe("Database query error: " + e.getMessage());
-    }
-    return null;
-  }
-
   public void savePunishment(
       @NotNull String uuid,
       @NotNull String type,

@@ -1,9 +1,3 @@
--- Alerts table
-CREATE TABLE IF NOT EXISTS smessential_alerts (
-    target VARCHAR(64) PRIMARY KEY,
-    message TEXT NOT NULL
-);
-
 -- Punishments table (unified history for mutes, bans, etc.)
 CREATE TABLE IF NOT EXISTS smessential_punishments (
     id VARCHAR(36) PRIMARY KEY,
@@ -39,9 +33,6 @@ CREATE TABLE IF NOT EXISTS smessential_users (
     first_join BIGINT NOT NULL,
     last_join BIGINT NOT NULL
 );
-
--- Drop statistics table if previously created
-DROP TABLE IF EXISTS smessential_statistics;
 
 -- Leaderboards table
 CREATE TABLE IF NOT EXISTS smessential_leaderboards (
@@ -95,4 +86,3 @@ CREATE TABLE IF NOT EXISTS smessential_user_display_ranks (
     uuid VARCHAR(36) PRIMARY KEY,
     rank_id VARCHAR(64) NOT NULL
 );
-
