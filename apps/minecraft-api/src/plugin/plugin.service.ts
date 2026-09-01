@@ -169,4 +169,21 @@ export class PluginService {
       return data || { online: false, leaderboards: [] }
     })
   }
+
+  async getWorld(): Promise<any> {
+    return this.cachedFetch('plugin_world', 5000, async () => {
+      const data = await this.fetchFromPlugin<any>('/v1/world')
+      return (
+        data || {
+          online: false,
+          worldAge: null,
+          time: null,
+          moonPhase: null,
+          weather: null,
+          dimensions: [],
+          aggregates: null,
+        }
+      )
+    })
+  }
 }

@@ -111,4 +111,43 @@ public class StatisticService {
     topPlayersCache.put(type, new CachedTopPlayers(now, fresh));
     return fresh.stream().limit(limit).toList();
   }
+
+  private record CachedAggregates(long timestamp, Map<StatisticType, Long> totals) {}
+
+  private volatile CachedAggregates cachedAggregates;
+
+  public @NotNull Map<StatisticType, Long> getGlobalAggregates() {
+    long now = System.currentTimeMillis();
+    CachedAggregates cached = cachedAggregates;
+    if (cached != null && (now - cached.timestamp()) < 60000L) {
+      return cached.totals();
+    }
+
+    Set<UUID> allUuids = new HashSet<>();
+    if (userService != null) {
+      allUuids.addAll(userService.getAllUsers().keySet());
+    }
+    for (Player online : Bukkit.getOnlinePlayers()) {
+      allUuids.add(online.getUniqueId());
+    }
+
+    Map<StatisticType, Long> totals = new EnumMap<>(StatisticType.class);
+    for (StatisticType type : StatisticType.values()) {
+      totals.put(type, 0L);
+    }
+
+    for (UUID uuid : allUuids) {
+      OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
+      for (StatisticType type : StatisticType.values()) {
+        long val = getStatistic(player, type);
+        if (val > 0) {
+          totals.put(type, totals.get(type) + val);
+        }
+      }
+    }
+
+    Map<StatisticType, Long> unmodifiable = Collections.unmodifiableMap(totals);
+    cachedAggregates = new CachedAggregates(now, unmodifiable);
+    return unmodifiable;
+  }
 }

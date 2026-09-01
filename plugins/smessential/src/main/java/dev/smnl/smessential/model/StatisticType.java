@@ -101,7 +101,87 @@ public enum StatisticType {
       "Villager Trades",
       "Total trades completed with villagers",
       Statistic.TRADED_WITH_VILLAGER,
-      Material.EMERALD);
+      Material.EMERALD),
+  SWIM_DISTANCE(
+      "swim_distance",
+      "Distance Swum",
+      "Total distance swum underwater or on surface",
+      Statistic.SWIM_ONE_CM,
+      Material.HEART_OF_THE_SEA),
+  BOAT_DISTANCE(
+      "boat_distance",
+      "Distance Sailed",
+      "Total distance traveled by boat",
+      Statistic.BOAT_ONE_CM,
+      Material.OAK_BOAT),
+  ELYTRA_DISTANCE(
+      "elytra_distance",
+      "Distance by Elytra",
+      "Total distance flown using elytra",
+      Statistic.AVIATE_ONE_CM,
+      Material.FEATHER),
+  MINECART_DISTANCE(
+      "minecart_distance",
+      "Distance by Minecart",
+      "Total distance traveled on rails",
+      Statistic.MINECART_ONE_CM,
+      Material.MINECART),
+  HORSE_DISTANCE(
+      "horse_distance",
+      "Distance on Mounts",
+      "Total distance ridden on horses and mounts",
+      Statistic.HORSE_ONE_CM,
+      Material.SADDLE),
+  CLIMB_DISTANCE(
+      "climb_distance",
+      "Distance Climbed",
+      "Total distance climbed up ladders and vines",
+      Statistic.CLIMB_ONE_CM,
+      Material.LADDER),
+  SNEAK_TIME(
+      "sneak_time",
+      "Time Sneaking",
+      "Total time spent crouching or sneaking",
+      Statistic.SNEAK_TIME,
+      Material.LEATHER_LEGGINGS),
+  DAMAGE_BLOCKED(
+      "damage_blocked",
+      "Damage Blocked",
+      "Total damage blocked with a shield",
+      Statistic.DAMAGE_BLOCKED_BY_SHIELD,
+      Material.SHIELD),
+  DAMAGE_RESISTED(
+      "damage_resisted",
+      "Damage Resisted",
+      "Total damage resisted with armor and effects",
+      Statistic.DAMAGE_RESISTED,
+      Material.IRON_CHESTPLATE),
+  DAMAGE_ABSORBED(
+      "damage_absorbed",
+      "Damage Absorbed",
+      "Total damage absorbed by golden hearts",
+      Statistic.DAMAGE_ABSORBED,
+      Material.GOLDEN_APPLE),
+  RAIDS_TRIGGERED(
+      "raids_triggered",
+      "Raids Triggered",
+      "Total Bad Omen raids started",
+      Statistic.RAID_TRIGGER,
+      Material.CROSSBOW),
+  TOOLS_BROKEN(
+      "tools_broken",
+      "Tools Broken",
+      "Total tools depleted and broken",
+      Statistic.BREAK_ITEM,
+      Material.ANVIL),
+  BELL_RINGS(
+      "bell_rings", "Bell Rings", "Total village bells rung", Statistic.BELL_RING, Material.BELL),
+  MUSIC_DISCS_PLAYED(
+      "music_discs_played",
+      "Music Discs Played",
+      "Total music records played in jukeboxes",
+      Statistic.RECORD_PLAYED,
+      Material.JUKEBOX);
 
   private final String key;
   private final String displayName;
@@ -144,9 +224,19 @@ public enum StatisticType {
 
   public @NotNull String formatValue(long value) {
     return switch (this) {
-      case PLAY_TIME, TIME_SINCE_DEATH -> formatTime(value);
-      case WALK_DISTANCE, SPRINT_DISTANCE, FLY_DISTANCE -> formatDistance(value);
-      case DAMAGE_DEALT, DAMAGE_TAKEN -> formatDamage(value);
+      case PLAY_TIME, TIME_SINCE_DEATH, SNEAK_TIME -> formatTime(value);
+      case WALK_DISTANCE,
+              SPRINT_DISTANCE,
+              FLY_DISTANCE,
+              SWIM_DISTANCE,
+              BOAT_DISTANCE,
+              ELYTRA_DISTANCE,
+              MINECART_DISTANCE,
+              HORSE_DISTANCE,
+              CLIMB_DISTANCE ->
+          formatDistance(value);
+      case DAMAGE_DEALT, DAMAGE_TAKEN, DAMAGE_BLOCKED, DAMAGE_RESISTED, DAMAGE_ABSORBED ->
+          formatDamage(value);
       default -> NumberFormat.getNumberInstance(Locale.US).format(value);
     };
   }
@@ -211,6 +301,20 @@ public enum StatisticType {
       case "breed", "breeding" -> ANIMALS_BRED;
       case "raid", "raids" -> RAIDS_WON;
       case "trade", "villager_trades" -> TRADES;
+      case "swim", "swum", "swimming" -> SWIM_DISTANCE;
+      case "boat", "boating", "sail", "sailed" -> BOAT_DISTANCE;
+      case "elytra", "aviate", "gliding" -> ELYTRA_DISTANCE;
+      case "minecart", "cart", "rails" -> MINECART_DISTANCE;
+      case "horse", "mount", "riding" -> HORSE_DISTANCE;
+      case "climb", "climbed", "ladders" -> CLIMB_DISTANCE;
+      case "sneak", "crouch", "sneaking" -> SNEAK_TIME;
+      case "blocked", "shield", "shield_blocked" -> DAMAGE_BLOCKED;
+      case "resisted", "damage_resist" -> DAMAGE_RESISTED;
+      case "absorbed", "absorption" -> DAMAGE_ABSORBED;
+      case "raid_trigger", "bad_omen" -> RAIDS_TRIGGERED;
+      case "break_item", "tools", "broken_tools" -> TOOLS_BROKEN;
+      case "bells", "bell", "bell_ring" -> BELL_RINGS;
+      case "music", "discs", "records" -> MUSIC_DISCS_PLAYED;
       default -> null;
     };
   }

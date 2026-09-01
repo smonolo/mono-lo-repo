@@ -68,47 +68,221 @@ export default function PlayerView({ player }: Props) {
   const punishments = player.punishments || []
 
   const stats = player.stats
-  const statItems: DataListItem[] = useMemo(
-    () =>
-      stats
-        ? [
-            {
-              label: 'Play Time',
-              value: formatDuration(stats.playTimeSeconds),
-            },
-            { label: 'Deaths', value: formatNumber(stats.deaths) },
-            { label: 'Mob Kills', value: formatNumber(stats.mobKills) },
-            { label: 'Player Kills', value: formatNumber(stats.playerKills) },
-            {
-              label: 'Damage Dealt',
-              value: formatNumber(Math.round(stats.damageDealt)),
-            },
-            {
-              label: 'Damage Taken',
-              value: formatNumber(Math.round(stats.damageTaken)),
-            },
-            { label: 'Jumps', value: formatNumber(stats.jumps) },
-            {
-              label: 'Walk Distance',
-              value: formatDistance(stats.walkDistanceMeters),
-            },
-            {
-              label: 'Fly Distance',
-              value: formatDistance(stats.flyDistanceMeters),
-            },
-            {
-              label: 'Time Since Rest',
-              value: formatDuration(stats.timeSinceRestSeconds),
-            },
-          ]
-        : [],
-    [stats]
-  )
+  const statItems: DataListItem[] = useMemo(() => {
+    if (!stats) return []
+    const items: DataListItem[] = [
+      {
+        label: 'Play Time',
+        value: formatDuration(stats.playTimeSeconds),
+      },
+      { label: 'Deaths', value: formatNumber(stats.deaths) },
+      { label: 'Mob Kills', value: formatNumber(stats.mobKills) },
+      { label: 'Player Kills', value: formatNumber(stats.playerKills) },
+      {
+        label: 'Damage Dealt',
+        value: formatNumber(Math.round(stats.damageDealt)),
+      },
+      {
+        label: 'Damage Taken',
+        value: formatNumber(Math.round(stats.damageTaken)),
+      },
+    ]
+
+    if (typeof stats.damageBlocked === 'number' && stats.damageBlocked > 0) {
+      items.push({
+        label: 'Damage Blocked',
+        value: formatNumber(Math.round(stats.damageBlocked)),
+      })
+    }
+    if (typeof stats.damageResisted === 'number' && stats.damageResisted > 0) {
+      items.push({
+        label: 'Damage Resisted',
+        value: formatNumber(Math.round(stats.damageResisted)),
+      })
+    }
+    if (typeof stats.damageAbsorbed === 'number' && stats.damageAbsorbed > 0) {
+      items.push({
+        label: 'Damage Absorbed',
+        value: formatNumber(Math.round(stats.damageAbsorbed)),
+      })
+    }
+
+    items.push({ label: 'Jumps', value: formatNumber(stats.jumps) })
+    items.push({
+      label: 'Walk Distance',
+      value: formatDistance(stats.walkDistanceMeters),
+    })
+
+    if (
+      typeof stats.sprintDistanceMeters === 'number' &&
+      stats.sprintDistanceMeters > 0
+    ) {
+      items.push({
+        label: 'Sprint Distance',
+        value: formatDistance(stats.sprintDistanceMeters),
+      })
+    }
+
+    items.push({
+      label: 'Fly Distance',
+      value: formatDistance(stats.flyDistanceMeters),
+    })
+
+    if (
+      typeof stats.elytraDistanceMeters === 'number' &&
+      stats.elytraDistanceMeters > 0
+    ) {
+      items.push({
+        label: 'Elytra Flight',
+        value: formatDistance(stats.elytraDistanceMeters),
+      })
+    }
+    if (
+      typeof stats.boatDistanceMeters === 'number' &&
+      stats.boatDistanceMeters > 0
+    ) {
+      items.push({
+        label: 'Distance Sailed',
+        value: formatDistance(stats.boatDistanceMeters),
+      })
+    }
+    if (
+      typeof stats.swimDistanceMeters === 'number' &&
+      stats.swimDistanceMeters > 0
+    ) {
+      items.push({
+        label: 'Distance Swum',
+        value: formatDistance(stats.swimDistanceMeters),
+      })
+    }
+    if (
+      typeof stats.minecartDistanceMeters === 'number' &&
+      stats.minecartDistanceMeters > 0
+    ) {
+      items.push({
+        label: 'Minecart Distance',
+        value: formatDistance(stats.minecartDistanceMeters),
+      })
+    }
+    if (
+      typeof stats.horseDistanceMeters === 'number' &&
+      stats.horseDistanceMeters > 0
+    ) {
+      items.push({
+        label: 'Mount Distance',
+        value: formatDistance(stats.horseDistanceMeters),
+      })
+    }
+    if (
+      typeof stats.climbDistanceMeters === 'number' &&
+      stats.climbDistanceMeters > 0
+    ) {
+      items.push({
+        label: 'Distance Climbed',
+        value: formatDistance(stats.climbDistanceMeters),
+      })
+    }
+    if (
+      typeof stats.sneakTimeSeconds === 'number' &&
+      stats.sneakTimeSeconds > 0
+    ) {
+      items.push({
+        label: 'Time Sneaking',
+        value: formatDuration(stats.sneakTimeSeconds),
+      })
+    }
+
+    items.push({
+      label: 'Time Since Rest',
+      value: formatDuration(stats.timeSinceRestSeconds),
+    })
+
+    if (typeof stats.sleeps === 'number' && stats.sleeps > 0) {
+      items.push({
+        label: 'Times Slept',
+        value: formatNumber(stats.sleeps),
+      })
+    }
+    if (typeof stats.chestsOpened === 'number' && stats.chestsOpened > 0) {
+      items.push({
+        label: 'Chests Opened',
+        value: formatNumber(stats.chestsOpened),
+      })
+    }
+    if (typeof stats.itemsEnchanted === 'number' && stats.itemsEnchanted > 0) {
+      items.push({
+        label: 'Items Enchanted',
+        value: formatNumber(stats.itemsEnchanted),
+      })
+    }
+    if (typeof stats.fishCaught === 'number' && stats.fishCaught > 0) {
+      items.push({
+        label: 'Fish Caught',
+        value: formatNumber(stats.fishCaught),
+      })
+    }
+    if (typeof stats.animalsBred === 'number' && stats.animalsBred > 0) {
+      items.push({
+        label: 'Animals Bred',
+        value: formatNumber(stats.animalsBred),
+      })
+    }
+    if (typeof stats.raidsWon === 'number' && stats.raidsWon > 0) {
+      items.push({
+        label: 'Raids Won',
+        value: formatNumber(stats.raidsWon),
+      })
+    }
+    if (typeof stats.raidsTriggered === 'number' && stats.raidsTriggered > 0) {
+      items.push({
+        label: 'Raids Triggered',
+        value: formatNumber(stats.raidsTriggered),
+      })
+    }
+    if (typeof stats.trades === 'number' && stats.trades > 0) {
+      items.push({
+        label: 'Villager Trades',
+        value: formatNumber(stats.trades),
+      })
+    }
+    if (typeof stats.toolsBroken === 'number' && stats.toolsBroken > 0) {
+      items.push({
+        label: 'Tools Broken',
+        value: formatNumber(stats.toolsBroken),
+      })
+    }
+    if (typeof stats.bellRings === 'number' && stats.bellRings > 0) {
+      items.push({
+        label: 'Bell Rings',
+        value: formatNumber(stats.bellRings),
+      })
+    }
+    if (
+      typeof stats.musicDiscsPlayed === 'number' &&
+      stats.musicDiscsPlayed > 0
+    ) {
+      items.push({
+        label: 'Music Discs Played',
+        value: formatNumber(stats.musicDiscsPlayed),
+      })
+    }
+
+    return items
+  }, [stats])
 
   const activeInfractions = useMemo(
     () => punishments.filter(p => getPunishmentStatus(p) === 'ACTIVE').length,
     [punishments]
   )
+
+  const formattedBiome = useMemo(() => {
+    if (!player.biome) return null
+    return player.biome
+      .toLowerCase()
+      .replace(/^minecraft:/, '')
+      .replace(/_/g, ' ')
+      .replace(/\b\w/g, l => l.toUpperCase())
+  }, [player.biome])
 
   return (
     <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-[220px_1fr] md:gap-10">
@@ -155,6 +329,34 @@ export default function PlayerView({ player }: Props) {
         </div>
 
         <div className="space-y-2 border-t border-neutral-800 pt-4 text-xs text-gray-400">
+          {player.online && (
+            <>
+              <div className="flex items-center justify-between">
+                <span>Status</span>
+                <span className="font-medium text-emerald-400">
+                  {player.afk ? 'Online (AFK)' : 'Online'}
+                </span>
+              </div>
+              {player.world && player.world !== 'Offline' && (
+                <div className="flex items-center justify-between">
+                  <span>Dimension</span>
+                  <span className="text-gray-300">{player.world}</span>
+                </div>
+              )}
+              {formattedBiome && (
+                <div className="flex items-center justify-between">
+                  <span>Biome</span>
+                  <span className="text-gray-300">{formattedBiome}</span>
+                </div>
+              )}
+              {typeof player.ping === 'number' && (
+                <div className="flex items-center justify-between">
+                  <span>Ping</span>
+                  <span className="text-gray-300">{player.ping}ms</span>
+                </div>
+              )}
+            </>
+          )}
           <div className="flex items-center justify-between">
             <span>First Login</span>
             <span suppressHydrationWarning className="text-gray-300">

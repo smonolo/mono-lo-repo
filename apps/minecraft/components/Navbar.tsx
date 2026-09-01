@@ -75,6 +75,11 @@ export default function Navbar() {
   const navLinks = [
     { label: 'Home', href: '/', active: pathname === '/' },
     {
+      label: 'World',
+      href: '/world',
+      active: pathname?.startsWith('/world'),
+    },
+    {
       label: 'Players',
       href: '/players',
       active: pathname?.startsWith('/players'),

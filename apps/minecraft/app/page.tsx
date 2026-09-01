@@ -4,7 +4,7 @@ import SearchBar from '@/components/SearchBar'
 import CopyServerIp from '@/components/CopyServerIp'
 import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
-import { fetchOnlinePlayers } from '@/lib/api'
+import { fetchOnlinePlayers, fetchWorldStats } from '@/lib/api'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -16,7 +16,11 @@ export const metadata: Metadata = {
 }
 
 export default async function HomePage() {
-  const data = await fetchOnlinePlayers()
+  const [data, worldData] = await Promise.all([
+    fetchOnlinePlayers(),
+    fetchWorldStats(),
+  ])
+
   const players = data.players || []
   const onlinePlayers = players.filter(p => p.online)
   const totalCount = data.count || players.length
@@ -25,8 +29,11 @@ export default async function HomePage() {
       ? data.onlineCount
       : onlinePlayers.length
 
+  const worldAgeStr = worldData?.worldAge?.formatted || 'Day 1'
+  const weatherStr = worldData?.weather?.status || 'Clear'
+
   return (
-    <div className="mx-auto flex w-full max-w-4xl flex-col items-center justify-center space-y-12 py-6 sm:py-12">
+    <div className="mx-auto flex w-full max-w-5xl flex-col items-center justify-center space-y-12 py-6 sm:py-12">
       <div className="w-full max-w-xl space-y-6 text-center">
         <div className="flex justify-center">
           <CopyServerIp
@@ -85,7 +92,23 @@ export default async function HomePage() {
         )}
       </div>
 
-      <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-3">
+      <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <Link href="/world" className="group block">
+          <Card className="h-full space-y-2 p-4 transition-all group-hover:border-neutral-700 group-hover:bg-white/[0.03]">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-white group-hover:text-emerald-400">
+                World
+              </span>
+              <span className="text-[11px] font-medium text-neutral-500">
+                {worldAgeStr} · {weatherStr}
+              </span>
+            </div>
+            <p className="text-xs text-neutral-400">
+              Real-time day & weather cycles, dimension telemetry, and server milestones.
+            </p>
+          </Card>
+        </Link>
+
         <Link href="/players" className="group block">
           <Card className="h-full space-y-2 p-4 transition-all group-hover:border-neutral-700 group-hover:bg-white/[0.03]">
             <div className="flex items-center justify-between">

@@ -13,10 +13,32 @@ export type PlayerStats = {
   playerKills: number
   damageDealt: number
   damageTaken: number
+  damageBlocked?: number
+  damageResisted?: number
+  damageAbsorbed?: number
   jumps: number
   walkDistanceMeters: number
+  sprintDistanceMeters?: number
   flyDistanceMeters: number
+  elytraDistanceMeters?: number
+  boatDistanceMeters?: number
+  minecartDistanceMeters?: number
+  horseDistanceMeters?: number
+  swimDistanceMeters?: number
+  climbDistanceMeters?: number
+  sneakTimeSeconds?: number
   timeSinceRestSeconds: number
+  sleeps?: number
+  chestsOpened?: number
+  itemsEnchanted?: number
+  fishCaught?: number
+  animalsBred?: number
+  raidsWon?: number
+  raidsTriggered?: number
+  trades?: number
+  toolsBroken?: number
+  bellRings?: number
+  musicDiscsPlayed?: number
 }
 
 export type PlayerData = {
@@ -29,6 +51,7 @@ export type PlayerData = {
   ping: number
   afk: boolean
   world: string
+  biome?: string
   gamemode?: string
   health?: number
   food?: number
@@ -47,6 +70,7 @@ export type PlayerSummary = {
   ping?: number
   afk?: boolean
   world?: string
+  biome?: string
   lastLogin?: number
   rank: RankData
 }
@@ -108,3 +132,109 @@ export type PunishmentsResponse = {
   punishments: Punishment[]
   error?: string
 }
+
+export type WorldAge = {
+  ticks: number
+  fullTimeTicks?: number
+  days: number
+  formatted: string
+}
+
+export type WorldTime = {
+  ticks: number
+  timeOfDay: string
+  phase: string
+  isDay: boolean
+}
+
+export type MoonPhase = {
+  phase: number
+  name: string
+}
+
+export type WorldWeather = {
+  isRaining: boolean
+  isThundering: boolean
+  status: string
+  weatherDurationSeconds?: number
+  thunderDurationSeconds?: number
+  clearWeatherDurationSeconds?: number
+}
+
+export type WorldBorderData = {
+  size: number
+  centerX: number
+  centerZ: number
+  damageBuffer: number
+  damageAmount: number
+  warningDistance: number
+}
+
+export type DimensionData = {
+  name: string
+  environment: 'NORMAL' | 'NETHER' | 'THE_END' | string
+  difficulty: string
+  hardcore: boolean
+  pvp: boolean
+  seaLevel: number
+  minHeight: number
+  maxHeight: number
+  loadedChunks: number
+  entitiesCount: number
+  livingEntitiesCount: number
+  playersCount: number
+  spawn: {
+    x: number
+    y: number
+    z: number
+  }
+  worldBorder?: WorldBorderData
+}
+
+export type WorldAggregates = {
+  play_time?: number
+  deaths?: number
+  player_kills?: number
+  mob_kills?: number
+  damage_dealt?: number
+  damage_taken?: number
+  damage_blocked?: number
+  damage_resisted?: number
+  damage_absorbed?: number
+  time_since_death?: number
+  walk_distance?: number
+  sprint_distance?: number
+  fly_distance?: number
+  elytra_distance?: number
+  boat_distance?: number
+  minecart_distance?: number
+  horse_distance?: number
+  swim_distance?: number
+  climb_distance?: number
+  sneak_time?: number
+  jumps?: number
+  sleeps?: number
+  chests_opened?: number
+  items_enchanted?: number
+  fish_caught?: number
+  animals_bred?: number
+  raids_won?: number
+  raids_triggered?: number
+  trades?: number
+  tools_broken?: number
+  bell_rings?: number
+  music_discs_played?: number
+  [key: string]: number | undefined
+}
+
+export type WorldResponse = {
+  online: boolean
+  worldAge?: WorldAge
+  time?: WorldTime
+  moonPhase?: MoonPhase
+  weather?: WorldWeather
+  dimensions?: DimensionData[]
+  aggregates?: WorldAggregates
+  error?: string
+}
+

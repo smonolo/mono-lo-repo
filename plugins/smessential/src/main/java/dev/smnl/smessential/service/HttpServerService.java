@@ -18,15 +18,20 @@ import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Statistic;
+import org.bukkit.World;
+import org.bukkit.WorldBorder;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -84,12 +89,14 @@ public class HttpServerService {
       server.createContext("/v1/player", new SinglePlayerHandler());
       server.createContext("/v1/leaderboards", new LeaderboardsHandler());
       server.createContext("/v1/leaderboard", new LeaderboardsHandler());
+      server.createContext("/v1/world", new WorldHandler());
 
       server.createContext("/api/status", new StatusHandler());
       server.createContext("/api/players", new PlayersListHandler());
       server.createContext("/api/player", new SinglePlayerHandler());
       server.createContext("/api/leaderboards", new LeaderboardsHandler());
       server.createContext("/api/leaderboard", new LeaderboardsHandler());
+      server.createContext("/api/world", new WorldHandler());
 
       server.start();
       plugin.getLogger().info("SMEssential HTTP API listening on " + host + ":" + port);
@@ -381,6 +388,10 @@ public class HttpServerService {
           p.addProperty("ping", onlinePlayer.getPing());
           p.addProperty("afk", afkService.isAfk(onlinePlayer));
           p.addProperty("world", onlinePlayer.getWorld().getName());
+          try {
+            p.addProperty("biome", onlinePlayer.getLocation().getBlock().getBiome().name());
+          } catch (Exception ignored) {
+          }
         } else {
           p.addProperty("ping", 0);
           p.addProperty("afk", false);
@@ -557,6 +568,10 @@ public class HttpServerService {
         p.addProperty("ping", onlinePlayer.getPing());
         p.addProperty("afk", afkService.isAfk(onlinePlayer));
         p.addProperty("world", onlinePlayer.getWorld().getName());
+        try {
+          p.addProperty("biome", onlinePlayer.getLocation().getBlock().getBiome().name());
+        } catch (Exception ignored) {
+        }
         p.addProperty("gamemode", onlinePlayer.getGameMode().name());
         p.addProperty("health", Math.round(onlinePlayer.getHealth() * 10.0) / 10.0);
         p.addProperty("food", onlinePlayer.getFoodLevel());
@@ -575,13 +590,43 @@ public class HttpServerService {
       stats.addProperty("playerKills", getSafeStat(offlinePlayer, Statistic.PLAYER_KILLS));
       stats.addProperty("damageDealt", getSafeStat(offlinePlayer, Statistic.DAMAGE_DEALT));
       stats.addProperty("damageTaken", getSafeStat(offlinePlayer, Statistic.DAMAGE_TAKEN));
+      stats.addProperty(
+          "damageBlocked", getSafeStat(offlinePlayer, Statistic.DAMAGE_BLOCKED_BY_SHIELD));
+      stats.addProperty("damageResisted", getSafeStat(offlinePlayer, Statistic.DAMAGE_RESISTED));
+      stats.addProperty("damageAbsorbed", getSafeStat(offlinePlayer, Statistic.DAMAGE_ABSORBED));
       stats.addProperty("jumps", getSafeStat(offlinePlayer, Statistic.JUMP));
       stats.addProperty(
           "walkDistanceMeters", getSafeStat(offlinePlayer, Statistic.WALK_ONE_CM) / 100);
       stats.addProperty(
+          "sprintDistanceMeters", getSafeStat(offlinePlayer, Statistic.SPRINT_ONE_CM) / 100);
+      stats.addProperty(
           "flyDistanceMeters", getSafeStat(offlinePlayer, Statistic.FLY_ONE_CM) / 100);
       stats.addProperty(
+          "elytraDistanceMeters", getSafeStat(offlinePlayer, Statistic.AVIATE_ONE_CM) / 100);
+      stats.addProperty(
+          "boatDistanceMeters", getSafeStat(offlinePlayer, Statistic.BOAT_ONE_CM) / 100);
+      stats.addProperty(
+          "minecartDistanceMeters", getSafeStat(offlinePlayer, Statistic.MINECART_ONE_CM) / 100);
+      stats.addProperty(
+          "horseDistanceMeters", getSafeStat(offlinePlayer, Statistic.HORSE_ONE_CM) / 100);
+      stats.addProperty(
+          "swimDistanceMeters", getSafeStat(offlinePlayer, Statistic.SWIM_ONE_CM) / 100);
+      stats.addProperty(
+          "climbDistanceMeters", getSafeStat(offlinePlayer, Statistic.CLIMB_ONE_CM) / 100);
+      stats.addProperty("sneakTimeSeconds", getSafeStat(offlinePlayer, Statistic.SNEAK_TIME) / 20);
+      stats.addProperty(
           "timeSinceRestSeconds", getSafeStat(offlinePlayer, Statistic.TIME_SINCE_REST) / 20);
+      stats.addProperty("sleeps", getSafeStat(offlinePlayer, Statistic.SLEEP_IN_BED));
+      stats.addProperty("chestsOpened", getSafeStat(offlinePlayer, Statistic.CHEST_OPENED));
+      stats.addProperty("itemsEnchanted", getSafeStat(offlinePlayer, Statistic.ITEM_ENCHANTED));
+      stats.addProperty("fishCaught", getSafeStat(offlinePlayer, Statistic.FISH_CAUGHT));
+      stats.addProperty("animalsBred", getSafeStat(offlinePlayer, Statistic.ANIMALS_BRED));
+      stats.addProperty("raidsWon", getSafeStat(offlinePlayer, Statistic.RAID_WIN));
+      stats.addProperty("raidsTriggered", getSafeStat(offlinePlayer, Statistic.RAID_TRIGGER));
+      stats.addProperty("trades", getSafeStat(offlinePlayer, Statistic.TRADED_WITH_VILLAGER));
+      stats.addProperty("toolsBroken", getSafeStat(offlinePlayer, Statistic.BREAK_ITEM));
+      stats.addProperty("bellRings", getSafeStat(offlinePlayer, Statistic.BELL_RING));
+      stats.addProperty("musicDiscsPlayed", getSafeStat(offlinePlayer, Statistic.RECORD_PLAYED));
       p.add("stats", stats);
 
       JsonObject root = new JsonObject();
@@ -719,5 +764,308 @@ public class HttpServerService {
 
     obj.add("top", topArray);
     return obj;
+  }
+
+  private record WorldDimensionSnapshot(
+      String name,
+      String environment,
+      String difficulty,
+      boolean hardcore,
+      boolean pvp,
+      int seaLevel,
+      int minHeight,
+      int maxHeight,
+      int chunkCount,
+      int entityCount,
+      int livingEntitiesCount,
+      int playerCount,
+      int spawnX,
+      int spawnY,
+      int spawnZ,
+      double borderSize,
+      double borderCenterX,
+      double borderCenterZ,
+      double borderBuffer,
+      double borderDamage,
+      int borderWarning) {}
+
+  private record WorldEnvironmentSnapshot(
+      long gameTime,
+      long fullTime,
+      long timeOfDay,
+      boolean hasStorm,
+      boolean isThundering,
+      int weatherDurationTicks,
+      int thunderDurationTicks,
+      int clearWeatherDurationTicks,
+      List<WorldDimensionSnapshot> dimensions) {}
+
+  private WorldEnvironmentSnapshot captureWorldSnapshotSync() {
+    List<World> worlds = Bukkit.getWorlds();
+    World mainWorld = null;
+    for (World w : worlds) {
+      if (w.getEnvironment() == World.Environment.NORMAL) {
+        mainWorld = w;
+        break;
+      }
+    }
+    if (mainWorld == null && !worlds.isEmpty()) {
+      mainWorld = worlds.get(0);
+    }
+
+    long gameTime = mainWorld != null ? mainWorld.getGameTime() : 0L;
+    long fullTime = mainWorld != null ? mainWorld.getFullTime() : 0L;
+    long timeOfDay = mainWorld != null ? mainWorld.getTime() : 0L;
+    boolean hasStorm = mainWorld != null && mainWorld.hasStorm();
+    boolean isThundering = mainWorld != null && mainWorld.isThundering();
+    int weatherDuration = mainWorld != null ? mainWorld.getWeatherDuration() : 0;
+    int thunderDuration = mainWorld != null ? mainWorld.getThunderDuration() : 0;
+    int clearDuration = mainWorld != null ? mainWorld.getClearWeatherDuration() : 0;
+
+    List<WorldDimensionSnapshot> dims = new ArrayList<>(worlds.size());
+    for (World w : worlds) {
+      int chunkCount;
+      try {
+        chunkCount = w.getChunkCount();
+      } catch (Throwable ignored) {
+        chunkCount = w.getLoadedChunks().length;
+      }
+
+      int entityCount;
+      try {
+        entityCount = w.getEntityCount();
+      } catch (Throwable ignored) {
+        entityCount = w.getEntities().size();
+      }
+
+      int livingCount = 0;
+      try {
+        livingCount = w.getLivingEntities().size();
+      } catch (Throwable ignored) {
+      }
+
+      int playerCount = w.getPlayers().size();
+      int spawnX = w.getSpawnLocation().getBlockX();
+      int spawnY = w.getSpawnLocation().getBlockY();
+      int spawnZ = w.getSpawnLocation().getBlockZ();
+
+      WorldBorder b = w.getWorldBorder();
+      double bSize = b != null ? b.getSize() : 0.0;
+      double bCenterX = b != null && b.getCenter() != null ? b.getCenter().getX() : 0.0;
+      double bCenterZ = b != null && b.getCenter() != null ? b.getCenter().getZ() : 0.0;
+      double bBuffer = b != null ? b.getDamageBuffer() : 0.0;
+      double bDamage = b != null ? b.getDamageAmount() : 0.0;
+      int bWarning = b != null ? b.getWarningDistance() : 0;
+
+      dims.add(
+          new WorldDimensionSnapshot(
+              w.getName(),
+              w.getEnvironment().name(),
+              w.getDifficulty().name(),
+              w.isHardcore(),
+              w.getPVP(),
+              w.getSeaLevel(),
+              w.getMinHeight(),
+              w.getMaxHeight(),
+              chunkCount,
+              entityCount,
+              livingCount,
+              playerCount,
+              spawnX,
+              spawnY,
+              spawnZ,
+              bSize,
+              bCenterX,
+              bCenterZ,
+              bBuffer,
+              bDamage,
+              bWarning));
+    }
+
+    return new WorldEnvironmentSnapshot(
+        gameTime,
+        fullTime,
+        timeOfDay,
+        hasStorm,
+        isThundering,
+        weatherDuration,
+        thunderDuration,
+        clearDuration,
+        dims);
+  }
+
+  private class WorldHandler implements HttpHandler {
+    @Override
+    public void handle(HttpExchange exchange) throws IOException {
+      if ("OPTIONS".equalsIgnoreCase(exchange.getRequestMethod())) {
+        sendJsonResponse(exchange, 204, new JsonObject());
+        return;
+      }
+
+      if (isRateLimited(exchange)) {
+        JsonObject err = new JsonObject();
+        err.addProperty("error", "Too Many Requests");
+        sendJsonResponse(exchange, 429, err);
+        return;
+      }
+
+      if (!authenticate(exchange)) {
+        JsonObject err = new JsonObject();
+        err.addProperty("error", "Unauthorized");
+        sendJsonResponse(exchange, 401, err);
+        return;
+      }
+
+      long now = System.currentTimeMillis();
+      CachedPayload cached = payloadCache.get("world");
+      if (cached != null && (now - cached.timestamp()) < 5000L) {
+        sendRawBytesResponse(exchange, 200, cached.data());
+        return;
+      }
+
+      WorldEnvironmentSnapshot snapshot = null;
+      try {
+        Future<WorldEnvironmentSnapshot> future =
+            Bukkit.getScheduler()
+                .callSyncMethod(plugin, HttpServerService.this::captureWorldSnapshotSync);
+        snapshot = future.get(2, TimeUnit.SECONDS);
+      } catch (Exception e) {
+        plugin.getLogger().warning("Failed to capture sync world snapshot: " + e.getMessage());
+      }
+
+      if (snapshot == null) {
+        if (cached != null) {
+          sendRawBytesResponse(exchange, 200, cached.data());
+          return;
+        }
+        JsonObject err = new JsonObject();
+        err.addProperty("online", false);
+        sendJsonResponse(exchange, 503, err);
+        return;
+      }
+
+      JsonObject root = new JsonObject();
+      root.addProperty("online", true);
+
+      long gameTime = snapshot.gameTime();
+      long fullTime = snapshot.fullTime();
+      long timeOfDay = snapshot.timeOfDay();
+      long day = gameTime / 24000L;
+
+      JsonObject worldAge = new JsonObject();
+      worldAge.addProperty("ticks", gameTime);
+      worldAge.addProperty("fullTimeTicks", fullTime);
+      worldAge.addProperty("days", day);
+      worldAge.addProperty("formatted", "Day " + (day + 1));
+      root.add("worldAge", worldAge);
+
+      JsonObject time = new JsonObject();
+      time.addProperty("ticks", timeOfDay);
+      time.addProperty("timeOfDay", formatClockTime(timeOfDay));
+      time.addProperty("phase", getTimePhaseName(timeOfDay));
+      time.addProperty("isDay", timeOfDay >= 0 && timeOfDay < 12000);
+      root.add("time", time);
+
+      int moonPhaseNum = (int) ((fullTime / 24000) % 8);
+      JsonObject moon = new JsonObject();
+      moon.addProperty("phase", moonPhaseNum);
+      moon.addProperty("name", getMoonPhaseName(fullTime));
+      root.add("moonPhase", moon);
+
+      JsonObject weather = new JsonObject();
+      boolean hasStorm = snapshot.hasStorm();
+      boolean isThundering = snapshot.isThundering();
+      weather.addProperty("isRaining", hasStorm);
+      weather.addProperty("isThundering", isThundering);
+      weather.addProperty("status", isThundering ? "Thunderstorm" : (hasStorm ? "Rain" : "Clear"));
+      weather.addProperty("weatherDurationSeconds", snapshot.weatherDurationTicks() / 20);
+      weather.addProperty("thunderDurationSeconds", snapshot.thunderDurationTicks() / 20);
+      weather.addProperty("clearWeatherDurationSeconds", snapshot.clearWeatherDurationTicks() / 20);
+      root.add("weather", weather);
+
+      JsonArray dimensions = new JsonArray();
+      for (WorldDimensionSnapshot dimSnap : snapshot.dimensions()) {
+        JsonObject dim = new JsonObject();
+        dim.addProperty("name", dimSnap.name());
+        dim.addProperty("environment", dimSnap.environment());
+        dim.addProperty("difficulty", dimSnap.difficulty());
+        dim.addProperty("hardcore", dimSnap.hardcore());
+        dim.addProperty("pvp", dimSnap.pvp());
+        dim.addProperty("seaLevel", dimSnap.seaLevel());
+        dim.addProperty("minHeight", dimSnap.minHeight());
+        dim.addProperty("maxHeight", dimSnap.maxHeight());
+        dim.addProperty("loadedChunks", dimSnap.chunkCount());
+        dim.addProperty("entitiesCount", dimSnap.entityCount());
+        dim.addProperty("livingEntitiesCount", dimSnap.livingEntitiesCount());
+        dim.addProperty("playersCount", dimSnap.playerCount());
+
+        JsonObject spawn = new JsonObject();
+        spawn.addProperty("x", dimSnap.spawnX());
+        spawn.addProperty("y", dimSnap.spawnY());
+        spawn.addProperty("z", dimSnap.spawnZ());
+        dim.add("spawn", spawn);
+
+        if (dimSnap.borderSize() > 0) {
+          JsonObject wb = new JsonObject();
+          wb.addProperty("size", dimSnap.borderSize());
+          wb.addProperty("centerX", dimSnap.borderCenterX());
+          wb.addProperty("centerZ", dimSnap.borderCenterZ());
+          wb.addProperty("damageBuffer", dimSnap.borderBuffer());
+          wb.addProperty("damageAmount", dimSnap.borderDamage());
+          wb.addProperty("warningDistance", dimSnap.borderWarning());
+          dim.add("worldBorder", wb);
+        }
+
+        dimensions.add(dim);
+      }
+      root.add("dimensions", dimensions);
+
+      if (statisticService != null) {
+        Map<StatisticType, Long> totals = statisticService.getGlobalAggregates();
+        JsonObject aggregates = new JsonObject();
+        for (Map.Entry<StatisticType, Long> e : totals.entrySet()) {
+          aggregates.addProperty(e.getKey().getKey(), e.getValue());
+        }
+        root.add("aggregates", aggregates);
+      }
+
+      byte[] bytes = GSON.toJson(root).getBytes(StandardCharsets.UTF_8);
+      payloadCache.put("world", new CachedPayload(now, bytes));
+      sendRawBytesResponse(exchange, 200, bytes);
+    }
+  }
+
+  private static String getMoonPhaseName(long fullTime) {
+    int phase = (int) ((fullTime / 24000) % 8);
+    return switch (phase) {
+      case 0 -> "Full Moon";
+      case 1 -> "Waning Gibbous";
+      case 2 -> "Third Quarter";
+      case 3 -> "Waning Crescent";
+      case 4 -> "New Moon";
+      case 5 -> "Waxing Crescent";
+      case 6 -> "First Quarter";
+      case 7 -> "Waxing Gibbous";
+      default -> "Full Moon";
+    };
+  }
+
+  private static String getTimePhaseName(long timeOfDay) {
+    long t = (timeOfDay % 24000 + 24000) % 24000;
+    if (t >= 0 && t < 1000) return "Sunrise / Dawn";
+    if (t >= 1000 && t < 6000) return "Morning";
+    if (t >= 6000 && t < 11000) return "Afternoon";
+    if (t >= 11000 && t < 13000) return "Sunset / Dusk";
+    if (t >= 13000 && t < 18000) return "Night";
+    if (t >= 18000 && t < 22000) return "Midnight";
+    return "Late Night";
+  }
+
+  private static String formatClockTime(long timeOfDay) {
+    long t = (timeOfDay + 6000) % 24000;
+    if (t < 0) t += 24000;
+    long hours = t / 1000;
+    long minutes = (t % 1000) * 60 / 1000;
+    return String.format(Locale.US, "%02d:%02d", hours, minutes);
   }
 }

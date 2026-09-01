@@ -7,6 +7,7 @@ import { StatusController } from './status/status.controller'
 import { PlayersController } from './players/players.controller'
 import { LeaderboardsController } from './leaderboards/leaderboards.controller'
 import { AdminController } from './admin/admin.controller'
+import { WorldController } from './world/world.controller'
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { AdminController } from './admin/admin.controller'
     PlayersController,
     LeaderboardsController,
     AdminController,
+    WorldController,
   ],
   providers: [
     {

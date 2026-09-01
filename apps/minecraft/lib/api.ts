@@ -6,6 +6,7 @@ import type {
   PunishmentsResponse,
   SinglePlayerResponse,
   StatisticLeaderboard,
+  WorldResponse,
 } from '@/types/minecraft'
 
 export function getApiConfig() {
@@ -303,4 +304,37 @@ export async function fetchPunishments(): Promise<PunishmentsResponse> {
       }
     }
   )
+}
+
+export async function fetchWorldStats(): Promise<WorldResponse> {
+  return cachedFetch<WorldResponse>('world_stats', 5000, async () => {
+    const { apiUrl } = getApiConfig()
+
+    try {
+      const res = await fetchWithTimeout(`${apiUrl}/v1/world`)
+
+      if (!res.ok) {
+        return {
+          online: false,
+          error: `HTTP ${res.status}`,
+        }
+      }
+
+      const data = await res.json()
+      return {
+        online: data.online !== false,
+        worldAge: data.worldAge,
+        time: data.time,
+        moonPhase: data.moonPhase,
+        weather: data.weather,
+        dimensions: Array.isArray(data.dimensions) ? data.dimensions : [],
+        aggregates: data.aggregates || {},
+      }
+    } catch (err: any) {
+      return {
+        online: false,
+        error: err?.message || 'Failed to reach Minecraft server',
+      }
+    }
+  })
 }

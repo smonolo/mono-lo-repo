@@ -110,7 +110,8 @@ public class StatsGUIManager {
     int[] slots = {
       10, 11, 12, 13, 14, 15, 16,
       19, 20, 21, 22, 23, 24, 25,
-      28, 29, 30, 31
+      28, 29, 30, 31, 32, 33, 34,
+      37, 38, 39, 40, 41, 42, 43
     };
 
     StatisticType[] types = StatisticType.values();
