@@ -6,8 +6,9 @@ export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 export const metadata: Metadata = {
-  title: 'World Telemetry',
-  description: 'Minecraft server world telemetry, dimensions, environment, and global statistics',
+  title: 'World',
+  description:
+    'Minecraft server world environment, dimensions, and global statistics',
   robots: {
     index: false,
     follow: false,
@@ -21,10 +22,10 @@ export default async function WorldPage() {
     <div className="space-y-8">
       <div className="space-y-2">
         <h1 className="text-3xl font-semibold tracking-tight text-white">
-          World Telemetry
+          World
         </h1>
         <p className="text-sm text-neutral-400">
-          Real-time environment cycle, dimension telemetry, and global server milestones.
+          Real-time environment cycle, dimensions, and global server milestones.
         </p>
       </div>
 

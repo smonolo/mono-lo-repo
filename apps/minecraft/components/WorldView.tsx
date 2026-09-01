@@ -208,7 +208,7 @@ export default function WorldView({ worldData }: Props) {
     return (
       <div className="rounded-xl border border-neutral-800 bg-white/[0.02] p-8 text-center">
         <p className="text-sm text-neutral-400">
-          Server is offline or world telemetry is currently unavailable.
+          Server is offline or world data is currently unavailable.
         </p>
       </div>
     )
