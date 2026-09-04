@@ -90,6 +90,11 @@ export default function Navbar() {
       active: pathname?.startsWith('/leaderboards'),
     },
     {
+      label: 'Achievements',
+      href: '/achievements',
+      active: pathname?.startsWith('/achievements'),
+    },
+    {
       label: 'Punishments',
       href: '/punishments',
       active: pathname?.startsWith('/punishments'),

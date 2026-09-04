@@ -186,4 +186,23 @@ export class PluginService {
       )
     })
   }
+
+  async getAchievements(): Promise<any> {
+    return this.cachedFetch('plugin_achievements', 30000, async () => {
+      const data = await this.fetchFromPlugin<any>('/v1/achievements')
+      return (
+        data || {
+          online: false,
+          total: 0,
+          categories: [],
+          achievements: [],
+          globalStats: {
+            totalAchievements: 0,
+            totalCompletions: 0,
+            trackedPlayers: 0,
+          },
+        }
+      )
+    })
+  }
 }

@@ -61,6 +61,56 @@ export type PlayerData = {
   ranks?: RankData[]
   stats?: PlayerStats
   punishments?: Punishment[]
+  achievements?: PlayerAchievementsSummary
+}
+
+export type AchievementFrame = 'TASK' | 'GOAL' | 'CHALLENGE'
+
+export type Achievement = {
+  id: string
+  title: string
+  description: string
+  frame: AchievementFrame
+  icon: string
+  category: string
+  categoryName: string
+  parent?: string | null
+  criteriaCount?: number
+  completedCount?: number
+  completedPercentage?: number
+}
+
+export type PlayerAchievement = {
+  id: string
+  title: string
+  description: string
+  frame: AchievementFrame
+  icon: string
+  category: string
+  categoryName: string
+  parent?: string | null
+  completed: boolean
+  completedAt?: number | null
+}
+
+export type PlayerAchievementsSummary = {
+  completedCount: number
+  totalCount: number
+  percentage: number
+  list: PlayerAchievement[]
+}
+
+export type AchievementsResponse = {
+  online: boolean
+  total: number
+  categories: string[]
+  achievements: Achievement[]
+  globalStats?: {
+    totalAchievements: number
+    totalCompletions: number
+    trackedPlayers: number
+  }
+  error?: string
 }
 
 export type PlayerSummary = {

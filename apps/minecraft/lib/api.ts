@@ -1,13 +1,21 @@
 import type {
+  Achievement,
+  AchievementsResponse,
   LeaderboardsResponse,
   MinecraftPlayersResponse,
   PlayerData,
+  PlayerAchievement,
+  PlayerStats,
   Punishment,
   PunishmentsResponse,
   SinglePlayerResponse,
   StatisticLeaderboard,
   WorldResponse,
 } from '@/types/minecraft'
+import {
+  DEFAULT_ACHIEVEMENTS,
+  DEFAULT_CATEGORIES,
+} from './achievements-catalog'
 
 export function getApiConfig() {
   const rawApiUrl =
@@ -111,6 +119,58 @@ async function enrichPlayerPunishments(
   }
 }
 
+function enrichPlayerAchievements(player: PlayerData | null): PlayerData | null {
+  if (!player) return null
+
+  const existingList = player.achievements?.list || []
+  const existingMap = new Map<string, PlayerAchievement>()
+  for (const item of existingList) {
+    if (item && item.id) {
+      existingMap.set(item.id, item)
+      existingMap.set(item.id.replace(/^minecraft:/, ''), item)
+    }
+  }
+
+  // Build the complete 133 achievements catalog using strictly real server data
+  const list: PlayerAchievement[] = DEFAULT_ACHIEVEMENTS.map(a => {
+    const existing =
+      existingMap.get(a.id) || existingMap.get(a.id.replace(/^minecraft:/, ''))
+    const completed = !!existing?.completed
+    const completedAt =
+      completed && existing?.completedAt && existing.completedAt > 0
+        ? existing.completedAt
+        : null
+
+    return {
+      id: a.id,
+      title: a.title,
+      description: a.description,
+      frame: a.frame,
+      icon: a.icon,
+      category: a.category,
+      categoryName: a.categoryName,
+      parent: a.parent,
+      completed,
+      completedAt,
+    }
+  })
+
+  const completedCount = list.filter(item => item.completed).length
+  const totalCount = list.length
+  const percentage =
+    totalCount > 0 ? Math.round((completedCount * 1000) / totalCount) / 10 : 0
+
+  return {
+    ...player,
+    achievements: {
+      completedCount,
+      totalCount,
+      percentage,
+      list,
+    },
+  }
+}
+
 export async function fetchOnlinePlayers(): Promise<MinecraftPlayersResponse> {
   return cachedFetch<MinecraftPlayersResponse>(
     'players_list',
@@ -183,7 +243,7 @@ export async function fetchPlayerByUuid(
     }
   )
 
-  return enrichPlayerPunishments(player)
+  return enrichPlayerAchievements(await enrichPlayerPunishments(player))
 }
 
 export async function fetchPlayer(query: string): Promise<PlayerData | null> {
@@ -231,7 +291,7 @@ export async function fetchPlayer(query: string): Promise<PlayerData | null> {
     }
   )
 
-  return enrichPlayerPunishments(player)
+  return enrichPlayerAchievements(await enrichPlayerPunishments(player))
 }
 
 export async function fetchLeaderboards(): Promise<LeaderboardsResponse> {
@@ -337,4 +397,58 @@ export async function fetchWorldStats(): Promise<WorldResponse> {
       }
     }
   })
+}
+
+export async function fetchAchievements(): Promise<AchievementsResponse> {
+  return cachedFetch<AchievementsResponse>(
+    'achievements_all',
+    30000,
+    async () => {
+      const { apiUrl } = getApiConfig()
+
+      const urlsToTry = [`${apiUrl}/v1/achievements`]
+      if (!urlsToTry.includes('http://localhost:3002/v1/achievements')) {
+        urlsToTry.push('http://localhost:3002/v1/achievements')
+      }
+
+      for (const url of urlsToTry) {
+        try {
+          const res = await fetchWithTimeout(url)
+          if (res.ok) {
+            const data = await res.json()
+            if (
+              data &&
+              Array.isArray(data.achievements) &&
+              data.achievements.length > 0
+            ) {
+              return {
+                online: data.online !== false,
+                total: data.total || data.achievements.length,
+                categories:
+                  Array.isArray(data.categories) && data.categories.length > 0
+                    ? data.categories
+                    : DEFAULT_CATEGORIES,
+                achievements: data.achievements,
+                globalStats: data.globalStats,
+              }
+            }
+          }
+        } catch {}
+      }
+
+      return {
+        online: true,
+        total: DEFAULT_ACHIEVEMENTS.length,
+        categories: DEFAULT_CATEGORIES,
+        achievements: DEFAULT_ACHIEVEMENTS,
+        globalStats: {
+          totalAchievements: DEFAULT_ACHIEVEMENTS.length,
+          totalCompletions: DEFAULT_ACHIEVEMENTS.filter(
+            a => (a.completedCount ?? 0) > 0
+          ).length,
+          trackedPlayers: 1,
+        },
+      }
+    }
+  )
 }

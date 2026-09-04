@@ -51,6 +51,7 @@ import dev.smnl.smessential.manager.RaidManager;
 import dev.smnl.smessential.manager.SidebarManager;
 import dev.smnl.smessential.manager.SleepManager;
 import dev.smnl.smessential.manager.TabListManager;
+import dev.smnl.smessential.service.AdvancementService;
 import dev.smnl.smessential.service.AfkService;
 import dev.smnl.smessential.service.AlertService;
 import dev.smnl.smessential.service.BanService;
@@ -143,7 +144,10 @@ public final class SMEssential extends JavaPlugin {
     DeathManager deathManager = new DeathManager(this, statisticService);
     deathManager.setup();
 
-    AdvancementManager advancementManager = new AdvancementManager(this);
+    AdvancementService advancementService = new AdvancementService(this, userService);
+    advancementService.setup();
+
+    AdvancementManager advancementManager = new AdvancementManager(this, advancementService);
     advancementManager.setup();
 
     SleepManager sleepManager = new SleepManager(this);
@@ -243,7 +247,7 @@ public final class SMEssential extends JavaPlugin {
 
     httpServerService =
         new dev.smnl.smessential.service.HttpServerService(
-            this, rankService, afkService, userService, statisticService);
+            this, rankService, afkService, userService, statisticService, advancementService);
     httpServerService.setup();
 
     getLogger().info("SMEssential v" + getPluginMeta().getVersion() + " has been enabled!");

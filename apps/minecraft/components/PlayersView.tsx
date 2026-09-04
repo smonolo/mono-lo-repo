@@ -5,7 +5,7 @@ import { useState, useMemo, useEffect } from 'react'
 import type { PlayerSummary } from '@/types/minecraft'
 import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
-import { formatDate, formatWorldName } from '@/utils/minecraft'
+import { formatDate } from '@/utils/minecraft'
 import { getClientPlayersList } from '@/lib/client-players'
 
 type Props = {
@@ -195,8 +195,6 @@ export default function PlayersView({ initialPlayers }: Props) {
                     <th className="px-4 py-3 font-medium">Player</th>
                     <th className="px-4 py-3 font-medium">Rank</th>
                     <th className="px-4 py-3 font-medium">Status</th>
-                    <th className="px-4 py-3 font-medium">Ping</th>
-                    <th className="px-4 py-3 font-medium">World</th>
                     <th className="px-4 py-3 font-medium">Last Seen</th>
                   </tr>
                 </thead>
@@ -244,14 +242,6 @@ export default function PlayersView({ initialPlayers }: Props) {
                             Offline
                           </span>
                         )}
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-3 text-neutral-400">
-                        {p.online && typeof p.ping === 'number'
-                          ? `${p.ping}ms`
-                          : '-'}
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-3 text-neutral-400">
-                        {formatWorldName(p.world)}
                       </td>
                       <td className="whitespace-nowrap px-4 py-3 text-neutral-400">
                         {p.lastLogin && p.lastLogin > 0
@@ -305,15 +295,8 @@ export default function PlayersView({ initialPlayers }: Props) {
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap items-center justify-between gap-y-1.5 text-neutral-400">
-                    <div className="flex items-center gap-x-3">
-                      {p.online && typeof p.ping === 'number' && (
-                        <span>Ping: {p.ping}ms</span>
-                      )}
-                      {p.world && p.world !== 'Offline' && (
-                        <span>World: {formatWorldName(p.world)}</span>
-                      )}
-                    </div>
+                  <div className="flex items-center justify-between text-neutral-400">
+                    <span>Last Seen</span>
                     <span>
                       {p.lastLogin && p.lastLogin > 0
                         ? formatDate(p.lastLogin)

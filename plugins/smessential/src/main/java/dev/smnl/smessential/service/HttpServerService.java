@@ -8,6 +8,7 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import dev.smnl.smessential.SMEssential;
 import dev.smnl.smessential.database.DatabaseManager.UserData;
+import dev.smnl.smessential.manager.SidebarManager;
 import dev.smnl.smessential.model.Rank;
 import dev.smnl.smessential.model.StatisticType;
 import java.io.IOException;
@@ -44,6 +45,7 @@ public class HttpServerService {
   private final AfkService afkService;
   private final UserService userService;
   private final StatisticService statisticService;
+  private final AdvancementService advancementService;
   private HttpServer server;
   private ExecutorService executor;
 
@@ -65,11 +67,22 @@ public class HttpServerService {
       @NotNull AfkService afkService,
       @NotNull UserService userService,
       @NotNull StatisticService statisticService) {
+    this(plugin, rankService, afkService, userService, statisticService, null);
+  }
+
+  public HttpServerService(
+      @NotNull SMEssential plugin,
+      @NotNull RankService rankService,
+      @NotNull AfkService afkService,
+      @NotNull UserService userService,
+      @NotNull StatisticService statisticService,
+      @org.jetbrains.annotations.Nullable AdvancementService advancementService) {
     this.plugin = plugin;
     this.rankService = rankService;
     this.afkService = afkService;
     this.userService = userService;
     this.statisticService = statisticService;
+    this.advancementService = advancementService;
   }
 
   public void setup() {
@@ -90,6 +103,7 @@ public class HttpServerService {
       server.createContext("/v1/leaderboards", new LeaderboardsHandler());
       server.createContext("/v1/leaderboard", new LeaderboardsHandler());
       server.createContext("/v1/world", new WorldHandler());
+      server.createContext("/v1/achievements", new AchievementsHandler());
 
       server.createContext("/api/status", new StatusHandler());
       server.createContext("/api/players", new PlayersListHandler());
@@ -97,6 +111,7 @@ public class HttpServerService {
       server.createContext("/api/leaderboards", new LeaderboardsHandler());
       server.createContext("/api/leaderboard", new LeaderboardsHandler());
       server.createContext("/api/world", new WorldHandler());
+      server.createContext("/api/achievements", new AchievementsHandler());
 
       server.start();
       plugin.getLogger().info("SMEssential HTTP API listening on " + host + ":" + port);
@@ -389,8 +404,8 @@ public class HttpServerService {
           p.addProperty("afk", afkService.isAfk(onlinePlayer));
           p.addProperty("world", onlinePlayer.getWorld().getName());
           try {
-            p.addProperty("biome", onlinePlayer.getLocation().getBlock().getBiome().name());
-          } catch (Exception ignored) {
+            p.addProperty("biome", SidebarManager.resolveBiomeKey(onlinePlayer));
+          } catch (Throwable ignored) {
           }
         } else {
           p.addProperty("ping", 0);
@@ -569,8 +584,8 @@ public class HttpServerService {
         p.addProperty("afk", afkService.isAfk(onlinePlayer));
         p.addProperty("world", onlinePlayer.getWorld().getName());
         try {
-          p.addProperty("biome", onlinePlayer.getLocation().getBlock().getBiome().name());
-        } catch (Exception ignored) {
+          p.addProperty("biome", SidebarManager.resolveBiomeKey(onlinePlayer));
+        } catch (Throwable ignored) {
         }
         p.addProperty("gamemode", onlinePlayer.getGameMode().name());
         p.addProperty("health", Math.round(onlinePlayer.getHealth() * 10.0) / 10.0);
@@ -628,6 +643,10 @@ public class HttpServerService {
       stats.addProperty("bellRings", getSafeStat(offlinePlayer, Statistic.BELL_RING));
       stats.addProperty("musicDiscsPlayed", getSafeStat(offlinePlayer, Statistic.RECORD_PLAYED));
       p.add("stats", stats);
+
+      if (advancementService != null) {
+        p.add("achievements", advancementService.getPlayerAchievementsJson(uuid));
+      }
 
       JsonObject root = new JsonObject();
       root.addProperty("online", true);
@@ -1031,6 +1050,52 @@ public class HttpServerService {
 
       byte[] bytes = GSON.toJson(root).getBytes(StandardCharsets.UTF_8);
       payloadCache.put("world", new CachedPayload(now, bytes));
+      sendRawBytesResponse(exchange, 200, bytes);
+    }
+  }
+
+  private class AchievementsHandler implements HttpHandler {
+    @Override
+    public void handle(HttpExchange exchange) throws IOException {
+      if ("OPTIONS".equalsIgnoreCase(exchange.getRequestMethod())) {
+        sendJsonResponse(exchange, 204, new JsonObject());
+        return;
+      }
+
+      if (isRateLimited(exchange)) {
+        JsonObject err = new JsonObject();
+        err.addProperty("error", "Too Many Requests");
+        sendJsonResponse(exchange, 429, err);
+        return;
+      }
+
+      if (!authenticate(exchange)) {
+        JsonObject err = new JsonObject();
+        err.addProperty("error", "Unauthorized");
+        sendJsonResponse(exchange, 401, err);
+        return;
+      }
+
+      long now = System.currentTimeMillis();
+      CachedPayload cached = payloadCache.get("achievements_all");
+      if (cached != null && (now - cached.timestamp()) < 30000L) {
+        sendRawBytesResponse(exchange, 200, cached.data());
+        return;
+      }
+
+      JsonObject root;
+      if (advancementService != null) {
+        root = advancementService.getGlobalAchievementsJson();
+      } else {
+        root = new JsonObject();
+        root.addProperty("online", true);
+        root.addProperty("total", 0);
+        root.add("categories", new JsonArray());
+        root.add("achievements", new JsonArray());
+      }
+
+      byte[] bytes = GSON.toJson(root).getBytes(StandardCharsets.UTF_8);
+      payloadCache.put("achievements_all", new CachedPayload(now, bytes));
       sendRawBytesResponse(exchange, 200, bytes);
     }
   }

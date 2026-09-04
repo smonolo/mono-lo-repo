@@ -8,6 +8,7 @@ import { PlayersController } from './players/players.controller'
 import { LeaderboardsController } from './leaderboards/leaderboards.controller'
 import { AdminController } from './admin/admin.controller'
 import { WorldController } from './world/world.controller'
+import { AchievementsController } from './achievements/achievements.controller'
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { WorldController } from './world/world.controller'
     LeaderboardsController,
     AdminController,
     WorldController,
+    AchievementsController,
   ],
   providers: [
     {

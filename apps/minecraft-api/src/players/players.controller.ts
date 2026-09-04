@@ -204,6 +204,12 @@ export class PlayersController {
         flyDistanceMeters: 0,
         timeSinceRestSeconds: 0,
       },
+      achievements: pluginPlayer?.achievements || {
+        completedCount: 0,
+        totalCount: 0,
+        percentage: 0,
+        list: [],
+      },
     }
 
     return {
