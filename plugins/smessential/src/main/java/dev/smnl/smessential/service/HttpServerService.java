@@ -93,6 +93,11 @@ public class HttpServerService {
     }
 
     try {
+      System.setProperty("sun.net.httpserver.idleInterval", "10");
+      System.setProperty("sun.net.httpserver.maxReqTime", "10");
+      System.setProperty("sun.net.httpserver.maxRspTime", "10");
+      System.setProperty("sun.net.httpserver.nodelay", "true");
+
       executor = Executors.newVirtualThreadPerTaskExecutor();
       server = HttpServer.create(new InetSocketAddress(host, port), 0);
       server.setExecutor(executor);
@@ -184,11 +189,16 @@ public class HttpServerService {
       return false;
     }
     String ip = remote.getAddress().getHostAddress();
-    if ("127.0.0.1".equals(ip) || "0:0:0:0:0:0:0:1".equals(ip) || "localhost".equals(ip)) {
-      return false;
-    }
+    boolean isLocalhost =
+        "127.0.0.1".equals(ip) || "0:0:0:0:0:0:0:1".equals(ip) || "localhost".equals(ip);
 
     long now = System.currentTimeMillis();
+
+    // Prevent memory leaks under distributed scans / spoofed requests
+    if (rateLimitMap.size() > 1000) {
+      rateLimitMap.entrySet().removeIf(e -> (now - e.getValue().windowStart()) > 60000L);
+    }
+
     RateLimitTracker tracker =
         rateLimitMap.compute(
             ip,
@@ -199,7 +209,16 @@ public class HttpServerService {
               return new RateLimitTracker(v.windowStart(), v.count() + 1);
             });
 
-    return tracker.count() > 120;
+    // Localhost / internal proxy: 600 req/min (10 req/s); External clients: 120 req/min (2 req/s)
+    int limit = isLocalhost ? 600 : 120;
+    return tracker.count() > limit;
+  }
+
+  private void putPayloadCache(@NotNull String key, byte[] data, long now) {
+    if (payloadCache.size() > 500) {
+      payloadCache.entrySet().removeIf(e -> (now - e.getValue().timestamp()) > 30000L);
+    }
+    payloadCache.put(key, new CachedPayload(now, data));
   }
 
   private boolean authenticate(@NotNull HttpExchange exchange) {
@@ -223,6 +242,12 @@ public class HttpServerService {
 
   private void sendRawBytesResponse(@NotNull HttpExchange exchange, int statusCode, byte[] bytes)
       throws IOException {
+    // Safely drain and close any unread incoming request body to prevent lingering open streams
+    try {
+      exchange.getRequestBody().close();
+    } catch (Throwable ignored) {
+    }
+
     exchange.getResponseHeaders().set("Content-Type", "application/json; charset=UTF-8");
     exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
     exchange.getResponseHeaders().set("Access-Control-Allow-Methods", "GET, OPTIONS");
@@ -311,7 +336,7 @@ public class HttpServerService {
       root.addProperty("uptimeSeconds", uptimeSeconds);
 
       byte[] bytes = GSON.toJson(root).getBytes(StandardCharsets.UTF_8);
-      payloadCache.put("status", new CachedPayload(now, bytes));
+      putPayloadCache("status", bytes, now);
       sendRawBytesResponse(exchange, 200, bytes);
     }
   }
@@ -438,7 +463,7 @@ public class HttpServerService {
       root.addProperty("onlineCount", onlineCount);
 
       byte[] bytes = GSON.toJson(root).getBytes(StandardCharsets.UTF_8);
-      payloadCache.put("players_list", new CachedPayload(now, bytes));
+      putPayloadCache("players_list", bytes, now);
       sendRawBytesResponse(exchange, 200, bytes);
     }
   }
@@ -487,6 +512,13 @@ public class HttpServerService {
       if (targetId == null || targetId.isBlank()) {
         JsonObject err = new JsonObject();
         err.addProperty("error", "Missing uuid or name parameter");
+        sendJsonResponse(exchange, 400, err);
+        return;
+      }
+
+      if (targetId.length() > 64) {
+        JsonObject err = new JsonObject();
+        err.addProperty("error", "Invalid player identifier");
         sendJsonResponse(exchange, 400, err);
         return;
       }
@@ -653,7 +685,7 @@ public class HttpServerService {
       root.add("player", p);
 
       byte[] bytes = GSON.toJson(root).getBytes(StandardCharsets.UTF_8);
-      payloadCache.put(cacheKey, new CachedPayload(now, bytes));
+      putPayloadCache(cacheKey, bytes, now);
       sendRawBytesResponse(exchange, 200, bytes);
     }
   }
@@ -693,6 +725,13 @@ public class HttpServerService {
         }
       }
 
+      if (requestedStat != null && requestedStat.length() > 64) {
+        JsonObject err = new JsonObject();
+        err.addProperty("error", "Invalid statistic parameter");
+        sendJsonResponse(exchange, 400, err);
+        return;
+      }
+
       long now = System.currentTimeMillis();
       String cacheKey =
           "leaderboards_" + (requestedStat != null ? requestedStat.toLowerCase() : "all");
@@ -715,7 +754,7 @@ public class HttpServerService {
         }
         root.add("leaderboard", buildLeaderboardJson(type, 10));
         byte[] bytes = GSON.toJson(root).getBytes(StandardCharsets.UTF_8);
-        payloadCache.put(cacheKey, new CachedPayload(now, bytes));
+        putPayloadCache(cacheKey, bytes, now);
         sendRawBytesResponse(exchange, 200, bytes);
         return;
       }
@@ -727,7 +766,7 @@ public class HttpServerService {
       root.add("leaderboards", list);
 
       byte[] bytes = GSON.toJson(root).getBytes(StandardCharsets.UTF_8);
-      payloadCache.put(cacheKey, new CachedPayload(now, bytes));
+      putPayloadCache(cacheKey, bytes, now);
       sendRawBytesResponse(exchange, 200, bytes);
     }
   }
@@ -1049,7 +1088,7 @@ public class HttpServerService {
       }
 
       byte[] bytes = GSON.toJson(root).getBytes(StandardCharsets.UTF_8);
-      payloadCache.put("world", new CachedPayload(now, bytes));
+      putPayloadCache("world", bytes, now);
       sendRawBytesResponse(exchange, 200, bytes);
     }
   }
@@ -1095,7 +1134,7 @@ public class HttpServerService {
       }
 
       byte[] bytes = GSON.toJson(root).getBytes(StandardCharsets.UTF_8);
-      payloadCache.put("achievements_all", new CachedPayload(now, bytes));
+      putPayloadCache("achievements_all", bytes, now);
       sendRawBytesResponse(exchange, 200, bytes);
     }
   }

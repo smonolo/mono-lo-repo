@@ -124,50 +124,65 @@ function enrichPlayerAchievements(
 ): PlayerData | null {
   if (!player) return null
 
-  const existingList = player.achievements?.list || []
-  const existingMap = new Map<string, PlayerAchievement>()
-  for (const item of existingList) {
-    if (item && item.id) {
-      existingMap.set(item.id, item)
-      existingMap.set(item.id.replace(/^minecraft:/, ''), item)
+  // If the server returned an achievements payload with a list, use it directly
+  if (
+    player.achievements &&
+    Array.isArray(player.achievements.list) &&
+    player.achievements.list.length > 0
+  ) {
+    const list: PlayerAchievement[] = player.achievements.list.map(item => ({
+      ...item,
+      completed: !!item.completed,
+      completedAt:
+        item.completed && item.completedAt && item.completedAt > 0
+          ? item.completedAt
+          : null,
+    }))
+
+    const completedCount =
+      typeof player.achievements.completedCount === 'number'
+        ? player.achievements.completedCount
+        : list.filter(a => a.completed).length
+    const totalCount =
+      typeof player.achievements.totalCount === 'number'
+        ? player.achievements.totalCount
+        : list.length
+    const percentage =
+      totalCount > 0
+        ? Math.round((completedCount * 1000) / totalCount) / 10
+        : 0
+
+    return {
+      ...player,
+      achievements: {
+        completedCount,
+        totalCount,
+        percentage,
+        list,
+      },
     }
   }
 
-  // Build the complete 133 achievements catalog using strictly real server data
-  const list: PlayerAchievement[] = DEFAULT_ACHIEVEMENTS.map(a => {
-    const existing =
-      existingMap.get(a.id) || existingMap.get(a.id.replace(/^minecraft:/, ''))
-    const completed = !!existing?.completed
-    const completedAt =
-      completed && existing?.completedAt && existing.completedAt > 0
-        ? existing.completedAt
-        : null
-
-    return {
-      id: a.id,
-      title: a.title,
-      description: a.description,
-      frame: a.frame,
-      icon: a.icon,
-      category: a.category,
-      categoryName: a.categoryName,
-      parent: a.parent,
-      completed,
-      completedAt,
-    }
-  })
-
-  const completedCount = list.filter(item => item.completed).length
-  const totalCount = list.length
-  const percentage =
-    totalCount > 0 ? Math.round((completedCount * 1000) / totalCount) / 10 : 0
+  // Fallback if the server has no achievements data yet: all locked
+  const list: PlayerAchievement[] = DEFAULT_ACHIEVEMENTS.map(a => ({
+    id: a.id,
+    title: a.title,
+    description: a.description,
+    frame: a.frame,
+    icon: a.icon,
+    category: a.category,
+    categoryName: a.categoryName,
+    parent: a.parent,
+    completed: false,
+    completedAt: null,
+  }))
 
   return {
     ...player,
     achievements: {
-      completedCount,
-      totalCount,
-      percentage,
+      completedCount: 0,
+      totalCount: list.length,
+      percentage: 0,
       list,
     },
   }

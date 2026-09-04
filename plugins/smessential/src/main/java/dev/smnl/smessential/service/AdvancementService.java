@@ -61,6 +61,16 @@ public class AdvancementService {
   // Global cached achievements JSON
   private volatile CachedGlobalPayload globalCache;
 
+  // 5-minute cache for advancement folders found on disk
+  private volatile CachedFolders cachedAdvancementFolders;
+
+  // File parse cache to prevent re-reading and re-parsing unchanged JSON files on disk
+  private final Map<String, CachedAdvancementFile> advancementFileCache = new ConcurrentHashMap<>();
+
+  private record CachedFolders(long timestamp, Set<File> folders) {}
+
+  private record CachedAdvancementFile(long lastModified, Map<String, Long> completedMap) {}
+
   private record CachedPlayerPayload(long timestamp, JsonObject payload) {}
 
   private record CachedGlobalPayload(long timestamp, JsonObject payload) {}
@@ -197,6 +207,8 @@ public class AdvancementService {
 
       rebuildCategoriesAndSorting();
       playerCache.clear();
+      advancementFileCache.clear();
+      cachedAdvancementFolders = null;
       globalCache = null;
       plugin.getLogger().info("AdvancementService refreshed with " + registeredAdvancements.size() + " total achievements.");
     } catch (Throwable e) {
@@ -347,8 +359,15 @@ public class AdvancementService {
 
   /**
    * Recursively finds all directories named 'advancements' across the entire server.
+   * Result is cached for 5 minutes to prevent continuous disk scanning.
    */
   public Set<File> getAllAdvancementFolders() {
+    long now = System.currentTimeMillis();
+    CachedFolders cached = cachedAdvancementFolders;
+    if (cached != null && (now - cached.timestamp()) < 300_000L) {
+      return cached.folders();
+    }
+
     Set<File> result = new HashSet<>();
     Set<String> visitedPaths = new HashSet<>();
     List<File> baseRoots = new ArrayList<>();
@@ -396,7 +415,9 @@ public class AdvancementService {
       scanForAdvancementFolders(root, 0, 3, result, visitedPaths);
     }
 
-    return result;
+    Set<File> unmodifiable = Collections.unmodifiableSet(result);
+    cachedAdvancementFolders = new CachedFolders(now, unmodifiable);
+    return unmodifiable;
   }
 
   private void scanForAdvancementFolders(File dir, int currentDepth, int maxDepth, Set<File> result, Set<String> visitedPaths) {
@@ -489,47 +510,10 @@ public class AdvancementService {
   public @NotNull Map<String, Long> loadPlayerCompletedMap(@NotNull UUID uuid) {
     Map<String, Long> completed = new HashMap<>();
 
-    // 1. Read from saved JSON file(s) on disk
+    // 1. Read from saved JSON file(s) on disk using file cache
     List<File> files = findAllAdvancementFilesForPlayer(uuid);
     for (File file : files) {
-      try (FileReader reader = new FileReader(file, StandardCharsets.UTF_8)) {
-        JsonObject root = JsonParser.parseReader(reader).getAsJsonObject();
-        long fileMod = file.lastModified();
-
-        for (Map.Entry<String, JsonElement> entry : root.entrySet()) {
-          String rawKey = entry.getKey();
-          if ("dataversion".equalsIgnoreCase(rawKey)) {
-            continue;
-          }
-          if (!entry.getValue().isJsonObject()) {
-            continue;
-          }
-
-          JsonObject advObj = entry.getValue().getAsJsonObject();
-          if (isAdvancementDone(advObj, rawKey)) {
-            long completedTime = fileMod;
-            if (advObj.has("criteria") && advObj.get("criteria").isJsonObject()) {
-              JsonObject criteria = advObj.getAsJsonObject("criteria");
-              long maxCriteriaTime = 0;
-              for (Map.Entry<String, JsonElement> critEntry : criteria.entrySet()) {
-                long parsed = parseCriteriaDate(critEntry.getValue());
-                if (parsed > maxCriteriaTime) {
-                  maxCriteriaTime = parsed;
-                }
-              }
-              if (maxCriteriaTime > 0) {
-                completedTime = maxCriteriaTime;
-              }
-            }
-
-            completed.put(rawKey, completedTime);
-            completed.put(normalizeKey(rawKey), completedTime);
-            completed.put(stripNamespace(rawKey), completedTime);
-          }
-        }
-      } catch (Throwable e) {
-        plugin.getLogger().warning("Error reading advancement file " + file.getAbsolutePath() + " for " + uuid + ": " + e.getMessage());
-      }
+      completed.putAll(parseAdvancementFileWithCache(file));
     }
 
     // 2. Overlay live in-memory completions
@@ -550,6 +534,66 @@ public class AdvancementService {
       } else {
         Bukkit.getScheduler().runTask(plugin, () -> syncPlayerAdvancements(online));
       }
+    }
+
+    return completed;
+  }
+
+  private Map<String, Long> parseAdvancementFileWithCache(File file) {
+    if (file == null || !file.isFile() || !file.canRead()) {
+      return Collections.emptyMap();
+    }
+    String path = file.getAbsolutePath();
+    long fileMod = file.lastModified();
+
+    CachedAdvancementFile cached = advancementFileCache.get(path);
+    if (cached != null && cached.lastModified() == fileMod) {
+      return cached.completedMap();
+    }
+
+    Map<String, Long> completed = new HashMap<>();
+    try (FileReader reader = new FileReader(file, StandardCharsets.UTF_8)) {
+      JsonObject root = JsonParser.parseReader(reader).getAsJsonObject();
+
+      for (Map.Entry<String, JsonElement> entry : root.entrySet()) {
+        String rawKey = entry.getKey();
+        if ("dataversion".equalsIgnoreCase(rawKey)) {
+          continue;
+        }
+        if (!entry.getValue().isJsonObject()) {
+          continue;
+        }
+
+        JsonObject advObj = entry.getValue().getAsJsonObject();
+        if (isAdvancementDone(advObj, rawKey)) {
+          long completedTime = fileMod;
+          if (advObj.has("criteria") && advObj.get("criteria").isJsonObject()) {
+            JsonObject criteria = advObj.getAsJsonObject("criteria");
+            long maxCriteriaTime = 0;
+            for (Map.Entry<String, JsonElement> critEntry : criteria.entrySet()) {
+              long parsed = parseCriteriaDate(critEntry.getValue());
+              if (parsed > maxCriteriaTime) {
+                maxCriteriaTime = parsed;
+              }
+            }
+            if (maxCriteriaTime > 0) {
+              completedTime = maxCriteriaTime;
+            }
+          }
+
+          completed.put(rawKey, completedTime);
+          completed.put(normalizeKey(rawKey), completedTime);
+          completed.put(stripNamespace(rawKey), completedTime);
+        }
+      }
+
+      if (advancementFileCache.size() > 1000) {
+        advancementFileCache.clear();
+      }
+      advancementFileCache.put(
+          path, new CachedAdvancementFile(fileMod, Collections.unmodifiableMap(completed)));
+    } catch (Throwable e) {
+      plugin.getLogger().warning("Error reading advancement file " + path + ": " + e.getMessage());
     }
 
     return completed;
@@ -691,6 +735,9 @@ public class AdvancementService {
     root.addProperty("percentage", percentage);
     root.add("list", list);
 
+    if (playerCache.size() > 500) {
+      playerCache.entrySet().removeIf(e -> (now - e.getValue().timestamp()) > 15000L);
+    }
     playerCache.put(uuid, new CachedPlayerPayload(now, root));
     return root;
   }
@@ -726,27 +773,17 @@ public class AdvancementService {
           continue;
         }
 
-        try (FileReader reader = new FileReader(f, StandardCharsets.UTF_8)) {
-          JsonObject root = JsonParser.parseReader(reader).getAsJsonObject();
-          Set<String> playerCompletedNormKeys = new HashSet<>();
+        Map<String, Long> playerCompleted = parseAdvancementFileWithCache(f);
+        Set<String> playerCompletedNormKeys = new HashSet<>();
+        for (String rawKey : playerCompleted.keySet()) {
+          playerCompletedNormKeys.add(normalizeKey(rawKey));
+        }
 
-          for (Map.Entry<String, JsonElement> entry : root.entrySet()) {
-            String rawKey = entry.getKey();
-            if ("dataversion".equalsIgnoreCase(rawKey)) continue;
-            if (!entry.getValue().isJsonObject()) continue;
-            JsonObject advObj = entry.getValue().getAsJsonObject();
-            if (isAdvancementDone(advObj, rawKey)) {
-              playerCompletedNormKeys.add(normalizeKey(rawKey));
-            }
+        for (String normKey : playerCompletedNormKeys) {
+          if (counts.containsKey(normKey)) {
+            counts.put(normKey, counts.get(normKey) + 1);
+            totalCompletions++;
           }
-
-          for (String normKey : playerCompletedNormKeys) {
-            if (counts.containsKey(normKey)) {
-              counts.put(normKey, counts.get(normKey) + 1);
-              totalCompletions++;
-            }
-          }
-        } catch (Throwable ignored) {
         }
       }
     }

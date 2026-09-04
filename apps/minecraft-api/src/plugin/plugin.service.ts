@@ -30,6 +30,22 @@ export class PluginService {
     fetcher: () => Promise<T>
   ): Promise<T> {
     const now = Date.now()
+
+    if (this.memoryCache.size > 500) {
+      for (const [k, v] of this.memoryCache.entries()) {
+        if (v.expiresAt <= now) {
+          this.memoryCache.delete(k)
+        }
+      }
+      if (this.memoryCache.size > 500) {
+        const excess = this.memoryCache.size - 400
+        const keysToDelete = Array.from(this.memoryCache.keys()).slice(0, excess)
+        for (const k of keysToDelete) {
+          this.memoryCache.delete(k)
+        }
+      }
+    }
+
     const cached = this.memoryCache.get(key)
     if (cached && cached.expiresAt > now) {
       return cached.data
@@ -144,26 +160,36 @@ export class PluginService {
   }
 
   async getPlayer(query: string): Promise<any | null> {
+    const trimmed = query ? query.trim() : ''
+    if (!trimmed || trimmed.length > 64) {
+      return null
+    }
+
     const isUuid =
       /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(
-        query
-      ) || /^[0-9a-fA-F]{32}$/.test(query)
+        trimmed
+      ) || /^[0-9a-fA-F]{32}$/.test(trimmed)
 
-    const cacheKey = `plugin_player_${query.toLowerCase()}`
+    const cacheKey = `plugin_player_${trimmed.toLowerCase()}`
     return this.cachedFetch(cacheKey, 10000, async () => {
       const param = isUuid
-        ? `uuid=${encodeURIComponent(query)}`
-        : `name=${encodeURIComponent(query)}`
+        ? `uuid=${encodeURIComponent(trimmed)}`
+        : `name=${encodeURIComponent(trimmed)}`
       const data = await this.fetchFromPlugin<any>(`/v1/player?${param}`)
       return data?.player || null
     })
   }
 
   async getLeaderboards(statKey?: string): Promise<any> {
-    const cacheKey = `plugin_leaderboards_${statKey ? statKey.toLowerCase() : 'all'}`
+    const trimmed = statKey ? statKey.trim() : undefined
+    if (trimmed && trimmed.length > 64) {
+      return { online: false, leaderboards: [] }
+    }
+
+    const cacheKey = `plugin_leaderboards_${trimmed ? trimmed.toLowerCase() : 'all'}`
     return this.cachedFetch(cacheKey, 15000, async () => {
-      const endpoint = statKey
-        ? `/v1/leaderboards?stat=${encodeURIComponent(statKey)}`
+      const endpoint = trimmed
+        ? `/v1/leaderboards?stat=${encodeURIComponent(trimmed)}`
         : '/v1/leaderboards'
       const data = await this.fetchFromPlugin<any>(endpoint)
       return data || { online: false, leaderboards: [] }
