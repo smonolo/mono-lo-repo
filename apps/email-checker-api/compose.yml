@@ -1,0 +1,14 @@
+services:
+  email-checker-api:
+    build:
+      context: ../..
+      dockerfile: apps/email-checker-api/Dockerfile
+    container_name: email-checker-api
+    restart: unless-stopped
+    ports:
+      - '4000:4000'
+    environment:
+      - PORT=4000
+      - API_SECRET_KEY=${API_SECRET_KEY:-}
+      - SENDER_DOMAIN=${SENDER_DOMAIN:-localhost}
+      - SENDER_ADDRESS=${SENDER_ADDRESS:-<>}

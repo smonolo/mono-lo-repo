@@ -49,6 +49,14 @@
       "env": ["POSTGRES_*", "SMESSENTIAL_*", "PORT"],
       "outputs": ["dist/**"]
     },
+    "email-checker#build": {
+      "env": ["NEXT_PUBLIC_*", "EMAIL_CHECKER_*"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "email-checker-api#build": {
+      "env": ["PORT", "API_SECRET_KEY", "SENDER_DOMAIN"],
+      "outputs": ["dist/**"]
+    },
     "smessential#build": {
       "outputs": ["build/libs/**"]
     }

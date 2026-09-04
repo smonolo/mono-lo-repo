@@ -18,6 +18,9 @@
     "dev:minecraft": "turbo dev --filter=minecraft",
     "dev:minecraft-api": "turbo dev --filter=minecraft-api",
     "dev:minecraft:full": "turbo dev --filter=minecraft --filter=minecraft-api",
+    "dev:email-checker": "turbo dev --filter=email-checker",
+    "dev:email-checker-api": "turbo dev --filter=email-checker-api",
+    "dev:email-checker:full": "turbo dev --filter=email-checker --filter=email-checker-api",
     "dev": "turbo dev",
     "build:website": "turbo build --filter=website",
     "build:resume": "turbo build --filter=resume",
@@ -28,6 +31,8 @@
     "build:site": "turbo build --filter=site",
     "build:minecraft": "turbo build --filter=minecraft",
     "build:minecraft-api": "turbo build --filter=minecraft-api",
+    "build:email-checker": "turbo build --filter=email-checker",
+    "build:email-checker-api": "turbo build --filter=email-checker-api",
     "build:smessential": "turbo build --filter=smessential",
     "build": "turbo build"
   },
