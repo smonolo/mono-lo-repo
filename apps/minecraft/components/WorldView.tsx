@@ -345,9 +345,7 @@ export default function WorldView({ worldData }: Props) {
                       {dim.pvp && <Badge color="#EF4444">PvP</Badge>}
                       {dim.hardcore && <Badge color="#A855F7">Hardcore</Badge>}
                       {dim.playersCount > 0 && (
-                        <Badge color="#10B981">
-                          {dim.playersCount} online
-                        </Badge>
+                        <Badge color="#10B981">{dim.playersCount} online</Badge>
                       )}
                     </div>
                   </CardHeader>

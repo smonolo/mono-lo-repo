@@ -287,4 +287,3 @@ export type WorldResponse = {
   aggregates?: WorldAggregates
   error?: string
 }
-

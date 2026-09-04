@@ -332,7 +332,8 @@ export const DEFAULT_ACHIEVEMENTS: Achievement[] = [
   {
     id: 'minecraft:nether/uneasy_alliance',
     title: 'Uneasy Alliance',
-    description: 'Rescue a Ghast from the Nether, bring it safely home to the Overworld... and then kill it',
+    description:
+      'Rescue a Ghast from the Nether, bring it safely home to the Overworld... and then kill it',
     frame: 'CHALLENGE',
     icon: 'ghast_tear',
     category: 'nether',
@@ -423,7 +424,8 @@ export const DEFAULT_ACHIEVEMENTS: Achievement[] = [
   {
     id: 'minecraft:nether/ride_strider_in_overworld_lava',
     title: 'Feels Like Home',
-    description: 'Take a Strider for a loooong ride on a lava lake in the Overworld',
+    description:
+      'Take a Strider for a loooong ride on a lava lake in the Overworld',
     frame: 'TASK',
     icon: 'warped_fungus_on_a_stick',
     category: 'nether',
@@ -856,7 +858,8 @@ export const DEFAULT_ACHIEVEMENTS: Achievement[] = [
   {
     id: 'minecraft:adventure/bullseye',
     title: 'Bullseye',
-    description: 'Hit the bullseye of a Target block from at least 30 meters away',
+    description:
+      'Hit the bullseye of a Target block from at least 30 meters away',
     frame: 'CHALLENGE',
     icon: 'target',
     category: 'adventure',
@@ -895,7 +898,8 @@ export const DEFAULT_ACHIEVEMENTS: Achievement[] = [
   {
     id: 'minecraft:adventure/play_jukebox_in_meadows',
     title: 'Sound of Music',
-    description: 'Make the Meadows come alive with the sound of music from a Jukebox',
+    description:
+      'Make the Meadows come alive with the sound of music from a Jukebox',
     frame: 'TASK',
     icon: 'jukebox',
     category: 'adventure',
@@ -973,7 +977,8 @@ export const DEFAULT_ACHIEVEMENTS: Achievement[] = [
   {
     id: 'minecraft:adventure/avoid_vibration',
     title: 'Sneak 100',
-    description: 'Sneak near a Sculk Sensor or Warden to prevent it detecting you',
+    description:
+      'Sneak near a Sculk Sensor or Warden to prevent it detecting you',
     frame: 'TASK',
     icon: 'sculk_sensor',
     category: 'adventure',
@@ -1051,7 +1056,8 @@ export const DEFAULT_ACHIEVEMENTS: Achievement[] = [
   {
     id: 'minecraft:adventure/read_power_of_chiseled_bookshelf',
     title: 'The Power of Books',
-    description: 'Read the power signal of a Chiseled Bookshelf using a Comparator',
+    description:
+      'Read the power signal of a Chiseled Bookshelf using a Comparator',
     frame: 'TASK',
     icon: 'chiseled_bookshelf',
     category: 'adventure',
@@ -1194,7 +1200,8 @@ export const DEFAULT_ACHIEVEMENTS: Achievement[] = [
   {
     id: 'minecraft:adventure/lightning_rod_with_villager_no_fire',
     title: 'Surge Protector',
-    description: 'Protect a Villager from an undesired shock without starting a fire',
+    description:
+      'Protect a Villager from an undesired shock without starting a fire',
     frame: 'TASK',
     icon: 'lightning_rod',
     category: 'adventure',
@@ -1326,7 +1333,8 @@ export const DEFAULT_ACHIEVEMENTS: Achievement[] = [
   {
     id: 'minecraft:husbandry/balanced_diet',
     title: 'A Balanced Diet',
-    description: 'Eat everything that is edible, even if it is not good for you',
+    description:
+      'Eat everything that is edible, even if it is not good for you',
     frame: 'CHALLENGE',
     icon: 'apple',
     category: 'husbandry',
@@ -1339,7 +1347,8 @@ export const DEFAULT_ACHIEVEMENTS: Achievement[] = [
   {
     id: 'minecraft:husbandry/break_diamond_hoe',
     title: 'Serious Dedication',
-    description: 'Completely use up a diamond hoe, and then reevaluate your life choices',
+    description:
+      'Completely use up a diamond hoe, and then reevaluate your life choices',
     frame: 'CHALLENGE',
     icon: 'diamond_hoe',
     category: 'husbandry',

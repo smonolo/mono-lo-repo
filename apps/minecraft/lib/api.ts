@@ -119,7 +119,9 @@ async function enrichPlayerPunishments(
   }
 }
 
-function enrichPlayerAchievements(player: PlayerData | null): PlayerData | null {
+function enrichPlayerAchievements(
+  player: PlayerData | null
+): PlayerData | null {
   if (!player) return null
 
   const existingList = player.achievements?.list || []

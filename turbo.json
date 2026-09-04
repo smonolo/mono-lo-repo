@@ -1,8 +1,6 @@
 {
   "$schema": "https://v2-10-12.turborepo.dev/schema.json",
-  "globalEnv": [
-    "NODE_ENV"
-  ],
+  "globalEnv": ["NODE_ENV"],
   "globalPassThroughEnv": [
     "CI",
     "VERCEL",
@@ -31,16 +29,11 @@
       ]
     },
     "website#build": {
-      "env": [
-        "NEXT_PUBLIC_*"
-      ],
+      "env": ["NEXT_PUBLIC_*"],
       "outputs": [".next/**", "!.next/cache/**"]
     },
     "minecraft#build": {
-      "env": [
-        "NEXT_PUBLIC_*",
-        "MINECRAFT_API_URL"
-      ],
+      "env": ["NEXT_PUBLIC_*", "MINECRAFT_API_URL"],
       "outputs": [".next/**", "!.next/cache/**"]
     },
     "mfd#build": {
@@ -53,11 +46,7 @@
       ]
     },
     "minecraft-api#build": {
-      "env": [
-        "POSTGRES_*",
-        "SMESSENTIAL_*",
-        "PORT"
-      ],
+      "env": ["POSTGRES_*", "SMESSENTIAL_*", "PORT"],
       "outputs": ["dist/**"]
     },
     "smessential#build": {

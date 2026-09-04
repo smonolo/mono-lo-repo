@@ -4,7 +4,10 @@ dotenv.config()
 
 import { NestFactory } from '@nestjs/core'
 import { Logger } from '@nestjs/common'
-import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express'
+import {
+  ExpressAdapter,
+  NestExpressApplication,
+} from '@nestjs/platform-express'
 import { AppModule } from './app.module'
 
 async function bootstrap() {

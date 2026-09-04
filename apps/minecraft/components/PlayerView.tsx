@@ -325,12 +325,19 @@ export default function PlayerView({ player }: Props) {
         const query = achievementSearch.toLowerCase().trim()
         const titleMatch = a.title.toLowerCase().includes(query)
         const descMatch = a.description.toLowerCase().includes(query)
-        const catMatch = (a.categoryName || a.category).toLowerCase().includes(query)
+        const catMatch = (a.categoryName || a.category)
+          .toLowerCase()
+          .includes(query)
         return titleMatch || descMatch || catMatch
       }
       return true
     })
-  }, [playerAchievements, achievementCategory, achievementStatus, achievementSearch])
+  }, [
+    playerAchievements,
+    achievementCategory,
+    achievementStatus,
+    achievementSearch,
+  ])
 
   return (
     <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-[220px_1fr] md:gap-10">
@@ -423,7 +430,8 @@ export default function PlayerView({ player }: Props) {
             <span>Achievements</span>
             {player.achievements && player.achievements.totalCount > 0 && (
               <span className="rounded-full bg-white/[0.08] px-1.5 py-0.5 text-[10px] font-semibold text-neutral-300">
-                {player.achievements.completedCount}/{player.achievements.totalCount}
+                {player.achievements.completedCount}/
+                {player.achievements.totalCount}
               </span>
             )}
           </button>
@@ -474,7 +482,8 @@ export default function PlayerView({ player }: Props) {
                   </h2>
                   <p className="text-xs text-neutral-400">
                     {player.achievements?.completedCount ?? 0} of{' '}
-                    {player.achievements?.totalCount ?? playerAchievements.length}{' '}
+                    {player.achievements?.totalCount ??
+                      playerAchievements.length}{' '}
                     achievements completed
                   </p>
                 </div>
@@ -506,9 +515,7 @@ export default function PlayerView({ player }: Props) {
                       ).length
                     }{' '}
                     /{' '}
-                    {
-                      playerAchievements.filter(a => a.frame === 'TASK').length
-                    }
+                    {playerAchievements.filter(a => a.frame === 'TASK').length}
                   </p>
                 </div>
                 <div className="rounded-lg border border-neutral-800 bg-white/[0.02] p-2">
@@ -522,9 +529,7 @@ export default function PlayerView({ player }: Props) {
                       ).length
                     }{' '}
                     /{' '}
-                    {
-                      playerAchievements.filter(a => a.frame === 'GOAL').length
-                    }
+                    {playerAchievements.filter(a => a.frame === 'GOAL').length}
                   </p>
                 </div>
                 <div className="rounded-lg border border-neutral-800 bg-white/[0.02] p-2">
@@ -539,9 +544,8 @@ export default function PlayerView({ player }: Props) {
                     }{' '}
                     /{' '}
                     {
-                      playerAchievements.filter(
-                        a => a.frame === 'CHALLENGE'
-                      ).length
+                      playerAchievements.filter(a => a.frame === 'CHALLENGE')
+                        .length
                     }
                   </p>
                 </div>
@@ -582,8 +586,7 @@ export default function PlayerView({ player }: Props) {
                       : 'border border-transparent bg-white/[0.02] text-neutral-400 hover:text-white'
                   }`}
                 >
-                  Locked (
-                  {playerAchievements.filter(a => !a.completed).length})
+                  Locked ({playerAchievements.filter(a => !a.completed).length})
                 </button>
               </div>
 

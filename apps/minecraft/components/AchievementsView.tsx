@@ -59,8 +59,7 @@ export default function AchievementsView({
       if (!added.has(c)) {
         list.push({
           id: c,
-          label:
-            c.charAt(0).toUpperCase() + c.slice(1).replace(/_/g, ' '),
+          label: c.charAt(0).toUpperCase() + c.slice(1).replace(/_/g, ' '),
         })
         added.add(c)
       }
@@ -177,7 +176,9 @@ export default function AchievementsView({
           <p className="mt-1 text-2xl font-bold text-white">
             {statsCounts.tasks}
           </p>
-          <span className="text-[10px] text-neutral-500">Regular milestones</span>
+          <span className="text-[10px] text-neutral-500">
+            Regular milestones
+          </span>
         </Card>
 
         <Card className="p-4">
@@ -403,8 +404,7 @@ export default function AchievementsView({
                   <div className="flex items-center justify-between text-[11px] text-neutral-500">
                     <span>Server Unlocks</span>
                     <span className="font-medium text-neutral-300">
-                      {count}{' '}
-                      {count === 1 ? 'player' : 'players'}
+                      {count} {count === 1 ? 'player' : 'players'}
                     </span>
                   </div>
 
