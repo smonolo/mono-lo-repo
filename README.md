@@ -3,14 +3,15 @@
 [![Turborepo](https://img.shields.io/badge/Turborepo-2.x-ef4444?style=flat-square&logo=turborepo)](https://turbo.build/)
 [![Package Manager](https://img.shields.io/badge/npm-v11.2.0-cb3837?style=flat-square&logo=npm)](https://www.npmjs.com/)
 [![Nuxt 3](https://img.shields.io/badge/Nuxt-3.x-00DC82?style=flat-square&logo=nuxt.js)](https://nuxt.com/)
-[![Next.js 14](https://img.shields.io/badge/Next.js-14.x-000000?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-14_|_16-000000?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![NestJS](https://img.shields.io/badge/NestJS-10.x-E0234E?style=flat-square&logo=nestjs)](https://nestjs.com/)
+[![Go](https://img.shields.io/badge/Go-1.24+-00ADD8?style=flat-square&logo=go)](https://go.dev/)
 [![Java 21](https://img.shields.io/badge/Java-21-ED8B00?style=flat-square&logo=openjdk)](https://openjdk.org/)
 [![PaperMC](https://img.shields.io/badge/PaperMC-1.21-1f2937?style=flat-square)](https://papermc.io/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v3_|_v4-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 
-A high-performance polyglot monorepo orchestrated with **Turborepo** and **npm workspaces**, housing personal web applications, interactive dashboards, portfolios, Minecraft server plugins, and backend microservices maintained by **Stefano Monolo**.
+A high-performance polyglot monorepo orchestrated with **Turborepo** and **npm workspaces**, housing personal web applications, interactive dashboards, portfolios, Minecraft server plugins, CLI administration tools, and backend microservices maintained by **Stefano Monolo**.
 
 ---
 
@@ -18,17 +19,20 @@ A high-performance polyglot monorepo orchestrated with **Turborepo** and **npm w
 
 ### Applications & Microservices (`apps/`)
 
-| Application           | Path                                             | Framework / Tech Stack                             | Description                                            |
-| :-------------------- | :----------------------------------------------- | :------------------------------------------------- | :----------------------------------------------------- |
-| **`minecraft`**       | [`apps/minecraft`](./apps/minecraft)             | Next.js 14, React 18, Tailwind CSS v3, TypeScript  | Minecraft player profiles, stats & server leaderboards |
-| **`minecraft-api`**   | [`apps/minecraft-api`](./apps/minecraft-api)     | NestJS 10, PostgreSQL (`pg`), Throttler, RxJS      | Gateway API (`minecraft-api.smnl.dev`) for Minecraft   |
-| **`cdn`**             | [`apps/cdn`](./apps/cdn)                         | NestJS 10, RxJS, Express                           | Backend REST API & media asset CDN microservice        |
-| **`cdn-ui`**          | [`apps/cdn-ui`](./apps/cdn-ui)                   | Nuxt 3, Vue 3, Tailwind CSS v4, Vue Query          | Admin dashboard UI for managing CDN files and assets   |
-| **`site`**            | [`apps/site`](./apps/site)                       | Nuxt 3, Vue 3, Tailwind CSS v4, Nuxt Icons & Fonts | Personal website & digital portfolio                   |
-| **`website`**         | [`apps/website`](./apps/website)                 | Next.js 14, React 18, TypeScript, Tailwind CSS v3  | Web application built with Next.js                     |
-| **`resume`**          | [`apps/resume`](./apps/resume)                   | Nuxt 3, Vue 3, Tailwind CSS v3                     | Interactive CV / Online Resume                         |
-| **`resume-template`** | [`apps/resume-template`](./apps/resume-template) | HTML5, CSS3                                        | ATS-optimized static single-page HTML resume template  |
-| **`mfd`**             | [`apps/mfd`](./apps/mfd)                         | Nuxt 3, Vue 3, Pinia, Vue Query, Tailwind CSS v3   | Multi-Function Dashboard application                   |
+| Application             | Path                                                 | Framework / Tech Stack                             | Description                                                                             |
+| :---------------------- | :--------------------------------------------------- | :------------------------------------------------- | :-------------------------------------------------------------------------------------- |
+| **`minecraft`**         | [`apps/minecraft`](./apps/minecraft)                 | Next.js 14, React 18, Tailwind CSS v3, TypeScript  | Minecraft player profiles, stats & server leaderboards                                  |
+| **`minecraft-api`**     | [`apps/minecraft-api`](./apps/minecraft-api)         | NestJS 10, PostgreSQL (`pg`), Throttler, RxJS      | Gateway API (`minecraft-api.smnl.dev`) for Minecraft                                    |
+| **`minecraft-cli`**     | [`apps/minecraft-cli`](./apps/minecraft-cli)         | Go 1.24+, Cobra, godotenv                          | Administrative CLI toolkit for player inspection, purging, and cache invalidation       |
+| **`email-checker`**     | [`apps/email-checker`](./apps/email-checker)         | Next.js 16, React 18, Tailwind CSS v3, TypeScript  | Web application for email reachability checking and real-time SMTP handshake inspection |
+| **`email-checker-api`** | [`apps/email-checker-api`](./apps/email-checker-api) | Express 4, TypeScript, tsx, Node DNS & Net         | Microservice performing direct SMTP handshakes (`EHLO`/`MAIL FROM`/`RCPT TO`)           |
+| **`cdn`**               | [`apps/cdn`](./apps/cdn)                             | NestJS 10, RxJS, Express                           | Backend REST API & media asset CDN microservice                                         |
+| **`cdn-ui`**            | [`apps/cdn-ui`](./apps/cdn-ui)                       | Nuxt 3, Vue 3, Tailwind CSS v4, Vue Query          | Admin dashboard UI for managing CDN files and assets                                    |
+| **`site`**              | [`apps/site`](./apps/site)                           | Nuxt 3, Vue 3, Tailwind CSS v4, Nuxt Icons & Fonts | Personal website & digital portfolio                                                    |
+| **`website`**           | [`apps/website`](./apps/website)                     | Next.js 14, React 18, TypeScript, Tailwind CSS v3  | Web application built with Next.js                                                      |
+| **`resume`**            | [`apps/resume`](./apps/resume)                       | Nuxt 3, Vue 3, Tailwind CSS v3                     | Interactive CV / Online Resume                                                          |
+| **`resume-template`**   | [`apps/resume-template`](./apps/resume-template)     | HTML5, CSS3                                        | ATS-optimized static single-page HTML resume template                                   |
+| **`mfd`**               | [`apps/mfd`](./apps/mfd)                             | Nuxt 3, Vue 3, Pinia, Vue Query, Tailwind CSS v3   | Multi-Function Dashboard application                                                    |
 
 ### Plugins (`plugins/`)
 
@@ -46,6 +50,7 @@ graph TD
 
     subgraph Frontends["Frontend Applications"]
         MINECRAFT["minecraft (Next.js 14)"]
+        EMAIL_CHECKER["email-checker (Next.js 16)"]
         SITE["site (Nuxt 3 + Tailwind v4)"]
         WEBSITE["website (Next.js 14 + React)"]
         RESUME["resume (Nuxt 3)"]
@@ -57,20 +62,30 @@ graph TD
     subgraph Gateways["Gateway APIs & Microservices"]
         CDN["cdn (NestJS API)"]
         MC_API["minecraft-api (NestJS Gateway)"]
+        EMAIL_API["email-checker-api (Express API)"]
     end
 
-    subgraph StorageAndPlugin["Data & Game Servers"]
+    subgraph CLI["CLI Tools"]
+        MC_CLI["minecraft-cli (Go / Cobra)"]
+    end
+
+    subgraph StorageAndServices["Data & External Services"]
         PG[("PostgreSQL Database")]
         SMESSENTIAL["smessential (PaperMC / Java)"]
+        MX["Target Mail Servers (Port 25 SMTP)"]
     end
 
     Root --> Frontends
     Root --> Gateways
+    Root --> CLI
     MINECRAFT -. Stats API .-> MC_API
     MFD -. Admin API .-> MC_API
     CDN_UI -. Management API .-> CDN
+    EMAIL_CHECKER -. Verification API .-> EMAIL_API
+    MC_CLI -. Admin REST API .-> MC_API
     MC_API -->|Direct DB Queries| PG
     MC_API -->|Cached Telemetry/Live State| SMESSENTIAL
+    EMAIL_API -->|Direct SMTP Handshake| MX
 ```
 
 ---
@@ -81,6 +96,7 @@ graph TD
 
 - **Node.js**: `^20.0.0` or later
 - **Package Manager**: `npm@11.2.0` (enforced via `packageManager` field)
+- **Go**: `1.24+` (for Minecraft CLI binary builds)
 - **Java Development Kit**: `JDK 21+` & `Gradle` (for Minecraft plugin builds)
 
 ### Installation
@@ -107,19 +123,23 @@ Run all applications in development mode simultaneously:
 npm run dev
 ```
 
-Or run a specific application:
+Or run a specific application or stack:
 
-| Application         | Command                       |
-| :------------------ | :---------------------------- |
-| **Minecraft Web**   | `npm run dev:minecraft`       |
-| **Minecraft API**   | `npm run dev:minecraft-api`   |
-| **CDN API**         | `npm run dev:cdn`             |
-| **CDN UI**          | `npm run dev:cdn-ui`          |
-| **Site**            | `npm run dev:site`            |
-| **Website**         | `npm run dev:website`         |
-| **Resume**          | `npm run dev:resume`          |
-| **Resume Template** | `npm run dev:resume-template` |
-| **MFD**             | `npm run dev:mfd`             |
+| Application / Target           | Command                          |
+| :----------------------------- | :------------------------------- |
+| **Minecraft Web**              | `npm run dev:minecraft`          |
+| **Minecraft API**              | `npm run dev:minecraft-api`      |
+| **Minecraft (Full Stack)**     | `npm run dev:minecraft:full`     |
+| **Email Checker Web**          | `npm run dev:email-checker`      |
+| **Email Checker API**          | `npm run dev:email-checker-api`  |
+| **Email Checker (Full Stack)** | `npm run dev:email-checker:full` |
+| **CDN API**                    | `npm run dev:cdn`                |
+| **CDN UI**                     | `npm run dev:cdn-ui`             |
+| **Site**                       | `npm run dev:site`               |
+| **Website**                    | `npm run dev:website`            |
+| **Resume**                     | `npm run dev:resume`             |
+| **Resume Template**            | `npm run dev:resume-template`    |
+| **MFD**                        | `npm run dev:mfd`                |
 
 ### Building for Production
 
@@ -132,16 +152,19 @@ npm run build
 Or build a specific workspace:
 
 ```bash
-npm run build:minecraft     # Build Minecraft web app
-npm run build:minecraft-api # Build Minecraft Gateway API
-npm run build:smessential   # Build SMEssential Paper plugin JAR
-npm run build:cdn-ui        # Build CDN UI
-npm run build:site          # Build Site
-npm run build:website       # Build Website
-npm run build:resume        # Build Resume
-npm run build:resume-template # Build Resume Template
-npm run build:mfd           # Build MFD
-npm run build:dev           # Build CDN API
+npm run build:minecraft         # Build Minecraft web app
+npm run build:minecraft-api     # Build Minecraft Gateway API
+npm run build:minecraft-cli     # Build Minecraft CLI binary (Go)
+npm run build:email-checker     # Build Email Checker web app
+npm run build:email-checker-api # Build Email Checker API
+npm run build:smessential       # Build SMEssential Paper plugin JAR
+npm run build:cdn-ui            # Build CDN UI
+npm run build:site              # Build Site
+npm run build:website           # Build Website
+npm run build:resume            # Build Resume
+npm run build:resume-template   # Build Resume Template
+npm run build:mfd               # Build MFD
+npm run build:dev               # Build CDN API
 ```
 
 ### Code Formatting
@@ -172,9 +195,12 @@ mono-lo-repo/
 ├── apps/
 │   ├── cdn/                     # NestJS backend API / CDN microservice
 │   ├── cdn-ui/                  # Nuxt 3 admin interface for CDN
+│   ├── email-checker/           # Next.js 16 email reachability verification UI
+│   ├── email-checker-api/       # Express/TypeScript SMTP handshake verification microservice
 │   ├── mfd/                     # Nuxt 3 multi-function dashboard
 │   ├── minecraft/               # Next.js 14 Minecraft stats & leaderboards site
 │   ├── minecraft-api/           # NestJS Gateway API (minecraft-api.smnl.dev)
+│   ├── minecraft-cli/           # Go/Cobra CLI administration tool for Minecraft
 │   ├── resume/                  # Nuxt 3 online CV / resume
 │   ├── resume-template/         # ATS-optimized static HTML resume template
 │   ├── site/                    # Nuxt 3 personal website & portfolio
