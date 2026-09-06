@@ -1,0 +1,11 @@
+{
+  "name": "minecraft-cli",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Go CLI toolkit for Minecraft and SMEssential administration",
+  "scripts": {
+    "build": "go build -o bin/mc .",
+    "test": "go test ./...",
+    "clean": "rm -rf bin"
+  }
+}

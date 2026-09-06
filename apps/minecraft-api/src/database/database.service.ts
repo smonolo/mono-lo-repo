@@ -44,6 +44,55 @@ export type DbWhitelist = {
   added_at: number
 }
 
+export type PlayerSummary = {
+  player: {
+    uuid: string
+    username: string
+    first_join: number
+    last_join: number
+    in_users: boolean
+  }
+  ranks: string[]
+  display_rank: string | null
+  target_punishments: {
+    id: string
+    type: string
+    reason: string
+    issuer: string
+    created_at: number
+    expires_at: number
+  }[]
+  issuer_punishments_count: number
+  whitelist: {
+    name: string
+    added_by: string
+    added_at: number
+  } | null
+  total_records_to_delete: number
+}
+
+export type DeletePlayerResult = {
+  player: {
+    uuid: string
+    username: string
+  }
+  deleted_users: number
+  deleted_user_ranks: number
+  deleted_user_display_ranks: number
+  deleted_punishments: number
+  deleted_whitelist: number
+  preserved_issuer_punishments: number
+  total_deleted: number
+}
+
+function normalizeUuid(input: string): string {
+  const trimmed = input.trim()
+  if (/^[0-9a-fA-F]{32}$/.test(trimmed)) {
+    return `${trimmed.substring(0, 8)}-${trimmed.substring(8, 12)}-${trimmed.substring(12, 16)}-${trimmed.substring(16, 20)}-${trimmed.substring(20, 32)}`
+  }
+  return trimmed
+}
+
 function resolveStaffName(
   raw?: string,
   resolvedName?: string
@@ -323,6 +372,282 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
     } catch (err: any) {
       this.logger.warn(`Failed to fetch whitelist: ${err.message}`)
       return []
+    }
+  }
+
+  async getPlayerSummary(query: string): Promise<PlayerSummary | null> {
+    if (!this.pool) return null
+    const trimmed = (query || '').trim()
+    if (!trimmed) return null
+
+    const normId = normalizeUuid(trimmed)
+    let foundUuid = ''
+    let foundUsername = ''
+    let firstJoin = 0
+    let lastJoin = 0
+    let inUsers = false
+
+    // 1. Check smessential_users
+    try {
+      const userRes = await this.pool.query<any>(
+        `SELECT uuid, username, first_join, last_join 
+         FROM smessential_users 
+         WHERE LOWER(uuid) = LOWER($1) OR LOWER(username) = LOWER($1) 
+         LIMIT 1`,
+        [normId]
+      )
+      if (userRes.rows.length > 0) {
+        const u = userRes.rows[0]
+        foundUuid = u.uuid
+        foundUsername = u.username
+        firstJoin = Number(u.first_join) || 0
+        lastJoin = Number(u.last_join) || 0
+        inUsers = true
+      }
+    } catch (err: any) {
+      this.logger.warn(`Error querying smessential_users for summary: ${err.message}`)
+    }
+
+    // 2. Check whitelist if needed
+    if (!foundUuid || !foundUsername) {
+      try {
+        const wlRes = await this.pool.query<any>(
+          `SELECT COALESCE(uuid, '') AS uuid, COALESCE(name, '') AS name 
+           FROM smessential_whitelist 
+           WHERE LOWER(uuid) = LOWER($1) OR LOWER(name) = LOWER($1) 
+           LIMIT 1`,
+          [normId]
+        )
+        if (wlRes.rows.length > 0) {
+          if (!foundUuid && wlRes.rows[0].uuid) foundUuid = wlRes.rows[0].uuid
+          if (!foundUsername && wlRes.rows[0].name) foundUsername = wlRes.rows[0].name
+        }
+      } catch (err: any) {
+        this.logger.warn(`Error querying whitelist for summary: ${err.message}`)
+      }
+    }
+
+    // 3. Check punishments if needed
+    if (!foundUuid || !foundUsername) {
+      try {
+        const pRes = await this.pool.query<any>(
+          `SELECT uuid, username 
+           FROM smessential_punishments 
+           WHERE LOWER(uuid) = LOWER($1) OR LOWER(username) = LOWER($1) 
+           LIMIT 1`,
+          [normId]
+        )
+        if (pRes.rows.length > 0) {
+          if (!foundUuid && pRes.rows[0].uuid) foundUuid = pRes.rows[0].uuid
+          if (!foundUsername && pRes.rows[0].username) foundUsername = pRes.rows[0].username
+        }
+      } catch (err: any) {
+        this.logger.warn(`Error querying punishments for summary: ${err.message}`)
+      }
+    }
+
+    // 4. Check user ranks / display ranks if UUID
+    const isUuid =
+      /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(
+        normId
+      )
+    if (!foundUuid && isUuid) {
+      foundUuid = normId
+    }
+
+    if (!foundUuid && !foundUsername) {
+      return null
+    }
+    if (!foundUsername) foundUsername = foundUuid
+    if (!foundUuid) foundUuid = foundUsername
+
+    let recordsToDelete = inUsers ? 1 : 0
+
+    // Fetch user ranks
+    const ranks: string[] = []
+    try {
+      const rRes = await this.pool.query<any>(
+        'SELECT rank_id FROM smessential_user_ranks WHERE LOWER(uuid) = LOWER($1)',
+        [foundUuid]
+      )
+      for (const row of rRes.rows) {
+        ranks.push(row.rank_id)
+        recordsToDelete++
+      }
+    } catch (err: any) {
+      this.logger.warn(`Error querying user ranks: ${err.message}`)
+    }
+
+    // Fetch user display rank
+    let displayRank: string | null = null
+    try {
+      const drRes = await this.pool.query<any>(
+        'SELECT rank_id FROM smessential_user_display_ranks WHERE LOWER(uuid) = LOWER($1) LIMIT 1',
+        [foundUuid]
+      )
+      if (drRes.rows.length > 0) {
+        displayRank = drRes.rows[0].rank_id
+        recordsToDelete++
+      }
+    } catch (err: any) {
+      this.logger.warn(`Error querying user display rank: ${err.message}`)
+    }
+
+    // Fetch target punishments (strictly excluding issuer punishments)
+    const targetPunishments: any[] = []
+    try {
+      const tpRes = await this.pool.query<any>(
+        `SELECT id, type, reason, issuer, created_at, expires_at 
+         FROM smessential_punishments 
+         WHERE LOWER(uuid) = LOWER($1) 
+            OR (LOWER(username) = LOWER($2) AND LOWER(issuer) != LOWER($1) AND LOWER(issuer) != LOWER($2))
+         ORDER BY created_at DESC`,
+        [foundUuid, foundUsername]
+      )
+      for (const row of tpRes.rows) {
+        targetPunishments.push({
+          id: row.id,
+          type: row.type,
+          reason: row.reason,
+          issuer: row.issuer,
+          created_at: Number(row.created_at) || 0,
+          expires_at: Number(row.expires_at) || 0,
+        })
+        recordsToDelete++
+      }
+    } catch (err: any) {
+      this.logger.warn(`Error querying target punishments: ${err.message}`)
+    }
+
+    // Count issuer punishments (preserved)
+    let issuerPunishmentsCount = 0
+    try {
+      const ipRes = await this.pool.query<any>(
+        `SELECT COUNT(*) AS cnt FROM smessential_punishments 
+         WHERE LOWER(issuer) = LOWER($1) OR LOWER(issuer) = LOWER($2)`,
+        [foundUuid, foundUsername]
+      )
+      issuerPunishmentsCount = Number(ipRes.rows[0]?.cnt) || 0
+    } catch (err: any) {
+      this.logger.warn(`Error counting issuer punishments: ${err.message}`)
+    }
+
+    // Whitelist entry
+    let whitelistEntry: any = null
+    try {
+      const wlRes = await this.pool.query<any>(
+        `SELECT name, added_by, added_at 
+         FROM smessential_whitelist 
+         WHERE LOWER(uuid) = LOWER($1) OR LOWER(name) = LOWER($2) 
+         LIMIT 1`,
+        [foundUuid, foundUsername]
+      )
+      if (wlRes.rows.length > 0) {
+        whitelistEntry = {
+          name: wlRes.rows[0].name,
+          added_by: wlRes.rows[0].added_by,
+          added_at: Number(wlRes.rows[0].added_at) || 0,
+        }
+        recordsToDelete++
+      }
+    } catch (err: any) {
+      this.logger.warn(`Error querying whitelist entry: ${err.message}`)
+    }
+
+    return {
+      player: {
+        uuid: foundUuid,
+        username: foundUsername,
+        first_join: firstJoin,
+        last_join: lastJoin,
+        in_users: inUsers,
+      },
+      ranks,
+      display_rank: displayRank,
+      target_punishments: targetPunishments,
+      issuer_punishments_count: issuerPunishmentsCount,
+      whitelist: whitelistEntry,
+      total_records_to_delete: recordsToDelete,
+    }
+  }
+
+  async deletePlayer(query: string): Promise<DeletePlayerResult | null> {
+    if (!this.pool) return null
+    const summary = await this.getPlayerSummary(query)
+    if (!summary) return null
+
+    const uuid = summary.player.uuid
+    const username = summary.player.username
+
+    const client = await this.pool.connect()
+    try {
+      await client.query('BEGIN')
+
+      // 1. Delete target punishments only (preserving issuer records)
+      const pRes = await client.query(
+        `DELETE FROM smessential_punishments 
+         WHERE LOWER(uuid) = LOWER($1) 
+            OR (LOWER(username) = LOWER($2) AND LOWER(issuer) != LOWER($1) AND LOWER(issuer) != LOWER($2))`,
+        [uuid, username]
+      )
+
+      // 2. Delete user ranks
+      const urRes = await client.query(
+        'DELETE FROM smessential_user_ranks WHERE LOWER(uuid) = LOWER($1)',
+        [uuid]
+      )
+
+      // 3. Delete user display rank
+      const udrRes = await client.query(
+        'DELETE FROM smessential_user_display_ranks WHERE LOWER(uuid) = LOWER($1)',
+        [uuid]
+      )
+
+      // 4. Delete whitelist entries
+      const wlRes = await client.query(
+        'DELETE FROM smessential_whitelist WHERE LOWER(uuid) = LOWER($1) OR LOWER(name) = LOWER($2)',
+        [uuid, username]
+      )
+
+      // 5. Delete users profile
+      const uRes = await client.query(
+        'DELETE FROM smessential_users WHERE LOWER(uuid) = LOWER($1) OR LOWER(username) = LOWER($2)',
+        [uuid, username]
+      )
+
+      await client.query('COMMIT')
+
+      const deletedUsers = uRes.rowCount || 0
+      const deletedUserRanks = urRes.rowCount || 0
+      const deletedUserDisplayRanks = udrRes.rowCount || 0
+      const deletedPunishments = pRes.rowCount || 0
+      const deletedWhitelist = wlRes.rowCount || 0
+      const totalDeleted =
+        deletedUsers +
+        deletedUserRanks +
+        deletedUserDisplayRanks +
+        deletedPunishments +
+        deletedWhitelist
+
+      return {
+        player: {
+          uuid,
+          username,
+        },
+        deleted_users: deletedUsers,
+        deleted_user_ranks: deletedUserRanks,
+        deleted_user_display_ranks: deletedUserDisplayRanks,
+        deleted_punishments: deletedPunishments,
+        deleted_whitelist: deletedWhitelist,
+        preserved_issuer_punishments: summary.issuer_punishments_count,
+        total_deleted: totalDeleted,
+      }
+    } catch (err: any) {
+      await client.query('ROLLBACK')
+      this.logger.error(`Failed to delete player (${query}): ${err.message}`)
+      throw err
+    } finally {
+      client.release()
     }
   }
 }

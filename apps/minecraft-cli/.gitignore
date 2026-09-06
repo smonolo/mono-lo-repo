@@ -1,0 +1,6 @@
+# Binaries
+bin/
+
+# Environment local files
+.env
+.env.local

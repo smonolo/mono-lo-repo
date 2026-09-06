@@ -5,8 +5,11 @@ import dev.smnl.smessential.service.TeamService;
 import dev.smnl.smessential.util.FontUtils;
 import dev.smnl.smessential.util.PlayerUtils;
 import io.papermc.paper.scoreboard.numbers.NumberFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -19,8 +22,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerBedLeaveEvent;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.world.TimeSkipEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Criteria;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -32,14 +38,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class SidebarManager implements Listener {
 
+  private static final DateTimeFormatter DATE_FORMATTER =
+      DateTimeFormatter.ofPattern("MMM dd, yyyy", Locale.ENGLISH);
+
   private final JavaPlugin plugin;
   private TeamService teamService;
   private final Map<UUID, Scoreboard> playerBoards = new ConcurrentHashMap<>();
   private final Map<UUID, List<Component>> lastRenderedLines = new ConcurrentHashMap<>();
   private final Map<UUID, Integer> lastRenderedCount = new ConcurrentHashMap<>();
 
-  private static final int MIN_SIDEBAR_PIXEL_WIDTH =
-      FontUtils.getPixelWidth("XYZ: 99999, 99999, 9999") + 8;
+  private static final int TEAM_MIN_SIDEBAR_PIXEL_WIDTH =
+      FontUtils.getPixelWidth("1234567890123456 (20HP)");
 
   public SidebarManager(@NotNull JavaPlugin plugin) {
     this.plugin = plugin;
@@ -94,38 +103,30 @@ public class SidebarManager implements Listener {
     String titleText = "Headquarters";
     int titleWidth = FontUtils.getPixelWidth(titleText, true);
 
-    long day = (player.getWorld().getFullTime() / 24000L) + 1;
-    long ticks = player.getWorld().getTime();
+    World timeWorld = getTimeWorld(player);
+    long dayIndex = Math.max(0L, timeWorld.getFullTime() / 24000L);
+    LocalDate date = LocalDate.of(1, 1, 1).plusDays(dayIndex);
+    String formattedDate = date.format(DATE_FORMATTER);
+
+    long ticks = timeWorld.getTime();
     long hours = ((ticks / 1000) + 6) % 24;
     long rawMinutes = (ticks % 1000) * 60 / 1000;
     long minutes = rawMinutes < 30 ? 0 : 30;
     String formattedTime = String.format("%02d:%02d", hours, minutes);
 
     boolean isMonsterSpawnTime =
-        (ticks >= 13000 && ticks < 23000) || player.getWorld().isThundering();
+        (ticks >= 13000 && ticks < 23000) || timeWorld.isThundering();
     NamedTextColor timeColor = isMonsterSpawnTime ? NamedTextColor.RED : NamedTextColor.WHITE;
 
-    org.bukkit.Location loc = player.getLocation();
-    String xyz = loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ();
-    String biomeKey = resolveBiomeKey(player);
-    String biomeName = FontUtils.formatEnumTitleCase(biomeKey);
-    NamedTextColor biomeColor = resolveBiomeColor(biomeKey);
-
-    WeatherDisplay weather = resolveWeather(player);
-
     String rawFooter = "mc.smnl.dev";
-    String timeLine = "Time: " + formattedTime + " (Day " + day + ")";
-    String xyzLine = "XYZ: " + xyz;
-    String biomeLine = "Biome: " + biomeName;
-    String weatherLine = "Weather: " + weather.name();
+    String timeLine = "Time: " + formattedTime;
+    String dateLine = "Date: " + formattedDate;
 
     Team team = teamService != null ? teamService.getTeam(player.getUniqueId()) : null;
     List<String> dynamicStrings = new ArrayList<>();
     dynamicStrings.add(titleText);
     dynamicStrings.add(timeLine);
-    dynamicStrings.add(xyzLine);
-    dynamicStrings.add(biomeLine);
-    dynamicStrings.add(weatherLine);
+    dynamicStrings.add(dateLine);
 
     List<Component> teamComponents = new ArrayList<>();
     if (team != null) {
@@ -165,7 +166,9 @@ public class SidebarManager implements Listener {
 
     int dynamicWidth =
         FontUtils.getMaxPixelWidth(titleWidth, dynamicStrings.toArray(new String[0]));
-    int maxPixelWidth = Math.max(MIN_SIDEBAR_PIXEL_WIDTH, dynamicWidth);
+    boolean hasTeam = team != null && !teamComponents.isEmpty();
+    int minPixelWidth = hasTeam ? TEAM_MIN_SIDEBAR_PIXEL_WIDTH : 0;
+    int maxPixelWidth = Math.max(minPixelWidth, dynamicWidth);
     String centeredFooter = FontUtils.centerAndPadLine(rawFooter, maxPixelWidth);
 
     List<Component> lineList = new ArrayList<>();
@@ -173,19 +176,10 @@ public class SidebarManager implements Listener {
 
     lineList.add(
         Component.text("Time: ", NamedTextColor.GRAY)
-            .append(Component.text(formattedTime, timeColor))
-            .append(Component.text(" (Day ", NamedTextColor.GRAY))
-            .append(Component.text(String.valueOf(day), NamedTextColor.WHITE))
-            .append(Component.text(")", NamedTextColor.GRAY)));
+            .append(Component.text(formattedTime, timeColor)));
     lineList.add(
-        Component.text("XYZ: ", NamedTextColor.GRAY)
-            .append(Component.text(xyz, NamedTextColor.WHITE)));
-    lineList.add(
-        Component.text("Biome: ", NamedTextColor.GRAY)
-            .append(Component.text(biomeName, biomeColor)));
-    lineList.add(
-        Component.text("Weather: ", NamedTextColor.GRAY)
-            .append(Component.text(weather.name(), weather.color())));
+        Component.text("Date: ", NamedTextColor.GRAY)
+            .append(Component.text(formattedDate, NamedTextColor.WHITE)));
 
     if (!teamComponents.isEmpty()) {
       lineList.add(Component.empty());
@@ -420,6 +414,19 @@ public class SidebarManager implements Listener {
     updateSidebar(player);
   }
 
+  public static @NotNull World getTimeWorld(@NotNull Player player) {
+    World world = player.getWorld();
+    if (world.getEnvironment() == World.Environment.NORMAL) {
+      return world;
+    }
+    for (World w : Bukkit.getWorlds()) {
+      if (w.getEnvironment() == World.Environment.NORMAL) {
+        return w;
+      }
+    }
+    return world;
+  }
+
   @EventHandler(priority = EventPriority.MONITOR)
   public void onPlayerJoin(PlayerJoinEvent event) {
     Bukkit.getScheduler().runTask(plugin, this::updateAll);
@@ -432,5 +439,20 @@ public class SidebarManager implements Listener {
     lastRenderedLines.remove(uuid);
     lastRenderedCount.remove(uuid);
     Bukkit.getScheduler().runTask(plugin, this::updateAll);
+  }
+
+  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+  public void onTimeSkip(TimeSkipEvent event) {
+    Bukkit.getScheduler().runTask(plugin, this::updateAll);
+  }
+
+  @EventHandler(priority = EventPriority.MONITOR)
+  public void onPlayerBedLeave(PlayerBedLeaveEvent event) {
+    Bukkit.getScheduler().runTask(plugin, this::updateAll);
+  }
+
+  @EventHandler(priority = EventPriority.MONITOR)
+  public void onPlayerChangedWorld(PlayerChangedWorldEvent event) {
+    Bukkit.getScheduler().runTask(plugin, () -> updateSidebar(event.getPlayer()));
   }
 }

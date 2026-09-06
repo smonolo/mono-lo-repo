@@ -109,27 +109,8 @@ export class PluginService {
   }
 
   private async fetchFromPlugin<T>(endpoint: string): Promise<T | null> {
-    const primary = await this.executeFetch<T>(endpoint)
-    if (primary.data !== null) {
-      return primary.data
-    }
-
-    if (primary.status === 404) {
-      const fallbackEndpoint = endpoint.startsWith('/v1/')
-        ? endpoint.replace(/^\/v1\//, '/api/')
-        : endpoint.startsWith('/api/')
-          ? endpoint.replace(/^\/api\//, '/v1/')
-          : null
-
-      if (fallbackEndpoint) {
-        const fallback = await this.executeFetch<T>(fallbackEndpoint)
-        if (fallback.data !== null) {
-          return fallback.data
-        }
-      }
-    }
-
-    return null
+    const res = await this.executeFetch<T>(endpoint)
+    return res.data
   }
 
   async getStatus(): Promise<any> {
@@ -230,5 +211,18 @@ export class PluginService {
         }
       )
     })
+  }
+
+  clearCache(keyPattern?: string) {
+    if (!keyPattern) {
+      this.memoryCache.clear()
+      return
+    }
+    const lower = keyPattern.toLowerCase()
+    for (const k of this.memoryCache.keys()) {
+      if (k.toLowerCase().includes(lower)) {
+        this.memoryCache.delete(k)
+      }
+    }
   }
 }

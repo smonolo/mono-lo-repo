@@ -31,6 +31,7 @@
     "build:site": "turbo build --filter=site",
     "build:minecraft": "turbo build --filter=minecraft",
     "build:minecraft-api": "turbo build --filter=minecraft-api",
+    "build:minecraft-cli": "turbo build --filter=minecraft-cli",
     "build:email-checker": "turbo build --filter=email-checker",
     "build:email-checker-api": "turbo build --filter=email-checker-api",
     "build:smessential": "turbo build --filter=smessential",
