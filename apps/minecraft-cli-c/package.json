@@ -1,0 +1,12 @@
+{
+  "name": "minecraft-cli-c",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Ultra-optimized C CLI administration toolkit for Minecraft and SMEssential",
+  "scripts": {
+    "build": "make build",
+    "build:pgo": "make pgo",
+    "test": "make test",
+    "clean": "make clean"
+  }
+}

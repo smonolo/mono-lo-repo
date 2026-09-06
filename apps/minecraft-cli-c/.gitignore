@@ -1,0 +1,15 @@
+# Binaries
+bin/
+
+# Object files & profiles
+*.o
+*.gcda
+*.gcno
+src/*.o
+src/*.gcda
+src/*.gcno
+tests/*.o
+
+# Environment local files
+.env
+.env.local
