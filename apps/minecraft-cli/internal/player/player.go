@@ -55,11 +55,19 @@ type WhitelistSummary struct {
 	AddedAt int64  `json:"added_at"`
 }
 
+// RankDetail contains rank information with proper display name and color.
+type RankDetail struct {
+	ID     string `json:"id"`
+	Name   string `json:"name"`
+	Color  string `json:"color"`
+	Prefix string `json:"prefix"`
+}
+
 // PlayerSummary aggregates all database entities associated with a player.
 type PlayerSummary struct {
 	Player                 PlayerInfo          `json:"player"`
-	Ranks                  []string            `json:"ranks"`
-	DisplayRank            *string             `json:"display_rank"`
+	Ranks                  []RankDetail        `json:"ranks"`
+	DisplayRank            *RankDetail         `json:"display_rank"`
 	TargetPunishments      []PunishmentSummary `json:"target_punishments"`
 	IssuerPunishmentsCount int64               `json:"issuer_punishments_count"`
 	Whitelist              *WhitelistSummary   `json:"whitelist"`

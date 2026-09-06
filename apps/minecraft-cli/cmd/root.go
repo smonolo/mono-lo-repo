@@ -22,7 +22,7 @@ var (
 
 // RootCmd represents the base command when called without any subcommands.
 var RootCmd = &cobra.Command{
-	Use:   "minecraft-cli",
+	Use:   "mc",
 	Short: "Minecraft administration CLI toolkit",
 	Long: `A robust Go CLI toolkit for administering the Minecraft project via minecraft-api.
 Provides commands for managing players and administrative tasks.`,

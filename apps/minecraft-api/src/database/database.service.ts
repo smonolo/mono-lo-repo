@@ -44,6 +44,13 @@ export type DbWhitelist = {
   added_at: number
 }
 
+export type DbRankSummary = {
+  id: string
+  name: string
+  color: string
+  prefix: string
+}
+
 export type PlayerSummary = {
   player: {
     uuid: string
@@ -52,8 +59,8 @@ export type PlayerSummary = {
     last_join: number
     in_users: boolean
   }
-  ranks: string[]
-  display_rank: string | null
+  ranks: DbRankSummary[]
+  display_rank: DbRankSummary | null
   target_punishments: {
     id: string
     type: string
@@ -463,30 +470,48 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
 
     let recordsToDelete = inUsers ? 1 : 0
 
-    // Fetch user ranks
-    const ranks: string[] = []
+    // Fetch user ranks with proper casing and colors
+    const ranks: DbRankSummary[] = []
     try {
       const rRes = await this.pool.query<any>(
-        'SELECT rank_id FROM smessential_user_ranks WHERE LOWER(uuid) = LOWER($1)',
+        `SELECT r.id, r.name, r.color, r.prefix 
+         FROM smessential_user_ranks ur
+         JOIN smessential_ranks r ON ur.rank_id = r.id
+         WHERE LOWER(ur.uuid) = LOWER($1)
+         ORDER BY r.weight DESC`,
         [foundUuid]
       )
       for (const row of rRes.rows) {
-        ranks.push(row.rank_id)
+        ranks.push({
+          id: row.id,
+          name: row.name,
+          color: row.color,
+          prefix: row.prefix || '',
+        })
         recordsToDelete++
       }
     } catch (err: any) {
       this.logger.warn(`Error querying user ranks: ${err.message}`)
     }
 
-    // Fetch user display rank
-    let displayRank: string | null = null
+    // Fetch user display rank with proper casing and color
+    let displayRank: DbRankSummary | null = null
     try {
       const drRes = await this.pool.query<any>(
-        'SELECT rank_id FROM smessential_user_display_ranks WHERE LOWER(uuid) = LOWER($1) LIMIT 1',
+        `SELECT r.id, r.name, r.color, r.prefix 
+         FROM smessential_user_display_ranks udr
+         JOIN smessential_ranks r ON udr.rank_id = r.id
+         WHERE LOWER(udr.uuid) = LOWER($1) 
+         LIMIT 1`,
         [foundUuid]
       )
       if (drRes.rows.length > 0) {
-        displayRank = drRes.rows[0].rank_id
+        displayRank = {
+          id: drRes.rows[0].id,
+          name: drRes.rows[0].name,
+          color: drRes.rows[0].color,
+          prefix: drRes.rows[0].prefix || '',
+        }
         recordsToDelete++
       }
     } catch (err: any) {
