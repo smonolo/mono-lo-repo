@@ -114,8 +114,7 @@ public class SidebarManager implements Listener {
     long minutes = rawMinutes < 30 ? 0 : 30;
     String formattedTime = String.format("%02d:%02d", hours, minutes);
 
-    boolean isMonsterSpawnTime =
-        (ticks >= 13000 && ticks < 23000) || timeWorld.isThundering();
+    boolean isMonsterSpawnTime = (ticks >= 13000 && ticks < 23000) || timeWorld.isThundering();
     NamedTextColor timeColor = isMonsterSpawnTime ? NamedTextColor.RED : NamedTextColor.WHITE;
 
     String rawFooter = "mc.smnl.dev";

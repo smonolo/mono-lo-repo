@@ -6,6 +6,7 @@ import dev.smnl.smessential.command.impl.AlertCommand;
 import dev.smnl.smessential.command.impl.ClearCommand;
 import dev.smnl.smessential.command.impl.DatabaseInfoCommand;
 import dev.smnl.smessential.command.impl.DifficultyCommand;
+import dev.smnl.smessential.command.impl.EffectCommand;
 import dev.smnl.smessential.command.impl.FeedCommand;
 import dev.smnl.smessential.command.impl.FindCommand;
 import dev.smnl.smessential.command.impl.FlyCommand;
@@ -239,6 +240,7 @@ public final class SMEssential extends JavaPlugin {
         new GamemodeCommand.QuickAdventure(),
         new ClearCommand(),
         new GiveCommand(),
+        new EffectCommand(),
         new FeedCommand(freezeService),
         new HealCommand(freezeService),
         new LeaderboardCommand(leaderboardService),
