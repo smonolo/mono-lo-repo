@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "author": "Stefano Monolo <stefano@smnl.dev>",
   "workspaces": [
-    "apps/*",
-    "plugins/*"
+    "apps/*"
   ],
   "packageManager": "npm@11.2.0",
   "scripts": {
@@ -16,12 +15,6 @@
     "dev:cdn-ui": "turbo dev --filter=cdn-ui",
     "dev:mfd": "turbo dev --filter=mfd",
     "dev:site": "turbo dev --filter=site",
-    "dev:minecraft": "turbo dev --filter=minecraft",
-    "dev:minecraft-api": "turbo dev --filter=minecraft-api",
-    "dev:minecraft:full": "turbo dev --filter=minecraft --filter=minecraft-api",
-    "dev:email-checker": "turbo dev --filter=email-checker",
-    "dev:email-checker-api": "turbo dev --filter=email-checker-api",
-    "dev:email-checker:full": "turbo dev --filter=email-checker --filter=email-checker-api",
     "dev": "turbo dev",
     "build:website": "turbo build --filter=website",
     "build:resume": "turbo build --filter=resume",
@@ -30,13 +23,6 @@
     "build:mfd": "turbo build --filter=mfd",
     "build:cdn-ui": "turbo build --filter=cdn-ui",
     "build:site": "turbo build --filter=site",
-    "build:minecraft": "turbo build --filter=minecraft",
-    "build:minecraft-api": "turbo build --filter=minecraft-api",
-    "build:minecraft-cli": "turbo build --filter=minecraft-cli",
-    "build:minecraft-cli-c": "turbo build --filter=minecraft-cli-c",
-    "build:email-checker": "turbo build --filter=email-checker",
-    "build:email-checker-api": "turbo build --filter=email-checker-api",
-    "build:smessential": "turbo build --filter=smessential",
     "build": "turbo build"
   },
   "devDependencies": {

@@ -24,16 +24,11 @@
         "GOOGLE_CLIENT_ID",
         "MINECRAFT_API_URL",
         "POSTGRES_*",
-        "SESSION_SECRET",
-        "SMESSENTIAL_*"
+        "SESSION_SECRET"
       ]
     },
     "website#build": {
       "env": ["NEXT_PUBLIC_*"],
-      "outputs": [".next/**", "!.next/cache/**"]
-    },
-    "minecraft#build": {
-      "env": ["NEXT_PUBLIC_*", "MINECRAFT_API_URL"],
       "outputs": [".next/**", "!.next/cache/**"]
     },
     "mfd#build": {
@@ -44,21 +39,6 @@
         "MINECRAFT_API_URL",
         "GOOGLE_CLIENT_ID"
       ]
-    },
-    "minecraft-api#build": {
-      "env": ["POSTGRES_*", "SMESSENTIAL_*", "PORT"],
-      "outputs": ["dist/**"]
-    },
-    "email-checker#build": {
-      "env": ["NEXT_PUBLIC_*", "EMAIL_CHECKER_*"],
-      "outputs": [".next/**", "!.next/cache/**"]
-    },
-    "email-checker-api#build": {
-      "env": ["PORT", "API_SECRET_KEY", "SENDER_DOMAIN"],
-      "outputs": ["dist/**"]
-    },
-    "smessential#build": {
-      "outputs": ["build/libs/**"]
     }
   },
   "ui": "tui"
