@@ -14,11 +14,7 @@ const socials = [
     <div
       class="flex max-w-full items-center justify-between px-4 py-8 md:mx-auto md:max-w-[600px] md:px-0"
     >
-      <NuxtLink
-        to="/"
-        aria-label="Home"
-        class="flex h-11 w-11 items-center justify-center"
-      >
+      <NuxtLink to="/" aria-label="Home">
         <div class="bg-sm-blue h-7 w-7 rounded" />
       </NuxtLink>
       <div class="flex items-center gap-x-2">
