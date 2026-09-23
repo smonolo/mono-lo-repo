@@ -29,7 +29,7 @@ const socials = [
           target="_blank"
           rel="noopener noreferrer"
           :aria-label="social.name"
-          class="flex h-11 w-11 items-center justify-center text-gray-500 transition-colors hover:text-white"
+          class="leading-0 text-gray-500 transition-colors hover:text-white"
         >
           <Icon :name="social.icon" />
         </a>
