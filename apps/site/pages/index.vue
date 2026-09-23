@@ -34,54 +34,57 @@ const showResumeSiteWarning = () => {
 
 <template>
   <div class="space-y-24 md:space-y-28">
-    <hgroup class="space-y-2 md:px-[50px]">
-      <h1 class="font-heading text-3xl font-semibold">
-        Hi there, I'm Stefano.
-      </h1>
-      <p class="text-gray-300">
-        I'm a software engineer passionate about technology, gaming, transport,
-        and emergency response.
-      </p>
-    </hgroup>
+    <div class="space-y-12 md:space-y-16">
+      <hgroup class="space-y-2 md:px-[50px]">
+        <h1 class="font-heading text-3xl font-semibold">
+          Hi there, I'm Stefano.
+        </h1>
+        <p class="text-gray-300">
+          I'm a software engineer passionate about technology, gaming,
+          transport, and emergency response.
+        </p>
+      </hgroup>
 
-    <section class="space-y-8">
-      <div
-        class="bg-sm-blue flex h-40 items-center justify-center gap-x-8 rounded-2xl"
-      >
+      <section class="space-y-8">
         <div
-          v-for="key in 3"
-          :key="key"
-          class="h-14 w-14 rounded bg-white transition-transform hover:scale-125"
-        />
-      </div>
+          class="bg-sm-blue flex h-40 items-center justify-center gap-x-8 rounded-2xl"
+        >
+          <div
+            v-for="key in 3"
+            :key="key"
+            class="h-14 w-14 rounded bg-white transition-transform hover:scale-125"
+          />
+        </div>
 
-      <div class="space-y-4 text-gray-300 md:px-[50px]">
-        <p>
-          I work as a software engineer at
-          <a
-            href="https://www.klarna.com/?ref=smnl.dev"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-white hover:text-[#ffa8cd] hover:underline focus-visible:underline"
-          >
-            Klarna</a
-          >, where my main focus is building and maintaining services for
-          financial hardship and credit disputes, such as deceased customers and
-          bankruptcy. I additionally support systems for standard disputes,
-          returns, and refunds.
-        </p>
-        <p>
-          Beyond product engineering, I enjoy working on infrastructure and
-          networking, including cloud providers, VMs, containers, and full-stack
-          backend services.
-        </p>
-        <p>
-          I experiment with AI daily, leveraging LLMs, agentic workflows, and
-          prompt engineering across my projects. It has become an essential part
-          of how I design systems, automate routine tasks, and write code.
-        </p>
-      </div>
-    </section>
+        <div class="space-y-4 text-gray-300 md:px-[50px]">
+          <p>
+            I work as a software engineer at
+            <a
+              href="https://www.klarna.com/?ref=smnl.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-white hover:text-[#ffa8cd] hover:underline focus-visible:underline"
+            >
+              Klarna</a
+            >, where my main focus is building and maintaining services for
+            financial hardship and credit disputes, such as deceased customers
+            and bankruptcy. I additionally support systems for standard
+            disputes, returns, and refunds.
+          </p>
+          <p>
+            Beyond product engineering, I enjoy working on infrastructure and
+            networking, including cloud providers, VMs, containers, and
+            full-stack backend services.
+          </p>
+          <p>
+            I experiment with AI daily, leveraging LLMs, agentic workflows, and
+            prompt engineering across my projects. It has become an essential
+            part of how I design systems, automate routine tasks, and write
+            code.
+          </p>
+        </div>
+      </section>
+    </div>
 
     <section aria-label="Active projects" class="space-y-8">
       <div
