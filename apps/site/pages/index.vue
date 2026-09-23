@@ -33,7 +33,7 @@ const showResumeSiteWarning = () => {
 </script>
 
 <template>
-  <div class="space-y-16 sm:space-y-20">
+  <div class="space-y-24 md:space-y-28">
     <hgroup class="space-y-2 md:px-[50px]">
       <h1 class="font-heading text-3xl font-semibold">
         Hi there, I'm Stefano.
@@ -82,8 +82,6 @@ const showResumeSiteWarning = () => {
         </p>
       </div>
     </section>
-
-    <hr class="mx-auto h-px w-10 border-0 bg-gray-700" />
 
     <section aria-label="Active projects" class="space-y-8">
       <div
@@ -149,8 +147,6 @@ const showResumeSiteWarning = () => {
         </ul>
       </div>
     </section>
-
-    <hr class="mx-auto h-px w-10 border-0 bg-gray-700" />
 
     <section class="space-y-8">
       <div
