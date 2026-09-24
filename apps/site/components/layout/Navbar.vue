@@ -1,10 +1,14 @@
 <script setup lang="ts">
 const socials = [
-  { name: 'GitHub', icon: 'bi:github', url: 'https://github.com/smonolo' },
+  {
+    name: 'GitHub',
+    icon: 'bi:github',
+    url: 'https://github.com/smonolo?ref=smnl.dev',
+  },
   {
     name: 'LinkedIn',
     icon: 'bi:linkedin',
-    url: 'https://www.linkedin.com/in/stemon/',
+    url: 'https://www.linkedin.com/in/stemon/?ref=smnl.dev',
   },
 ]
 </script>

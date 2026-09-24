@@ -9,7 +9,7 @@ const currentYear = new Date().getFullYear()
     <p class="text-sm text-gray-300">© {{ currentYear }} Stefano Monolo.</p>
     <p class="text-sm text-gray-300 underline hover:text-white">
       <a
-        href="https://git.new/monorepo"
+        href="https://git.new/monorepo?ref=smnl.dev"
         target="_blank"
         rel="noopener noreferrer"
       >

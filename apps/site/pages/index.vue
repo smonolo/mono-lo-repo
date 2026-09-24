@@ -142,7 +142,7 @@ const showResumeSiteWarning = () => {
             <span class="text-gray-500"> - {{ project.description }}</span>
           </span>
           <a
-            :href="`https://${project.domain}`"
+            :href="`https://${project.domain}/?ref=smnl.dev`"
             target="_blank"
             rel="noopener noreferrer"
             class="focus-visible:outline-sm-blue hover:text-sm-blue shrink-0 text-right text-gray-300 transition-colors hover:underline focus-visible:rounded-sm focus-visible:underline focus-visible:outline-2 focus-visible:outline-offset-4"
@@ -166,11 +166,17 @@ const showResumeSiteWarning = () => {
 
     <div class="space-y-4 text-gray-300 md:px-[50px]">
       <p>
-        Outside tech, I serve as a volunteer for the Italian Civil Protection in
-        Lombardy, with training covering wildfire fighting, flood response,
-        high-risk operations, and rescue diving. My hobbies include gaming,
-        getting my boating license, and working towards an advanced scuba
-        certification.
+        Outside tech, I serve as a volunteer for the
+        <a
+          href="https://www.regione.lombardia.it/sicurezza-e-protezione-civile/pianificazione-allertamento-e-gestione-emergenze/gestione-delle-emergenze/il-sistema-di-protezione-civile?ref=smnl.dev"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-white hover:text-[#45b777] hover:underline focus-visible:underline"
+        >
+          Italian Civil Protection in Lombardy</a
+        >, with training covering wildfire fighting, flood response, high-risk
+        operations, and rescue diving. My hobbies include gaming, getting my
+        boating license, and working towards an advanced scuba certification.
       </p>
       <p>
         I've kept this site minimal. If you're looking for my resume and want to
@@ -184,6 +190,53 @@ const showResumeSiteWarning = () => {
         >
           resume.smnl.dev</a
         >.
+      </p>
+    </div>
+
+    <div class="space-y-12">
+      <div
+        aria-hidden="true"
+        class="group flex h-44 items-center justify-center gap-5 overflow-hidden rounded-2xl bg-[#eb8744]"
+      >
+        <svg
+          viewBox="0 0 100 100"
+          class="h-8 w-8 text-white transition-transform duration-500 group-hover:-translate-y-3 motion-reduce:transition-none"
+        >
+          <path
+            d="M50 12 90 90 10 90Z"
+            fill="currentColor"
+            stroke="currentColor"
+            stroke-linejoin="round"
+            stroke-width="14"
+          />
+        </svg>
+        <svg
+          viewBox="0 0 100 100"
+          class="h-16 w-16 text-sm-black transition-transform duration-700 group-hover:translate-y-3 motion-reduce:transition-none"
+        >
+          <path
+            d="M50 12 90 90 10 90Z"
+            fill="currentColor"
+            stroke="currentColor"
+            stroke-linejoin="round"
+            stroke-width="14"
+          />
+        </svg>
+        <svg
+          viewBox="0 0 100 100"
+          class="h-12 w-12 text-white transition-transform duration-300 group-hover:-translate-y-1 motion-reduce:transition-none"
+        >
+          <path
+            d="M50 12 90 90 10 90Z"
+            fill="currentColor"
+            stroke="currentColor"
+            stroke-linejoin="round"
+            stroke-width="14"
+          />
+        </svg>
+      </div>
+      <p class="text-gray-300 md:px-[50px]">
+        That's it, now you'll find the footer.
       </p>
     </div>
   </div>
