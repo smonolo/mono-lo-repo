@@ -212,7 +212,7 @@ const showResumeSiteWarning = () => {
         </svg>
         <svg
           viewBox="0 0 100 100"
-          class="h-16 w-16 text-sm-black transition-transform duration-700 group-hover:translate-y-3 motion-reduce:transition-none"
+          class="text-sm-black h-16 w-16 transition-transform duration-700 group-hover:translate-y-3 motion-reduce:transition-none"
         >
           <path
             d="M50 12 90 90 10 90Z"
