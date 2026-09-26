@@ -35,11 +35,8 @@ const showResumeSiteWarning = () => {
 <template>
   <div class="space-y-12 md:space-y-16">
     <hgroup class="space-y-2 md:px-[50px]">
-      <h1
-        class="font-heading flex items-baseline gap-3 text-3xl font-semibold md:mt-12"
-      >
-        <span class="bg-sm-blue h-6 w-6 shrink-0 rounded" aria-hidden="true" />
-        Hi there, I'm Stefano.
+      <h1 class="font-heading text-3xl font-semibold md:mt-12">
+        Hi there, I'm <span class="bg-sm-blue relative top-0.5 inline-block h-6 w-6 align-baseline rounded-[12px] transition-[border-radius] duration-300 hover:rounded motion-reduce:transition-none" aria-hidden="true" /> Stefano.
       </h1>
       <p class="text-gray-300">
         I'm a software engineer passionate about technology, gaming, transport,
@@ -144,7 +141,7 @@ const showResumeSiteWarning = () => {
           >
             <span class="min-w-0">
               <span class="text-white">{{ project.name }}</span>
-              <span class="text-gray-500"> - {{ project.description }}</span>
+              <span class="text-gray-400"> - {{ project.description }}</span>
             </span>
             <a
               :href="`https://${project.domain}/?ref=smnl.dev`"
@@ -162,7 +159,7 @@ const showResumeSiteWarning = () => {
     <div class="space-y-12">
       <div
         aria-hidden="true"
-        class="group mx-auto flex h-48 w-[95%] items-center justify-center gap-5 overflow-hidden rounded-2xl bg-[#eb8744]"
+        class="group mx-auto flex h-48 w-[95%] items-center justify-center gap-5 overflow-hidden rounded-2xl bg-[#f07835]"
       >
         <svg
           viewBox="0 0 100 100"

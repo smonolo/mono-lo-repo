@@ -15,7 +15,7 @@ const socials = [
 
 <template>
   <footer
-    class="flex w-full max-w-full flex-col items-start gap-4 px-4 py-8 sm:flex-row sm:items-center sm:justify-between md:mx-auto md:max-w-[600px] md:px-0"
+    class="flex w-full max-w-full items-center justify-between gap-4 px-4 py-8 md:mx-auto md:max-w-[600px] md:px-0"
   >
     <div class="flex items-center gap-x-3">
       <a
@@ -36,7 +36,7 @@ const socials = [
         target="_blank"
         rel="noopener noreferrer"
       >
-        Source code on GitHub
+        GitHub
       </a>
     </p>
   </footer>
