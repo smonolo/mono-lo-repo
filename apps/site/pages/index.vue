@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import ProjectsModal from '~/components/ProjectsModal.vue'
+
+const projectsModalOpen = ref(false)
+
 const circles = [
   'w-10 h-10 group-hover:w-2 group-hover:h-2',
   'w-8 h-8 group-hover:w-4 group-hover:h-4',
@@ -10,17 +14,25 @@ const circles = [
 const activeProjects = [
   {
     name: 'Rails',
-    description: 'A minimalist railway simulator',
+    description: 'Web-based railway simulator',
+    details:
+      'A browser-based railway simulator focused on train movement and a clear, interactive interface.',
     domain: 'rails.smnl.dev',
+    githubUrl: 'https://github.com/smonolo/rails',
   },
   {
     name: 'MFD',
-    description: 'A personal dashboard',
+    description: 'Physical display-style dashboard',
+    details:
+      'A dashboard styled as a physical multi-function display, with bezel controls and system views.',
     domain: 'mfd.smnl.dev',
+    githubUrl: 'https://github.com/smonolo/mono-lo-repo/tree/main/apps/mfd',
   },
   {
     name: 'MXC',
     description: 'FiveM resources and tools',
+    details:
+      'FiveM resources and tools, alongside the storefront and feedback sites I built for MXC.',
     domain: 'markz3d.com',
   },
 ]
@@ -33,7 +45,7 @@ const showResumeSiteWarning = () => {
 </script>
 
 <template>
-  <div class="space-y-12 md:space-y-16">
+  <div class="space-y-12">
     <hgroup class="space-y-2 md:px-[50px]">
       <h1 class="font-heading text-3xl font-semibold md:mt-12">
         Hi there, I'm <span class="bg-sm-blue relative top-0.5 inline-block h-6 w-6 align-baseline rounded-[12px] transition-[border-radius] duration-300 hover:rounded motion-reduce:transition-none" aria-hidden="true" /> Stefano.
@@ -47,7 +59,7 @@ const showResumeSiteWarning = () => {
     <div class="space-y-12">
       <div
         aria-hidden="true"
-        class="bg-sm-blue mx-auto flex h-48 w-[95%] items-center justify-center gap-x-8 rounded-2xl"
+        class="painted-banner painted-banner--blue bg-sm-blue mx-auto flex h-48 w-[95%] items-center justify-center gap-x-8 rounded-2xl"
       >
         <div
           v-for="key in 3"
@@ -76,9 +88,9 @@ const showResumeSiteWarning = () => {
           backend services.
         </p>
         <p>
-          I experiment with AI daily, leveraging LLMs, agentic workflows, and
-          prompt engineering across my projects. It has become an essential part
-          of how I design systems, automate routine tasks, and write code.
+          I use AI regularly in my work and personal projects. It helps me
+          explore ideas, work through unfamiliar problems, and take some of the
+          repetition out of building software.
         </p>
       </div>
     </div>
@@ -86,7 +98,7 @@ const showResumeSiteWarning = () => {
     <div class="space-y-12">
       <div
         aria-hidden="true"
-        class="bg-sm-purple group mx-auto flex h-48 w-[95%] flex-col items-center justify-center gap-3 overflow-hidden rounded-2xl"
+        class="painted-banner painted-banner--purple bg-sm-purple group mx-auto flex h-48 w-[95%] flex-col items-center justify-center gap-3 overflow-hidden rounded-2xl"
       >
         <div
           v-for="(line, index) in [
@@ -147,19 +159,32 @@ const showResumeSiteWarning = () => {
               :href="`https://${project.domain}/?ref=smnl.dev`"
               target="_blank"
               rel="noopener noreferrer"
-              class="focus-visible:outline-sm-blue hover:text-sm-blue shrink-0 text-right text-gray-300 transition-colors hover:underline focus-visible:rounded-sm focus-visible:underline focus-visible:outline-2 focus-visible:outline-offset-4"
+              class="focus-visible:outline-sm-blue hover:text-sm-blue shrink-0 text-right text-white transition-colors hover:underline focus-visible:rounded-sm focus-visible:underline focus-visible:outline-2 focus-visible:outline-offset-4"
             >
               {{ project.domain }}
             </a>
           </li>
         </ul>
+        <button
+          type="button"
+          class="rounded-lg border-0 bg-white px-3 py-1 font-semibold text-sm-black transition-colors hover:bg-gray-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sm-blue"
+          @click="projectsModalOpen = true"
+        >
+          Read more
+        </button>
       </div>
     </div>
+
+    <ProjectsModal
+      :open="projectsModalOpen"
+      :projects="activeProjects"
+      @close="projectsModalOpen = false"
+    />
 
     <div class="space-y-12">
       <div
         aria-hidden="true"
-        class="group mx-auto flex h-48 w-[95%] items-center justify-center gap-5 overflow-hidden rounded-2xl bg-[#f07835]"
+        class="painted-banner painted-banner--orange group mx-auto flex h-48 w-[95%] items-center justify-center gap-5 overflow-hidden rounded-2xl bg-[#f07835]"
       >
         <svg
           viewBox="0 0 100 100"
@@ -218,7 +243,7 @@ const showResumeSiteWarning = () => {
     <div class="space-y-12">
       <div
         aria-hidden="true"
-        class="group mx-auto flex h-48 w-[95%] items-center justify-center gap-x-4 rounded-2xl bg-white"
+        class="painted-banner painted-banner--white group mx-auto flex h-48 w-[95%] items-center justify-center gap-x-4 rounded-2xl bg-white"
       >
         <div
           v-for="(circle, index) in circles"

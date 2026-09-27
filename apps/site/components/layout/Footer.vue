@@ -25,7 +25,7 @@ const socials = [
         target="_blank"
         rel="noopener noreferrer"
         :aria-label="social.name"
-        class="leading-0 text-gray-500 transition-colors hover:text-white"
+        class="leading-0 text-gray-400 transition-colors hover:text-white"
       >
         <Icon :name="social.icon" />
       </a>

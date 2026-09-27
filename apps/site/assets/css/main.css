@@ -8,3 +8,52 @@
   --color-sm-blue: #008cff;
   --color-sm-purple: #a855f7;
 }
+
+a[href],
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+.painted-banner {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.painted-banner::before {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: url('/textures/painted-concrete-blue.png') var(--texture-position, center) / 520px auto;
+  content: '';
+  opacity: 0.38;
+  pointer-events: none;
+}
+
+.painted-banner--purple {
+  --texture-position: 18% 72%;
+}
+
+.painted-banner--purple::before {
+  transform: scaleX(-1);
+}
+
+.painted-banner--orange {
+  --texture-position: 83% 26%;
+}
+
+.painted-banner--orange::before {
+  transform: scaleY(-1);
+}
+
+.painted-banner--white {
+  --texture-position: 47% 91%;
+}
+
+.painted-banner--white::before {
+  transform: scale(-1);
+}
+
+.painted-banner > * {
+  position: relative;
+}
