@@ -4,6 +4,11 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   modules: ['@nuxt/fonts', '@nuxt/icon', 'nuxt-gtag'],
+  // Avoid Vite cold-start "Failed to resolve import #app-manifest" race
+  // (nuxt/nuxt#30461 / #33606). This site does not need the app manifest.
+  experimental: {
+    appManifest: false,
+  },
   gtag: {
     id: 'G-F1H9HVR3BL',
   },
