@@ -78,7 +78,7 @@ const onBackdropClick = (event: MouseEvent) => {
   <dialog
     ref="dialog"
     aria-labelledby="projects-modal-title"
-    class="projects-dialog font-display fixed inset-0 m-auto max-h-[min(80vh,48rem)] w-[calc(100%-2rem)] max-w-2xl overflow-y-auto rounded-[28px] border-0 bg-sm-black p-0 text-white shadow-2xl"
+    class="projects-dialog font-display bg-sm-black fixed inset-0 m-auto max-h-[min(80vh,48rem)] w-[calc(100%-2rem)] max-w-2xl overflow-y-auto rounded-[28px] border-0 p-0 text-white shadow-2xl"
     :class="{ 'modal-visible': isVisible }"
     @cancel.prevent="emit('close')"
     @close="onClose"
@@ -92,7 +92,7 @@ const onBackdropClick = (event: MouseEvent) => {
         <button
           type="button"
           aria-label="Close projects"
-          class="flex h-9 w-9 items-center justify-center rounded-lg bg-transparent text-2xl leading-none text-gray-300 transition-colors hover:bg-gray-500/20 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sm-blue"
+          class="focus-visible:outline-sm-blue flex h-9 w-9 items-center justify-center rounded-lg bg-transparent text-2xl leading-none text-gray-300 transition-colors hover:bg-gray-500/20 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2"
           @click="emit('close')"
         >
           &times;
@@ -100,15 +100,21 @@ const onBackdropClick = (event: MouseEvent) => {
       </div>
 
       <ul class="divide-y divide-gray-700">
-        <li v-for="project in projects" :key="project.name" class="space-y-3 py-5 first:pt-0 last:pb-0">
+        <li
+          v-for="project in projects"
+          :key="project.name"
+          class="space-y-3 py-5 first:pt-0 last:pb-0"
+        >
           <h3 class="text-xl font-semibold">{{ project.name }}</h3>
-          <p class="line-clamp-2 leading-relaxed text-gray-300">{{ project.details }}</p>
+          <p class="line-clamp-2 leading-relaxed text-gray-300">
+            {{ project.details }}
+          </p>
           <div class="flex flex-wrap gap-x-5 gap-y-2">
             <a
               :href="`https://${project.domain}/?ref=smnl.dev`"
               target="_blank"
               rel="noopener noreferrer"
-              class="text-white hover:text-sm-blue hover:underline focus-visible:underline"
+              class="hover:text-sm-blue text-white hover:underline focus-visible:underline"
             >
               {{ project.domain }}
             </a>
@@ -117,7 +123,7 @@ const onBackdropClick = (event: MouseEvent) => {
               :href="project.githubUrl"
               target="_blank"
               rel="noopener noreferrer"
-              class="text-white hover:text-sm-blue hover:underline focus-visible:underline"
+              class="hover:text-sm-blue text-white hover:underline focus-visible:underline"
             >
               GitHub
             </a>
@@ -132,7 +138,9 @@ const onBackdropClick = (event: MouseEvent) => {
 .projects-dialog {
   opacity: 0;
   transform: scale(0.97);
-  transition: opacity 220ms ease, transform 220ms ease;
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
 }
 
 .projects-dialog.modal-visible {

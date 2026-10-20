@@ -48,7 +48,12 @@ const showResumeSiteWarning = () => {
   <div class="space-y-12">
     <hgroup class="space-y-2 md:px-[50px]">
       <h1 class="font-heading text-3xl font-semibold md:mt-12">
-        Hi there, I'm <span class="bg-sm-blue relative top-0.5 inline-block h-6 w-6 align-baseline rounded-[12px] transition-[border-radius] duration-300 hover:rounded motion-reduce:transition-none" aria-hidden="true" /> Stefano.
+        Hi there, I'm
+        <span
+          class="bg-sm-blue relative top-0.5 inline-block h-6 w-6 rounded-[12px] align-baseline transition-[border-radius] duration-300 hover:rounded motion-reduce:transition-none"
+          aria-hidden="true"
+        />
+        Stefano.
       </h1>
       <p class="text-gray-300">
         I'm a software engineer passionate about technology, gaming, transport,
@@ -141,9 +146,9 @@ const showResumeSiteWarning = () => {
       <div class="space-y-4 text-gray-300 md:px-[50px]">
         <p>
           Outside work, I spend time on a few projects of my own. They give me
-          room to try new ideas, build useful tools, and refine the small details
-          that make something enjoyable to use. These are the ones I'm working on
-          right now.
+          room to try new ideas, build useful tools, and refine the small
+          details that make something enjoyable to use. These are the ones I'm
+          working on right now.
         </p>
         <ul class="divide-y divide-gray-700">
           <li
@@ -167,7 +172,7 @@ const showResumeSiteWarning = () => {
         </ul>
         <button
           type="button"
-          class="rounded-lg border-0 bg-white px-3 py-1 font-semibold text-sm-black transition-colors hover:bg-gray-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sm-blue"
+          class="text-sm-black focus-visible:outline-sm-blue rounded-lg border-0 bg-white px-3 py-1 font-semibold transition-colors hover:bg-gray-400 focus-visible:outline-2 focus-visible:outline-offset-4"
           @click="projectsModalOpen = true"
         >
           Read more
@@ -254,8 +259,8 @@ const showResumeSiteWarning = () => {
       </div>
       <div class="space-y-4 text-gray-300 md:px-[50px]">
         <p>
-          I've kept this site minimal. If you're looking for my resume and want to
-          learn more about my experience, you can find it at
+          I've kept this site minimal. If you're looking for my resume and want
+          to learn more about my experience, you can find it at
           <a
             href="https://resume.smnl.dev/?ref=smnl.dev"
             target="_blank"

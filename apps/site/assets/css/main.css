@@ -24,7 +24,8 @@ button:not(:disabled) {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: url('/textures/painted-concrete-blue.png') var(--texture-position, center) / 520px auto;
+  background: url('/textures/painted-concrete-blue.png')
+    var(--texture-position, center) / 520px auto;
   content: '';
   opacity: 0.38;
   pointer-events: none;

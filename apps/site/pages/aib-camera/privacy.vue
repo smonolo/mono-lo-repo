@@ -65,7 +65,12 @@ const dataRows = [
           smnl.dev
         </NuxtLink>
         <span aria-hidden="true"> / </span>
-        <span>AIB Camera</span>
+        <NuxtLink
+          to="/aib-camera"
+          class="hover:text-sm-blue text-gray-300 hover:underline focus-visible:underline"
+        >
+          AIB Camera
+        </NuxtLink>
         <span aria-hidden="true"> / </span>
         <span>Privacy</span>
       </p>
@@ -225,8 +230,8 @@ const dataRows = [
           href="mailto:stefano@smnl.dev"
           class="hover:text-sm-blue text-white hover:underline focus-visible:underline"
         >
-          stefano@smnl.dev
-        </a>.
+          stefano@smnl.dev </a
+        >.
       </p>
     </section>
   </article>
