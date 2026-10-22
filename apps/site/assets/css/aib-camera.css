@@ -1,0 +1,108 @@
+/* AIB Camera — only for injected guida HTML (v-html). Pages use Tailwind utilities. */
+
+body:has(.aib) {
+  @apply bg-aib-canvas text-aib-fg dark:bg-aib-canvas-inverse dark:text-aib-fg-inverse;
+}
+
+.aib-prose > h1:first-of-type {
+  @apply hidden;
+}
+
+.aib-prose h1 {
+  @apply text-aib-fg dark:text-aib-fg-inverse mb-4 text-[28px] font-bold leading-tight tracking-[-0.4px];
+}
+
+.aib-prose h2 {
+  @apply border-aib-border text-aib-fg dark:border-aib-border-dark dark:text-aib-fg-inverse mb-2.5 mt-8 border-b pb-1.5 text-[17px] font-semibold;
+}
+
+.aib-prose h3 {
+  @apply text-aib-fg dark:text-aib-fg-inverse mb-1.5 mt-5 text-[15px] font-semibold;
+}
+
+.aib-prose p,
+.aib-prose ul,
+.aib-prose ol,
+.aib-prose table {
+  @apply text-aib-muted dark:text-aib-muted-dark mb-3.5 text-[15px] leading-relaxed;
+}
+
+.aib-prose li {
+  @apply mb-1;
+}
+
+.aib-prose ul,
+.aib-prose ol {
+  @apply pl-5;
+}
+
+.aib-prose strong {
+  @apply text-aib-fg dark:text-aib-fg-inverse font-semibold;
+}
+
+.aib-prose em {
+  @apply text-aib-muted dark:text-aib-muted-dark;
+}
+
+.aib-prose a {
+  @apply text-aib-fg dark:text-aib-fg-inverse underline underline-offset-2 hover:opacity-70;
+}
+
+.aib-prose hr {
+  @apply border-aib-border dark:border-aib-border-dark my-5 border-0 border-t;
+}
+
+.aib-prose table {
+  @apply block w-full overflow-x-auto text-[13px];
+  border-collapse: collapse;
+  -webkit-overflow-scrolling: touch;
+}
+
+.aib-prose th,
+.aib-prose td {
+  @apply border-aib-border dark:border-aib-border-dark border px-2.5 py-2 text-left align-top;
+}
+
+.aib-prose th {
+  @apply bg-aib-surface-muted text-aib-fg dark:bg-aib-surface-muted-dark dark:text-aib-fg-inverse font-semibold;
+}
+
+.aib-prose code {
+  @apply bg-aib-surface-muted text-aib-fg dark:bg-aib-surface-muted-dark dark:text-aib-fg-inverse rounded-md px-1 py-0.5 font-mono text-[0.86em];
+}
+
+.aib-prose .doc-meta {
+  @apply rounded-aib bg-aib-surface dark:bg-aib-surface-dark mb-4 block w-full overflow-hidden text-[13px];
+}
+
+.aib-prose .doc-meta td {
+  @apply border-aib-border text-aib-muted dark:border-aib-border-dark dark:text-aib-muted-dark border-0 border-b px-3.5 py-2.5;
+}
+
+.aib-prose .doc-meta tr:last-child td {
+  @apply border-b-0;
+}
+
+.aib-prose .doc-meta td:first-child {
+  @apply w-[42%] font-medium;
+}
+
+.aib-prose .callout {
+  @apply rounded-r-aib-sm border-aib-border border-l-aib-track-active bg-aib-surface text-aib-muted dark:border-aib-border-dark dark:bg-aib-surface-dark dark:text-aib-muted-dark my-4 border border-l-[3px] px-4 py-3;
+}
+
+.aib-prose .callout-warn {
+  @apply border-l-aib-border-strong bg-aib-warn dark:border-l-aib-border-strong-dark dark:bg-aib-warn-dark;
+}
+
+.aib-prose .callout p {
+  @apply m-0 text-inherit;
+}
+
+.aib-prose .callout p + p {
+  @apply mt-2;
+}
+
+.aib-prose .callout strong {
+  @apply text-aib-fg dark:text-aib-fg-inverse;
+}

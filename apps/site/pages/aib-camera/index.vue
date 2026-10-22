@@ -1,7 +1,11 @@
 <script setup lang="ts">
+definePageMeta({
+  layout: 'aib-camera',
+})
+
 const title = 'AIB Camera'
 const description =
-  'Independent field camera for AIB volunteers: stamped photos with date, time, GPS, and place — plus EXIF IDs and an on-device capture log. Offline-first, no account.'
+  'Fotocamera di campo indipendente per volontari AIB: anteprima live del timbro, JPEG con data/ora/GPS/luogo, ID EXIF e registro scatti sul dispositivo. Funziona offline, senza account.'
 const canonical = 'https://smnl.dev/aib-camera'
 
 useSeoMeta({
@@ -22,104 +26,148 @@ useHead({
 
 const features = [
   {
-    title: 'Stamp on the JPEG',
-    body: 'Date, time (Europe/Rome), coordinates, altitude, heading, and place burned into the photo.',
+    title: 'Anteprima live del timbro',
+    body: 'Sul mirino compare lo stesso timbro che verrà bruciato sulla foto — campi, dimensione testo e opacità dalle impostazioni Aspetto.',
   },
   {
-    title: 'EXIF for machines',
-    body: 'After stamping, the app writes Software, ImageUniqueID (UUID), GPS tags, and a JSON UserComment when the native build supports it.',
+    title: 'Timbro sul JPEG',
+    body: 'Data, ora (Europe/Rome), coordinate, altitudine, direzione, luogo e testo personalizzato opzionale stampati sulla foto.',
   },
   {
-    title: 'Capture log',
-    body: 'Each shot gets a local ID, date, and coords you can open from Settings — even after deleting the photo from the gallery.',
+    title: 'Scatto rapido',
+    body: 'Puoi scattare in sequenza senza aspettare l’elaborazione del timbro. Per la posizione si usa il fix live quando disponibile, così lo scatto resta snello.',
   },
   {
-    title: 'Works offline',
-    body: 'Capture, stamp, in-app gallery, capture log, and share without network. GPS and place labels are optional.',
+    title: 'EXIF per le macchine',
+    body: 'Dopo il timbro l’app scrive Software, ImageUniqueID (UUID), tag GPS e un UserComment JSON quando la build nativa lo supporta.',
   },
   {
-    title: 'Local-first',
-    body: 'No account, no analytics SDK, no cloud sync. Photos, settings, and the capture log stay on your device.',
+    title: 'Galleria in-app',
+    body: 'Le foto restano nell’app come fonte di verità. Album Foto «AIB Camera» opzionale; eliminando dall’app si rimuove anche quella copia quando possibile.',
   },
   {
-    title: 'Emergency-ready',
-    body: 'Camera is required; location is not. The shutter stays usable even without a GPS fix.',
+    title: 'Registro scatti',
+    body: 'Ogni scatto ha un ID locale, data e coordinate, consultabili da Impostazioni — anche dopo aver eliminato la foto dalla galleria.',
+  },
+  {
+    title: 'Funziona offline',
+    body: 'Scatto, timbro, galleria, registro scatti e condivisione senza rete. GPS e etichette di luogo sono opzionali.',
+  },
+  {
+    title: 'Tutto sul dispositivo',
+    body: 'Nessun account, nessun SDK di analytics, nessuna sincronizzazione cloud. Foto, impostazioni e registro restano sul dispositivo.',
+  },
+  {
+    title: 'Pronto per l’emergenza',
+    body: 'La fotocamera è obbligatoria; la posizione no. Lo scatto resta utilizzabile anche senza fix GPS.',
   },
 ]
+
+const linkClass =
+  'text-aib-fg underline underline-offset-2 hover:opacity-70 dark:text-aib-fg-inverse'
+const bodyClass =
+  'text-[15px] leading-relaxed text-aib-muted dark:text-aib-muted-dark [&_strong]:font-semibold [&_strong]:text-aib-fg dark:[&_strong]:text-aib-fg-inverse'
+const h2Class = 'text-[17px] font-semibold text-aib-fg dark:text-aib-fg-inverse'
 </script>
 
 <template>
-  <article class="space-y-10 pb-8 md:px-[50px]">
-    <header class="space-y-4">
-      <p class="text-sm text-gray-400">
-        <NuxtLink
-          to="/"
-          class="hover:text-sm-blue text-gray-300 hover:underline focus-visible:underline"
-          >smnl.dev</NuxtLink
-        >
+  <article class="space-y-10">
+    <header class="space-y-3">
+      <p
+        class="text-aib-muted dark:text-aib-muted-dark [&_a:hover]:text-aib-fg dark:[&_a:hover]:text-aib-fg-inverse text-[13px] font-medium [&_a:hover]:underline [&_a:hover]:underline-offset-2 [&_a]:text-inherit [&_a]:no-underline"
+      >
+        <NuxtLink to="/">smnl.dev</NuxtLink>
         <span aria-hidden="true"> / </span>
         <span>AIB Camera</span>
       </p>
-      <h1 class="font-heading text-3xl font-semibold">AIB Camera</h1>
-      <p class="text-lg text-gray-300">
-        Independent field photography for Antincendio Boschivo volunteers —
-        stamp date, time, GPS, and place on every shot, with EXIF IDs for later
-        checks.
+      <h1
+        class="text-aib-fg dark:text-aib-fg-inverse text-[28px] font-bold leading-tight tracking-[-0.4px]"
+      >
+        AIB Camera
+      </h1>
+      <p
+        class="text-aib-muted dark:text-aib-muted-dark text-[17px] leading-normal"
+      >
+        Fotografia di campo indipendente per volontari di antincendio boschivo —
+        anteprima e timbro di data, ora, GPS e luogo su ogni scatto, con ID EXIF
+        per i controlli successivi.
       </p>
     </header>
 
-    <section class="space-y-4 text-gray-300">
+    <section :class="['space-y-4', bodyClass]">
       <p>
-        AIB Camera is a small mobile app for capturing stamped field photos when
-        you need a clear record — on a fire line, a flood response, or any
-        volunteer shift where connectivity and permissions are unreliable.
+        AIB Camera è una piccola app mobile per scattare foto di campo timbrate
+        quando serve un resoconto chiaro — su una linea di fuoco, in un
+        intervento alluvionale o in qualsiasi turno di volontariato in cui rete
+        e permessi sono inaffidabili.
       </p>
       <p>
-        It is
-        <strong class="font-medium text-white">not</strong> affiliated with,
-        endorsed by, or built by Protezione Civile, Vigili del Fuoco, Regione
-        Lombardia, or any other public institution. Built by a volunteer for
-        volunteer use.
+        <strong>Non</strong> è affiliata, approvata né realizzata da Protezione
+        Civile, Vigili del Fuoco, Regione Lombardia o altri enti pubblici.
+        Creata da un volontario per uso volontario.
       </p>
     </section>
 
-    <section class="space-y-4">
-      <h2 class="font-heading text-xl font-semibold text-white">
-        What it does
-      </h2>
-      <ul class="divide-y divide-gray-800 border-y border-gray-800">
+    <section>
+      <p
+        class="text-aib-muted dark:text-aib-muted-dark mb-2 text-[13px] font-medium"
+      >
+        Cosa fa
+      </p>
+      <ul
+        class="rounded-aib bg-aib-surface dark:bg-aib-surface-dark overflow-hidden"
+      >
         <li
           v-for="feature in features"
           :key="feature.title"
-          class="space-y-1 py-4"
+          class="border-aib-border dark:border-aib-border-dark border-b px-4 py-3.5 last:border-b-0"
         >
-          <p class="font-medium text-white">{{ feature.title }}</p>
-          <p class="text-gray-300">{{ feature.body }}</p>
+          <p
+            class="text-aib-fg dark:text-aib-fg-inverse text-[15px] font-semibold"
+          >
+            {{ feature.title }}
+          </p>
+          <p
+            class="text-aib-muted dark:text-aib-muted-dark mt-1 text-[13px] leading-snug"
+          >
+            {{ feature.body }}
+          </p>
         </li>
       </ul>
     </section>
 
-    <section class="space-y-3 text-gray-300">
-      <h2 class="font-heading text-xl font-semibold text-white">Privacy</h2>
-      <p>
-        Photos, settings, the capture log, and location stay on your device.
-        Read the full
-        <NuxtLink
-          to="/aib-camera/privacy"
-          class="hover:text-sm-blue text-white hover:underline focus-visible:underline"
-          >privacy policy</NuxtLink
+    <section class="space-y-2">
+      <h2 :class="h2Class">Guida operativa</h2>
+      <p :class="bodyClass">
+        Guida in italiano per l’uso sul campo e per chi valuta l’adozione:
+        permessi, fotocamera, timbro, galleria, registro scatti, limiti e
+        checklist pre-turno. Leggibile sul web e stampabile in PDF.
+        <NuxtLink to="/aib-camera/guida" :class="linkClass"
+          >Apri la guida</NuxtLink
+        >
+        oppure scarica
+        <a href="/docs/aib-camera-guida-operativa.pdf" :class="linkClass"
+          >guida-operativa.pdf</a
         >.
       </p>
     </section>
 
-    <section class="space-y-3 text-gray-300">
-      <h2 class="font-heading text-xl font-semibold text-white">Contact</h2>
-      <p>
-        Questions about the app:
-        <a
-          href="mailto:stefano@smnl.dev"
-          class="hover:text-sm-blue text-white hover:underline focus-visible:underline"
-          >stefano@smnl.dev</a
+    <section class="space-y-2">
+      <h2 :class="h2Class">Privacy</h2>
+      <p :class="bodyClass">
+        Foto, impostazioni, registro scatti e posizione restano sul dispositivo.
+        Leggi l’intera
+        <NuxtLink to="/aib-camera/privacy" :class="linkClass"
+          >informativa privacy</NuxtLink
+        >.
+      </p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 :class="h2Class">Contatti</h2>
+      <p :class="bodyClass">
+        Domande sull’app:
+        <a href="mailto:stefano@smnl.dev" :class="linkClass">stefano@smnl.dev</a
         >.
       </p>
     </section>

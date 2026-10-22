@@ -1,0 +1,654 @@
+<h1>AIB Camera — Guida operativa</h1>
+<table class="doc-meta">
+  <tbody>
+    <tr>
+      <td><strong>Versione documento</strong></td>
+      <td>22 ottobre 2026</td>
+    </tr>
+    <tr>
+      <td><strong>Versione app di riferimento</strong></td>
+      <td>1.0.0</td>
+    </tr>
+    <tr>
+      <td><strong>Lingua</strong></td>
+      <td>Italiano</td>
+    </tr>
+    <tr>
+      <td><strong>Sito</strong></td>
+      <td><a href="https://smnl.dev/aib-camera">smnl.dev/aib-camera</a></td>
+    </tr>
+    <tr>
+      <td><strong>Privacy</strong></td>
+      <td>
+        <a href="https://smnl.dev/aib-camera/privacy"
+          >smnl.dev/aib-camera/privacy</a
+        >
+      </td>
+    </tr>
+    <tr>
+      <td><strong>PDF</strong></td>
+      <td>
+        <a href="https://smnl.dev/docs/aib-camera-guida-operativa.pdf"
+          >smnl.dev/docs/aib-camera-guida-operativa.pdf</a
+        >
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h2>Indice</h2>
+<ol>
+  <li>Scopo della guida</li>
+  <li>Cos’è AIB Camera</li>
+  <li>Cosa fa e cosa non fa</li>
+  <li>Requisiti e installazione</li>
+  <li>Permessi</li>
+  <li>Schermate principali</li>
+  <li>Fotocamera</li>
+  <li>Aspetto del timbro</li>
+  <li>Galleria (scheda Foto)</li>
+  <li>Registro scatti</li>
+  <li>Metadati EXIF</li>
+  <li>Uso offline e luogo</li>
+  <li>Condivisione</li>
+  <li>Limiti e responsabilità</li>
+  <li>Checklist operativa</li>
+  <li>Contatti</li>
+</ol>
+<hr />
+<h2>1. Scopo della guida</h2>
+<p>
+  Questa guida spiega, in italiano, come funziona AIB Camera sul campo:
+  permessi, scatto, timbro sulle foto, galleria, registro scatti e uso senza
+  rete.
+</p>
+<p>
+  È pensata per chi usa l’app in attività di antincendio boschivo (AIB) e per
+  chi deve valutarne l’adozione operativa (squadre, coordinamenti, enti).
+  Descrive il comportamento reale della versione <strong>1.0.0</strong>.
+</p>
+<hr />
+<h2>2. Cos’è AIB Camera</h2>
+<p>
+  AIB Camera è un’applicazione mobile
+  <strong>indipendente e non ufficiale</strong> per la fotografia di campo
+  nell’antincendio boschivo. Consente di:
+</p>
+<ul>
+  <li>scattare foto con la fotocamera posteriore;</li>
+  <li>
+    stampare sul JPEG (timbro visivo) data, ora, posizione e — se disponibili —
+    luogo e altri dati di contesto;
+  </li>
+  <li>conservare le foto in una <strong>galleria interna all’app</strong>;</li>
+  <li>condividerle con il foglio di condivisione del sistema operativo;</li>
+  <li>
+    tenere un <strong>registro scatti</strong> locale con un identificativo per
+    ogni scatto.
+  </li>
+</ul>
+<p>
+  È progettata per restare utilizzabile
+  <strong>anche senza rete, senza GPS e senza accesso alla libreria Foto</strong
+  >: in emergenza deve sempre essere possibile scattare e condividere.
+</p>
+<aside class="callout callout-warn">
+  <p><strong>Avviso — natura non istituzionale</strong></p>
+  <p>
+    L’app <strong>non</strong> è realizzata, approvata né affiliata a Protezione
+    Civile, Vigili del Fuoco, Regione Lombardia o altri enti pubblici. Non
+    utilizza loghi, stemmi o sigle istituzionali. È uno strumento volontario;
+    l’eventuale uso in contesti ufficiali resta sotto la responsabilità
+    dell’organizzazione o dell’operatore che la adotta.
+  </p>
+</aside>
+<hr />
+<h2>3. Cosa fa e cosa non fa</h2>
+<h3>Cosa fa</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Funzione</th>
+      <th>Dettaglio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Timbro sul JPEG</td>
+      <td>
+        Data/ora (fuso <strong>Europe/Rome</strong>), coordinate, precisione,
+        altitudine, direzione, luogo e testo personalizzato, secondo le
+        impostazioni Aspetto
+      </td>
+    </tr>
+    <tr>
+      <td>Anteprima live</td>
+      <td>Sul mirino compare lo stesso blocco che verrà bruciato sulla foto</td>
+    </tr>
+    <tr>
+      <td>Scatto rapido</td>
+      <td>
+        Si possono scattare più foto di seguito; il timbro viene elaborato in
+        coda, una foto alla volta
+      </td>
+    </tr>
+    <tr>
+      <td>Galleria in-app</td>
+      <td>
+        Fonte di verità: le foto restano nell’app anche senza permesso alla
+        libreria Foto
+      </td>
+    </tr>
+    <tr>
+      <td>Album di sistema</td>
+      <td>
+        Copia nell’album «AIB Camera» se il permesso Foto è concesso (non
+        garantita)
+      </td>
+    </tr>
+    <tr>
+      <td>Registro scatti</td>
+      <td>
+        Elenco locale solo in aggiunta: ID, data/ora, coordinate (se presenti)
+      </td>
+    </tr>
+    <tr>
+      <td>EXIF</td>
+      <td>
+        Tentativo di scrittura di identificativo, GPS e commento macchina sul
+        JPEG (non sempre disponibile)
+      </td>
+    </tr>
+    <tr>
+      <td>Offline</td>
+      <td>
+        Scatto, timbro, galleria, registro e condivisione non richiedono rete
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3>Cosa non fa</h3>
+<ul>
+  <li>Non richiede account, login o sincronizzazione cloud.</li>
+  <li>Non invia foto, posizione o registro a server del sviluppatore.</li>
+  <li>
+    Non sostituisce procedure istituzionali di archiviazione, verbali o sistemi
+    di comando e controllo.
+  </li>
+  <li>
+    Non garantisce precisione GPS o completezza EXIF: dipendono da dispositivo,
+    permesso, segnale e build dell’app.
+  </li>
+  <li>
+    Non offre fotocamera anteriore, modalità flash «auto», né cambio lingua
+    in-app (interfaccia predefinita in italiano).
+  </li>
+</ul>
+<hr />
+<h2>4. Requisiti e installazione</h2>
+<ul>
+  <li>
+    Telefono <strong>iOS</strong> o <strong>Android</strong> con fotocamera
+    posteriore.
+  </li>
+  <li>
+    Si consiglia un <strong>dispositivo fisico</strong> (non solo simulatore o
+    emulatore).
+  </li>
+  <li>Orientamento supportato: <strong>verticale</strong> (portrait).</li>
+  <li>Lingua dell’interfaccia: <strong>italiano</strong> (predefinita).</li>
+  <li>
+    Fuso orario sul timbro: sempre <strong>Europe/Rome</strong>, indipendente
+    dal fuso impostato sul telefono.
+  </li>
+</ul>
+<p>
+  Informazioni aggiornate su disponibilità e distribuzione:
+  <a href="https://smnl.dev/aib-camera">smnl.dev/aib-camera</a>. Per adozioni
+  organizzate (distribuzione a più dispositivi, build dedicate), contattare lo
+  sviluppatore (vedi § 16).
+</p>
+<hr />
+<h2>5. Permessi</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Permesso</th>
+      <th>Obbligatorio?</th>
+      <th>A cosa serve</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Fotocamera</strong></td>
+      <td>Sì</td>
+      <td>
+        Scattare le foto. Senza questo permesso l’app non può acquisire
+        immagini.
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Posizione (in uso)</strong></td>
+      <td>No</td>
+      <td>
+        Coordinate, precisione, altitudine, direzione e luogo sul timbro e, se
+        possibile, nell’EXIF.
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Libreria Foto / Media</strong></td>
+      <td>No</td>
+      <td>
+        Copiare le foto nell’album di sistema «AIB Camera» e rimuoverle da lì
+        quando si eliminano dall’app.
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>
+  <strong>Senza GPS</strong> è comunque possibile scattare. Sul timbro restano
+  data/ora e l’eventuale testo personalizzato; le righe geo mostrano
+  <em>Coordinate non disponibili</em> / <em>Luogo non disponibile</em>.
+</p>
+<p>
+  <strong>Senza libreria Foto</strong> le immagini restano nella
+  <strong>galleria dell’app</strong>, che è la fonte di verità.
+</p>
+<p>
+  I permessi si possono rivedere da <strong>Impostazioni → Permessi</strong> e
+  dalle Impostazioni di sistema del telefono.
+</p>
+<hr />
+<h2>6. Schermate principali</h2>
+<p>Tre schede nella barra inferiore:</p>
+<ol>
+  <li><strong>Fotocamera</strong> — scatto e anteprima del timbro</li>
+  <li><strong>Foto</strong> — galleria in-app</li>
+  <li>
+    <strong>Impostazioni</strong> — hub con <strong>Permessi</strong>,
+    <strong>Aspetto</strong> e <strong>Informazioni</strong> (versione app,
+    registro scatti, informativa privacy)
+  </li>
+</ol>
+<hr />
+<h2>7. Fotocamera</h2>
+<h3>7.1 Anteprima del timbro (live)</h3>
+<p>
+  Sul mirino compare lo stesso blocco che verrà <strong>bruciato</strong> sul
+  JPEG:
+</p>
+<ul>
+  <li>
+    in alto: data/ora, coordinate, meta (precisione / altitudine / direzione),
+    luogo — secondo gli interruttori in Aspetto;
+  </li>
+  <li>in basso: testo personalizzato, se compilato.</li>
+</ul>
+<p>
+  Carattere, dimensione del testo e opacità dello sfondo seguono
+  <strong>Impostazioni → Aspetto</strong>. L’anteprima coincide con ciò che
+  finirà sulla foto.
+</p>
+<h3>7.2 Controlli</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Controllo</th>
+      <th>Comportamento</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Pulsante di scatto</strong></td>
+      <td>Cerchio bianco al centro: acquisisce la foto.</td>
+    </tr>
+    <tr>
+      <td><strong>Anteprima ultimo scatto</strong></td>
+      <td>
+        Quadratino a sinistra: apre il dettaglio dell’ultima foto pronta. Se
+        l’elaborazione è ancora in corso compare un indicatore di caricamento.
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Flash</strong></td>
+      <td>
+        Icona fulmine in basso a destra: solo
+        <strong>acceso / spento</strong> (non c’è modalità automatica). È
+        possibile anche <strong>toccare due volte</strong> il mirino per
+        attivarlo o disattivarlo.
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Aspetto</strong></td>
+      <td>
+        Icona ingranaggio a destra del flash: apre direttamente le impostazioni
+        del timbro.
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Zoom</strong></td>
+      <td>
+        Pulsanti sul mirino (es. 0,5× / 1× / 2× se disponibili) e gesto a
+        <strong>due dita</strong>; durante il gesto compare il fattore di zoom.
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Scorrimento</strong></td>
+      <td>
+        Scorrere verso <strong>sinistra</strong> dal mirino per aprire la
+        galleria.
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>La fotocamera usata è solo quella <strong>posteriore</strong>.</p>
+<h3>7.3 Scatto e elaborazione in background</h3>
+<p>Dopo lo scatto:</p>
+<ol>
+  <li>
+    Il JPEG grezzo viene acquisito subito; il pulsante di scatto resta
+    disponibile per altri scatti.
+  </li>
+  <li>
+    In coda, <strong>una foto alla volta</strong>, l’app: applica il timbro,
+    scrive l’EXIF se possibile, salva nella galleria in-app, aggiorna il
+    registro scatti e prova a copiare nell’album «AIB Camera».
+  </li>
+</ol>
+<p>
+  È possibile scattare in sequenza senza attendere la fine del timbro:
+  l’indicatore sull’anteprima a sinistra segnala che l’elaborazione è ancora in
+  corso.
+</p>
+<p>
+  Per il timbro l’app preferisce la
+  <strong>posizione GPS già disponibile</strong> sul mirino, così lo scatto non
+  resta bloccato in attesa di un segnale più preciso.
+</p>
+<hr />
+<h2>8. Aspetto del timbro</h2>
+<p>
+  Percorso: <strong>Impostazioni → Aspetto</strong> (oppure l’ingranaggio sulla
+  fotocamera).
+</p>
+<h3>8.1 Campi visibili (interruttori)</h3>
+<ul>
+  <li>Data e ora</li>
+  <li>Coordinate</li>
+  <li>Luogo (etichetta da geocodifica inversa o da cache locale)</li>
+  <li>Precisione GPS</li>
+  <li>Altitudine</li>
+  <li>Direzione (bussola)</li>
+</ul>
+<h3>8.2 Testo personalizzato</h3>
+<p>
+  Fino a <strong>4 righe</strong> libere (es. nome squadra o turno). Vuoto di
+  default: non compare alcun blocco in basso. Segnaposto suggerito in app:
+  <em>Squadra Nord · Turno A</em>.
+</p>
+<h3>8.3 Formato data</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Opzione</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Completo</strong></td>
+      <td>Giorno della settimana e data estesa</td>
+    </tr>
+    <tr>
+      <td><strong>Breve</strong></td>
+      <td>Data e ora compatte (<strong>predefinito</strong>)</td>
+    </tr>
+    <tr>
+      <td><strong>ISO</strong></td>
+      <td>Formato ISO con fuso Europe/Rome</td>
+    </tr>
+  </tbody>
+</table>
+<h3>8.4 Dimensione testo</h3>
+<p>Piccolo / <strong>Medio</strong> (predefinito) / Grande.</p>
+<h3>8.5 Opacità dello sfondo del timbro</h3>
+<p>
+  Da <strong>0%</strong> (solo testo; con ombra per la leggibilità) a
+  <strong>100%</strong>, a step del 25%. Predefinito: <strong>0%</strong>.
+</p>
+<p>
+  Le modifiche si applicano subito all’anteprima live e agli scatti successivi.
+  Le foto già scattate non vengono modificate.
+</p>
+<hr />
+<h2>9. Galleria (scheda Foto)</h2>
+<ul>
+  <li>
+    Le foto sono raggruppate per giorno (fuso Europe/Rome), con intestazioni
+    tipo <em>Oggi</em> / <em>Ieri</em>.
+  </li>
+  <li>
+    Toccare una miniatura per il dettaglio (<strong>Condividi</strong> /
+    <strong>Elimina</strong>).
+  </li>
+  <li>
+    Modalità selezione: pulsante <strong>Seleziona</strong> oppure pressione
+    prolungata su una miniatura; quindi condivisione o eliminazione multipla.
+  </li>
+</ul>
+<h3>Galleria in-app e album di sistema</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Confronto</th>
+      <th>Galleria in-app</th>
+      <th>Album «AIB Camera»</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Ruolo</td>
+      <td><strong>Fonte di verità</strong></td>
+      <td>Copia nella libreria del telefono (se il permesso lo consente)</td>
+    </tr>
+    <tr>
+      <td>Serve il permesso Foto?</td>
+      <td>No</td>
+      <td>Sì, se si vuole la copia</td>
+    </tr>
+    <tr>
+      <td>Eliminazione dall’app</td>
+      <td>
+        Rimuove il file locale e, se presente, anche la copia in Libreria Foto
+      </td>
+      <td>—</td>
+    </tr>
+  </tbody>
+</table>
+<aside class="callout">
+  <p>
+    <strong>Registro scatti:</strong> eliminare una foto dalla galleria
+    <strong>non</strong> cancella la riga corrispondente nel registro scatti.
+  </p>
+</aside>
+<hr />
+<h2>10. Registro scatti</h2>
+<p>
+  Accesso: <strong>Impostazioni → Informazioni → Apri registro scatti</strong>.
+</p>
+<ul>
+  <li>
+    Ogni scatto riuscito aggiunge una riga con: <strong>ID</strong> (UUID),
+    data/ora, coordinate se disponibili (altrimenti <em>Nessun GPS</em>).
+  </li>
+  <li>
+    Il registro è <strong>solo in aggiunta</strong> (non si cancellano voci
+    dall’app): le righe restano sul dispositivo anche dopo le eliminazioni dalla
+    galleria.
+  </li>
+  <li>
+    Toccare una riga per <strong>copiare l’ID</strong> e confrontarlo con l’EXIF
+    del JPEG condiviso (<code>ImageUniqueID</code> / commento JSON), quando
+    l’EXIF è stato scritto.
+  </li>
+</ul>
+<p>Il registro <strong>non</strong> viene inviato a nessun server.</p>
+<hr />
+<h2>11. Metadati EXIF</h2>
+<p>Dopo il timbro l’app prova a scrivere sul JPEG, tra l’altro:</p>
+<ul>
+  <li><code>Software</code> / <code>Artist</code></li>
+  <li><code>ImageUniqueID</code> (UUID dello scatto)</li>
+  <li>date/ora di ripresa (Europe/Rome)</li>
+  <li>tag GPS, se la posizione è disponibile</li>
+  <li>
+    <code>ImageDescription</code> e <code>UserComment</code> (JSON per uso
+    macchina)
+  </li>
+</ul>
+<aside class="callout callout-warn">
+  <p>
+    <strong>Attenzione — EXIF non garantito:</strong> se il modulo nativo non è
+    disponibile sulla build installata,
+    <strong>foto timbrata, galleria e registro restano validi</strong>. Manca
+    solo la scrittura dei metadati nel file. Non trattare l’EXIF come prova
+    legale automatica: verificare sempre anche il timbro visivo e il registro.
+  </p>
+</aside>
+<hr />
+<h2>12. Uso offline e luogo</h2>
+<ul>
+  <li>
+    Scatto, timbro, galleria, registro e condivisione
+    <strong>non richiedono rete</strong>.
+  </li>
+  <li>
+    La rete serve solo per la <strong>geocodifica inversa</strong> (coordinate →
+    etichetta di luogo), se il campo Luogo è attivo e c’è connessione.
+  </li>
+  <li>
+    Le etichette recenti restano in <strong>cache locale</strong> e possono
+    essere riusate offline nelle vicinanze (raggio circa
+    <strong>2,5 km</strong>).
+  </li>
+</ul>
+<p>
+  Senza rete o senza GPS, il timbro mostra i testi di fallback (<em
+    >Coordinate non disponibili</em
+  >, <em>Luogo non disponibile</em>) senza bloccare lo scatto.
+</p>
+<hr />
+<h2>13. Condivisione</h2>
+<p>
+  Dal dettaglio o dalla selezione in galleria si apre il
+  <strong>foglio di condivisione di sistema</strong> (Messaggi, Mail, WhatsApp,
+  File, ecc.).
+</p>
+<p>
+  Il file condiviso è il JPEG già timbrato, con EXIF se è stato scritto. Dopo
+  l’invio, trattamento e conservazione dipendono dall’app o dal servizio scelto
+  dall’operatore (fuori dal controllo di AIB Camera).
+</p>
+<hr />
+<h2>14. Limiti e responsabilità</h2>
+<p>Chi adotta o usa l’app deve tenere presenti questi punti:</p>
+<ol>
+  <li>
+    <strong>Strumento di supporto</strong>, non sostituto di procedure ufficiali
+    di documentazione o archiviazione.
+  </li>
+  <li>
+    <strong>Precisione della posizione</strong> dipende dal dispositivo, dal
+    permesso Posizione e dalle condizioni di segnale; l’app non corregge né
+    certifica il GPS.
+  </li>
+  <li>
+    <strong>Data e ora sul timbro</strong> usano sempre Europe/Rome; verificare
+    che l’orologio del telefono sia impostato correttamente.
+  </li>
+  <li>
+    <strong>Album «AIB Camera»</strong> è una copia di comodo: sul dispositivo
+    la copia affidabile è la <strong>galleria in-app</strong>; a livello
+    organizzativo vale ciò che viene esportato o condiviso secondo le procedure
+    interne.
+  </li>
+  <li>
+    <strong>Privacy:</strong> foto, impostazioni e registro restano sul
+    dispositivo; non c’è sincronizzazione cloud gestita dallo sviluppatore. La
+    condivisione verso terzi è scelta dell’operatore.
+  </li>
+  <li>
+    <strong>Aggiornamenti:</strong> questa guida si riferisce alla versione app
+    <strong>1.0.0</strong>; in caso di release successive verificare eventuali
+    differenze su <a href="https://smnl.dev/aib-camera">smnl.dev/aib-camera</a>.
+  </li>
+</ol>
+<hr />
+<h2>15. Checklist operativa</h2>
+<ol>
+  <li>
+    Concedere almeno il permesso <strong>Fotocamera</strong>; Posizione e Foto
+    quando possibile e utile al turno.
+  </li>
+  <li>
+    Prima del turno, controllare <strong>Aspetto</strong> (campi attivi, testo
+    personalizzato, formato data, dimensione, opacità).
+  </li>
+  <li>Verificare sull’<strong>anteprima live</strong> cosa finirà sul JPEG.</li>
+  <li>
+    In sequenza di scatti, non attendere l’indicatore di elaborazione: si può
+    continuare a fotografare.
+  </li>
+  <li>
+    Se serve la copia in Libreria Foto, verificare che l’album
+    <strong>AIB Camera</strong> si aggiorni (permesso Foto concesso).
+  </li>
+  <li>
+    Per rintracciare uno scatto dopo l’eliminazione della foto, usare il
+    <strong>registro scatti</strong> e l’ID.
+  </li>
+  <li>
+    Prima di condividere all’esterno, assicurarsi che contenuto e destinazione
+    rispettino le regole della propria organizzazione.
+  </li>
+</ol>
+<hr />
+<h2>16. Contatti</h2>
+<table class="doc-meta">
+  <tbody>
+    <tr>
+      <td><strong>Domande sull’app</strong></td>
+      <td><a href="mailto:stefano@smnl.dev">stefano@smnl.dev</a></td>
+    </tr>
+    <tr>
+      <td><strong>Informativa privacy</strong></td>
+      <td>
+        <a href="https://smnl.dev/aib-camera/privacy"
+          >smnl.dev/aib-camera/privacy</a
+        >
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Questa guida (web)</strong></td>
+      <td>
+        <a href="https://smnl.dev/aib-camera/guida"
+          >smnl.dev/aib-camera/guida</a
+        >
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Questa guida (PDF)</strong></td>
+      <td>
+        <a href="https://smnl.dev/docs/aib-camera-guida-operativa.pdf"
+          >smnl.dev/docs/aib-camera-guida-operativa.pdf</a
+        >
+      </td>
+    </tr>
+  </tbody>
+</table>
+<hr />
+<p>
+  <em
+    >Documento non ufficiale · Versione app di riferimento 1.0.0 · Stampabile ·
+    © Stefano Monolo — smnl.dev</em
+  >
+</p>

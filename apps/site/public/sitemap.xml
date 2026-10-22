@@ -11,4 +11,12 @@
     <loc>https://smnl.dev/aib-camera/privacy</loc>
     <priority>0.6</priority>
   </url>
+  <url>
+    <loc>https://smnl.dev/aib-camera/guida</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://smnl.dev/docs/aib-camera-guida-operativa.pdf</loc>
+    <priority>0.6</priority>
+  </url>
 </urlset>
