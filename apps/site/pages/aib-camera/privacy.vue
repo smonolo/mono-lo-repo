@@ -53,6 +53,12 @@ const dataRows = [
     why: 'Identificare le foto scattate con questa app',
   },
   {
+    data: 'ID installazione (UUID)',
+    where:
+      'Sul dispositivo (archivio locale); Impostazioni → Informazioni (tocca per copiare); esportazione CSV',
+    why: 'Collegare i CSV del registro scatti a una specifica installazione',
+  },
+  {
     data: 'Testo personalizzato del timbro',
     where:
       'Sul dispositivo (impostazioni); può comparire in EXIF description / comment',
@@ -199,8 +205,17 @@ const codeClass =
         <strong>registro scatti</strong> locale (ID, data/ora e coordinate se
         disponibili). Il registro resta sul dispositivo anche se elimini la foto
         dalla galleria in-app o dall’album di sistema. Non viene caricato
-        online. Puoi aprirlo da Impostazioni e copiare un ID per confrontarlo
-        con l’EXIF di un JPEG condiviso.
+        online. Puoi aprirlo da Impostazioni, copiare un ID per confrontarlo
+        con l’EXIF di un JPEG condiviso, oppure esportare tutto in CSV tramite
+        il foglio di condivisione di sistema. Ogni installazione dell’app ha
+        anche un <strong>ID installazione</strong> (UUID) locale, visibile in
+        Impostazioni → Informazioni. Lì puoi toccare <strong>Versione</strong>
+        o <strong>ID installazione</strong> per copiare il valore. L’ID
+        installazione è scritto nella colonna
+        <code :class="codeClass">install_id</code> dei CSV, così i registri di
+        più dispositivi restano distinguibili. Reinstallare l’app genera un
+        nuovo ID. La stringa di versione è solo l’etichetta di build dell’app
+        (non un identificativo di tracciamento).
       </p>
 
       <h3 :class="h3Class">Metadati EXIF</h3>
@@ -216,7 +231,7 @@ const codeClass =
 
       <p :class="bodyClass">
         Lo sviluppatore <strong>non</strong> gestisce un backend che riceve
-        foto, posizione, impostazioni o ID di scatto.
+        foto, posizione, impostazioni, ID di scatto o ID installazione.
       </p>
     </section>
 
@@ -242,9 +257,9 @@ const codeClass =
       <h2 :class="h2Class">Condivisione</h2>
       <p :class="bodyClass">
         Se usi il foglio di condivisione di sistema (WhatsApp, Mail, File,
-        ecc.), la foto condivisa (compreso l’eventuale EXIF scritto nel file)
-        lascia l’app secondo le regole dell’app o del servizio che scegli. Ciò è
-        fuori dal controllo di AIB Camera.
+        ecc.), la foto condivisa (compreso l’eventuale EXIF scritto nel file) o
+        un CSV del registro scatti lascia l’app secondo le regole dell’app o del
+        servizio che scegli. Ciò è fuori dal controllo di AIB Camera.
       </p>
     </section>
 

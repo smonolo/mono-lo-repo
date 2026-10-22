@@ -75,7 +75,8 @@ L’app **non** è realizzata, approvata né affiliata a Protezione Civile, Vigi
 | Scatto rapido    | Si possono scattare più foto di seguito; il timbro viene elaborato in coda, una foto alla volta                                               |
 | Galleria in-app  | Fonte di verità: le foto restano nell’app anche senza permesso alla libreria Foto                                                             |
 | Album di sistema | Copia nell’album «AIB Camera» se il permesso Foto è concesso (non garantita)                                                                  |
-| Registro scatti  | Elenco locale solo in aggiunta: ID, data/ora, coordinate (se presenti)                                                                        |
+| Registro scatti  | Elenco locale solo in aggiunta: ID scatto, data/ora, coordinate; esportabile in CSV con `install_id`                                          |
+| ID installazione | UUID stabile per installazione (Impostazioni → Informazioni, tocca per copiare); coincide con la colonna CSV                                  |
 | EXIF             | Tentativo di scrittura di identificativo, GPS e commento macchina sul JPEG (non sempre disponibile)                                           |
 | Offline          | Scatto, timbro, galleria, registro e condivisione non richiedono rete                                                                         |
 
@@ -123,7 +124,7 @@ Tre schede nella barra inferiore:
 
 1. **Fotocamera** — scatto e anteprima del timbro
 2. **Foto** — galleria in-app
-3. **Impostazioni** — hub con **Permessi**, **Aspetto** e **Informazioni** (versione app, registro scatti, informativa privacy)
+3. **Impostazioni** — hub con **Permessi**, **Aspetto** e **Informazioni** (versione e ID installazione, entrambi copiabili al tocco; registro scatti; informativa privacy)
 
 ---
 
@@ -230,8 +231,11 @@ Accesso: **Impostazioni → Informazioni → Apri registro scatti**.
 - Ogni scatto riuscito aggiunge una riga con: **ID** (UUID), data/ora, coordinate se disponibili (altrimenti _Nessun GPS_).
 - Il registro è **solo in aggiunta** (non si cancellano voci dall’app): le righe restano sul dispositivo anche dopo le eliminazioni dalla galleria.
 - Toccare una riga per **copiare l’ID** e confrontarlo con l’EXIF del JPEG condiviso (`ImageUniqueID` / commento JSON), quando l’EXIF è stato scritto.
+- Pulsante **Esporta CSV** (in alto): genera un file locale con colonne `install_id`, `id`, `taken_at`, `latitude`, `longitude` e lo apre nel foglio di condivisione di sistema (Mail, File, AirDrop, …). Nessun upload automatico.
+- In **Impostazioni → Informazioni**, tocca **Versione** o **ID installazione** per copiare il valore negli appunti.
+- **ID installazione:** UUID creato alla prima apertura. È lo stesso valore della colonna `install_id` nei CSV; reinstallando l’app se ne genera uno nuovo.
 
-Il registro **non** viene inviato a nessun server.
+Il registro **non** viene inviato a nessun server; l’esportazione CSV lascia il dispositivo solo se scegli tu un’app o un servizio di condivisione.
 
 ---
 
@@ -291,7 +295,7 @@ Chi adotta o usa l’app deve tenere presenti questi punti:
 3. Verificare sull’**anteprima live** cosa finirà sul JPEG.
 4. In sequenza di scatti, non attendere l’indicatore di elaborazione: si può continuare a fotografare.
 5. Se serve la copia in Libreria Foto, verificare che l’album **AIB Camera** si aggiorni (permesso Foto concesso).
-6. Per rintracciare uno scatto dopo l’eliminazione della foto, usare il **registro scatti** e l’ID.
+6. Per rintracciare uno scatto dopo l’eliminazione della foto, usare il **registro scatti** e l’ID; per collegare CSV di più dispositivi, confrontare l’**ID installazione** in Informazioni con la colonna `install_id`.
 7. Prima di condividere all’esterno, assicurarsi che contenuto e destinazione rispettino le regole della propria organizzazione.
 
 ---

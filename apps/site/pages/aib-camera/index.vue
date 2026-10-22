@@ -47,7 +47,7 @@ const features = [
   },
   {
     title: 'Registro scatti',
-    body: 'Ogni scatto ha un ID locale, data e coordinate, consultabili da Impostazioni — anche dopo aver eliminato la foto dalla galleria.',
+    body: 'Ogni scatto ha un ID locale, data e coordinate. Da Impostazioni → Informazioni vedi versione e ID installazione (tocca per copiare) ed esporti il registro in CSV con install_id — anche dopo aver eliminato la foto dalla galleria.',
   },
   {
     title: 'Funziona offline',
