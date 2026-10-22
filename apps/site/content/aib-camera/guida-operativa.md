@@ -22,7 +22,7 @@
 5. Permessi
 6. Schermate principali
 7. Fotocamera
-8. Aspetto del timbro
+8. Configurazione del timbro
 9. Galleria (scheda Foto)
 10. Registro scatti
 11. Metadati EXIF
@@ -68,17 +68,17 @@ L’app **non** è realizzata, approvata né affiliata a Protezione Civile, Vigi
 
 ### Cosa fa
 
-| Funzione         | Dettaglio                                                                                                                                     |
-| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| Timbro sul JPEG  | Data/ora (fuso **Europe/Rome**), coordinate, precisione, altitudine, direzione, luogo e testo personalizzato, secondo le impostazioni Aspetto |
-| Anteprima live   | Sul mirino compare lo stesso blocco che verrà bruciato sulla foto                                                                             |
-| Scatto rapido    | Si possono scattare più foto di seguito; il timbro viene elaborato in coda, una foto alla volta                                               |
-| Galleria in-app  | Fonte di verità: le foto restano nell’app anche senza permesso alla libreria Foto                                                             |
-| Album di sistema | Copia nell’album «AIB Camera» se il permesso Foto è concesso (non garantita)                                                                  |
-| Registro scatti  | Elenco locale solo in aggiunta: ID scatto, data/ora, coordinate; esportabile in CSV con `install_id`                                          |
-| ID installazione | UUID stabile per installazione (Impostazioni → Informazioni, tocca per copiare); coincide con la colonna CSV                                  |
-| EXIF             | Tentativo di scrittura di identificativo, GPS e commento macchina sul JPEG (non sempre disponibile)                                           |
-| Offline          | Scatto, timbro, galleria, registro e condivisione non richiedono rete                                                                         |
+| Funzione         | Dettaglio                                                                                                                                          |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Timbro sul JPEG  | Data/ora (fuso **Europe/Rome**), coordinate, precisione, altitudine, direzione, luogo e testo personalizzato, secondo la Configurazione del timbro |
+| Anteprima live   | Sul mirino compare lo stesso blocco che verrà bruciato sulla foto                                                                                  |
+| Scatto rapido    | Si possono scattare più foto di seguito; il timbro viene elaborato in coda, una foto alla volta                                                    |
+| Galleria in-app  | Fonte di verità: le foto restano nell’app anche senza permesso alla libreria Foto                                                                  |
+| Album di sistema | Copia nell’album «AIB Camera» se il permesso Foto è concesso (non garantita)                                                                       |
+| Registro scatti  | Elenco locale solo in aggiunta: ID scatto, data/ora, coordinate; esportabile in CSV con `install_id`                                               |
+| ID installazione | UUID stabile per installazione (Impostazioni, tocca per copiare); coincide con la colonna CSV                                                      |
+| EXIF             | Tentativo di scrittura di identificativo, GPS e commento macchina sul JPEG (non sempre disponibile)                                                |
+| Offline          | Scatto, timbro, galleria, registro e condivisione non richiedono rete                                                                              |
 
 ### Cosa non fa
 
@@ -114,7 +114,7 @@ Informazioni aggiornate su disponibilità e distribuzione: [smnl.dev/aib-camera]
 
 **Senza libreria Foto** le immagini restano nella **galleria dell’app**, che è la fonte di verità.
 
-I permessi si possono rivedere da **Impostazioni → Permessi** e dalle Impostazioni di sistema del telefono.
+I permessi si possono rivedere da **Impostazioni** e dalle Impostazioni di sistema del telefono.
 
 ---
 
@@ -124,35 +124,39 @@ Tre schede nella barra inferiore:
 
 1. **Fotocamera** — scatto e anteprima del timbro
 2. **Foto** — galleria in-app
-3. **Impostazioni** — hub con **Permessi**, **Aspetto** e **Informazioni** (versione e ID installazione, entrambi copiabili al tocco; registro scatti; informativa privacy)
+3. **Impostazioni** — permessi, versione e ID installazione (tocca per copiare), registro scatti, link a questa guida e informativa privacy. La configurazione del timbro si apre dall’icona in alto a destra sulla fotocamera.
 
 ---
 
 ## 7. Fotocamera
 
-### 7.1 Anteprima del timbro (live)
+### 7.1 Mirino e bande nere
+
+L’anteprima live ha **bande nere** sopra e sotto. In alto: **flash** a sinistra, **configurazione timbro** a destra. In basso: scatto al centro, anteprima ultimo scatto a sinistra, **zoom** a destra. Oltre 2× il pulsante tele mostra il fattore live (3×, 4×, …).
+
+### 7.2 Anteprima del timbro (live)
 
 Sul mirino compare lo stesso blocco che verrà **bruciato** sul JPEG:
 
-- in alto: data/ora, coordinate, meta (precisione / altitudine / direzione), luogo — secondo gli interruttori in Aspetto;
+- in alto: data/ora, coordinate, meta (precisione / altitudine / direzione), luogo — secondo gli interruttori in Configurazione;
 - in basso: testo personalizzato, se compilato.
 
-Carattere, dimensione del testo e opacità dello sfondo seguono **Impostazioni → Aspetto**. L’anteprima coincide con ciò che finirà sulla foto.
+Carattere, dimensione del testo e opacità dello sfondo seguono la **Configurazione** (icona in alto a destra sulla fotocamera). L’anteprima coincide con ciò che finirà sulla foto.
 
-### 7.2 Controlli
+### 7.3 Controlli
 
-| Controllo                   | Comportamento                                                                                                                                                            |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Pulsante di scatto**      | Cerchio bianco al centro: acquisisce la foto.                                                                                                                            |
-| **Anteprima ultimo scatto** | Quadratino a sinistra: apre il dettaglio dell’ultima foto pronta. Se l’elaborazione è ancora in corso compare un indicatore di caricamento.                              |
-| **Flash**                   | Icona fulmine in basso a destra: solo **acceso / spento** (non c’è modalità automatica). È possibile anche **toccare due volte** il mirino per attivarlo o disattivarlo. |
-| **Aspetto**                 | Icona ingranaggio a destra del flash: apre direttamente le impostazioni del timbro.                                                                                      |
-| **Zoom**                    | Pulsanti sul mirino (es. 0,5× / 1× / 2× se disponibili) e gesto a **due dita**; durante il gesto compare il fattore di zoom.                                             |
-| **Scorrimento**             | Scorrere verso **sinistra** dal mirino per aprire la galleria.                                                                                                           |
+| Controllo                   | Comportamento                                                                                                                                                                              |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Pulsante di scatto**      | Cerchio bianco al centro della banda inferiore: acquisisce la foto.                                                                                                                        |
+| **Anteprima ultimo scatto** | Quadratino a sinistra: apre il dettaglio dell’ultima foto pronta. Se l’elaborazione è ancora in corso compare un indicatore di caricamento.                                                |
+| **Flash**                   | Icona fulmine in **alto a sinistra**: solo **acceso / spento** (non c’è modalità automatica).                                                                                              |
+| **Configurazione**          | Icona cursori in **alto a destra**: apre la configurazione del timbro.                                                                                                                     |
+| **Zoom**                    | Pulsanti in **basso a destra** (es. 0,5× / 1× / 2× se disponibili) e gesto a **due dita**; oltre 2× il pulsante attivo mostra 3×, 4×, …. **Doppio tocco** sul mirino riporta lo zoom a 1×. |
+| **Scorrimento**             | Scorrere verso **sinistra** dal mirino per aprire la galleria.                                                                                                                             |
 
 La fotocamera usata è solo quella **posteriore**.
 
-### 7.3 Scatto e elaborazione in background
+### 7.4 Scatto e elaborazione in background
 
 Dopo lo scatto:
 
@@ -165,9 +169,9 @@ Per il timbro l’app preferisce la **posizione GPS già disponibile** sul mirin
 
 ---
 
-## 8. Aspetto del timbro
+## 8. Configurazione del timbro
 
-Percorso: **Impostazioni → Aspetto** (oppure l’ingranaggio sulla fotocamera).
+Percorso: icona cursori sulla **fotocamera** (Configurazione).
 
 ### 8.1 Campi visibili (interruttori)
 
@@ -226,13 +230,13 @@ Le modifiche si applicano subito all’anteprima live e agli scatti successivi. 
 
 ## 10. Registro scatti
 
-Accesso: **Impostazioni → Informazioni → Apri registro scatti**.
+Accesso: **Impostazioni → Registro scatti**.
 
 - Ogni scatto riuscito aggiunge una riga con: **ID** (UUID), data/ora, coordinate se disponibili (altrimenti _Nessun GPS_).
 - Il registro è **solo in aggiunta** (non si cancellano voci dall’app): le righe restano sul dispositivo anche dopo le eliminazioni dalla galleria.
 - Toccare una riga per **copiare l’ID** e confrontarlo con l’EXIF del JPEG condiviso (`ImageUniqueID` / commento JSON), quando l’EXIF è stato scritto.
 - Pulsante **Esporta CSV** (in alto): genera un file locale con colonne `install_id`, `id`, `taken_at`, `latitude`, `longitude` e lo apre nel foglio di condivisione di sistema (Mail, File, AirDrop, …). Nessun upload automatico.
-- In **Impostazioni → Informazioni**, tocca **Versione** o **ID installazione** per copiare il valore negli appunti.
+- In **Impostazioni**, tocca **Versione** o **ID installazione** per copiare il valore negli appunti.
 - **ID installazione:** UUID creato alla prima apertura. È lo stesso valore della colonna `install_id` nei CSV; reinstallando l’app se ne genera uno nuovo.
 
 Il registro **non** viene inviato a nessun server; l’esportazione CSV lascia il dispositivo solo se scegli tu un’app o un servizio di condivisione.
@@ -265,6 +269,8 @@ Dopo il timbro l’app prova a scrivere sul JPEG, tra l’altro:
 
 Senza rete o senza GPS, il timbro mostra i testi di fallback (_Coordinate non disponibili_, _Luogo non disponibile_) senza bloccare lo scatto.
 
+Su dispositivi più vecchi o con moduli nativi limitati, l’app **degrada in silenzio**: se il timbro Skia fallisce resta il JPEG non timbrato in galleria; senza EXIF nativo restano foto + galleria + registro; senza permesso Foto resta solo la galleria in-app; font e vibrazione usano fallback di sistema. Lo scatto non deve bloccarsi per questi dettagli.
+
 ---
 
 ## 13. Condivisione
@@ -291,11 +297,11 @@ Chi adotta o usa l’app deve tenere presenti questi punti:
 ## 15. Checklist operativa
 
 1. Concedere almeno il permesso **Fotocamera**; Posizione e Foto quando possibile e utile al turno.
-2. Prima del turno, controllare **Aspetto** (campi attivi, testo personalizzato, formato data, dimensione, opacità).
+2. Prima del turno, controllare **Configurazione** (campi attivi, testo personalizzato, formato data, dimensione, opacità).
 3. Verificare sull’**anteprima live** cosa finirà sul JPEG.
 4. In sequenza di scatti, non attendere l’indicatore di elaborazione: si può continuare a fotografare.
 5. Se serve la copia in Libreria Foto, verificare che l’album **AIB Camera** si aggiorni (permesso Foto concesso).
-6. Per rintracciare uno scatto dopo l’eliminazione della foto, usare il **registro scatti** e l’ID; per collegare CSV di più dispositivi, confrontare l’**ID installazione** in Informazioni con la colonna `install_id`.
+6. Per rintracciare uno scatto dopo l’eliminazione della foto, usare il **registro scatti** e l’ID; per collegare CSV di più dispositivi, confrontare l’**ID installazione** in Impostazioni con la colonna `install_id`.
 7. Prima di condividere all’esterno, assicurarsi che contenuto e destinazione rispettino le regole della propria organizzazione.
 
 ---

@@ -26,8 +26,8 @@ useHead({
 
 const features = [
   {
-    title: 'Anteprima live del timbro',
-    body: 'Sul mirino compare lo stesso timbro che verrà bruciato sulla foto — campi, dimensione testo e opacità dalle impostazioni Aspetto.',
+    title: 'Mirino 4:3 e timbro live',
+    body: 'Mirino con bande nere: flash e configurazione timbro in alto, zoom e scatto in basso. Sul mirino compare lo stesso timbro che verrà bruciato sulla foto.',
   },
   {
     title: 'Timbro sul JPEG',
@@ -47,11 +47,11 @@ const features = [
   },
   {
     title: 'Registro scatti',
-    body: 'Ogni scatto ha un ID locale, data e coordinate. Da Impostazioni → Informazioni vedi versione e ID installazione (tocca per copiare) ed esporti il registro in CSV con install_id — anche dopo aver eliminato la foto dalla galleria.',
+    body: 'Ogni scatto ha un ID locale, data e coordinate. Da Impostazioni vedi versione e ID installazione (tocca per copiare) ed esporti il registro in CSV con install_id — anche dopo aver eliminato la foto dalla galleria.',
   },
   {
     title: 'Funziona offline',
-    body: 'Scatto, timbro, galleria, registro scatti e condivisione senza rete. GPS e etichette di luogo sono opzionali.',
+    body: 'Scatto, timbro, galleria, registro scatti e condivisione senza rete. GPS e etichette di luogo sono opzionali. Su dispositivi limitati (niente EXIF, album Foto, font o vibrazione) l’app continua comunque a scattare e salvare.',
   },
   {
     title: 'Tutto sul dispositivo',

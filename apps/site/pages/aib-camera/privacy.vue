@@ -55,7 +55,7 @@ const dataRows = [
   {
     data: 'ID installazione (UUID)',
     where:
-      'Sul dispositivo (archivio locale); Impostazioni → Informazioni (tocca per copiare); esportazione CSV',
+      'Sul dispositivo (archivio locale); Impostazioni (tocca per copiare); esportazione CSV',
     why: 'Collegare i CSV del registro scatti a una specifica installazione',
   },
   {
@@ -205,12 +205,12 @@ const codeClass =
         <strong>registro scatti</strong> locale (ID, data/ora e coordinate se
         disponibili). Il registro resta sul dispositivo anche se elimini la foto
         dalla galleria in-app o dall’album di sistema. Non viene caricato
-        online. Puoi aprirlo da Impostazioni, copiare un ID per confrontarlo
-        con l’EXIF di un JPEG condiviso, oppure esportare tutto in CSV tramite
-        il foglio di condivisione di sistema. Ogni installazione dell’app ha
-        anche un <strong>ID installazione</strong> (UUID) locale, visibile in
-        Impostazioni → Informazioni. Lì puoi toccare <strong>Versione</strong>
-        o <strong>ID installazione</strong> per copiare il valore. L’ID
+        online. Puoi aprirlo da Impostazioni, copiare un ID per confrontarlo con
+        l’EXIF di un JPEG condiviso, oppure esportare tutto in CSV tramite il
+        foglio di condivisione di sistema. Ogni installazione dell’app ha anche
+        un <strong>ID installazione</strong> (UUID) locale, visibile in
+        Impostazioni. Lì puoi toccare <strong>Versione</strong> o
+        <strong>ID installazione</strong> per copiare il valore. L’ID
         installazione è scritto nella colonna
         <code :class="codeClass">install_id</code> dei CSV, così i registri di
         più dispositivi restano distinguibili. Reinstallare l’app genera un
@@ -226,7 +226,8 @@ const codeClass =
         <code :class="codeClass">ImageUniqueID</code>, campi GPS e un
         <code :class="codeClass">UserComment</code> JSON). Se la build del
         dispositivo non può scrivere EXIF, la foto resta salvata con il timbro
-        visivo e la voce nel registro scatti.
+        visivo e la voce nel registro scatti. Se anche il compositing del timbro
+        fallisce, resta comunque il JPEG non timbrato nella galleria in-app.
       </p>
 
       <p :class="bodyClass">
