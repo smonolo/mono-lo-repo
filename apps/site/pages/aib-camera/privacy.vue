@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const title = 'Privacy Policy — AIB Camera'
 const description =
-  'Privacy policy for AIB Camera: local-first field photography. Photos, settings, and location stay on your device.'
+  'Privacy policy for AIB Camera: local-first field photography. Photos, settings, capture log, and location stay on your device.'
 const canonical = 'https://smnl.dev/aib-camera/privacy'
 
 useSeoMeta({
@@ -28,7 +28,7 @@ const dataRows = [
   },
   {
     data: 'Date & time',
-    where: 'Burned into the JPEG stamp (Europe/Rome)',
+    where: 'Burned into the JPEG stamp (Europe/Rome); also EXIF DateTime',
     why: 'Operational context on the photo',
   },
   {
@@ -38,12 +38,18 @@ const dataRows = [
   },
   {
     data: 'Place label (reverse geocode)',
-    where: 'On device; optional network lookup; local cache',
+    where:
+      'On device; optional network lookup; local cache; may appear in EXIF',
     why: 'Human-readable place on the stamp',
   },
   {
+    data: 'Capture ID (UUID)',
+    where: 'On device (capture log); EXIF ImageUniqueID / UserComment JSON',
+    why: 'Identify which photos were taken with this app',
+  },
+  {
     data: 'Custom stamp text you type',
-    where: 'On device (settings)',
+    where: 'On device (settings); may appear in EXIF description / comment',
     why: 'Squad / shift notes on the photo',
   },
   {
@@ -61,23 +67,21 @@ const dataRows = [
         <NuxtLink
           to="/"
           class="hover:text-sm-blue text-gray-300 hover:underline focus-visible:underline"
+          >smnl.dev</NuxtLink
         >
-          smnl.dev
-        </NuxtLink>
         <span aria-hidden="true"> / </span>
         <NuxtLink
           to="/aib-camera"
           class="hover:text-sm-blue text-gray-300 hover:underline focus-visible:underline"
+          >AIB Camera</NuxtLink
         >
-          AIB Camera
-        </NuxtLink>
         <span aria-hidden="true"> / </span>
         <span>Privacy</span>
       </p>
       <h1 class="font-heading text-3xl font-semibold">
         Privacy Policy — AIB Camera
       </h1>
-      <p class="text-sm text-gray-400">Last updated: 20 October 2026</p>
+      <p class="text-sm text-gray-400">Last updated: 22 October 2026</p>
     </header>
 
     <div class="space-y-4 text-gray-300">
@@ -97,7 +101,7 @@ const dataRows = [
         <li>
           The app works
           <strong class="font-medium text-white">offline-first</strong>. Photos,
-          settings, and the in-app gallery stay on your device.
+          settings, the in-app gallery, and the capture log stay on your device.
         </li>
         <li>
           There is
@@ -113,7 +117,7 @@ const dataRows = [
         <li>
           <strong class="font-medium text-white">Location</strong> is optional
           and used only to stamp coordinates, altitude, heading, and place on
-          the photo (and in JPEG metadata when available).
+          the photo, and to write matching fields into JPEG EXIF when possible.
         </li>
         <li>
           <strong class="font-medium text-white">Photos library</strong> access
@@ -157,10 +161,35 @@ const dataRows = [
           </tbody>
         </table>
       </div>
+
+      <h3 class="font-heading text-lg font-semibold text-white">Capture log</h3>
+      <p class="text-gray-300">
+        Each successful capture is recorded in a local
+        <strong class="font-medium text-white">capture log</strong> (ID,
+        date/time, and coordinates when available). The log stays on the device
+        even if you delete the photo from the in-app gallery or the system
+        Photos album. It is not uploaded. You can open it from Settings and copy
+        an ID to match a shared JPEG’s EXIF.
+      </p>
+
+      <h3 class="font-heading text-lg font-semibold text-white">
+        EXIF metadata
+      </h3>
+      <p class="text-gray-300">
+        After the visual stamp is applied, the app attempts to write standard
+        EXIF tags into the saved JPEG (for example
+        <code class="text-white">Software</code>,
+        <code class="text-white">Artist</code>,
+        <code class="text-white">ImageUniqueID</code>, GPS fields, and a JSON
+        <code class="text-white">UserComment</code>). If the device build cannot
+        write EXIF, the photo is still saved with the visual stamp and the local
+        capture log entry.
+      </p>
+
       <p class="text-gray-300">
         The developer does
         <strong class="font-medium text-white">not</strong> operate a backend
-        that receives your photos, location, or settings.
+        that receives your photos, location, settings, or capture IDs.
       </p>
     </section>
 
@@ -174,7 +203,7 @@ const dataRows = [
         <li>
           <strong class="font-medium text-white">Location (when in use)</strong>
           — optional. If denied, you can still shoot; geo lines on the stamp
-          show as unavailable.
+          show as unavailable, and GPS EXIF fields are omitted.
         </li>
         <li>
           <strong class="font-medium text-white">Photo library / media</strong>
@@ -189,8 +218,9 @@ const dataRows = [
       <h2 class="font-heading text-xl font-semibold text-white">Sharing</h2>
       <p class="text-gray-300">
         If you use the system share sheet (WhatsApp, Mail, Files, etc.), the
-        shared photo leaves the app under the rules of the app or service you
-        choose. That is outside this app’s control.
+        shared photo (including any EXIF written into the file) leaves the app
+        under the rules of the app or service you choose. That is outside this
+        app’s control.
       </p>
     </section>
 
@@ -220,17 +250,21 @@ const dataRows = [
         <a
           href="https://smnl.dev/?ref=aib-camera-privacy"
           class="hover:text-sm-blue text-white hover:underline focus-visible:underline"
+          >smnl.dev</a
         >
-          smnl.dev
-        </a>
+        · Policy URL:
+        <a
+          href="https://smnl.dev/aib-camera/privacy"
+          class="hover:text-sm-blue text-white hover:underline focus-visible:underline"
+          >smnl.dev/aib-camera/privacy</a
+        >
       </p>
       <p class="text-gray-300">
         For privacy questions about AIB Camera, email
         <a
           href="mailto:stefano@smnl.dev"
           class="hover:text-sm-blue text-white hover:underline focus-visible:underline"
-        >
-          stefano@smnl.dev </a
+          >stefano@smnl.dev</a
         >.
       </p>
     </section>

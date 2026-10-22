@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const title = 'AIB Camera'
 const description =
-  'Independent field camera for AIB volunteers: stamped photos with date, time, GPS, and place — offline-first, no account.'
+  'Independent field camera for AIB volunteers: stamped photos with date, time, GPS, and place — plus EXIF IDs and an on-device capture log. Offline-first, no account.'
 const canonical = 'https://smnl.dev/aib-camera'
 
 useSeoMeta({
@@ -26,12 +26,20 @@ const features = [
     body: 'Date, time (Europe/Rome), coordinates, altitude, heading, and place burned into the photo.',
   },
   {
+    title: 'EXIF for machines',
+    body: 'After stamping, the app writes Software, ImageUniqueID (UUID), GPS tags, and a JSON UserComment when the native build supports it.',
+  },
+  {
+    title: 'Capture log',
+    body: 'Each shot gets a local ID, date, and coords you can open from Settings — even after deleting the photo from the gallery.',
+  },
+  {
     title: 'Works offline',
-    body: 'Capture, stamp, in-app gallery, and share without network. GPS and place labels are optional.',
+    body: 'Capture, stamp, in-app gallery, capture log, and share without network. GPS and place labels are optional.',
   },
   {
     title: 'Local-first',
-    body: 'No account, no analytics SDK, no cloud sync. Photos and settings stay on your device.',
+    body: 'No account, no analytics SDK, no cloud sync. Photos, settings, and the capture log stay on your device.',
   },
   {
     title: 'Emergency-ready',
@@ -47,16 +55,16 @@ const features = [
         <NuxtLink
           to="/"
           class="hover:text-sm-blue text-gray-300 hover:underline focus-visible:underline"
+          >smnl.dev</NuxtLink
         >
-          smnl.dev
-        </NuxtLink>
         <span aria-hidden="true"> / </span>
         <span>AIB Camera</span>
       </p>
       <h1 class="font-heading text-3xl font-semibold">AIB Camera</h1>
       <p class="text-lg text-gray-300">
         Independent field photography for Antincendio Boschivo volunteers —
-        stamp date, time, GPS, and place on every shot.
+        stamp date, time, GPS, and place on every shot, with EXIF IDs for later
+        checks.
       </p>
     </header>
 
@@ -94,12 +102,12 @@ const features = [
     <section class="space-y-3 text-gray-300">
       <h2 class="font-heading text-xl font-semibold text-white">Privacy</h2>
       <p>
-        Photos, settings, and location stay on your device. Read the full
+        Photos, settings, the capture log, and location stay on your device.
+        Read the full
         <NuxtLink
           to="/aib-camera/privacy"
           class="hover:text-sm-blue text-white hover:underline focus-visible:underline"
-        >
-          privacy policy </NuxtLink
+          >privacy policy</NuxtLink
         >.
       </p>
     </section>
@@ -111,8 +119,7 @@ const features = [
         <a
           href="mailto:stefano@smnl.dev"
           class="hover:text-sm-blue text-white hover:underline focus-visible:underline"
-        >
-          stefano@smnl.dev </a
+          >stefano@smnl.dev</a
         >.
       </p>
     </section>
