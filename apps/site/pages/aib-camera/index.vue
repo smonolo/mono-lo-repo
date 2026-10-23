@@ -27,7 +27,11 @@ useHead({
 const features = [
   {
     title: 'Mirino 4:3 e timbro live',
-    body: 'Mirino con bande nere: flash e configurazione timbro in alto, zoom e scatto in basso. Sul mirino compare lo stesso timbro che verrà bruciato sulla foto.',
+    body: 'Mirino con bande nere: flash, punta e configurazione timbro in alto, zoom e scatto in basso. Sul mirino compare lo stesso timbro che verrà bruciato sulla foto.',
+  },
+  {
+    title: 'Punto mirato',
+    body: 'Punta la fotocamera, indica la distanza (es. 200 m) e blocca le coordinate stimate da GPS + bussola. Alterna Qui ↔ Mirato senza perdere il punto; sul timbro compare l’etichetta «Punto mirato (stimato)».',
   },
   {
     title: 'Timbro sul JPEG',
@@ -35,7 +39,7 @@ const features = [
   },
   {
     title: 'Scatto rapido',
-    body: 'Puoi scattare in sequenza senza aspettare l’elaborazione del timbro. Per la posizione si usa il fix live quando disponibile, così lo scatto resta snello.',
+    body: 'Puoi scattare in sequenza senza aspettare l’elaborazione del timbro. Per la posizione si usa il fix live (o il punto mirato bloccato) quando disponibile, così lo scatto resta snello.',
   },
   {
     title: 'EXIF per le macchine',
@@ -153,12 +157,16 @@ const h2Class = 'text-[17px] font-semibold text-aib-fg dark:text-aib-fg-inverse'
     </section>
 
     <section class="space-y-2">
-      <h2 :class="h2Class">Privacy</h2>
+      <h2 :class="h2Class">Privacy e termini</h2>
       <p :class="bodyClass">
         Foto, impostazioni, registro scatti e posizione restano sul dispositivo.
-        Leggi l’intera
+        Leggi l’
         <NuxtLink to="/aib-camera/privacy" :class="linkClass"
           >informativa privacy</NuxtLink
+        >
+        e i
+        <NuxtLink to="/aib-camera/terms" :class="linkClass"
+          >termini di utilizzo</NuxtLink
         >.
       </p>
     </section>

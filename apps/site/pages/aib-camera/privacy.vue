@@ -41,6 +41,12 @@ const dataRows = [
     why: 'Contesto di posizione sulla foto',
   },
   {
+    data: 'Stima punto mirato (distanza + direzione)',
+    where:
+      'Sul dispositivo (punto sticky di sessione); può comparire su timbro / registro / EXIF GPS',
+    why: 'Coordinate di ciò a cui stai puntando, non solo della tua posizione',
+  },
+  {
     data: 'Etichetta di luogo (geocodifica inversa)',
     where:
       'Sul dispositivo; lookup di rete opzionale; cache locale; può comparire in EXIF',
@@ -103,7 +109,7 @@ const codeClass =
       <p
         class="text-aib-muted dark:text-aib-muted-dark text-[13px] font-medium"
       >
-        Ultimo aggiornamento: 22 ottobre 2026
+        Ultimo aggiornamento: 23 ottobre 2026
       </p>
     </header>
 
@@ -132,9 +138,12 @@ const codeClass =
         </li>
         <li>La <strong>fotocamera</strong> è necessaria per scattare.</li>
         <li>
-          La <strong>posizione</strong> è opzionale e serve solo a stampare
+          La <strong>posizione</strong> è opzionale e serve a stampare
           coordinate, altitudine, direzione e luogo sulla foto, e a scrivere i
-          campi corrispondenti nell’EXIF JPEG quando possibile.
+          campi corrispondenti nell’EXIF JPEG quando possibile. Puoi anche
+          bloccare un <strong>punto mirato</strong> (GPS + bussola + distanza
+          inserita): le coordinate stimate possono sostituire la tua posizione
+          sul timbro finché non le cancelli.
         </li>
         <li>
           L’accesso alla <strong>libreria Foto</strong> è opzionale e serve a
@@ -291,6 +300,10 @@ const codeClass =
         · URL informativa:
         <a href="https://smnl.dev/aib-camera/privacy" :class="linkClass"
           >smnl.dev/aib-camera/privacy</a
+        >
+        · Termini:
+        <NuxtLink to="/aib-camera/terms" :class="linkClass"
+          >smnl.dev/aib-camera/terms</NuxtLink
         >
       </p>
       <p :class="bodyClass">
