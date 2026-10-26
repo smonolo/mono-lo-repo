@@ -154,9 +154,9 @@ Font, text size, and background opacity follow **Configuration** (top-right icon
 | **Shutter**           | White circle in the center of the bottom band: captures the photo.                                                                                                         |
 | **Last-shot preview** | Square on the left: opens the detail of the last ready photo. A loading indicator appears while processing is still running.                                               |
 | **Flash**             | Lightning icon **top left**: **on / off** only (no auto mode).                                                                                                             |
-| **Aim**               | Crosshair icon next to flash: opens a full-width sheet for distance (presets 50 / 100 / 200 / 500 m or free value) and **Lock target**.                                    |
+| **Aim**               | Crosshair icon next to flash, or **press and hold** the viewfinder (~0.5 s): full-width content-height sheet; dismiss with ✕ or tap outside; distance and **Lock target**. |
 | **Me / Target**       | With a sticky point active, selector at top center: switches between your GPS position and the aimed point without losing it.                                              |
-| **Configuration**     | Sliders icon **top right**: opens stamp configuration.                                                                                                                     |
+| **Configuration**     | Sliders icon **top right**: full-width bottom sheet (full height); dismiss with ✕ or tap outside.                                                                          |
 | **Zoom**              | Buttons **bottom right** (e.g. 0.5× / 1× / 2× when available) and **pinch**; beyond 2× the active button shows 3×, 4×, …. **Double-tap** the viewfinder resets zoom to 1×. |
 | **Swipe**             | Swipe **left** from the viewfinder to open the gallery.                                                                                                                    |
 
@@ -168,9 +168,10 @@ To stamp the coordinates of what you are **pointing at** (e.g. a hotspot 200 m a
 
 1. Make sure GPS and compass are available.
 2. Point the camera at the point of interest.
-3. Tap **Aim**, choose or type the distance in meters, then **Lock target**.
-4. The stamp shows estimated coordinates and the label **Aimed target (estimated)**.
-5. Use **Me ↔ Target** to return to your position or re-enable the sticky point; **Clear target** removes it.
+3. Tap **Aim** (or press and hold the viewfinder): a full-width sheet opens (dismiss with ✕ or tap outside).
+4. Choose or type the distance in meters, then **Lock target**.
+5. The stamp shows estimated coordinates and the label **Aimed target (estimated)**.
+6. Use **Me ↔ Target** to return to your position or re-enable the sticky point; **Clear target** removes it.
 
 It is a ground estimate along the compass heading (no altimetry / DEM): useful in the field, not a GNSS fix on the target. Without GPS or heading, lock fails; capture remains available in Me mode.
 
@@ -189,7 +190,7 @@ For the stamp the app prefers the **position already available** on the viewfind
 
 ## 8. Stamp configuration
 
-Path: sliders icon on the **camera** (Configuration).
+Path: sliders icon on the **camera** — full-width, full-height bottom sheet (Configuration); dismiss with ✕ or tap outside.
 
 ### 8.1 Visible fields (toggles)
 
@@ -317,7 +318,7 @@ Anyone using the app should keep these points in mind:
 1. Grant at least **Camera** permission; Location and Photos when useful.
 2. Check **Configuration** (active fields, custom text, date format, size, opacity) before shooting.
 3. Verify on the **live preview** what will land on the JPEG.
-   3b. If you need to document a distant point (e.g. a hotspot), use **Aim** with an estimated distance and check the **Aimed target (estimated)** label before shooting.
+   3b. If you need to document a distant point (e.g. a hotspot), use **Aim** (tap or press-and-hold the viewfinder) with an estimated distance and check the **Aimed target (estimated)** label before shooting.
 4. In a capture sequence, do not wait for the processing indicator: you can keep photographing.
 5. If you need the Photos library copy, confirm the **AIB Camera** album updates (Photos permission granted).
 6. To trace a shot after deleting the photo, use the **capture log** and ID; to link CSVs across devices, compare **Install ID** in Settings with the `install_id` column.

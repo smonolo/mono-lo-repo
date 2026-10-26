@@ -154,9 +154,9 @@ Carattere, dimensione del testo e opacità dello sfondo seguono la **Configurazi
 | **Pulsante di scatto**      | Cerchio bianco al centro della banda inferiore: acquisisce la foto.                                                                                                                        |
 | **Anteprima ultimo scatto** | Quadratino a sinistra: apre il dettaglio dell’ultima foto pronta. Se l’elaborazione è ancora in corso compare un indicatore di caricamento.                                                |
 | **Flash**                   | Icona fulmine in **alto a sinistra**: solo **acceso / spento** (non c’è modalità automatica).                                                                                              |
-| **Punta**                   | Icona mirino accanto al flash: apre un foglio modale a tutta larghezza per la distanza (preset 50 / 100 / 200 / 500 m o valore libero) e **Blocca punto**.                                 |
+| **Punta**                   | Icona mirino accanto al flash, oppure **tieni premuto** il mirino (~0,5 s): foglio a tutta larghezza alto quanto il contenuto; chiusura con ✕ o tocco fuori; distanza e **Blocca punto**.  |
 | **Qui / Mirato**            | Con un punto sticky attivo, selettore in alto al centro: alterna tra la tua posizione GPS e il punto mirato senza perderlo.                                                                |
-| **Configurazione**          | Icona cursori in **alto a destra**: apre la configurazione del timbro.                                                                                                                     |
+| **Configurazione**          | Icona cursori in **alto a destra**: foglio a tutta larghezza dal basso (altezza piena); chiusura con ✕ o tocco fuori.                                                                      |
 | **Zoom**                    | Pulsanti in **basso a destra** (es. 0,5× / 1× / 2× se disponibili) e gesto a **due dita**; oltre 2× il pulsante attivo mostra 3×, 4×, …. **Doppio tocco** sul mirino riporta lo zoom a 1×. |
 | **Scorrimento**             | Scorrere verso **sinistra** dal mirino per aprire la galleria.                                                                                                                             |
 
@@ -168,9 +168,10 @@ Per stampare le coordinate di ciò a cui stai **puntando** (es. un focolaio a 20
 
 1. Assicurati che GPS e bussola siano disponibili.
 2. Punta la fotocamera verso il punto di interesse.
-3. Tocca **Punta**, scegli o digita la distanza in metri, poi **Blocca punto**.
-4. Sul timbro compaiono le coordinate stimate e l’etichetta **Punto mirato (stimato)**.
-5. Usa **Qui ↔ Mirato** per tornare alla tua posizione o riattivare il punto sticky; **Cancella punto** lo elimina.
+3. Tocca **Punta** (o tieni premuto il mirino): si apre un foglio a tutta larghezza (chiudi con ✕ o toccando fuori).
+4. Scegli o digita la distanza in metri, poi **Blocca punto**.
+5. Sul timbro compaiono le coordinate stimate e l’etichetta **Punto mirato (stimato)**.
+6. Usa **Qui ↔ Mirato** per tornare alla tua posizione o riattivare il punto sticky; **Cancella punto** lo elimina.
 
 È una stima a terra lungo la direzione della bussola (senza altimetria / DEM): utile in campo, non un fix GNSS sul bersaglio. Senza GPS o direzione, il blocco non va a buon fine; lo scatto resta comunque disponibile in modalità Qui.
 
@@ -189,7 +190,7 @@ Per il timbro l’app preferisce la **posizione già disponibile** sul mirino (G
 
 ## 8. Configurazione del timbro
 
-Percorso: icona cursori sulla **fotocamera** (Configurazione).
+Percorso: icona cursori sulla **fotocamera** — foglio a tutta larghezza e altezza piena dal basso (Configurazione); chiudi con ✕ o toccando fuori.
 
 ### 8.1 Campi visibili (interruttori)
 
@@ -317,7 +318,7 @@ Chi usa l’app deve tenere presenti questi punti:
 1. Concedere almeno il permesso **Fotocamera**; Posizione e Foto quando possibile e utili.
 2. Controllare **Configurazione** (campi attivi, testo personalizzato, formato data, dimensione, opacità) prima di scattare.
 3. Verificare sull’**anteprima live** cosa finirà sul JPEG.
-   3b. Se serve documentare un punto lontano (es. focolaio), usare **Punta** con distanza stimata e controllare l’etichetta **Punto mirato (stimato)** prima di scattare.
+   3b. Se serve documentare un punto lontano (es. focolaio), usare **Punta** (tocco o pressione lunga sul mirino) con distanza stimata e controllare l’etichetta **Punto mirato (stimato)** prima di scattare.
 4. In sequenza di scatti, non attendere l’indicatore di elaborazione: si può continuare a fotografare.
 5. Se serve la copia in Libreria Foto, verificare che l’album **AIB Camera** si aggiorni (permesso Foto concesso).
 6. Per rintracciare uno scatto dopo l’eliminazione della foto, usare il **registro scatti** e l’ID; per collegare CSV di più dispositivi, confrontare l’**ID installazione** in Impostazioni con la colonna `install_id`.

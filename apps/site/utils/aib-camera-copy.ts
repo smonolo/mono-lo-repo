@@ -137,7 +137,7 @@ const it: AibCopy = {
       },
       {
         title: 'Punto mirato',
-        body: 'Punta la fotocamera, indica la distanza (es. 200 m) e blocca le coordinate stimate da GPS + bussola. Alterna Qui ↔ Mirato senza perdere il punto; sul timbro compare l’etichetta «Punto mirato (stimato)».',
+        body: 'Tieni premuto il mirino (o tocca Punta): si apre un foglio a tutta larghezza. Indica la distanza (es. 200 m) e blocca le coordinate stimate da GPS + bussola. Alterna Qui ↔ Mirato senza perdere il punto; sul timbro compare l’etichetta «Punto mirato (stimato)».',
       },
       {
         title: 'Timbro sul JPEG',
@@ -382,7 +382,7 @@ const en: AibCopy = {
       },
       {
         title: 'Aimed target',
-        body: 'Point the camera, enter a distance (e.g. 200 m), and lock estimated coordinates from GPS + compass. Toggle Me ↔ Target without losing the lock; the stamp shows “Aimed target (estimated)”.',
+        body: 'Press and hold the viewfinder (or tap Aim) to open a full-width sheet. Enter a distance (e.g. 200 m) and lock estimated coordinates from GPS + compass. Toggle Me ↔ Target without losing the lock; the stamp shows “Aimed target (estimated)”.',
       },
       {
         title: 'Stamp on the JPEG',
