@@ -340,7 +340,7 @@ const it: AibCopy = {
       'Il trattamento dei dati sull’app è descritto nell’ <a data-aib="privacy">informativa privacy</a>. In sintesi: elaborazione prevalentemente sul dispositivo, senza account né sincronizzazione cloud gestita dallo sviluppatore.',
     ipTitle: 'Proprietà intellettuale',
     ipBody:
-      'L’app, il nome «AIB Camera» come usato qui e i materiali del sito correlati appartengono allo sviluppatore, fatti salvi componenti di terzi (librerie open source, font, ecc.) con le rispettive licenze. Non è concessa alcuna licenza a marchi o segni di istituzioni pubbliche.',
+      'L’app, il nome «AIB Camera» come usato qui e i materiali del sito correlati appartengono allo sviluppatore, fatti salvi componenti di terzi (librerie open source, font, ecc.) con le rispettive licenze. Non è concessa alcuna licenza a marchi o segni di istituzioni pubbliche. Il codice sorgente del progetto è disponibile sotto PolyForm Noncommercial License 1.0.0 (uso, modifica e redistribuzione non commerciali). Il nome «AIB Camera», le icone, lo splash e gli altri asset di brand non sono inclusi in quella licenza: non usarli per altre app, store o prodotti senza autorizzazione scritta.',
     updatesTitle: 'Aggiornamenti',
     updatesBody:
       'L’app e questi termini possono cambiare. La data di «Ultimo aggiornamento» verrà rivista in caso di modifiche sostanziali. Continuare a usare l’app dopo un aggiornamento implica l’accettazione dei termini rivisti.',
@@ -581,7 +581,7 @@ const en: AibCopy = {
       'How the app handles data is described in the <a data-aib="privacy">privacy policy</a>. In short: mostly on-device processing, with no account or developer-managed cloud sync.',
     ipTitle: 'Intellectual property',
     ipBody:
-      'The app, the name “AIB Camera” as used here, and related site materials belong to the developer, subject to third-party components (open-source libraries, fonts, etc.) under their licenses. No license is granted to trademarks or marks of public institutions.',
+      'The app, the name “AIB Camera” as used here, and related site materials belong to the developer, subject to third-party components (open-source libraries, fonts, etc.) under their licenses. No license is granted to trademarks or marks of public institutions. Source code of this project is available under the PolyForm Noncommercial License 1.0.0 (noncommercial use, modification, and redistribution). The “AIB Camera” name, icons, splash art, and other brand assets are not included in that license — do not use them for other apps, stores, or products without written permission.',
     updatesTitle: 'Updates',
     updatesBody:
       'The app and these terms may change. The “Last updated” date will be revised for material changes. Continuing to use the app after an update means you accept the revised terms.',
