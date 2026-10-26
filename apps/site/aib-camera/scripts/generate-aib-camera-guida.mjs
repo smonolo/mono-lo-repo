@@ -1,12 +1,12 @@
 /**
- * Regenerates guide PDFs + HTML bodies from content/aib-camera/
+ * Regenerates guide PDFs + HTML bodies from aib-camera/content/
  *
  * - Italian: guida-operativa.md
  *     → public/docs/aib-camera-guida-operativa.pdf
- *     → assets/aib-camera/guida-operativa.body.html (bundled into the site)
+ *     → assets/guida-operativa.body.html (bundled into the site)
  * - English: guida-operativa.en.md
  *     → public/docs/aib-camera-field-guide.pdf
- *     → assets/aib-camera/field-guide.body.html (bundled into the site)
+ *     → assets/field-guide.body.html (bundled into the site)
  *
  * PDFs stay under public/docs/; brand images under public/aib-assets/ —
  * never public/aib-camera/, which would collide with pages/aib-camera and
@@ -24,7 +24,7 @@ import puppeteer from 'puppeteer'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const outDir = join(root, 'public/docs')
-const assetDir = join(root, 'assets/aib-camera')
+const assetDir = join(root, 'assets')
 
 const DOC_VERSION_IT = '26 ottobre 2026'
 const DOC_VERSION_EN = '26 October 2026'
@@ -32,7 +32,7 @@ const APP_VERSION = '1.0.0'
 
 const docs = [
   {
-    mdPath: join(root, 'content/aib-camera/guida-operativa.md'),
+    mdPath: join(root, 'content/guida-operativa.md'),
     outPdf: join(outDir, 'aib-camera-guida-operativa.pdf'),
     outBody: join(assetDir, 'guida-operativa.body.html'),
     lang: 'it',
@@ -41,7 +41,7 @@ const docs = [
     pageLabel: 'Pagina',
   },
   {
-    mdPath: join(root, 'content/aib-camera/guida-operativa.en.md'),
+    mdPath: join(root, 'content/guida-operativa.en.md'),
     outPdf: join(outDir, 'aib-camera-field-guide.pdf'),
     outBody: join(assetDir, 'field-guide.body.html'),
     lang: 'en',

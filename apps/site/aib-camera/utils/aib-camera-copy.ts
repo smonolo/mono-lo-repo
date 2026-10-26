@@ -1,4 +1,4 @@
-import type { AibLocale } from '~/composables/useAibLocale'
+import type { AibLocale } from '#aib/composables/useAibLocale'
 
 type Feature = { title: string; body: string }
 type DataRow = { data: string; where: string; why: string }

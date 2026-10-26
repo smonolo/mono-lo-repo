@@ -10,7 +10,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "docs:aib-camera-guida": "node scripts/generate-aib-camera-guida.mjs"
+    "docs:aib-camera-guida": "node aib-camera/scripts/generate-aib-camera-guida.mjs"
   },
   "dependencies": {
     "@nuxt/fonts": "^0.11.1",

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { aibCopy } from '~/utils/aib-camera-copy'
-import { aibGuideBody } from '~/utils/aib-guide-bodies'
+import { aibCopy } from '#aib/utils/aib-camera-copy'
+import { aibGuideBody } from '#aib/utils/aib-guide-bodies'
 
 definePageMeta({
   layout: 'aib-camera',

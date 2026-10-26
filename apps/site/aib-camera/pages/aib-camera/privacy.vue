@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { aibCopy } from '~/utils/aib-camera-copy'
-import { aibHtml } from '~/utils/aib-html'
+import { aibCopy } from '#aib/utils/aib-camera-copy'
+import { aibHtml } from '#aib/utils/aib-html'
 
 definePageMeta({
   layout: 'aib-camera',

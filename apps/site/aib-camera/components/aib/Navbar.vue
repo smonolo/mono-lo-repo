@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { aibCopy } from '~/utils/aib-camera-copy'
+import { aibCopy } from '#aib/utils/aib-camera-copy'
 
 const { locale, setLocale, localePath } = useAibLocale()
 const copy = computed(() => aibCopy(locale.value))

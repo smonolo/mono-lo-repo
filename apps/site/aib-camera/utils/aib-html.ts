@@ -1,4 +1,4 @@
-import { aibLocaleHref, type AibLocale } from '~/composables/useAibLocale'
+import { aibLocaleHref, type AibLocale } from '#aib/composables/useAibLocale'
 
 const LINK_HREFS: Record<string, string> = {
   privacy: '/aib-camera/privacy',
