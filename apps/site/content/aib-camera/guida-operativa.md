@@ -4,7 +4,7 @@
 
 <table class="doc-meta">
   <tbody>
-    <tr><td><strong>Versione documento</strong></td><td>23 ottobre 2026</td></tr>
+    <tr><td><strong>Versione documento</strong></td><td>26 ottobre 2026</td></tr>
     <tr><td><strong>Versione app di riferimento</strong></td><td>1.0.0</td></tr>
     <tr><td><strong>Lingua</strong></td><td>Italiano</td></tr>
     <tr><td><strong>Sito</strong></td><td><a href="https://smnl.dev/aib-camera">smnl.dev/aib-camera</a></td></tr>
@@ -39,19 +39,21 @@
 
 Questa guida spiega, in italiano, come funziona AIB Camera sul campo: permessi, scatto, timbro sulle foto, galleria, registro scatti e uso senza rete.
 
-È pensata per chi usa l’app in attività di antincendio boschivo (AIB) e per chi deve valutarne l’adozione operativa (squadre, coordinamenti, enti). Descrive il comportamento reale della versione **1.0.0**.
+È pensata per **chiunque** usi l’app — cittadini, volontari o altri — per documentare un incendio boschivo (AIB) o una situazione simile. Descrive il comportamento reale della versione **1.0.0**.
 
 ---
 
 ## 2. Cos’è AIB Camera
 
-AIB Camera è un’applicazione mobile **indipendente e non ufficiale** per la fotografia di campo nell’antincendio boschivo. Consente di:
+AIB Camera è un’applicazione mobile **indipendente e non ufficiale** per la fotografia di campo nell’antincendio boschivo e situazioni simili. È **aperta a chiunque**: non è riservata a una specifica organizzazione né solo a operatori professionali. Consente di:
 
 - scattare foto con la fotocamera posteriore;
 - stampare sul JPEG (timbro visivo) data, ora, posizione e — se disponibili — luogo e altri dati di contesto;
 - conservare le foto in una **galleria interna all’app**;
-- condividerle con il foglio di condivisione del sistema operativo;
+- condividerle con il foglio di condivisione del sistema operativo (WhatsApp, Telegram, Mail, …);
 - tenere un **registro scatti** locale con un identificativo per ogni scatto.
+
+Usi tipici: documentare un incendio, inviare lo scatto a chi di dovere, oppure leggere coordinate e altri dettagli a chi risponde all’emergenza (ad es. 112).
 
 È progettata per restare utilizzabile **anche senza rete, senza GPS e senza accesso alla libreria Foto**: in emergenza deve sempre essere possibile scattare e condividere.
 
@@ -59,7 +61,7 @@ AIB Camera è un’applicazione mobile **indipendente e non ufficiale** per la f
 
 **Avviso — natura non istituzionale**
 
-L’app **non** è realizzata, approvata né affiliata a Protezione Civile, Vigili del Fuoco, Regione Lombardia o altri enti pubblici. Non utilizza loghi, stemmi o sigle istituzionali. È uno strumento volontario; l’eventuale uso in contesti ufficiali resta sotto la responsabilità dell’organizzazione o dell’operatore che la adotta.
+L’app **non** è realizzata, approvata né affiliata a Protezione Civile, Vigili del Fuoco, Regione Lombardia o altri enti pubblici. Non utilizza loghi, stemmi o sigle istituzionali. È uno strumento indipendente disponibile al pubblico; l’eventuale uso in contesti ufficiali resta sotto la responsabilità di chi la usa.
 
 </aside>
 
@@ -293,33 +295,33 @@ Su dispositivi più vecchi o con moduli nativi limitati, l’app **degrada in si
 
 Dal dettaglio o dalla selezione in galleria si apre il **foglio di condivisione di sistema** (Messaggi, Mail, WhatsApp, File, ecc.).
 
-Il file condiviso è il JPEG già timbrato, con EXIF se è stato scritto. Dopo l’invio, trattamento e conservazione dipendono dall’app o dal servizio scelto dall’operatore (fuori dal controllo di AIB Camera).
+Il file condiviso è il JPEG già timbrato, con EXIF se è stato scritto. Dopo l’invio, trattamento e conservazione dipendono dall’app o dal servizio scelto da chi condivide (fuori dal controllo di AIB Camera).
 
 ---
 
 ## 14. Limiti e responsabilità
 
-Chi adotta o usa l’app deve tenere presenti questi punti:
+Chi usa l’app deve tenere presenti questi punti:
 
 1. **Strumento di supporto**, non sostituto di procedure ufficiali di documentazione o archiviazione.
 2. **Precisione della posizione** dipende dal dispositivo, dal permesso Posizione e dalle condizioni di segnale; l’app non corregge né certifica il GPS. Il **punto mirato** è una stima (GPS + bussola + distanza indicata), non un fix sul bersaglio.
 3. **Data e ora sul timbro** usano sempre Europe/Rome; verificare che l’orologio del telefono sia impostato correttamente.
-4. **Album «AIB Camera»** è una copia di comodo: sul dispositivo la copia affidabile è la **galleria in-app**; a livello organizzativo vale ciò che viene esportato o condiviso secondo le procedure interne.
-5. **Privacy:** foto, impostazioni e registro restano sul dispositivo; non c’è sincronizzazione cloud gestita dallo sviluppatore. La condivisione verso terzi è scelta dell’operatore.
+4. **Album «AIB Camera»** è una copia di comodo: sul dispositivo la copia affidabile è la **galleria in-app**.
+5. **Privacy:** foto, impostazioni e registro restano sul dispositivo; non c’è sincronizzazione cloud gestita dallo sviluppatore. La condivisione verso terzi è scelta di chi usa l’app.
 6. **Aggiornamenti:** questa guida si riferisce alla versione app **1.0.0**; in caso di release successive verificare eventuali differenze su [smnl.dev/aib-camera](https://smnl.dev/aib-camera).
 
 ---
 
 ## 15. Checklist operativa
 
-1. Concedere almeno il permesso **Fotocamera**; Posizione e Foto quando possibile e utile al turno.
-2. Prima del turno, controllare **Configurazione** (campi attivi, testo personalizzato, formato data, dimensione, opacità).
+1. Concedere almeno il permesso **Fotocamera**; Posizione e Foto quando possibile e utili.
+2. Controllare **Configurazione** (campi attivi, testo personalizzato, formato data, dimensione, opacità) prima di scattare.
 3. Verificare sull’**anteprima live** cosa finirà sul JPEG.
    3b. Se serve documentare un punto lontano (es. focolaio), usare **Punta** con distanza stimata e controllare l’etichetta **Punto mirato (stimato)** prima di scattare.
 4. In sequenza di scatti, non attendere l’indicatore di elaborazione: si può continuare a fotografare.
 5. Se serve la copia in Libreria Foto, verificare che l’album **AIB Camera** si aggiorni (permesso Foto concesso).
 6. Per rintracciare uno scatto dopo l’eliminazione della foto, usare il **registro scatti** e l’ID; per collegare CSV di più dispositivi, confrontare l’**ID installazione** in Impostazioni con la colonna `install_id`.
-7. Prima di condividere all’esterno, assicurarsi che contenuto e destinazione rispettino le regole della propria organizzazione.
+7. Prima di condividere all’esterno, assicurarsi che contenuto e destinazione rispettino la legge applicabile.
 
 ---
 

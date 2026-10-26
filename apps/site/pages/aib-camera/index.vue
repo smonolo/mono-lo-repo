@@ -5,7 +5,7 @@ definePageMeta({
 
 const title = 'AIB Camera'
 const description =
-  'Fotocamera di campo indipendente per volontari AIB: anteprima live del timbro, JPEG con data/ora/GPS/luogo, ID EXIF e registro scatti sul dispositivo. Funziona offline, senza account.'
+  'Fotocamera di campo indipendente per chiunque: foto geolocalizzate di incendi boschivi (AIB) con timbro data/ora/GPS/luogo, ID EXIF e registro scatti sul dispositivo. Aperta al pubblico, offline, senza account.'
 const canonical = 'https://smnl.dev/aib-camera'
 
 useSeoMeta({
@@ -92,23 +92,27 @@ const h2Class = 'text-[17px] font-semibold text-aib-fg dark:text-aib-fg-inverse'
       <p
         class="text-aib-muted dark:text-aib-muted-dark text-[17px] leading-normal"
       >
-        Fotografia di campo indipendente per volontari di antincendio boschivo —
-        anteprima e timbro di data, ora, GPS e luogo su ogni scatto, con ID EXIF
-        per i controlli successivi.
+        Fotografia di campo indipendente per chiunque — anteprima e timbro di
+        data, ora, GPS e luogo su ogni scatto, con ID EXIF per i controlli
+        successivi. Non riservata a enti o professionisti.
       </p>
     </header>
 
     <section :class="['space-y-4', bodyClass]">
       <p>
-        AIB Camera è una piccola app mobile per scattare foto di campo timbrate
-        quando serve un resoconto chiaro — su una linea di fuoco, in un
-        intervento alluvionale o in qualsiasi turno di volontariato in cui rete
-        e permessi sono inaffidabili.
+        AIB Camera è una piccola app mobile per scattare foto geolocalizzate
+        timbrate in contesto di antincendio boschivo (AIB) o situazioni simili:
+        quando serve documentare un incendio, condividere lo scatto (WhatsApp,
+        Telegram, Mail, …) oppure leggere coordinate e altri dettagli a chi
+        risponde all’emergenza (ad es. 112) — anche senza rete affidabile.
       </p>
       <p>
-        <strong>Non</strong> è affiliata, approvata né realizzata da Protezione
-        Civile, Vigili del Fuoco, Regione Lombardia o altri enti pubblici.
-        Creata da un volontario per uso volontario.
+        È <strong>aperta a chiunque</strong>: cittadini, volontari o chiunque
+        voglia usarla. <strong>Non</strong> è limitata a una specifica
+        organizzazione né solo a operatori di Protezione Civile, Vigili del
+        Fuoco o altri corpi. <strong>Non</strong> è affiliata, approvata né
+        realizzata da Protezione Civile, Vigili del Fuoco, Regione Lombardia o
+        altri enti pubblici. Creata da un volontario; disponibile al pubblico.
       </p>
     </section>
 
@@ -143,9 +147,9 @@ const h2Class = 'text-[17px] font-semibold text-aib-fg dark:text-aib-fg-inverse'
     <section class="space-y-2">
       <h2 :class="h2Class">Guida operativa</h2>
       <p :class="bodyClass">
-        Guida in italiano per l’uso sul campo e per chi valuta l’adozione:
-        permessi, fotocamera, timbro, galleria, registro scatti, limiti e
-        checklist pre-turno. Leggibile sul web e stampabile in PDF.
+        Guida in italiano per l’uso sul campo: permessi, fotocamera, timbro,
+        galleria, registro scatti, limiti e checklist. Leggibile sul web e
+        stampabile in PDF.
         <NuxtLink to="/aib-camera/guida" :class="linkClass"
           >Apri la guida</NuxtLink
         >

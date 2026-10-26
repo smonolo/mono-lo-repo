@@ -5,7 +5,7 @@ definePageMeta({
 
 const title = 'Termini di utilizzo — AIB Camera'
 const description =
-  'Termini di utilizzo di AIB Camera: app indipendente non ufficiale per fotografia di campo AIB. Uso a proprio rischio, senza garanzia e senza affiliazione istituzionale.'
+  'Termini di utilizzo di AIB Camera: app indipendente non ufficiale, aperta a chiunque, per fotografia di campo AIB. Uso a proprio rischio, senza garanzia e senza affiliazione istituzionale.'
 const canonical = 'https://smnl.dev/aib-camera/terms'
 
 useSeoMeta({
@@ -53,7 +53,7 @@ const crumbClass =
       <p
         class="text-aib-muted dark:text-aib-muted-dark text-[13px] font-medium"
       >
-        Ultimo aggiornamento: 23 ottobre 2026
+        Ultimo aggiornamento: 26 ottobre 2026
       </p>
     </header>
 
@@ -74,13 +74,27 @@ const crumbClass =
     </div>
 
     <section class="space-y-3">
+      <h2 :class="h2Class">Chi può usarla</h2>
+      <p :class="bodyClass">
+        <strong>Chiunque.</strong> L’app <strong>non</strong> è riservata a una
+        specifica organizzazione, squadra o ruolo professionale (Protezione
+        Civile, Vigili del Fuoco o altri). È disponibile al pubblico. Usi
+        tipici: documentare un incendio boschivo o una situazione simile,
+        condividere la foto timbrata (WhatsApp, Telegram, Mail, …), oppure
+        leggere coordinate e altri dettagli a chi risponde all’emergenza (ad es.
+        112). Anche volontari e organizzazioni possono usarla se lo desiderano:
+        ciò non la rende esclusiva per loro.
+      </p>
+    </section>
+
+    <section class="space-y-3">
       <h2 :class="h2Class">A cosa serve l’app</h2>
       <p :class="bodyClass">
         AIB Camera aiuta a scattare foto di campo con data/ora, posizione (se
         disponibile) e testo personalizzato stampati sul JPEG, più un registro
         scatti locale. È uno
-        <strong>strumento di supporto</strong> per la documentazione personale o
-        di squadra: <strong>non</strong> sostituisce procedure ufficiali,
+        <strong>strumento di supporto</strong> per la documentazione personale e
+        la condivisione: <strong>non</strong> sostituisce procedure ufficiali,
         moduli, sistemi di comando o archivi istituzionali.
       </p>
     </section>
@@ -89,9 +103,8 @@ const crumbClass =
       <h2 :class="h2Class">Uso consentito</h2>
       <ul :class="listClass">
         <li>
-          Usare l’app per fotografia di campo e note operative in contesto AIB o
-          analogo, nel rispetto delle leggi e delle regole della propria
-          organizzazione.
+          Usare l’app per fotografia di campo legata a incendi boschivi (AIB) o
+          situazioni simili, nel rispetto della legge applicabile.
         </li>
         <li>
           Non presentare l’app, le foto o i metadati come documentazione
@@ -99,7 +112,7 @@ const crumbClass =
         </li>
         <li>
           Non usare l’app per attività illegali, molestie, o per alterare in
-          modo ingannevole coordinate, orari o contesto operativo.
+          modo ingannevole coordinate, orari o contesto sulla foto.
         </li>
         <li>
           Sei responsabile di ciò che scatti, condividi o esporti (foto, EXIF,

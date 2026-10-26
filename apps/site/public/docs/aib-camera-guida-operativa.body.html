@@ -3,7 +3,7 @@
   <tbody>
     <tr>
       <td><strong>Versione documento</strong></td>
-      <td>22 ottobre 2026</td>
+      <td>26 ottobre 2026</td>
     </tr>
     <tr>
       <td><strong>Versione app di riferimento</strong></td>
@@ -22,6 +22,14 @@
       <td>
         <a href="https://smnl.dev/aib-camera/privacy"
           >smnl.dev/aib-camera/privacy</a
+        >
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Termini</strong></td>
+      <td>
+        <a href="https://smnl.dev/aib-camera/terms"
+          >smnl.dev/aib-camera/terms</a
         >
       </td>
     </tr>
@@ -62,8 +70,8 @@
   rete.
 </p>
 <p>
-  È pensata per chi usa l’app in attività di antincendio boschivo (AIB) e per
-  chi deve valutarne l’adozione operativa (squadre, coordinamenti, enti).
+  È pensata per <strong>chiunque</strong> usi l’app — cittadini, volontari o
+  altri — per documentare un incendio boschivo (AIB) o una situazione simile.
   Descrive il comportamento reale della versione <strong>1.0.0</strong>.
 </p>
 <hr />
@@ -71,7 +79,9 @@
 <p>
   AIB Camera è un’applicazione mobile
   <strong>indipendente e non ufficiale</strong> per la fotografia di campo
-  nell’antincendio boschivo. Consente di:
+  nell’antincendio boschivo e situazioni simili. È
+  <strong>aperta a chiunque</strong>: non è riservata a una specifica
+  organizzazione né solo a operatori professionali. Consente di:
 </p>
 <ul>
   <li>scattare foto con la fotocamera posteriore;</li>
@@ -80,12 +90,19 @@
     luogo e altri dati di contesto;
   </li>
   <li>conservare le foto in una <strong>galleria interna all’app</strong>;</li>
-  <li>condividerle con il foglio di condivisione del sistema operativo;</li>
+  <li>
+    condividerle con il foglio di condivisione del sistema operativo (WhatsApp,
+    Telegram, Mail, …);
+  </li>
   <li>
     tenere un <strong>registro scatti</strong> locale con un identificativo per
     ogni scatto.
   </li>
 </ul>
+<p>
+  Usi tipici: documentare un incendio, inviare lo scatto a chi di dovere, oppure
+  leggere coordinate e altri dettagli a chi risponde all’emergenza (ad es. 112).
+</p>
 <p>
   È progettata per restare utilizzabile
   <strong>anche senza rete, senza GPS e senza accesso alla libreria Foto</strong
@@ -96,9 +113,9 @@
   <p>
     L’app <strong>non</strong> è realizzata, approvata né affiliata a Protezione
     Civile, Vigili del Fuoco, Regione Lombardia o altri enti pubblici. Non
-    utilizza loghi, stemmi o sigle istituzionali. È uno strumento volontario;
-    l’eventuale uso in contesti ufficiali resta sotto la responsabilità
-    dell’organizzazione o dell’operatore che la adotta.
+    utilizza loghi, stemmi o sigle istituzionali. È uno strumento indipendente
+    disponibile al pubblico; l’eventuale uso in contesti ufficiali resta sotto
+    la responsabilità di chi la usa.
   </p>
 </aside>
 <hr />
@@ -118,6 +135,13 @@
         Data/ora (fuso <strong>Europe/Rome</strong>), coordinate, precisione,
         altitudine, direzione, luogo e testo personalizzato, secondo la
         Configurazione del timbro
+      </td>
+    </tr>
+    <tr>
+      <td>Punto mirato</td>
+      <td>
+        Distanza + direzione bussola da GPS: stima le coordinate di ciò a cui
+        punti; commutatore Qui ↔ Mirato; etichetta «stimato» sul timbro
       </td>
     </tr>
     <tr>
@@ -283,10 +307,10 @@
 <h3>7.1 Mirino e bande nere</h3>
 <p>
   L’anteprima live ha <strong>bande nere</strong> sopra e sotto. In alto:
-  <strong>flash</strong> a sinistra, <strong>configurazione timbro</strong> a
-  destra. In basso: scatto al centro, anteprima ultimo scatto a sinistra,
-  <strong>zoom</strong> a destra. Oltre 2× il pulsante tele mostra il fattore
-  live (3×, 4×, …).
+  <strong>flash</strong> a sinistra, <strong>Punta</strong> accanto al flash,
+  <strong>configurazione timbro</strong> a destra. In basso: scatto al centro,
+  anteprima ultimo scatto a sinistra, <strong>zoom</strong> a destra. Oltre 2×
+  il pulsante tele mostra il fattore live (3×, 4×, …).
 </p>
 <h3>7.2 Anteprima del timbro (live)</h3>
 <p>
@@ -295,7 +319,8 @@
 </p>
 <ul>
   <li>
-    in alto: data/ora, coordinate, meta (precisione / altitudine / direzione),
+    in alto: data/ora, eventuale riga <strong>Punto mirato (stimato)</strong>,
+    coordinate, meta (distanza stimata / precisione / altitudine / direzione),
     luogo — secondo gli interruttori in Configurazione;
   </li>
   <li>in basso: testo personalizzato, se compilato.</li>
@@ -335,6 +360,21 @@
       </td>
     </tr>
     <tr>
+      <td><strong>Punta</strong></td>
+      <td>
+        Icona mirino accanto al flash: apre un foglio modale a tutta larghezza
+        per la distanza (preset 50 / 100 / 200 / 500 m o valore libero) e
+        <strong>Blocca punto</strong>.
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Qui / Mirato</strong></td>
+      <td>
+        Con un punto sticky attivo, selettore in alto al centro: alterna tra la
+        tua posizione GPS e il punto mirato senza perderlo.
+      </td>
+    </tr>
+    <tr>
       <td><strong>Configurazione</strong></td>
       <td>
         Icona cursori in <strong>alto a destra</strong>: apre la configurazione
@@ -360,7 +400,34 @@
   </tbody>
 </table>
 <p>La fotocamera usata è solo quella <strong>posteriore</strong>.</p>
-<h3>7.4 Scatto e elaborazione in background</h3>
+<h3>7.4 Punto mirato (distanza + direzione)</h3>
+<p>
+  Per stampare le coordinate di ciò a cui stai <strong>puntando</strong> (es. un
+  focolaio a 200 m), non la tua posizione:
+</p>
+<ol>
+  <li>Assicurati che GPS e bussola siano disponibili.</li>
+  <li>Punta la fotocamera verso il punto di interesse.</li>
+  <li>
+    Tocca <strong>Punta</strong>, scegli o digita la distanza in metri, poi
+    <strong>Blocca punto</strong>.
+  </li>
+  <li>
+    Sul timbro compaiono le coordinate stimate e l’etichetta
+    <strong>Punto mirato (stimato)</strong>.
+  </li>
+  <li>
+    Usa <strong>Qui ↔ Mirato</strong> per tornare alla tua posizione o
+    riattivare il punto sticky; <strong>Cancella punto</strong> lo elimina.
+  </li>
+</ol>
+<p>
+  È una stima a terra lungo la direzione della bussola (senza altimetria / DEM):
+  utile in campo, non un fix GNSS sul bersaglio. Senza GPS o direzione, il
+  blocco non va a buon fine; lo scatto resta comunque disponibile in modalità
+  Qui.
+</p>
+<h3>7.5 Scatto e elaborazione in background</h3>
 <p>Dopo lo scatto:</p>
 <ol>
   <li>
@@ -380,8 +447,9 @@
 </p>
 <p>
   Per il timbro l’app preferisce la
-  <strong>posizione GPS già disponibile</strong> sul mirino, così lo scatto non
-  resta bloccato in attesa di un segnale più preciso.
+  <strong>posizione già disponibile</strong> sul mirino (GPS live o punto mirato
+  bloccato), così lo scatto non resta bloccato in attesa di un segnale più
+  preciso.
 </p>
 <hr />
 <h2>8. Configurazione del timbro</h2>
@@ -571,6 +639,13 @@
     >Coordinate non disponibili</em
   >, <em>Luogo non disponibile</em>) senza bloccare lo scatto.
 </p>
+<p>
+  Su dispositivi più vecchi o con moduli nativi limitati, l’app
+  <strong>degrada in silenzio</strong>: se il timbro Skia fallisce resta il JPEG
+  non timbrato in galleria; senza EXIF nativo restano foto + galleria +
+  registro; senza permesso Foto resta solo la galleria in-app; font e vibrazione
+  usano fallback di sistema. Lo scatto non deve bloccarsi per questi dettagli.
+</p>
 <hr />
 <h2>13. Condivisione</h2>
 <p>
@@ -581,11 +656,11 @@
 <p>
   Il file condiviso è il JPEG già timbrato, con EXIF se è stato scritto. Dopo
   l’invio, trattamento e conservazione dipendono dall’app o dal servizio scelto
-  dall’operatore (fuori dal controllo di AIB Camera).
+  da chi condivide (fuori dal controllo di AIB Camera).
 </p>
 <hr />
 <h2>14. Limiti e responsabilità</h2>
-<p>Chi adotta o usa l’app deve tenere presenti questi punti:</p>
+<p>Chi usa l’app deve tenere presenti questi punti:</p>
 <ol>
   <li>
     <strong>Strumento di supporto</strong>, non sostituto di procedure ufficiali
@@ -594,7 +669,8 @@
   <li>
     <strong>Precisione della posizione</strong> dipende dal dispositivo, dal
     permesso Posizione e dalle condizioni di segnale; l’app non corregge né
-    certifica il GPS.
+    certifica il GPS. Il <strong>punto mirato</strong> è una stima (GPS +
+    bussola + distanza indicata), non un fix sul bersaglio.
   </li>
   <li>
     <strong>Data e ora sul timbro</strong> usano sempre Europe/Rome; verificare
@@ -602,14 +678,12 @@
   </li>
   <li>
     <strong>Album «AIB Camera»</strong> è una copia di comodo: sul dispositivo
-    la copia affidabile è la <strong>galleria in-app</strong>; a livello
-    organizzativo vale ciò che viene esportato o condiviso secondo le procedure
-    interne.
+    la copia affidabile è la <strong>galleria in-app</strong>.
   </li>
   <li>
     <strong>Privacy:</strong> foto, impostazioni e registro restano sul
     dispositivo; non c’è sincronizzazione cloud gestita dallo sviluppatore. La
-    condivisione verso terzi è scelta dell’operatore.
+    condivisione verso terzi è scelta di chi usa l’app.
   </li>
   <li>
     <strong>Aggiornamenti:</strong> questa guida si riferisce alla versione app
@@ -622,13 +696,18 @@
 <ol>
   <li>
     Concedere almeno il permesso <strong>Fotocamera</strong>; Posizione e Foto
-    quando possibile e utile al turno.
+    quando possibile e utili.
   </li>
   <li>
-    Prima del turno, controllare <strong>Configurazione</strong> (campi attivi,
-    testo personalizzato, formato data, dimensione, opacità).
+    Controllare <strong>Configurazione</strong> (campi attivi, testo
+    personalizzato, formato data, dimensione, opacità) prima di scattare.
   </li>
-  <li>Verificare sull’<strong>anteprima live</strong> cosa finirà sul JPEG.</li>
+  <li>
+    Verificare sull’<strong>anteprima live</strong> cosa finirà sul JPEG. 3b. Se
+    serve documentare un punto lontano (es. focolaio), usare
+    <strong>Punta</strong> con distanza stimata e controllare l’etichetta
+    <strong>Punto mirato (stimato)</strong> prima di scattare.
+  </li>
   <li>
     In sequenza di scatti, non attendere l’indicatore di elaborazione: si può
     continuare a fotografare.
@@ -645,7 +724,7 @@
   </li>
   <li>
     Prima di condividere all’esterno, assicurarsi che contenuto e destinazione
-    rispettino le regole della propria organizzazione.
+    rispettino la legge applicabile.
   </li>
 </ol>
 <hr />
@@ -661,6 +740,14 @@
       <td>
         <a href="https://smnl.dev/aib-camera/privacy"
           >smnl.dev/aib-camera/privacy</a
+        >
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Termini di utilizzo</strong></td>
+      <td>
+        <a href="https://smnl.dev/aib-camera/terms"
+          >smnl.dev/aib-camera/terms</a
         >
       </td>
     </tr>

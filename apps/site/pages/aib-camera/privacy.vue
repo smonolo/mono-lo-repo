@@ -5,7 +5,7 @@ definePageMeta({
 
 const title = 'Informativa privacy — AIB Camera'
 const description =
-  'Informativa privacy di AIB Camera: fotografia di campo sul dispositivo. Foto, impostazioni, registro scatti e posizione restano sul telefono.'
+  'Informativa privacy di AIB Camera: app aperta a chiunque. Fotografia di campo sul dispositivo; foto, impostazioni, registro scatti e posizione restano sul telefono.'
 const canonical = 'https://smnl.dev/aib-camera/privacy'
 
 useSeoMeta({
@@ -68,7 +68,7 @@ const dataRows = [
     data: 'Testo personalizzato del timbro',
     where:
       'Sul dispositivo (impostazioni); può comparire in EXIF description / comment',
-    why: 'Note di squadra / turno sulla foto',
+    why: 'Note opzionali sulla foto',
   },
   {
     data: 'Impostazioni dell’app',
@@ -109,14 +109,19 @@ const codeClass =
       <p
         class="text-aib-muted dark:text-aib-muted-dark text-[13px] font-medium"
       >
-        Ultimo aggiornamento: 23 ottobre 2026
+        Ultimo aggiornamento: 26 ottobre 2026
       </p>
     </header>
 
     <div :class="['space-y-4', bodyClass]">
       <p>
         AIB Camera è un’app mobile indipendente e non ufficiale per la
-        fotografia di campo nell’antincendio boschivo (AIB).
+        fotografia di campo nell’antincendio boschivo (AIB) e situazioni simili.
+        È <strong>aperta a chiunque</strong> — non riservata a una specifica
+        organizzazione, squadra o insieme di professionisti. Chiunque può usarla
+        per scattare foto geolocalizzate timbrate (ad esempio per condividerle
+        con la Protezione Civile locale via WhatsApp o Telegram, o per leggere
+        coordinate e altri dettagli a chi risponde all’emergenza, come il 112).
         <strong>Non</strong> è affiliata, approvata né realizzata da Protezione
         Civile, Vigili del Fuoco, Regione Lombardia o altri enti pubblici.
       </p>
