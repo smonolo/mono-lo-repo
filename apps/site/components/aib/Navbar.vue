@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { aibCopy } from '~/utils/aib-camera-copy'
 
-const { locale, setLocale } = useAibLocale()
+const { locale, setLocale, localePath } = useAibLocale()
 const copy = computed(() => aibCopy(locale.value))
 const route = useRoute()
 
@@ -28,7 +28,7 @@ function navClass(path: string) {
       class="mx-auto flex h-12 w-full max-w-[700px] items-center justify-between gap-2 px-4 sm:h-14 sm:gap-3 sm:px-5"
     >
       <NuxtLink
-        to="/aib-camera"
+        :to="localePath('/aib-camera')"
         class="shrink-0"
         :aria-label="copy.nav.homeAria"
       >
@@ -45,16 +45,22 @@ function navClass(path: string) {
         class="flex min-w-0 flex-1 items-center justify-end gap-2.5 sm:gap-4"
         :aria-label="copy.footer.brand"
       >
-        <NuxtLink to="/aib-camera/guide" :class="navClass('/aib-camera/guide')">
+        <NuxtLink
+          :to="localePath('/aib-camera/guide')"
+          :class="navClass('/aib-camera/guide')"
+        >
           {{ copy.nav.guide }}
         </NuxtLink>
         <NuxtLink
-          to="/aib-camera/privacy"
+          :to="localePath('/aib-camera/privacy')"
           :class="navClass('/aib-camera/privacy')"
         >
           {{ copy.nav.privacy }}
         </NuxtLink>
-        <NuxtLink to="/aib-camera/terms" :class="navClass('/aib-camera/terms')">
+        <NuxtLink
+          :to="localePath('/aib-camera/terms')"
+          :class="navClass('/aib-camera/terms')"
+        >
           {{ copy.nav.terms }}
         </NuxtLink>
 

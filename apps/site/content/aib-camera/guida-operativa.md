@@ -90,7 +90,7 @@ L’app **non** è realizzata, approvata né affiliata a Protezione Civile, Vigi
 - Non invia foto, posizione o registro a server del sviluppatore.
 - Non sostituisce procedure istituzionali di archiviazione, verbali o sistemi di comando e controllo.
 - Non garantisce precisione GPS o completezza EXIF: dipendono da dispositivo, permesso, segnale e build dell’app.
-- Non offre fotocamera anteriore, modalità flash «auto», né cambio lingua in-app (interfaccia predefinita in italiano).
+- Non offre fotocamera anteriore né modalità flash «auto». La lingua dell’interfaccia (italiano predefinito o inglese) si cambia da Impostazioni.
 
 ---
 
@@ -99,7 +99,7 @@ L’app **non** è realizzata, approvata né affiliata a Protezione Civile, Vigi
 - Telefono **iOS** o **Android** con fotocamera posteriore.
 - Si consiglia un **dispositivo fisico** (non solo simulatore o emulatore).
 - Orientamento supportato: **verticale** (portrait).
-- Lingua dell’interfaccia: **italiano** (predefinita).
+- Lingua dell’interfaccia: **italiano** (predefinita) o **inglese**, selezionabile in **Impostazioni** e memorizzata sul dispositivo.
 - Fuso orario sul timbro: sempre **Europe/Rome**, indipendente dal fuso impostato sul telefono.
 
 Informazioni aggiornate su disponibilità e distribuzione: [smnl.dev/aib-camera](https://smnl.dev/aib-camera). Per adozioni organizzate (distribuzione a più dispositivi, build dedicate), contattare lo sviluppatore (vedi § 16).
@@ -128,7 +128,7 @@ Tre schede nella barra inferiore:
 
 1. **Fotocamera** — scatto e anteprima del timbro
 2. **Foto** — galleria in-app
-3. **Impostazioni** — permessi, versione e ID installazione (tocca per copiare), registro scatti, link a questa guida e informativa privacy. La configurazione del timbro si apre dall’icona in alto a destra sulla fotocamera.
+3. **Impostazioni** — lingua (Italiano / English), permessi, versione e ID installazione (tocca per copiare), registro scatti, link a questa guida e informativa privacy. La configurazione del timbro si apre dall’icona in alto a destra sulla fotocamera.
 
 ---
 

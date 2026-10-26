@@ -6,7 +6,7 @@ definePageMeta({
   layout: 'aib-camera',
 })
 
-const { locale } = useAibLocale()
+const { locale, localePath } = useAibLocale()
 const copy = computed(() => aibCopy(locale.value))
 const canonical = 'https://smnl.dev/aib-camera'
 
@@ -32,8 +32,12 @@ const bodyClass =
   'text-[15px] leading-relaxed text-aib-muted dark:text-aib-muted-dark [&_strong]:font-semibold [&_strong]:text-aib-fg dark:[&_strong]:text-aib-fg-inverse'
 const h2Class = 'text-[17px] font-semibold text-aib-fg dark:text-aib-fg-inverse'
 
-const privacyBody = computed(() => aibHtml(copy.value.home.privacyBodyHtml))
-const contactsBody = computed(() => aibHtml(copy.value.home.contactsBodyHtml))
+const privacyBody = computed(() =>
+  aibHtml(copy.value.home.privacyBodyHtml, { locale: locale.value })
+)
+const contactsBody = computed(() =>
+  aibHtml(copy.value.home.contactsBodyHtml, { locale: locale.value })
+)
 </script>
 
 <template>
@@ -88,7 +92,7 @@ const contactsBody = computed(() => aibHtml(copy.value.home.contactsBodyHtml))
       <h2 :class="h2Class">{{ copy.home.guideTitle }}</h2>
       <p :class="bodyClass">
         <span v-html="copy.home.guideBodyHtml" />
-        <NuxtLink to="/aib-camera/guide" :class="linkClass">{{
+        <NuxtLink :to="localePath('/aib-camera/guide')" :class="linkClass">{{
           copy.home.guideLink
         }}</NuxtLink>
         {{ copy.home.guideOr }}

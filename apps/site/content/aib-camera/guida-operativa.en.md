@@ -23,7 +23,7 @@
 5. Permissions
 6. Main screens
 7. Camera
-8. Stamp configuration
+8. Stamp settings
 9. Gallery (Photos tab)
 10. Capture log
 11. EXIF metadata
@@ -73,7 +73,7 @@ The app is **not** built, endorsed, or affiliated with Civil Protection, the Fir
 
 | Feature        | Detail                                                                                                                               |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| Stamp on JPEG  | Date/time (**Europe/Rome** timezone), coordinates, accuracy, altitude, heading, place, and custom text, per Stamp configuration      |
+| Stamp on JPEG  | Date/time (**Europe/Rome** timezone), coordinates, accuracy, altitude, heading, place, and custom text, per Stamp settings           |
 | Aimed target   | Distance + compass heading from GPS: estimates coordinates of what you point at; Me ↔ Target toggle; “estimated” label on the stamp |
 | Live preview   | The viewfinder shows the same block that will be burned into the photo                                                               |
 | Fast capture   | You can take several photos in a row; the stamp is processed in a queue, one photo at a time                                         |
@@ -90,7 +90,7 @@ The app is **not** built, endorsed, or affiliated with Civil Protection, the Fir
 - Does not send photos, location, or the log to developer servers.
 - Does not replace institutional archival procedures, reports, or command-and-control systems.
 - Does not guarantee GPS accuracy or EXIF completeness: those depend on device, permission, signal, and app build.
-- Does not offer a front camera, flash “auto” mode, or in-app language switching (default UI is Italian).
+- Does not offer a front camera or flash “auto” mode. UI language (Italian by default, or English) is switched in Settings.
 
 ---
 
@@ -99,7 +99,7 @@ The app is **not** built, endorsed, or affiliated with Civil Protection, the Fir
 - **iOS** or **Android** phone with a rear camera.
 - A **physical device** is recommended (not only a simulator or emulator).
 - Supported orientation: **portrait**.
-- UI language: **Italian** (default).
+- UI language: **Italian** (default) or **English**, selectable in **Settings** and stored on the device.
 - Stamp timezone: always **Europe/Rome**, independent of the phone timezone.
 
 Up-to-date availability and distribution: [smnl.dev/aib-camera](https://smnl.dev/aib-camera). For organized rollouts (many devices, dedicated builds), contact the developer (see § 16).
@@ -128,7 +128,7 @@ Three tabs in the bottom bar:
 
 1. **Camera** — capture and stamp preview
 2. **Photos** — in-app gallery
-3. **Settings** — permissions, version and install ID (tap to copy), capture log, links to this guide and the privacy policy. Stamp configuration opens from the icon at the top right of the camera.
+3. **Settings** — language (Italiano / English), permissions, version and install ID (tap to copy), capture log, links to this guide and the privacy policy. Stamp settings open from the icon at the top right of the camera.
 
 ---
 
@@ -142,10 +142,10 @@ The live preview has **black bands** above and below. Top: **flash** on the left
 
 The viewfinder shows the same block that will be **burned** into the JPEG:
 
-- top: date/time, optional **Aimed target (estimated)** line, coordinates, meta (estimated distance / accuracy / altitude / heading), place — per Configuration toggles;
+- top: date/time, optional **Aimed target (estimated)** line, coordinates, meta (estimated distance / accuracy / altitude / heading), place — per Stamp settings toggles;
 - bottom: custom text, if filled in.
 
-Font, text size, and background opacity follow **Configuration** (top-right icon on the camera). The preview matches what will land on the photo.
+Font, text size, and background opacity follow **Stamp settings** (top-right icon on the camera). The preview matches what will land on the photo.
 
 ### 7.3 Controls
 
@@ -155,8 +155,8 @@ Font, text size, and background opacity follow **Configuration** (top-right icon
 | **Last-shot preview** | Square on the left: opens the detail of the last ready photo. A loading indicator appears while processing is still running.                                               |
 | **Flash**             | Lightning icon **top left**: **on / off** only (no auto mode).                                                                                                             |
 | **Aim**               | Crosshair icon next to flash, or **press and hold** the viewfinder (~0.5 s): full-width content-height sheet; dismiss with ✕ or tap outside; distance and **Lock target**. |
-| **Me / Target**       | With a sticky point active, selector at top center: switches between your GPS position and the aimed point without losing it.                                              |
-| **Configuration**     | Sliders icon **top right**: full-width bottom sheet (full height); dismiss with ✕ or tap outside.                                                                          |
+| **Me / Target**       | With a sticky point active, selector at top center: switches between your GPS position and the aimed target without losing it.                                             |
+| **Stamp settings**    | Sliders icon **top right**: full-width bottom sheet (full height); dismiss with ✕ or tap outside.                                                                          |
 | **Zoom**              | Buttons **bottom right** (e.g. 0.5× / 1× / 2× when available) and **pinch**; beyond 2× the active button shows 3×, 4×, …. **Double-tap** the viewfinder resets zoom to 1×. |
 | **Swipe**             | Swipe **left** from the viewfinder to open the gallery.                                                                                                                    |
 
@@ -184,13 +184,13 @@ After the shutter:
 
 You can shoot in sequence without waiting for the stamp to finish: the indicator on the left preview shows that processing is still running.
 
-For the stamp the app prefers the **position already available** on the viewfinder (live GPS or locked aimed point), so the shutter is not blocked waiting for a more precise fix.
+For the stamp the app prefers the **position already available** on the viewfinder (live GPS or locked aimed target), so the shutter is not blocked waiting for a more precise fix.
 
 ---
 
-## 8. Stamp configuration
+## 8. Stamp settings
 
-Path: sliders icon on the **camera** — full-width, full-height bottom sheet (Configuration); dismiss with ✕ or tap outside.
+Path: sliders icon on the **camera** — full-width, full-height bottom sheet (**Stamp settings**); dismiss with ✕ or tap outside.
 
 ### 8.1 Visible fields (toggles)
 
@@ -316,7 +316,7 @@ Anyone using the app should keep these points in mind:
 ## 15. Field checklist
 
 1. Grant at least **Camera** permission; Location and Photos when useful.
-2. Check **Configuration** (active fields, custom text, date format, size, opacity) before shooting.
+2. Check **Stamp settings** (active fields, custom text, date format, size, opacity) before shooting.
 3. Verify on the **live preview** what will land on the JPEG.
    3b. If you need to document a distant point (e.g. a hotspot), use **Aim** (tap or press-and-hold the viewfinder) with an estimated distance and check the **Aimed target (estimated)** label before shooting.
 4. In a capture sequence, do not wait for the processing indicator: you can keep photographing.

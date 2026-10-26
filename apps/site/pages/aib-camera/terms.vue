@@ -36,9 +36,15 @@ const richBody = [
   '[&_a]:text-aib-fg [&_a]:underline [&_a]:underline-offset-2 [&_a]:hover:opacity-70 dark:[&_a]:text-aib-fg-inverse',
 ].join(' ')
 
-const privacyBody = computed(() => aibHtml(copy.value.terms.privacyBodyHtml))
-const contactsBody = computed(() => aibHtml(copy.value.terms.contactsBodyHtml))
-const contactsMail = computed(() => aibHtml(copy.value.terms.contactsMailHtml))
+const privacyBody = computed(() =>
+  aibHtml(copy.value.terms.privacyBodyHtml, { locale: locale.value })
+)
+const contactsBody = computed(() =>
+  aibHtml(copy.value.terms.contactsBodyHtml, { locale: locale.value })
+)
+const contactsMail = computed(() =>
+  aibHtml(copy.value.terms.contactsMailHtml, { locale: locale.value })
+)
 </script>
 
 <template>

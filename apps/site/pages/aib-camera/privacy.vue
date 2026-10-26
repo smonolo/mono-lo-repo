@@ -40,16 +40,22 @@ const richBody = [
 ].join(' ')
 
 const logBody = computed(() =>
-  aibHtml(copy.value.privacy.logBodyHtml, { codeClass })
+  aibHtml(copy.value.privacy.logBodyHtml, {
+    codeClass,
+    locale: locale.value,
+  })
 )
 const exifBody = computed(() =>
-  aibHtml(copy.value.privacy.exifBodyHtml, { codeClass })
+  aibHtml(copy.value.privacy.exifBodyHtml, {
+    codeClass,
+    locale: locale.value,
+  })
 )
 const contactsBody = computed(() =>
-  aibHtml(copy.value.privacy.contactsBodyHtml)
+  aibHtml(copy.value.privacy.contactsBodyHtml, { locale: locale.value })
 )
 const contactsMail = computed(() =>
-  aibHtml(copy.value.privacy.contactsMailHtml)
+  aibHtml(copy.value.privacy.contactsMailHtml, { locale: locale.value })
 )
 </script>
 

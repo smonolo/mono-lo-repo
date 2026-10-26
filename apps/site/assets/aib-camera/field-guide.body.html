@@ -52,7 +52,7 @@
   <li>Permissions</li>
   <li>Main screens</li>
   <li>Camera</li>
-  <li>Stamp configuration</li>
+  <li>Stamp settings</li>
   <li>Gallery (Photos tab)</li>
   <li>Capture log</li>
   <li>EXIF metadata</li>
@@ -128,8 +128,7 @@
       <td>Stamp on JPEG</td>
       <td>
         Date/time (<strong>Europe/Rome</strong> timezone), coordinates,
-        accuracy, altitude, heading, place, and custom text, per Stamp
-        configuration
+        accuracy, altitude, heading, place, and custom text, per Stamp settings
       </td>
     </tr>
     <tr>
@@ -205,8 +204,8 @@
     device, permission, signal, and app build.
   </li>
   <li>
-    Does not offer a front camera, flash “auto” mode, or in-app language
-    switching (default UI is Italian).
+    Does not offer a front camera or flash “auto” mode. UI language (Italian by
+    default, or English) is switched in Settings.
   </li>
 </ul>
 <hr />
@@ -220,7 +219,10 @@
     emulator).
   </li>
   <li>Supported orientation: <strong>portrait</strong>.</li>
-  <li>UI language: <strong>Italian</strong> (default).</li>
+  <li>
+    UI language: <strong>Italian</strong> (default) or <strong>English</strong>,
+    selectable in <strong>Settings</strong> and stored on the device.
+  </li>
   <li>
     Stamp timezone: always <strong>Europe/Rome</strong>, independent of the
     phone timezone.
@@ -285,9 +287,10 @@
   <li><strong>Camera</strong> — capture and stamp preview</li>
   <li><strong>Photos</strong> — in-app gallery</li>
   <li>
-    <strong>Settings</strong> — permissions, version and install ID (tap to
-    copy), capture log, links to this guide and the privacy policy. Stamp
-    configuration opens from the icon at the top right of the camera.
+    <strong>Settings</strong> — language (Italiano / English), permissions,
+    version and install ID (tap to copy), capture log, links to this guide and
+    the privacy policy. Stamp settings open from the icon at the top right of
+    the camera.
   </li>
 </ol>
 <hr />
@@ -309,13 +312,13 @@
   <li>
     top: date/time, optional <strong>Aimed target (estimated)</strong> line,
     coordinates, meta (estimated distance / accuracy / altitude / heading),
-    place — per Configuration toggles;
+    place — per Stamp settings toggles;
   </li>
   <li>bottom: custom text, if filled in.</li>
 </ul>
 <p>
   Font, text size, and background opacity follow
-  <strong>Configuration</strong> (top-right icon on the camera). The preview
+  <strong>Stamp settings</strong> (top-right icon on the camera). The preview
   matches what will land on the photo.
 </p>
 <h3>7.3 Controls</h3>
@@ -359,11 +362,11 @@
       <td><strong>Me / Target</strong></td>
       <td>
         With a sticky point active, selector at top center: switches between
-        your GPS position and the aimed point without losing it.
+        your GPS position and the aimed target without losing it.
       </td>
     </tr>
     <tr>
-      <td><strong>Configuration</strong></td>
+      <td><strong>Stamp settings</strong></td>
       <td>
         Sliders icon <strong>top right</strong>: full-width bottom sheet (full
         height); dismiss with ✕ or tap outside.
@@ -435,14 +438,14 @@
 <p>
   For the stamp the app prefers the
   <strong>position already available</strong> on the viewfinder (live GPS or
-  locked aimed point), so the shutter is not blocked waiting for a more precise
+  locked aimed target), so the shutter is not blocked waiting for a more precise
   fix.
 </p>
 <hr />
-<h2>8. Stamp configuration</h2>
+<h2>8. Stamp settings</h2>
 <p>
   Path: sliders icon on the <strong>camera</strong> — full-width, full-height
-  bottom sheet (Configuration); dismiss with ✕ or tap outside.
+  bottom sheet (<strong>Stamp settings</strong>); dismiss with ✕ or tap outside.
 </p>
 <h3>8.1 Visible fields (toggles)</h3>
 <ul>
@@ -680,7 +683,7 @@
     useful.
   </li>
   <li>
-    Check <strong>Configuration</strong> (active fields, custom text, date
+    Check <strong>Stamp settings</strong> (active fields, custom text, date
     format, size, opacity) before shooting.
   </li>
   <li>

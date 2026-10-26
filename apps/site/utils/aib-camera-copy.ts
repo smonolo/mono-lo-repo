@@ -269,7 +269,7 @@ const it: AibCopy = {
       {
         data: 'Impostazioni dell’app',
         where: 'Sul dispositivo (archivio locale)',
-        why: 'Ricordare le preferenze del timbro',
+        why: 'Ricordare le preferenze del timbro e la lingua dell’interfaccia',
       },
     ],
     logTitle: 'Registro scatti',
@@ -390,7 +390,7 @@ const en: AibCopy = {
       },
       {
         title: 'Fast shutter',
-        body: 'Shoot in sequence without waiting for stamp processing. Position uses the live fix (or locked aimed point) when available, so the shutter stays snappy.',
+        body: 'Shoot in sequence without waiting for stamp processing. Position uses the live fix (or locked aimed target) when available, so the shutter stays snappy.',
       },
       {
         title: 'EXIF for machines',
@@ -510,7 +510,7 @@ const en: AibCopy = {
       {
         data: 'App settings',
         where: 'On device (local storage)',
-        why: 'Remember stamp preferences',
+        why: 'Remember stamp preferences and UI language',
       },
     ],
     logTitle: 'Capture log',
