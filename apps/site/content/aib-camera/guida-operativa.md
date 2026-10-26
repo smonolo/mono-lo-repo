@@ -1,4 +1,4 @@
-<!-- Regenera PDF + HTML: npm run docs:aib-camera-guida (da apps/site) → public/docs/ -->
+<!-- Regenera PDF + body HTML (IT + EN): npm run docs:aib-camera-guida (da apps/site) → public/docs/ + assets/aib-camera/ -->
 
 # AIB Camera — Guida operativa
 
@@ -332,7 +332,7 @@ Chi usa l’app deve tenere presenti questi punti:
     <tr><td><strong>Domande sull’app</strong></td><td><a href="mailto:stefano@smnl.dev">stefano@smnl.dev</a></td></tr>
     <tr><td><strong>Informativa privacy</strong></td><td><a href="https://smnl.dev/aib-camera/privacy">smnl.dev/aib-camera/privacy</a></td></tr>
     <tr><td><strong>Termini di utilizzo</strong></td><td><a href="https://smnl.dev/aib-camera/terms">smnl.dev/aib-camera/terms</a></td></tr>
-    <tr><td><strong>Questa guida (web)</strong></td><td><a href="https://smnl.dev/aib-camera/guida">smnl.dev/aib-camera/guida</a></td></tr>
+    <tr><td><strong>Questa guida (web)</strong></td><td><a href="https://smnl.dev/aib-camera/guide">smnl.dev/aib-camera/guide</a></td></tr>
     <tr><td><strong>Questa guida (PDF)</strong></td><td><a href="https://smnl.dev/docs/aib-camera-guida-operativa.pdf">smnl.dev/docs/aib-camera-guida-operativa.pdf</a></td></tr>
   </tbody>
 </table>

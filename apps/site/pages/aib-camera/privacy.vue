@@ -1,22 +1,24 @@
 <script setup lang="ts">
+import { aibCopy } from '~/utils/aib-camera-copy'
+import { aibHtml } from '~/utils/aib-html'
+
 definePageMeta({
   layout: 'aib-camera',
 })
 
-const title = 'Informativa privacy — AIB Camera'
-const description =
-  'Informativa privacy di AIB Camera: app aperta a chiunque. Fotografia di campo sul dispositivo; foto, impostazioni, registro scatti e posizione restano sul telefono.'
+const { locale } = useAibLocale()
+const copy = computed(() => aibCopy(locale.value))
 const canonical = 'https://smnl.dev/aib-camera/privacy'
 
 useSeoMeta({
-  title,
-  description,
-  ogTitle: title,
-  ogDescription: description,
+  title: () => copy.value.privacy.title,
+  description: () => copy.value.privacy.description,
+  ogTitle: () => copy.value.privacy.title,
+  ogDescription: () => copy.value.privacy.description,
   ogUrl: canonical,
   ogType: 'website',
-  twitterTitle: title,
-  twitterDescription: description,
+  twitterTitle: () => copy.value.privacy.title,
+  twitterDescription: () => copy.value.privacy.description,
   robots: 'index, follow',
 })
 
@@ -24,148 +26,62 @@ useHead({
   link: [{ rel: 'canonical', href: canonical }],
 })
 
-const dataRows = [
-  {
-    data: 'Immagine dalla fotocamera',
-    where: 'Sul dispositivo (archivio app; opzionalmente Libreria Foto)',
-    why: 'Scattare e condividere foto di campo timbrate',
-  },
-  {
-    data: 'Data e ora',
-    where: 'Stampate sul JPEG (Europe/Rome); anche EXIF DateTime',
-    why: 'Contesto operativo sulla foto',
-  },
-  {
-    data: 'Coordinate GPS, precisione, altitudine, direzione',
-    where: 'Sul dispositivo; sul timbro / EXIF se disponibili',
-    why: 'Contesto di posizione sulla foto',
-  },
-  {
-    data: 'Stima punto mirato (distanza + direzione)',
-    where:
-      'Sul dispositivo (punto sticky di sessione); può comparire su timbro / registro / EXIF GPS',
-    why: 'Coordinate di ciò a cui stai puntando, non solo della tua posizione',
-  },
-  {
-    data: 'Etichetta di luogo (geocodifica inversa)',
-    where:
-      'Sul dispositivo; lookup di rete opzionale; cache locale; può comparire in EXIF',
-    why: 'Luogo leggibile sul timbro',
-  },
-  {
-    data: 'ID scatto (UUID)',
-    where:
-      'Sul dispositivo (registro scatti); EXIF ImageUniqueID / UserComment JSON',
-    why: 'Identificare le foto scattate con questa app',
-  },
-  {
-    data: 'ID installazione (UUID)',
-    where:
-      'Sul dispositivo (archivio locale); Impostazioni (tocca per copiare); esportazione CSV',
-    why: 'Collegare i CSV del registro scatti a una specifica installazione',
-  },
-  {
-    data: 'Testo personalizzato del timbro',
-    where:
-      'Sul dispositivo (impostazioni); può comparire in EXIF description / comment',
-    why: 'Note opzionali sulla foto',
-  },
-  {
-    data: 'Impostazioni dell’app',
-    where: 'Sul dispositivo (archivio locale)',
-    why: 'Ricordare le preferenze del timbro',
-  },
-]
-
-const linkClass =
-  'text-aib-fg underline underline-offset-2 hover:opacity-70 dark:text-aib-fg-inverse'
 const bodyClass =
   'text-[15px] leading-relaxed text-aib-muted dark:text-aib-muted-dark [&_strong]:font-semibold [&_strong]:text-aib-fg dark:[&_strong]:text-aib-fg-inverse'
 const h2Class = 'text-[17px] font-semibold text-aib-fg dark:text-aib-fg-inverse'
 const h3Class = 'text-[15px] font-semibold text-aib-fg dark:text-aib-fg-inverse'
 const listClass =
   'list-disc space-y-2 pl-5 text-[15px] leading-relaxed text-aib-muted dark:text-aib-muted-dark [&_strong]:font-semibold [&_strong]:text-aib-fg dark:[&_strong]:text-aib-fg-inverse'
-const crumbClass =
-  'text-[13px] font-medium text-aib-muted dark:text-aib-muted-dark [&_a]:text-inherit [&_a]:no-underline [&_a:hover]:text-aib-fg [&_a:hover]:underline [&_a:hover]:underline-offset-2 dark:[&_a:hover]:text-aib-fg-inverse'
 const codeClass =
   'rounded-md bg-aib-surface-muted px-1 py-0.5 font-mono text-[0.86em] text-aib-fg dark:bg-aib-surface-muted-dark dark:text-aib-fg-inverse'
+const richBody = [
+  bodyClass,
+  '[&_a]:text-aib-fg [&_a]:underline [&_a]:underline-offset-2 [&_a]:hover:opacity-70 dark:[&_a]:text-aib-fg-inverse',
+].join(' ')
+
+const logBody = computed(() =>
+  aibHtml(copy.value.privacy.logBodyHtml, { codeClass })
+)
+const exifBody = computed(() =>
+  aibHtml(copy.value.privacy.exifBodyHtml, { codeClass })
+)
+const contactsBody = computed(() =>
+  aibHtml(copy.value.privacy.contactsBodyHtml)
+)
+const contactsMail = computed(() =>
+  aibHtml(copy.value.privacy.contactsMailHtml)
+)
 </script>
 
 <template>
   <article class="space-y-10">
     <header class="space-y-3">
-      <p :class="crumbClass">
-        <NuxtLink to="/">smnl.dev</NuxtLink>
-        <span aria-hidden="true"> / </span>
-        <NuxtLink to="/aib-camera">AIB Camera</NuxtLink>
-        <span aria-hidden="true"> / </span>
-        <span>Informativa</span>
-      </p>
       <h1
-        class="text-aib-fg dark:text-aib-fg-inverse text-[28px] font-bold leading-tight tracking-[-0.4px]"
+        class="text-aib-fg dark:text-aib-fg-inverse text-[26px] font-bold leading-tight tracking-[-0.4px] sm:text-[28px]"
       >
-        Informativa privacy — AIB Camera
+        {{ copy.privacy.heading }}
       </h1>
       <p
         class="text-aib-muted dark:text-aib-muted-dark text-[13px] font-medium"
       >
-        Ultimo aggiornamento: 26 ottobre 2026
+        {{ copy.privacy.updated }}
       </p>
     </header>
 
     <div :class="['space-y-4', bodyClass]">
-      <p>
-        AIB Camera è un’app mobile indipendente e non ufficiale per la
-        fotografia di campo nell’antincendio boschivo (AIB) e situazioni simili.
-        È <strong>aperta a chiunque</strong> — non riservata a una specifica
-        organizzazione, squadra o insieme di professionisti. Chiunque può usarla
-        per scattare foto geolocalizzate timbrate (ad esempio per condividerle
-        con la Protezione Civile locale via WhatsApp o Telegram, o per leggere
-        coordinate e altri dettagli a chi risponde all’emergenza, come il 112).
-        <strong>Non</strong> è affiliata, approvata né realizzata da Protezione
-        Civile, Vigili del Fuoco, Regione Lombardia o altri enti pubblici.
-      </p>
-      <p>
-        Questa informativa descrive come l’app tratta i dati sul dispositivo.
-      </p>
+      <p v-html="copy.privacy.intro1Html" />
+      <p>{{ copy.privacy.intro2 }}</p>
     </div>
 
     <section class="space-y-3">
-      <h2 :class="h2Class">In sintesi</h2>
+      <h2 :class="h2Class">{{ copy.privacy.summaryTitle }}</h2>
       <ul :class="listClass">
-        <li>
-          L’app è <strong>offline-first</strong>. Foto, impostazioni, galleria
-          in-app e registro scatti restano sul dispositivo.
-        </li>
-        <li>
-          Non c’è <strong>account</strong>, <strong>SDK di analytics</strong> né
-          <strong>sincronizzazione cloud</strong> gestita dallo sviluppatore.
-        </li>
-        <li>La <strong>fotocamera</strong> è necessaria per scattare.</li>
-        <li>
-          La <strong>posizione</strong> è opzionale e serve a stampare
-          coordinate, altitudine, direzione e luogo sulla foto, e a scrivere i
-          campi corrispondenti nell’EXIF JPEG quando possibile. Puoi anche
-          bloccare un <strong>punto mirato</strong> (GPS + bussola + distanza
-          inserita): le coordinate stimate possono sostituire la tua posizione
-          sul timbro finché non le cancelli.
-        </li>
-        <li>
-          L’accesso alla <strong>libreria Foto</strong> è opzionale e serve a
-          salvare le foto timbrate nell’album «AIB Camera» e a rimuovere quelle
-          copie quando elimini le foto dall’app.
-        </li>
-        <li>
-          La rete serve solo per la
-          <strong>geocodifica inversa opzionale</strong> (da GPS a etichetta di
-          luogo) quando c’è connessione. Le etichette vicine possono restare in
-          cache sul dispositivo per riuso offline.
-        </li>
+        <li v-for="(item, i) in copy.privacy.summary" :key="i" v-html="item" />
       </ul>
     </section>
 
     <section class="space-y-4">
-      <h2 :class="h2Class">Dati trattati dall’app</h2>
+      <h2 :class="h2Class">{{ copy.privacy.dataTitle }}</h2>
       <div
         class="rounded-aib bg-aib-surface dark:bg-aib-surface-dark overflow-x-auto"
       >
@@ -177,22 +93,22 @@ const codeClass =
               <th
                 class="border-aib-border text-aib-fg dark:border-aib-border-dark dark:text-aib-fg-inverse border-b px-3.5 py-3 font-semibold"
               >
-                Dato
+                {{ copy.privacy.colData }}
               </th>
               <th
                 class="border-aib-border text-aib-fg dark:border-aib-border-dark dark:text-aib-fg-inverse border-b px-3.5 py-3 font-semibold"
               >
-                Dove resta
+                {{ copy.privacy.colWhere }}
               </th>
               <th
                 class="border-aib-border text-aib-fg dark:border-aib-border-dark dark:text-aib-fg-inverse border-b px-3.5 py-3 font-semibold"
               >
-                Perché
+                {{ copy.privacy.colWhy }}
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="row in dataRows" :key="row.data">
+            <tr v-for="row in copy.privacy.dataRows" :key="row.data">
               <td
                 class="border-aib-border text-aib-fg dark:border-aib-border-dark dark:text-aib-fg-inverse border-t px-3.5 py-3 align-top font-medium"
               >
@@ -213,109 +129,45 @@ const codeClass =
         </table>
       </div>
 
-      <h3 :class="h3Class">Registro scatti</h3>
-      <p :class="bodyClass">
-        Ogni scatto riuscito viene registrato in un
-        <strong>registro scatti</strong> locale (ID, data/ora e coordinate se
-        disponibili). Il registro resta sul dispositivo anche se elimini la foto
-        dalla galleria in-app o dall’album di sistema. Non viene caricato
-        online. Puoi aprirlo da Impostazioni, copiare un ID per confrontarlo con
-        l’EXIF di un JPEG condiviso, oppure esportare tutto in CSV tramite il
-        foglio di condivisione di sistema. Ogni installazione dell’app ha anche
-        un <strong>ID installazione</strong> (UUID) locale, visibile in
-        Impostazioni. Lì puoi toccare <strong>Versione</strong> o
-        <strong>ID installazione</strong> per copiare il valore. L’ID
-        installazione è scritto nella colonna
-        <code :class="codeClass">install_id</code> dei CSV, così i registri di
-        più dispositivi restano distinguibili. Reinstallare l’app genera un
-        nuovo ID. La stringa di versione è solo l’etichetta di build dell’app
-        (non un identificativo di tracciamento).
-      </p>
+      <h3 :class="h3Class">{{ copy.privacy.logTitle }}</h3>
+      <p :class="richBody" v-html="logBody" />
 
-      <h3 :class="h3Class">Metadati EXIF</h3>
-      <p :class="bodyClass">
-        Dopo il timbro visivo l’app prova a scrivere tag EXIF standard sul JPEG
-        salvato (ad esempio <code :class="codeClass">Software</code>,
-        <code :class="codeClass">Artist</code>,
-        <code :class="codeClass">ImageUniqueID</code>, campi GPS e un
-        <code :class="codeClass">UserComment</code> JSON). Se la build del
-        dispositivo non può scrivere EXIF, la foto resta salvata con il timbro
-        visivo e la voce nel registro scatti. Se anche il compositing del timbro
-        fallisce, resta comunque il JPEG non timbrato nella galleria in-app.
-      </p>
+      <h3 :class="h3Class">{{ copy.privacy.exifTitle }}</h3>
+      <p :class="richBody" v-html="exifBody" />
 
-      <p :class="bodyClass">
-        Lo sviluppatore <strong>non</strong> gestisce un backend che riceve
-        foto, posizione, impostazioni, ID di scatto o ID installazione.
-      </p>
+      <p :class="bodyClass" v-html="copy.privacy.noBackendHtml" />
     </section>
 
     <section class="space-y-3">
-      <h2 :class="h2Class">Permessi</h2>
+      <h2 :class="h2Class">{{ copy.privacy.permissionsTitle }}</h2>
       <ul :class="listClass">
-        <li><strong>Fotocamera</strong> — necessaria per scattare.</li>
-        <li>
-          <strong>Posizione (in uso)</strong> — opzionale. Se negata puoi
-          comunque scattare; le righe geo sul timbro risultano non disponibili e
-          i campi GPS EXIF sono omessi.
-        </li>
-        <li>
-          <strong>Libreria Foto / media</strong> — opzionale: salvare le foto
-          timbrate nell’album «AIB Camera» e rimuovere quelle copie quando le
-          elimini dall’app. La galleria in-app resta la fonte di verità anche se
-          questo permesso è negato.
-        </li>
+        <li
+          v-for="(item, i) in copy.privacy.permissions"
+          :key="i"
+          v-html="item"
+        />
       </ul>
     </section>
 
     <section class="space-y-2">
-      <h2 :class="h2Class">Condivisione</h2>
-      <p :class="bodyClass">
-        Se usi il foglio di condivisione di sistema (WhatsApp, Mail, File,
-        ecc.), la foto condivisa (compreso l’eventuale EXIF scritto nel file) o
-        un CSV del registro scatti lascia l’app secondo le regole dell’app o del
-        servizio che scegli. Ciò è fuori dal controllo di AIB Camera.
-      </p>
+      <h2 :class="h2Class">{{ copy.privacy.shareTitle }}</h2>
+      <p :class="bodyClass">{{ copy.privacy.shareBody }}</p>
     </section>
 
     <section class="space-y-2">
-      <h2 :class="h2Class">Privacy dei minori</h2>
-      <p :class="bodyClass">
-        L’app non è rivolta ai minori e non raccoglie consapevolmente dati
-        personali di minori.
-      </p>
+      <h2 :class="h2Class">{{ copy.privacy.minorsTitle }}</h2>
+      <p :class="bodyClass">{{ copy.privacy.minorsBody }}</p>
     </section>
 
     <section class="space-y-2">
-      <h2 :class="h2Class">Modifiche</h2>
-      <p :class="bodyClass">
-        Se questa informativa cambia in modo sostanziale, la data di «Ultimo
-        aggiornamento» sopra verrà aggiornata. Continuare a usare l’app dopo un
-        aggiornamento implica l’accettazione dell’informativa rivista.
-      </p>
+      <h2 :class="h2Class">{{ copy.privacy.changesTitle }}</h2>
+      <p :class="bodyClass">{{ copy.privacy.changesBody }}</p>
     </section>
 
     <section class="space-y-2">
-      <h2 :class="h2Class">Contatti</h2>
-      <p :class="bodyClass">
-        Sito dello sviluppatore:
-        <a href="https://smnl.dev/?ref=aib-camera-privacy" :class="linkClass"
-          >smnl.dev</a
-        >
-        · URL informativa:
-        <a href="https://smnl.dev/aib-camera/privacy" :class="linkClass"
-          >smnl.dev/aib-camera/privacy</a
-        >
-        · Termini:
-        <NuxtLink to="/aib-camera/terms" :class="linkClass"
-          >smnl.dev/aib-camera/terms</NuxtLink
-        >
-      </p>
-      <p :class="bodyClass">
-        Per domande sulla privacy di AIB Camera:
-        <a href="mailto:stefano@smnl.dev" :class="linkClass">stefano@smnl.dev</a
-        >.
-      </p>
+      <h2 :class="h2Class">{{ copy.privacy.contactsTitle }}</h2>
+      <p :class="richBody" v-html="contactsBody" />
+      <p :class="richBody" v-html="contactsMail" />
     </section>
   </article>
 </template>

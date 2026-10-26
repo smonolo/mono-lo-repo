@@ -1,9 +1,17 @@
 /**
- * Regenerates public/docs/aib-camera-guida-operativa.pdf (and .body.html)
- * from content/aib-camera/guida-operativa.md
+ * Regenerates guide PDFs + HTML bodies from content/aib-camera/
  *
- * Assets live under public/docs/ (not public/aib-camera/) so the static
- * directory does not collide with pages/aib-camera and force a trailing slash.
+ * - Italian: guida-operativa.md
+ *     → public/docs/aib-camera-guida-operativa.pdf
+ *     → assets/aib-camera/guida-operativa.body.html (bundled into the site)
+ * - English: guida-operativa.en.md
+ *     → public/docs/aib-camera-field-guide.pdf
+ *     → assets/aib-camera/field-guide.body.html (bundled into the site)
+ *
+ * PDFs stay under public/docs/; brand images under public/aib-assets/ —
+ * never public/aib-camera/, which would collide with pages/aib-camera and
+ * force a trailing slash on the home route.
+ * Bodies are imported at build time so SSR/Vercel never fetch or read them.
  *
  * Usage (from apps/site): npm run docs:aib-camera-guida
  */
@@ -15,17 +23,33 @@ import { marked } from 'marked'
 import puppeteer from 'puppeteer'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
-const mdPath = join(root, 'content/aib-camera/guida-operativa.md')
 const outDir = join(root, 'public/docs')
-const outPdf = join(outDir, 'aib-camera-guida-operativa.pdf')
-const outBody = join(outDir, 'aib-camera-guida-operativa.body.html')
+const assetDir = join(root, 'assets/aib-camera')
 
-const DOC_VERSION = '22 ottobre 2026'
+const DOC_VERSION_IT = '26 ottobre 2026'
+const DOC_VERSION_EN = '26 October 2026'
 const APP_VERSION = '1.0.0'
 
-const raw = await readFile(mdPath, 'utf8')
-const markdown = raw.replace(/^<!--[\s\S]*?-->\s*/, '')
-const body = await marked.parse(markdown)
+const docs = [
+  {
+    mdPath: join(root, 'content/aib-camera/guida-operativa.md'),
+    outPdf: join(outDir, 'aib-camera-guida-operativa.pdf'),
+    outBody: join(assetDir, 'guida-operativa.body.html'),
+    lang: 'it',
+    title: 'AIB Camera — Guida operativa',
+    footerLabel: `AIB Camera — Guida operativa · app ${APP_VERSION} · ${DOC_VERSION_IT}`,
+    pageLabel: 'Pagina',
+  },
+  {
+    mdPath: join(root, 'content/aib-camera/guida-operativa.en.md'),
+    outPdf: join(outDir, 'aib-camera-field-guide.pdf'),
+    outBody: join(assetDir, 'field-guide.body.html'),
+    lang: 'en',
+    title: 'AIB Camera — Field guide',
+    footerLabel: `AIB Camera — Field guide · app ${APP_VERSION} · ${DOC_VERSION_EN}`,
+    pageLabel: 'Page',
+  },
+]
 
 const sharedCss = `
   * { box-sizing: border-box; }
@@ -127,26 +151,6 @@ const sharedCss = `
   .doc-meta tr:last-child td { border-bottom: none; }
 `
 
-const html = `<!DOCTYPE html>
-<html lang="it">
-<head>
-  <meta charset="utf-8" />
-  <title>AIB Camera — Guida operativa</title>
-  <style>
-    @page { size: A4; margin: 16mm 15mm 18mm; }
-    ${sharedCss}
-    /* Meta table right after h1: tighten first block */
-    h1 + hr { display: none; }
-  </style>
-</head>
-<body>
-${body}
-</body>
-</html>`
-
-await mkdir(outDir, { recursive: true })
-await writeFile(outBody, body, 'utf8')
-
 const executablePath =
   process.env.PUPPETEER_EXECUTABLE_PATH ||
   [
@@ -160,6 +164,9 @@ const executablePath =
     }
   })
 
+await mkdir(outDir, { recursive: true })
+await mkdir(assetDir, { recursive: true })
+
 const browser = await puppeteer.launch({
   headless: true,
   ...(executablePath ? { executablePath } : {}),
@@ -167,29 +174,53 @@ const browser = await puppeteer.launch({
 })
 
 try {
-  const page = await browser.newPage()
-  await page.setContent(html, { waitUntil: 'networkidle0' })
-  const pdf = await page.pdf({
-    format: 'A4',
-    printBackground: true,
-    displayHeaderFooter: true,
-    headerTemplate: `<div></div>`,
-    footerTemplate: `
+  for (const doc of docs) {
+    const raw = await readFile(doc.mdPath, 'utf8')
+    const markdown = raw.replace(/^<!--[\s\S]*?-->\s*/, '')
+    const body = await marked.parse(markdown)
+    await writeFile(doc.outBody, body, 'utf8')
+
+    const html = `<!DOCTYPE html>
+<html lang="${doc.lang}">
+<head>
+  <meta charset="utf-8" />
+  <title>${doc.title}</title>
+  <style>
+    @page { size: A4; margin: 16mm 15mm 18mm; }
+    ${sharedCss}
+    h1 + hr { display: none; }
+  </style>
+</head>
+<body>
+${body}
+</body>
+</html>`
+
+    const page = await browser.newPage()
+    await page.setContent(html, { waitUntil: 'networkidle0' })
+    const pdf = await page.pdf({
+      format: 'A4',
+      printBackground: true,
+      displayHeaderFooter: true,
+      headerTemplate: `<div></div>`,
+      footerTemplate: `
       <div style="width:100%;font-size:8px;color:#71717a;padding:0 15mm;display:flex;justify-content:space-between;font-family:Helvetica,Arial,sans-serif;">
-        <span>AIB Camera — Guida operativa · app ${APP_VERSION} · ${DOC_VERSION}</span>
-        <span>Pagina <span class="pageNumber"></span> / <span class="totalPages"></span></span>
+        <span>${doc.footerLabel}</span>
+        <span>${doc.pageLabel} <span class="pageNumber"></span> / <span class="totalPages"></span></span>
       </div>
     `,
-    margin: {
-      top: '14mm',
-      right: '14mm',
-      bottom: '16mm',
-      left: '14mm',
-    },
-  })
-  await writeFile(outPdf, pdf)
-  console.log(`Wrote ${outPdf}`)
-  console.log(`Wrote ${outBody}`)
+      margin: {
+        top: '14mm',
+        right: '14mm',
+        bottom: '16mm',
+        left: '14mm',
+      },
+    })
+    await writeFile(doc.outPdf, pdf)
+    await page.close()
+    console.log(`Wrote ${doc.outPdf}`)
+    console.log(`Wrote ${doc.outBody}`)
+  }
 } finally {
   await browser.close()
 }

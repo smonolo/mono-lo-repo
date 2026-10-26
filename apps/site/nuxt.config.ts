@@ -21,6 +21,27 @@ export default defineNuxtConfig({
       weights: [400, 500, 600, 700, 800],
     },
   },
+  // Avoid trailingSlash forcing /aib-camera/ — static assets live under
+  // public/aib-assets/ so they do not collide with pages/aib-camera/.
+  trailingSlash: false,
+  routeRules: {
+    '/aib-camera/guida': {
+      redirect: { to: '/aib-camera/guide', statusCode: 301 },
+    },
+    // Old asset paths (pre aib-assets move)
+    '/aib-camera/favicon.png': {
+      redirect: { to: '/aib-assets/favicon.png', statusCode: 301 },
+    },
+    '/aib-camera/apple-touch-icon.png': {
+      redirect: { to: '/aib-assets/apple-touch-icon.png', statusCode: 301 },
+    },
+    '/aib-camera/icon.png': {
+      redirect: { to: '/aib-assets/icon.png', statusCode: 301 },
+    },
+    '/aib-camera/logo.png': {
+      redirect: { to: '/aib-assets/logo.png', statusCode: 301 },
+    },
+  },
   app: {
     head: {
       title: 'Stefano Monolo',

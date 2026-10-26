@@ -24,7 +24,11 @@
   --color-aib-border-dark: #2a2a2a;
   --color-aib-border-strong: #d4d4d4;
   --color-aib-border-strong-dark: #525252;
+  --color-aib-track: #e5e5e5;
+  --color-aib-track-dark: #262626;
   --color-aib-track-active: #404040;
+  --color-aib-track-idle: #525252;
+  --color-aib-track-idle-dark: #d4d4d4;
   --color-aib-warn: #fff7ed;
   --color-aib-warn-dark: #1f1814;
   --radius-aib: 1rem;

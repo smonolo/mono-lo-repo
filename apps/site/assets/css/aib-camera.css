@@ -76,7 +76,7 @@ body:has(.aib) {
 }
 
 .aib-prose .doc-meta td {
-  @apply border-aib-border text-aib-muted dark:border-aib-border-dark dark:text-aib-muted-dark border-0 border-b px-3.5 py-2.5;
+  @apply border-aib-border text-aib-muted dark:border-aib-border-dark dark:text-aib-muted-dark border-0 border-b px-3 py-2 sm:px-3.5 sm:py-2.5;
 }
 
 .aib-prose .doc-meta tr:last-child td {
@@ -84,7 +84,33 @@ body:has(.aib) {
 }
 
 .aib-prose .doc-meta td:first-child {
-  @apply w-[42%] font-medium;
+  @apply w-[38%] font-medium sm:w-[42%];
+}
+
+@media (max-width: 480px) {
+  .aib-prose .doc-meta,
+  .aib-prose .doc-meta tbody,
+  .aib-prose .doc-meta tr,
+  .aib-prose .doc-meta td {
+    display: block;
+    width: 100%;
+  }
+
+  .aib-prose .doc-meta tr {
+    @apply border-aib-border dark:border-aib-border-dark border-b px-3 py-2.5;
+  }
+
+  .aib-prose .doc-meta tr:last-child {
+    @apply border-b-0;
+  }
+
+  .aib-prose .doc-meta td {
+    @apply border-0 px-0 py-0.5;
+  }
+
+  .aib-prose .doc-meta td:first-child {
+    @apply w-full text-[12px] opacity-80;
+  }
 }
 
 .aib-prose .callout {

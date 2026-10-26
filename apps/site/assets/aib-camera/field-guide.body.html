@@ -1,0 +1,752 @@
+<h1>AIB Camera — Field guide</h1>
+<table class="doc-meta">
+  <tbody>
+    <tr>
+      <td><strong>Document version</strong></td>
+      <td>26 October 2026</td>
+    </tr>
+    <tr>
+      <td><strong>Reference app version</strong></td>
+      <td>1.0.0</td>
+    </tr>
+    <tr>
+      <td><strong>Language</strong></td>
+      <td>English</td>
+    </tr>
+    <tr>
+      <td><strong>Site</strong></td>
+      <td><a href="https://smnl.dev/aib-camera">smnl.dev/aib-camera</a></td>
+    </tr>
+    <tr>
+      <td><strong>Privacy</strong></td>
+      <td>
+        <a href="https://smnl.dev/aib-camera/privacy"
+          >smnl.dev/aib-camera/privacy</a
+        >
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Terms</strong></td>
+      <td>
+        <a href="https://smnl.dev/aib-camera/terms"
+          >smnl.dev/aib-camera/terms</a
+        >
+      </td>
+    </tr>
+    <tr>
+      <td><strong>PDF</strong></td>
+      <td>
+        <a href="https://smnl.dev/docs/aib-camera-field-guide.pdf"
+          >smnl.dev/docs/aib-camera-field-guide.pdf</a
+        >
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h2>Contents</h2>
+<ol>
+  <li>Purpose of this guide</li>
+  <li>What AIB Camera is</li>
+  <li>What it does and does not do</li>
+  <li>Requirements and install</li>
+  <li>Permissions</li>
+  <li>Main screens</li>
+  <li>Camera</li>
+  <li>Stamp configuration</li>
+  <li>Gallery (Photos tab)</li>
+  <li>Capture log</li>
+  <li>EXIF metadata</li>
+  <li>Offline use and place</li>
+  <li>Sharing</li>
+  <li>Limits and responsibility</li>
+  <li>Field checklist</li>
+  <li>Contact</li>
+</ol>
+<hr />
+<h2>1. Purpose of this guide</h2>
+<p>
+  This guide explains, in English, how AIB Camera works in the field:
+  permissions, capture, stamping photos, gallery, capture log, and use without a
+  network.
+</p>
+<p>
+  It is for <strong>anyone</strong> who uses the app — citizens, volunteers, or
+  others — to document a wildfire (AIB) or similar situation. It describes the
+  real behavior of version <strong>1.0.0</strong>.
+</p>
+<hr />
+<h2>2. What AIB Camera is</h2>
+<p>
+  AIB Camera is an <strong>independent, unofficial</strong> mobile app for field
+  photography in wildfire response and similar situations. It is
+  <strong>open to anyone</strong>: not limited to a specific organization or
+  only to professional operators. It lets you:
+</p>
+<ul>
+  <li>take photos with the rear camera;</li>
+  <li>
+    print on the JPEG (visual stamp) date, time, position, and — when available
+    — place and other context;
+  </li>
+  <li>keep photos in an <strong>in-app gallery</strong>;</li>
+  <li>share them with the system share sheet (WhatsApp, Telegram, Mail, …);</li>
+  <li>
+    keep a local <strong>capture log</strong> with an identifier for each shot.
+  </li>
+</ul>
+<p>
+  Typical uses: document a fire, send the shot to whoever needs it, or read
+  coordinates and other details to emergency responders (e.g. 112).
+</p>
+<p>
+  It is designed to stay usable
+  <strong>even without network, GPS, or Photos library access</strong>: in an
+  emergency it must always be possible to capture and share.
+</p>
+<aside class="callout callout-warn">
+  <p><strong>Notice — not institutional</strong></p>
+  <p>
+    The app is <strong>not</strong> built, endorsed, or affiliated with Civil
+    Protection, the Fire Service, Regione Lombardia, or other public
+    institutions. It does not use institutional logos, seals, or acronyms. It is
+    an independent tool available to the public; any use in official contexts
+    remains the responsibility of the person using it.
+  </p>
+</aside>
+<hr />
+<h2>3. What it does and does not do</h2>
+<h3>What it does</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>Detail</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Stamp on JPEG</td>
+      <td>
+        Date/time (<strong>Europe/Rome</strong> timezone), coordinates,
+        accuracy, altitude, heading, place, and custom text, per Stamp
+        configuration
+      </td>
+    </tr>
+    <tr>
+      <td>Aimed target</td>
+      <td>
+        Distance + compass heading from GPS: estimates coordinates of what you
+        point at; Me ↔ Target toggle; “estimated” label on the stamp
+      </td>
+    </tr>
+    <tr>
+      <td>Live preview</td>
+      <td>
+        The viewfinder shows the same block that will be burned into the photo
+      </td>
+    </tr>
+    <tr>
+      <td>Fast capture</td>
+      <td>
+        You can take several photos in a row; the stamp is processed in a queue,
+        one photo at a time
+      </td>
+    </tr>
+    <tr>
+      <td>In-app gallery</td>
+      <td>
+        Source of truth: photos stay in the app even without Photos library
+        permission
+      </td>
+    </tr>
+    <tr>
+      <td>System album</td>
+      <td>
+        Copy into the “AIB Camera” album if Photos permission is granted (not
+        guaranteed)
+      </td>
+    </tr>
+    <tr>
+      <td>Capture log</td>
+      <td>
+        Local append-only list: capture ID, date/time, coordinates; exportable
+        as CSV with <code>install_id</code>
+      </td>
+    </tr>
+    <tr>
+      <td>Install ID</td>
+      <td>
+        Stable UUID per install (Settings, tap to copy); matches the CSV column
+      </td>
+    </tr>
+    <tr>
+      <td>EXIF</td>
+      <td>
+        Best-effort write of identifier, GPS, and machine comment on the JPEG
+        (not always available)
+      </td>
+    </tr>
+    <tr>
+      <td>Offline</td>
+      <td>Capture, stamp, gallery, log, and share do not require a network</td>
+    </tr>
+  </tbody>
+</table>
+<h3>What it does not do</h3>
+<ul>
+  <li>Does not require an account, login, or cloud sync.</li>
+  <li>Does not send photos, location, or the log to developer servers.</li>
+  <li>
+    Does not replace institutional archival procedures, reports, or
+    command-and-control systems.
+  </li>
+  <li>
+    Does not guarantee GPS accuracy or EXIF completeness: those depend on
+    device, permission, signal, and app build.
+  </li>
+  <li>
+    Does not offer a front camera, flash “auto” mode, or in-app language
+    switching (default UI is Italian).
+  </li>
+</ul>
+<hr />
+<h2>4. Requirements and install</h2>
+<ul>
+  <li>
+    <strong>iOS</strong> or <strong>Android</strong> phone with a rear camera.
+  </li>
+  <li>
+    A <strong>physical device</strong> is recommended (not only a simulator or
+    emulator).
+  </li>
+  <li>Supported orientation: <strong>portrait</strong>.</li>
+  <li>UI language: <strong>Italian</strong> (default).</li>
+  <li>
+    Stamp timezone: always <strong>Europe/Rome</strong>, independent of the
+    phone timezone.
+  </li>
+</ul>
+<p>
+  Up-to-date availability and distribution:
+  <a href="https://smnl.dev/aib-camera">smnl.dev/aib-camera</a>. For organized
+  rollouts (many devices, dedicated builds), contact the developer (see § 16).
+</p>
+<hr />
+<h2>5. Permissions</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Permission</th>
+      <th>Required?</th>
+      <th>What it is for</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Camera</strong></td>
+      <td>Yes</td>
+      <td>Taking photos. Without it the app cannot capture images.</td>
+    </tr>
+    <tr>
+      <td><strong>Location (while using)</strong></td>
+      <td>No</td>
+      <td>
+        Coordinates, accuracy, altitude, heading, and place on the stamp and,
+        when possible, in EXIF.
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Photos / media library</strong></td>
+      <td>No</td>
+      <td>
+        Copy photos into the system “AIB Camera” album and remove them there
+        when deleted in the app.
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>
+  <strong>Without GPS</strong> you can still shoot. The stamp keeps date/time
+  and any custom text; geo lines show <em>Coordinates unavailable</em> /
+  <em>Place unavailable</em>.
+</p>
+<p>
+  <strong>Without Photos library</strong> images stay in the
+  <strong>in-app gallery</strong>, which is the source of truth.
+</p>
+<p>
+  Permissions can be reviewed from <strong>Settings</strong> and the phone’s
+  system Settings.
+</p>
+<hr />
+<h2>6. Main screens</h2>
+<p>Three tabs in the bottom bar:</p>
+<ol>
+  <li><strong>Camera</strong> — capture and stamp preview</li>
+  <li><strong>Photos</strong> — in-app gallery</li>
+  <li>
+    <strong>Settings</strong> — permissions, version and install ID (tap to
+    copy), capture log, links to this guide and the privacy policy. Stamp
+    configuration opens from the icon at the top right of the camera.
+  </li>
+</ol>
+<hr />
+<h2>7. Camera</h2>
+<h3>7.1 Viewfinder and letterbox bands</h3>
+<p>
+  The live preview has <strong>black bands</strong> above and below. Top:
+  <strong>flash</strong> on the left, <strong>Aim</strong> next to flash,
+  <strong>stamp configuration</strong> on the right. Bottom: shutter in the
+  center, last-shot preview on the left, <strong>zoom</strong> on the right.
+  Beyond 2× the tele button shows the live factor (3×, 4×, …).
+</p>
+<h3>7.2 Live stamp preview</h3>
+<p>
+  The viewfinder shows the same block that will be <strong>burned</strong> into
+  the JPEG:
+</p>
+<ul>
+  <li>
+    top: date/time, optional <strong>Aimed target (estimated)</strong> line,
+    coordinates, meta (estimated distance / accuracy / altitude / heading),
+    place — per Configuration toggles;
+  </li>
+  <li>bottom: custom text, if filled in.</li>
+</ul>
+<p>
+  Font, text size, and background opacity follow
+  <strong>Configuration</strong> (top-right icon on the camera). The preview
+  matches what will land on the photo.
+</p>
+<h3>7.3 Controls</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Control</th>
+      <th>Behavior</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Shutter</strong></td>
+      <td>
+        White circle in the center of the bottom band: captures the photo.
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Last-shot preview</strong></td>
+      <td>
+        Square on the left: opens the detail of the last ready photo. A loading
+        indicator appears while processing is still running.
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Flash</strong></td>
+      <td>
+        Lightning icon <strong>top left</strong>: <strong>on / off</strong> only
+        (no auto mode).
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Aim</strong></td>
+      <td>
+        Crosshair icon next to flash: opens a full-width sheet for distance
+        (presets 50 / 100 / 200 / 500 m or free value) and
+        <strong>Lock target</strong>.
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Me / Target</strong></td>
+      <td>
+        With a sticky point active, selector at top center: switches between
+        your GPS position and the aimed point without losing it.
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Configuration</strong></td>
+      <td>
+        Sliders icon <strong>top right</strong>: opens stamp configuration.
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Zoom</strong></td>
+      <td>
+        Buttons <strong>bottom right</strong> (e.g. 0.5× / 1× / 2× when
+        available) and <strong>pinch</strong>; beyond 2× the active button shows
+        3×, 4×, …. <strong>Double-tap</strong> the viewfinder resets zoom to 1×.
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Swipe</strong></td>
+      <td>
+        Swipe <strong>left</strong> from the viewfinder to open the gallery.
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>Only the <strong>rear</strong> camera is used.</p>
+<h3>7.4 Aimed target (distance + heading)</h3>
+<p>
+  To stamp the coordinates of what you are <strong>pointing at</strong> (e.g. a
+  hotspot 200 m away), not your position:
+</p>
+<ol>
+  <li>Make sure GPS and compass are available.</li>
+  <li>Point the camera at the point of interest.</li>
+  <li>
+    Tap <strong>Aim</strong>, choose or type the distance in meters, then
+    <strong>Lock target</strong>.
+  </li>
+  <li>
+    The stamp shows estimated coordinates and the label
+    <strong>Aimed target (estimated)</strong>.
+  </li>
+  <li>
+    Use <strong>Me ↔ Target</strong> to return to your position or re-enable
+    the sticky point; <strong>Clear target</strong> removes it.
+  </li>
+</ol>
+<p>
+  It is a ground estimate along the compass heading (no altimetry / DEM): useful
+  in the field, not a GNSS fix on the target. Without GPS or heading, lock
+  fails; capture remains available in Me mode.
+</p>
+<h3>7.5 Capture and background processing</h3>
+<p>After the shutter:</p>
+<ol>
+  <li>
+    The raw JPEG is acquired immediately; the shutter stays available for more
+    shots.
+  </li>
+  <li>
+    In a queue, <strong>one photo at a time</strong>, the app: applies the
+    stamp, writes EXIF if possible, saves to the in-app gallery, updates the
+    capture log, and tries to copy into the “AIB Camera” album.
+  </li>
+</ol>
+<p>
+  You can shoot in sequence without waiting for the stamp to finish: the
+  indicator on the left preview shows that processing is still running.
+</p>
+<p>
+  For the stamp the app prefers the
+  <strong>position already available</strong> on the viewfinder (live GPS or
+  locked aimed point), so the shutter is not blocked waiting for a more precise
+  fix.
+</p>
+<hr />
+<h2>8. Stamp configuration</h2>
+<p>Path: sliders icon on the <strong>camera</strong> (Configuration).</p>
+<h3>8.1 Visible fields (toggles)</h3>
+<ul>
+  <li>Date and time</li>
+  <li>Coordinates</li>
+  <li>Place (label from reverse geocode or local cache)</li>
+  <li>GPS accuracy</li>
+  <li>Altitude</li>
+  <li>Heading (compass)</li>
+</ul>
+<h3>8.2 Custom text</h3>
+<p>
+  Up to <strong>4</strong> free lines (e.g. crew name or shift). Empty by
+  default: no bottom block appears. Suggested in-app placeholder:
+  <em>Squadra Nord · Turno A</em>.
+</p>
+<h3>8.3 Date format</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Full</strong></td>
+      <td>Weekday and extended date</td>
+    </tr>
+    <tr>
+      <td><strong>Short</strong></td>
+      <td>Compact date and time (<strong>default</strong>)</td>
+    </tr>
+    <tr>
+      <td><strong>ISO</strong></td>
+      <td>ISO format with Europe/Rome timezone</td>
+    </tr>
+  </tbody>
+</table>
+<h3>8.4 Text size</h3>
+<p>Small / <strong>Medium</strong> (default) / Large.</p>
+<h3>8.5 Stamp background opacity</h3>
+<p>
+  From <strong>0%</strong> (text only; with shadow for readability) to
+  <strong>100%</strong>, in 25% steps. Default: <strong>0%</strong>.
+</p>
+<p>
+  Changes apply immediately to the live preview and later shots. Photos already
+  taken are not modified.
+</p>
+<hr />
+<h2>9. Gallery (Photos tab)</h2>
+<ul>
+  <li>
+    Photos are grouped by day (Europe/Rome timezone), with headers like
+    <em>Today</em> / <em>Yesterday</em>.
+  </li>
+  <li>
+    Tap a thumbnail for detail (<strong>Share</strong> /
+    <strong>Delete</strong>).
+  </li>
+  <li>
+    Selection mode: <strong>Select</strong> button or long-press a thumbnail;
+    then multi share or delete.
+  </li>
+</ul>
+<h3>In-app gallery vs system album</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Comparison</th>
+      <th>In-app gallery</th>
+      <th>“AIB Camera” album</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Role</td>
+      <td><strong>Source of truth</strong></td>
+      <td>Copy in the phone library (if permission allows)</td>
+    </tr>
+    <tr>
+      <td>Needs Photos permission?</td>
+      <td>No</td>
+      <td>Yes, if you want the copy</td>
+    </tr>
+    <tr>
+      <td>Delete in app</td>
+      <td>Removes the local file and, when present, the Photos library copy</td>
+      <td>—</td>
+    </tr>
+  </tbody>
+</table>
+<aside class="callout">
+  <p>
+    <strong>Capture log:</strong> deleting a photo from the gallery does
+    <strong>not</strong> remove the matching capture-log row.
+  </p>
+</aside>
+<hr />
+<h2>10. Capture log</h2>
+<p>Access: <strong>Settings → Capture log</strong>.</p>
+<ul>
+  <li>
+    Each successful shot adds a row with: <strong>ID</strong> (UUID), date/time,
+    coordinates when available (otherwise <em>No GPS</em>).
+  </li>
+  <li>
+    The log is <strong>append-only</strong> (entries are not deleted from the
+    app): rows stay on the device after gallery deletions.
+  </li>
+  <li>
+    Tap a row to <strong>copy the ID</strong> and compare it with EXIF on a
+    shared JPEG (<code>ImageUniqueID</code> / JSON comment), when EXIF was
+    written.
+  </li>
+  <li>
+    <strong>Export CSV</strong> (top): builds a local file with columns
+    <code>install_id</code>, <code>id</code>, <code>taken_at</code>,
+    <code>latitude</code>, <code>longitude</code> and opens the system share
+    sheet (Mail, Files, AirDrop, …). No automatic upload.
+  </li>
+  <li>
+    In <strong>Settings</strong>, tap <strong>Version</strong> or
+    <strong>Install ID</strong> to copy the value to the clipboard.
+  </li>
+  <li>
+    <strong>Install ID:</strong> UUID created on first launch. Same value as the
+    <code>install_id</code> CSV column; reinstalling creates a new one.
+  </li>
+</ul>
+<p>
+  The log is <strong>not</strong> sent to any server; CSV export leaves the
+  device only if you choose a share app or service.
+</p>
+<hr />
+<h2>11. EXIF metadata</h2>
+<p>After stamping the app tries to write on the JPEG, among other fields:</p>
+<ul>
+  <li><code>Software</code> / <code>Artist</code></li>
+  <li><code>ImageUniqueID</code> (capture UUID)</li>
+  <li>capture date/time (Europe/Rome)</li>
+  <li>GPS tags, if position is available</li>
+  <li>
+    <code>ImageDescription</code> and <code>UserComment</code> (JSON for machine
+    use)
+  </li>
+</ul>
+<aside class="callout callout-warn">
+  <p>
+    <strong>Caution — EXIF not guaranteed:</strong> if the native module is
+    unavailable on the installed build,
+    <strong>stamped photo, gallery, and log remain valid</strong>. Only metadata
+    write into the file is missing. Do not treat EXIF as automatic legal proof:
+    always also check the visual stamp and the log.
+  </p>
+</aside>
+<hr />
+<h2>12. Offline use and place</h2>
+<ul>
+  <li>
+    Capture, stamp, gallery, log, and share
+    <strong>do not require a network</strong>.
+  </li>
+  <li>
+    Network is only needed for <strong>reverse geocoding</strong> (coordinates →
+    place label), if Place is enabled and there is connectivity.
+  </li>
+  <li>
+    Recent labels stay in a <strong>local cache</strong> and can be reused
+    offline nearby (about <strong>2.5 km</strong> radius).
+  </li>
+</ul>
+<p>
+  Without network or GPS, the stamp shows fallback text (<em
+    >Coordinates unavailable</em
+  >, <em>Place unavailable</em>) without blocking the shutter.
+</p>
+<p>
+  On older or constrained devices, the app <strong>degrades quietly</strong>: if
+  Skia stamp fails the unstamped JPEG stays in the gallery; without native EXIF,
+  photo + gallery + log remain; without Photos permission only the in-app
+  gallery remains; fonts and haptics use system fallbacks. The shutter must not
+  block for these details.
+</p>
+<hr />
+<h2>13. Sharing</h2>
+<p>
+  From detail or gallery selection the <strong>system share sheet</strong> opens
+  (Messages, Mail, WhatsApp, Files, etc.).
+</p>
+<p>
+  The shared file is the already stamped JPEG, with EXIF if it was written.
+  After sending, handling and retention depend on the app or service chosen by
+  the sharer (outside AIB Camera’s control).
+</p>
+<hr />
+<h2>14. Limits and responsibility</h2>
+<p>Anyone using the app should keep these points in mind:</p>
+<ol>
+  <li>
+    <strong>Support tool</strong>, not a substitute for official documentation
+    or archival procedures.
+  </li>
+  <li>
+    <strong>Position accuracy</strong> depends on the device, Location
+    permission, and signal; the app does not correct or certify GPS.
+    <strong>Aimed target</strong> is an estimate (GPS + compass + entered
+    distance), not a fix on the target.
+  </li>
+  <li>
+    <strong>Date and time on the stamp</strong> always use Europe/Rome; check
+    that the phone clock is set correctly.
+  </li>
+  <li>
+    <strong>“AIB Camera” album</strong> is a convenience copy: the reliable copy
+    on the device is the <strong>in-app gallery</strong>.
+  </li>
+  <li>
+    <strong>Privacy:</strong> photos, settings, and log stay on the device;
+    there is no developer-managed cloud sync. Sharing with third parties is the
+    user’s choice.
+  </li>
+  <li>
+    <strong>Updates:</strong> this guide refers to app version
+    <strong>1.0.0</strong>; for later releases check for differences on
+    <a href="https://smnl.dev/aib-camera">smnl.dev/aib-camera</a>.
+  </li>
+</ol>
+<hr />
+<h2>15. Field checklist</h2>
+<ol>
+  <li>
+    Grant at least <strong>Camera</strong> permission; Location and Photos when
+    useful.
+  </li>
+  <li>
+    Check <strong>Configuration</strong> (active fields, custom text, date
+    format, size, opacity) before shooting.
+  </li>
+  <li>
+    Verify on the <strong>live preview</strong> what will land on the JPEG. 3b.
+    If you need to document a distant point (e.g. a hotspot), use
+    <strong>Aim</strong> with an estimated distance and check the
+    <strong>Aimed target (estimated)</strong> label before shooting.
+  </li>
+  <li>
+    In a capture sequence, do not wait for the processing indicator: you can
+    keep photographing.
+  </li>
+  <li>
+    If you need the Photos library copy, confirm the
+    <strong>AIB Camera</strong> album updates (Photos permission granted).
+  </li>
+  <li>
+    To trace a shot after deleting the photo, use the
+    <strong>capture log</strong> and ID; to link CSVs across devices, compare
+    <strong>Install ID</strong> in Settings with the
+    <code>install_id</code> column.
+  </li>
+  <li>
+    Before sharing externally, ensure content and destination comply with
+    applicable law.
+  </li>
+</ol>
+<hr />
+<h2>16. Contact</h2>
+<table class="doc-meta">
+  <tbody>
+    <tr>
+      <td><strong>App questions</strong></td>
+      <td><a href="mailto:stefano@smnl.dev">stefano@smnl.dev</a></td>
+    </tr>
+    <tr>
+      <td><strong>Privacy policy</strong></td>
+      <td>
+        <a href="https://smnl.dev/aib-camera/privacy"
+          >smnl.dev/aib-camera/privacy</a
+        >
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Terms of use</strong></td>
+      <td>
+        <a href="https://smnl.dev/aib-camera/terms"
+          >smnl.dev/aib-camera/terms</a
+        >
+      </td>
+    </tr>
+    <tr>
+      <td><strong>This guide (web)</strong></td>
+      <td>
+        <a href="https://smnl.dev/aib-camera/guide"
+          >smnl.dev/aib-camera/guide</a
+        >
+      </td>
+    </tr>
+    <tr>
+      <td><strong>This guide (PDF)</strong></td>
+      <td>
+        <a href="https://smnl.dev/docs/aib-camera-field-guide.pdf"
+          >smnl.dev/docs/aib-camera-field-guide.pdf</a
+        >
+      </td>
+    </tr>
+  </tbody>
+</table>
+<hr />
+<p>
+  <em
+    >Unofficial document · Reference app version 1.0.0 · Printable · © Stefano
+    Monolo — smnl.dev</em
+  >
+</p>
