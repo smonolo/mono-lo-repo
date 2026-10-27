@@ -50,25 +50,16 @@ function navClass(path: string) {
         class="flex min-w-0 flex-1 items-center justify-end gap-2.5 sm:gap-4"
         :aria-label="copy.footer.brand"
       >
-        <NuxtLink
-          to="/aib-sitac/guide"
-          :class="navClass('/aib-sitac/guide')"
-          class="hidden sm:inline-flex"
-        >
+        <NuxtLink to="/aib-sitac/guide" :class="navClass('/aib-sitac/guide')">
           {{ copy.nav.guide }}
         </NuxtLink>
         <NuxtLink
           to="/aib-sitac/privacy"
           :class="navClass('/aib-sitac/privacy')"
-          class="hidden sm:inline-flex"
         >
           {{ copy.nav.privacy }}
         </NuxtLink>
-        <NuxtLink
-          to="/aib-sitac/terms"
-          :class="navClass('/aib-sitac/terms')"
-          class="hidden sm:inline-flex"
-        >
+        <NuxtLink to="/aib-sitac/terms" :class="navClass('/aib-sitac/terms')">
           {{ copy.nav.terms }}
         </NuxtLink>
         <a

@@ -8,7 +8,7 @@ export const aibSitacCopy = {
     openApp: 'Apri l’app',
   },
   footer: {
-    brand: 'Strumento indipendente di volontariato · smnl.dev',
+    brand: 'AIB SITAC',
   },
   home: {
     title: 'AIB SITAC',
