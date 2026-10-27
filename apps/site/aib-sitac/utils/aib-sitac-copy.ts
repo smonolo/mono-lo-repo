@@ -45,7 +45,7 @@ export const aibSitacCopy = {
     guideLink: 'Leggi la guida',
     privacyTitle: 'Privacy',
     privacyBody:
-      'Metadati e storico eventi restano nel database del prodotto. Niente account in v1: accesso = link + password opzionale (hash scrypt lato API). Nessun SDK analytics di default.',
+      'Metadati, elenco pubblico in home (titolo / data / protetto) e storico eventi nel database del prodotto. Niente account in v1: accesso = link + password opzionale (hash scrypt lato API). Nessun SDK analytics di default.',
     privacyLink: 'Informativa privacy',
     termsTitle: 'Termini',
     termsBody:
@@ -63,30 +63,31 @@ export const aibSitacCopy = {
       {
         title: '1. Crea o apri un intervento',
         paragraphs: [
-          'Dalla home dell’app puoi creare un nuovo intervento (titolo e password opzionale) o cercare tra quelli esistenti (filtro per titolo, intervallo di date Europe/Rome, paginazione).',
-          'Apri la stanza dal link o dall’elenco. Se è protetta, inserisci la password: resta in sessione del browser per quella stanza.',
+          'Dalla home dell’app puoi creare un nuovo intervento (titolo e password opzionale, minimo 4 caratteri se la imposti) o cercare tra quelli esistenti (filtro per titolo, intervallo di date Europe/Rome, paginazione).',
+          'In creazione, se il browser lo consente, la mappa può centrarsi sulla tua posizione; altrimenti usa il centro predefinito.',
+          'Apri la stanza dal link o dall’elenco. Se è protetta, inserisci la password: resta in sessionStorage del browser per quella stanza (si chiude con la sessione).',
         ],
       },
       {
         title: '2. Profilo (nome visualizzato)',
         paragraphs: [
           'Icona utente in navbar: imposta un nome (es. Sala / Caposquadra). È obbligatorio prima di aggiungere o rimuovere segni.',
-          'Il nome resta solo sul dispositivo; quando disegni o elimini un segno viene copiato sull’evento e compare nella timeline.',
+          'Il nome resta in localStorage sul dispositivo; quando disegni o elimini un segno viene copiato sull’evento e compare nella timeline.',
         ],
       },
       {
         title: '3. Sidebar sinistra — cursore e simboli',
         paragraphs: [
-          '«Cursore»: seleziona un segno sulla mappa (clic sul vuoto non fa nulla). Con un segno selezionato puoi eliminarlo.',
+          '«Cursore»: seleziona un segno sulla mappa (clic sul vuoto non fa nulla). Con un segno selezionato puoi rimuoverlo con «Elimina segno» in fondo alla sidebar (solo in «Ora», non mentre scrubbi la timeline).',
           'Annotazioni in alto: Freccia e Forma (più clic, poi «Termina» o doppio clic); Testo (un clic e la finestra per l’etichetta).',
-          'Sotto, simboli tattici non ufficiali: hotspot, fronte attivo, area bruciata, punto acqua, osservatorio, PC/ROS, mezzo, squadra, strada chiusa, vento. Non sono simbologia NATO/PC istituzionale.',
+          'Sotto, simboli tattici non ufficiali: Hotspot, Fronte attivo, Area bruciata, Punto acqua, Osservatorio, PC/ROS, Mezzo, Squadra, Strada chiusa, Vento. Non sono simbologia NATO/PC istituzionale.',
         ],
       },
       {
         title: '4. Sidebar destra — timeline e azioni',
         paragraphs: [
           'Ogni add/remove è uno step automatico. Usa lo slider o ← →; «Ora» torna al live. Lo step corrente va in ?step= nell’URL; «Copia link» include lo step se stai scrubbando.',
-          'Impostazioni: rinomina l’intervento, imposta o rimuovi la password. Export GeoJSON e PNG della mappa.',
+          'Impostazioni intervento (rinomina, password) e export GeoJSON/PNG: disponibili in «Ora»; rinomina/password non sono modificabili mentre scrubbi la timeline.',
         ],
       },
       {
@@ -117,9 +118,10 @@ export const aibSitacCopy = {
     summaryTitle: 'In sintesi',
     summary: [
       'Metadati dell’intervento e lo storico eventi (segni) sono salvati nel database PostgreSQL del prodotto quando crei o apri una stanza.',
+      'L’elenco interventi in home (e l’API di elenco) è pubblico: per ogni stanza compaiono titolo, data di creazione (Europe/Rome) e se è protetta da password; aprire o vedere i segni resta vincolato al link e, se impostata, alla password.',
       'Niente account in v1: l’accesso è il link dell’intervento e, se impostata, la password.',
       'Nessun SDK analytics incluso di default.',
-      'Il nome visualizzato opzionale (icona utente) resta nella memoria locale del browser; quando segni la mappa viene copiato sull’evento.',
+      'Il nome visualizzato (icona utente) resta in localStorage del browser; quando aggiungi o rimuovi un segno viene copiato sull’evento come actorLabel.',
     ],
     dataTitle: 'Dati trattati',
     colData: 'Dato',
@@ -127,9 +129,14 @@ export const aibSitacCopy = {
     colWhy: 'Perché',
     dataRows: [
       {
-        data: 'Titolo intervento, centro mappa',
+        data: 'Titolo, data creazione, indicatore «protetto» (elenco home / API)',
+        where: 'Database (+ risposta API pubblica)',
+        why: 'Ricerca e apertura stanze dalla home',
+      },
+      {
+        data: 'Centro mappa e zoom iniziale',
         where: 'Database',
-        why: 'Identificare e aprire la stanza',
+        why: 'Aprire la stanza al centro giusto',
       },
       {
         data: 'Hash della password (opzionale)',
@@ -143,15 +150,21 @@ export const aibSitacCopy = {
       },
       {
         data: 'Nome visualizzato (profilo locale)',
-        where: 'Browser',
+        where: 'localStorage del browser',
         why: 'Etichetta sugli eventi',
+      },
+      {
+        data: 'Password stanza (dopo lo sblocco)',
+        where: 'sessionStorage del browser',
+        why: 'Riaprire la stanza nella stessa sessione',
       },
     ],
     accessTitle: 'Accesso e password',
     access: [
       'Stanze aperte (senza password): chiunque col link può vedere e modificare; aggiornamenti live via Server-Sent Events.',
       'Stanze protette: la password è inviata solo come header HTTP X-Passphrase (mai nell’URL). L’API conserva un hash scrypt salato e limita i tentativi errati.',
-      'Il nome profilo resta sul dispositivo; sugli eventi compare come actorLabel.',
+      'Dopo lo sblocco, la password resta in sessionStorage del browser per quella stanza (si chiude con la sessione); non viene messa nell’URL.',
+      'Il nome profilo resta in localStorage; sugli eventi compare come actorLabel.',
     ],
     shareTitle: 'Condivisioni ed export',
     shareBody:
