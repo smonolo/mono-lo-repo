@@ -24,8 +24,13 @@
   --color-aib-track-active: #404040;
   --color-aib-track-idle: #525252;
   --color-aib-track-idle-dark: #d4d4d4;
+  --color-aib-placeholder: #a3a3a3;
+  --color-aib-placeholder-dark: #737373;
+  --color-aib-selection: #525252;
+  --color-aib-selection-dark: #a3a3a3;
   --color-aib-warn: #fff7ed;
   --color-aib-warn-dark: #1f1814;
+  --color-aib-brand: #af2525;
   --radius-aib: 1rem;
   --radius-aib-sm: 0.75rem;
 }

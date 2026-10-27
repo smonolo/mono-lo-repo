@@ -1,7 +1,7 @@
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
-  extends: ['./aib-camera'],
+  extends: ['./aib-camera', './aib-sitac'],
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   modules: ['@nuxt/fonts', '@nuxt/icon', 'nuxt-gtag'],
