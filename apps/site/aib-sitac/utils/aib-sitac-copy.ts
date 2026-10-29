@@ -65,7 +65,7 @@ export const aibSitacCopy = {
         paragraphs: [
           'Dalla home (scheda centrata, senza navbar/footer) scegli **Cerca** per trovare e aprire un intervento esistente (ricerca per titolo, paginazione) oppure **Crea** per uno nuovo (titolo e password opzionale, minimo 4 caratteri se la imposti).',
           'In creazione, se il browser lo consente, la mappa può centrarsi sulla tua posizione; altrimenti usa il centro predefinito.',
-          'Apri la stanza dal link o dall’elenco. Se è protetta, inserisci la password: resta in sessionStorage del browser per quella stanza (si chiude con la sessione).',
+          'Apri la stanza dal link o dall’elenco. Se è protetta, vedi la mappa (basemap) con un dialogo password obbligatorio: finché non sblocchi non partono richieste di dettaglio/eventi e gli strumenti restano disattivati. Dopo lo sblocco la password resta in sessionStorage del browser per quella stanza (si chiude con la sessione).',
         ],
       },
       {
@@ -99,7 +99,7 @@ export const aibSitacCopy = {
         title: '6. Collaborazione e password',
         paragraphs: [
           'Stanze senza password: chiunque col link può vedere e modificare; aggiornamenti live via SSE. Se viene aggiunta una password, le connessioni live si chiudono e serve sbloccare.',
-          'Stanze con password: serve la password per aprire, leggere eventi e modificare; gli aggiornamenti arrivano con polling. Non mettere la password nell’URL.',
+          'Stanze con password: la mappa si apre in sola lettura con dialogo password non chiudibile; serve la password per caricare i dati, leggere eventi e modificare; gli aggiornamenti arrivano con polling. Non mettere la password nell’URL.',
         ],
       },
       {
@@ -180,7 +180,7 @@ export const aibSitacCopy = {
     accessTitle: 'Accesso e password',
     access: [
       'Stanze aperte (senza password): chiunque col link può vedere e modificare; aggiornamenti live via Server-Sent Events. Se viene aggiunta una password, le connessioni live aperte vengono chiuse e serve sbloccare di nuovo.',
-      'Stanze protette: ogni lettura/scrittura (dettaglio stanza, eventi, SSE) richiede la password solo come header HTTP X-Passphrase (mai nell’URL). L’API conserva un hash scrypt salato e limita i tentativi errati. Cambiare o togliere la password disconnette gli ascoltatori live di quella stanza.',
+      'Stanze protette: l’UI chiede solo se la stanza è protetta (stesso flag dell’elenco home), poi mostra la shell mappa con dialogo password obbligatorio e non fa altre richieste (dettaglio, eventi, SSE) finché non sblocchi; ogni lettura/scrittura richiede la password solo come header HTTP X-Passphrase (mai nell’URL). L’API conserva un hash scrypt salato e limita i tentativi errati. Cambiare o togliere la password disconnette gli ascoltatori live di quella stanza.',
       'Dopo lo sblocco, la password resta in sessionStorage del browser per quella stanza (si chiude con la sessione); non viene messa nell’URL.',
       'Il nome profilo resta in localStorage; alla creazione può diventare createdBy, sugli eventi compare come actorLabel. La preferenza tema resta in localStorage (chiave aib-sitac-theme) se impostata.',
     ],
