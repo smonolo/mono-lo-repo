@@ -17,7 +17,7 @@ const activeProjects = [
     description: 'Tactical situation map for wildfires',
     details:
       'An unofficial shared tactical map for wildfire response: timestamped marks, link-based rooms, and a scrubbable timeline. Built for operators; open to anyone.',
-    domain: 'aib-sitac.smnl.dev',
+    domain: 'smnl.dev/aib-sitac',
     githubUrl: 'https://github.com/smonolo/aib-sitac',
   },
   {
