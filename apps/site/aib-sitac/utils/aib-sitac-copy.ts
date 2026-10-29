@@ -72,7 +72,7 @@ export const aibSitacCopy = {
         title: '2. Profilo (nome visualizzato)',
         paragraphs: [
           'In home: profilo in basso nella scheda (accanto a Informazioni e al controllo tema). Nella mappa: in fondo alla sidebar, profilo a sinistra e icona tema a destra.',
-          'Imposta un nome (es. Sala / Caposquadra); è obbligatorio prima di aggiungere, spostare o rimuovere segni. Il nome resta in localStorage; quando disegni, sposti o elimini un segno viene copiato sull’evento e compare nella timeline.',
+          'Imposta un nome (es. Sala / Caposquadra); è obbligatorio prima di aggiungere, spostare, modificare o rimuovere segni. Il nome resta in localStorage; quando disegni, sposti, modifichi o elimini un segno viene copiato sull’evento e compare nella timeline.',
         ],
       },
       {
@@ -86,13 +86,13 @@ export const aibSitacCopy = {
       {
         title: '4. Controlli flottanti in basso',
         paragraphs: [
-          'Al centro in basso sulla mappa: nome del tool o del segno selezionato, icona info (apre una finestra con a cosa serve e come si usa), «Termina» / «Annulla» mentre disegni una freccia o una forma, e «Sposta» / «Elimina» quando hai un segno selezionato («Sposta» = trascina, poi «Termina» per salvare o «Annulla»; «Elimina» con conferma; solo in «Ora», non mentre scrubbi la timeline).',
+          'Al centro in basso sulla mappa: nome del tool o del segno selezionato, icona info (apre una finestra con a cosa serve e come si usa), «Termina» / «Annulla» mentre disegni una freccia o una forma, e «Sposta» / «Modifica» / «Elimina» quando hai un segno selezionato («Sposta» = trascina, poi «Termina» per salvare o «Annulla»; «Modifica» = cambia il testo di un’etichetta; «Elimina» con conferma; solo in «Ora», non mentre scrubbi la timeline).',
         ],
       },
       {
         title: '5. Timeline flottante in alto',
         paragraphs: [
-          'In alto sulla mappa (su telefono può andare su due righe): ogni aggiunta, spostamento o rimozione è uno step automatico. Usa lo slider, ← →, o «« / »» per inizio/fine (live). Lo step corrente va in ?step= nell’URL; «Copia link» include lo step se stai scrubbando.',
+          'In alto sulla mappa (su telefono può andare su due righe): ogni aggiunta, spostamento, modifica testo o rimozione è uno step automatico. Usa lo slider, ← →, o «« / »» per inizio/fine (live). Lo step corrente va in ?step= nell’URL; «Copia link» include lo step se stai scrubbando.',
         ],
       },
       {
@@ -126,7 +126,7 @@ export const aibSitacCopy = {
       'L’elenco interventi in home (e l’API di elenco) è pubblico: per ogni stanza compaiono titolo, data di creazione (Europe/Rome), eventuale creatore e se è protetta da password; centro mappa e zoom delle stanze protette non sono esposti nell’elenco. Aprire o vedere i segni resta vincolato al link e, se impostata, alla password.',
       'Niente account in v1: l’accesso è il link dell’intervento e, se impostata, la password.',
       'Nessun SDK analytics incluso di default.',
-      'Il nome visualizzato (profilo in home o in mappa) resta in localStorage del browser; alla creazione di un intervento può essere salvato come creatore (createdBy), e quando aggiungi o rimuovi un segno viene copiato sull’evento come actorLabel.',
+      'Il nome visualizzato (profilo in home o in mappa) resta in localStorage del browser; alla creazione di un intervento può essere salvato come creatore (createdBy), e quando aggiungi, sposti, modifichi o rimuovi un segno viene copiato sull’evento come actorLabel.',
       'La preferenza di tema (sistema / chiaro / scuro) resta in localStorage se la cambi dal predefinito (sistema).',
       'Le tile della mappa arrivano da server HOT OSM / openstreetmap.fr, che possono vedere IP e coordinate delle tile richieste.',
       'Guida, Privacy e Termini dall’app si aprono sul sito smnl.dev/aib-sitac (niente copie in-app).',
