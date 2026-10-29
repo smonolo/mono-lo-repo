@@ -27,15 +27,15 @@ export const aibSitacCopy = {
       },
       {
         title: 'Segni con timestamp',
-        body: 'Frecce, forme, testo e simboli tattici — storico append-only, con il nome del profilo su ogni add/remove.',
+        body: 'Frecce, forme, testo e simboli tattici — storico append-only, con il nome del profilo su ogni aggiunta, spostamento o rimozione.',
       },
       {
         title: 'Scrubber della timeline',
-        body: 'Ogni add/remove è uno step (con chi l’ha fatto); ?step= nell’URL e in «Copia link»; export GeoJSON o PNG.',
+        body: 'Ogni aggiunta, spostamento o rimozione è uno step (con chi l’ha fatto); ?step= nell’URL e in «Copia link»; export GeoJSON o PNG.',
       },
       {
         title: 'Aggiornamenti in tempo reale',
-        body: 'Stanze aperte via SSE; stanze con password aggiornate con polling. Solo dark mode in v1.',
+        body: 'Stanze aperte via SSE; stanze con password aggiornate con polling. Usabile su telefono e desktop; tema chiaro/scuro.',
       },
     ],
     appCta: 'Apri l’app',
@@ -45,7 +45,7 @@ export const aibSitacCopy = {
     guideLink: 'Leggi la guida',
     privacyTitle: 'Privacy',
     privacyBody:
-      'Metadati, elenco pubblico in home (titolo / data / protetto) e storico eventi nel database del prodotto. Niente account in v1: accesso = link + password opzionale (hash scrypt lato API). Tile mappa da HOT OSM. Nessun SDK analytics di default.',
+      'Metadati, elenco pubblico in home (titolo / data / protetto; centro mappa redatti se protetta) e storico eventi nel database del prodotto. Niente account in v1: accesso = link + password opzionale (hash scrypt; header X-Passphrase). Tema e profilo in localStorage. Tile da HOT OSM. Guida/Privacy/Termini sul sito marketing.',
     privacyLink: 'Informativa privacy',
     termsTitle: 'Termini',
     termsBody:
@@ -58,7 +58,7 @@ export const aibSitacCopy = {
     description:
       'Come usare AIB SITAC: interventi, profilo, simboli, timeline, password ed export.',
     heading: 'Guida',
-    lead: 'Guida operativa breve per sala, capisquadra e chiunque usi la mappa. L’interfaccia è in italiano; solo dark mode per ora.',
+    lead: 'Guida operativa breve per sala, capisquadra e chiunque usi la mappa. L’interfaccia è in italiano; tema chiaro o scuro (predefinito: sistema).',
     sections: [
       {
         title: '1. Crea o apri un intervento',
@@ -71,35 +71,35 @@ export const aibSitacCopy = {
       {
         title: '2. Profilo (nome visualizzato)',
         paragraphs: [
-          'In home: profilo in basso nella scheda. Nella mappa: profilo in fondo alla sidebar. Imposta un nome (es. Sala / Caposquadra); è obbligatorio prima di aggiungere o rimuovere segni.',
-          'Il nome resta in localStorage sul dispositivo; quando disegni o elimini un segno viene copiato sull’evento e compare nella timeline.',
+          'In home: profilo in basso nella scheda (accanto a Informazioni e al controllo tema). Nella mappa: in fondo alla sidebar, profilo a sinistra e icona tema a destra.',
+          'Imposta un nome (es. Sala / Caposquadra); è obbligatorio prima di aggiungere, spostare o rimuovere segni. Il nome resta in localStorage; quando disegni, sposti o elimini un segno viene copiato sull’evento e compare nella timeline.',
         ],
       },
       {
         title: '3. Sidebar — info, segni e azioni',
         paragraphs: [
-          'Nella vista mappa non ci sono navbar/footer del sito: logo in alto (torna alla home), poi titolo dell’intervento (con icona lucchetto se protetto da password).',
-          'Colonna scorrevole: «Cursore» (seleziona un segno; clic sul vuoto non fa nulla); annotazioni Freccia / Forma / Testo; poi simboli tattici non ufficiali (Hotspot, Fronte attivo, Area bruciata, Punto acqua, Osservatorio, Posto di comando, Mezzo, Squadra, Strada chiusa, Vento). Non sono simbologia NATO/PC istituzionale.',
-          'Sotto: impostazioni intervento (rinomina, password), «Esporta» (GeoJSON o PNG), e «Informazioni» (Guida / Privacy / Termini). Profilo utente in fondo. Rinomina/password solo in «Ora», non mentre scrubbi la timeline.',
+          'Nella vista mappa non ci sono navbar/footer del sito. Su desktop: sidebar a sinistra e mappa a destra. Su telefono: mappa a tutto schermo e menu (☰) in alto a sinistra che apre la stessa sidebar a cassetto; scegliendo uno strumento il menu si chiude.',
+          'Nella sidebar: logo (torna alla home), titolo intervento (lucchetto se protetto), poi «Cursore» e simboli (Freccia / Forma / Testo e tattici non ufficiali). In modalità cursore, tocca un segno per selezionarlo; il tocco sul vuoto deseleziona.',
+          'Sotto: impostazioni, «Esporta», «Informazioni» (su smnl.dev/aib-sitac). In fondo: profilo e icona tema. Rinomina/password solo in «Ora».',
         ],
       },
       {
         title: '4. Controlli flottanti in basso',
         paragraphs: [
-          'Al centro in basso sulla mappa: nome del tool o del segno selezionato, icona info (apre una finestra con a cosa serve e come si usa), «Termina» / «Annulla» mentre disegni una freccia o una forma, e «Elimina» quando hai un segno selezionato (con conferma; solo in «Ora», non mentre scrubbi la timeline).',
+          'Al centro in basso sulla mappa: nome del tool o del segno selezionato, icona info (apre una finestra con a cosa serve e come si usa), «Termina» / «Annulla» mentre disegni una freccia o una forma, e «Sposta» / «Elimina» quando hai un segno selezionato («Sposta» = trascina, poi «Termina» per salvare o «Annulla»; «Elimina» con conferma; solo in «Ora», non mentre scrubbi la timeline).',
         ],
       },
       {
         title: '5. Timeline flottante in alto',
         paragraphs: [
-          'Al centro in alto sulla mappa: ogni add/remove è uno step automatico. Usa lo slider, ← →, o «« / »» per andare all’inizio o alla fine (live). Lo step corrente va in ?step= nell’URL; «Copia link» include lo step se stai scrubbando.',
+          'In alto sulla mappa (su telefono può andare su due righe): ogni aggiunta, spostamento o rimozione è uno step automatico. Usa lo slider, ← →, o «« / »» per inizio/fine (live). Lo step corrente va in ?step= nell’URL; «Copia link» include lo step se stai scrubbando.',
         ],
       },
       {
         title: '6. Collaborazione e password',
         paragraphs: [
-          'Stanze senza password: chiunque col link può vedere e modificare; aggiornamenti live via SSE.',
-          'Stanze con password: serve la password per aprire e modificare; gli aggiornamenti arrivano con polling. Non mettere la password nell’URL.',
+          'Stanze senza password: chiunque col link può vedere e modificare; aggiornamenti live via SSE. Se viene aggiunta una password, le connessioni live si chiudono e serve sbloccare.',
+          'Stanze con password: serve la password per aprire, leggere eventi e modificare; gli aggiornamenti arrivano con polling. Non mettere la password nell’URL.',
         ],
       },
       {
@@ -117,17 +117,19 @@ export const aibSitacCopy = {
     description:
       'Informativa privacy di AIB SITAC: dati in database, niente account, password opzionale.',
     heading: 'Privacy',
-    updated: 'Ultimo aggiornamento: 27 ottobre 2026',
+    updated: 'Ultimo aggiornamento: 29 ottobre 2026',
     intro:
       'AIB SITAC è uno strumento indipendente e non ufficiale per mappe di situazione tattica su incendi boschivi. Non è affiliato a Protezione Civile, Vigili del Fuoco, Regione Lombardia o altre istituzioni pubbliche.',
     summaryTitle: 'In sintesi',
     summary: [
       'Metadati dell’intervento e lo storico eventi (segni) sono salvati nel database PostgreSQL del prodotto quando crei o apri una stanza.',
-      'L’elenco interventi in home (e l’API di elenco) è pubblico: per ogni stanza compaiono titolo, data di creazione (Europe/Rome), eventuale creatore e se è protetta da password; aprire o vedere i segni resta vincolato al link e, se impostata, alla password.',
+      'L’elenco interventi in home (e l’API di elenco) è pubblico: per ogni stanza compaiono titolo, data di creazione (Europe/Rome), eventuale creatore e se è protetta da password; centro mappa e zoom delle stanze protette non sono esposti nell’elenco. Aprire o vedere i segni resta vincolato al link e, se impostata, alla password.',
       'Niente account in v1: l’accesso è il link dell’intervento e, se impostata, la password.',
       'Nessun SDK analytics incluso di default.',
       'Il nome visualizzato (profilo in home o in mappa) resta in localStorage del browser; alla creazione di un intervento può essere salvato come creatore (createdBy), e quando aggiungi o rimuovi un segno viene copiato sull’evento come actorLabel.',
+      'La preferenza di tema (sistema / chiaro / scuro) resta in localStorage se la cambi dal predefinito (sistema).',
       'Le tile della mappa arrivano da server HOT OSM / openstreetmap.fr, che possono vedere IP e coordinate delle tile richieste.',
+      'Guida, Privacy e Termini dall’app si aprono sul sito smnl.dev/aib-sitac (niente copie in-app).',
     ],
     dataTitle: 'Dati trattati',
     colData: 'Dato',
@@ -141,8 +143,8 @@ export const aibSitacCopy = {
       },
       {
         data: 'Centro mappa e zoom iniziale',
-        where: 'Database',
-        why: 'Aprire la stanza al centro giusto',
+        where: 'Database (solo dopo sblocco)',
+        why: 'Aprire la stanza al centro giusto; redatti nell’elenco pubblico se protetta',
       },
       {
         data: 'Hash della password (opzionale)',
@@ -160,6 +162,11 @@ export const aibSitacCopy = {
         why: 'Creatore su nuovi interventi + etichetta sugli eventi',
       },
       {
+        data: 'Preferenza tema (sistema / chiaro / scuro)',
+        where: 'localStorage del browser',
+        why: 'Ricordare il tema UI',
+      },
+      {
         data: 'Richieste tile mappa (zoom/x/y)',
         where: 'Server tile HOT OSM',
         why: 'Disegnare lo sfondo mappa',
@@ -172,10 +179,10 @@ export const aibSitacCopy = {
     ],
     accessTitle: 'Accesso e password',
     access: [
-      'Stanze aperte (senza password): chiunque col link può vedere e modificare; aggiornamenti live via Server-Sent Events.',
-      'Stanze protette: la password è inviata solo come header HTTP X-Passphrase (mai nell’URL). L’API conserva un hash scrypt salato e limita i tentativi errati.',
+      'Stanze aperte (senza password): chiunque col link può vedere e modificare; aggiornamenti live via Server-Sent Events. Se viene aggiunta una password, le connessioni live aperte vengono chiuse e serve sbloccare di nuovo.',
+      'Stanze protette: ogni lettura/scrittura (dettaglio stanza, eventi, SSE) richiede la password solo come header HTTP X-Passphrase (mai nell’URL). L’API conserva un hash scrypt salato e limita i tentativi errati. Cambiare o togliere la password disconnette gli ascoltatori live di quella stanza.',
       'Dopo lo sblocco, la password resta in sessionStorage del browser per quella stanza (si chiude con la sessione); non viene messa nell’URL.',
-      'Il nome profilo resta in localStorage; alla creazione può diventare createdBy, sugli eventi compare come actorLabel.',
+      'Il nome profilo resta in localStorage; alla creazione può diventare createdBy, sugli eventi compare come actorLabel. La preferenza tema resta in localStorage (chiave aib-sitac-theme) se impostata.',
     ],
     shareTitle: 'Condivisioni ed export',
     shareBody:
@@ -187,7 +194,7 @@ export const aibSitacCopy = {
     description:
       'Termini di utilizzo di AIB SITAC: strumento non ufficiale, licenza, uso responsabile.',
     heading: 'Termini di utilizzo',
-    updated: 'Ultimo aggiornamento: 27 ottobre 2026',
+    updated: 'Ultimo aggiornamento: 29 ottobre 2026',
     intro:
       'AIB SITAC è uno strumento di volontariato non ufficiale per la mappa tattica di incendi boschivi. Non sostituisce i numeri di emergenza, i canali ufficiali né i sistemi istituzionali.',
     items: [
