@@ -21,6 +21,11 @@ export default defineNuxtConfig({
     defaults: {
       weights: [400, 500, 600, 700, 800],
     },
+    families: [
+      // Self-hosted (not on Google Fonts yet). Keep filename as GeistSerif —
+      // `geist-serif.*` also registers as family `Geist` via @nuxt/fonts local.
+      { name: 'Geist Serif', src: '/fonts/GeistSerif.woff2', weight: 400 },
+    ],
   },
   app: {
     head: {
