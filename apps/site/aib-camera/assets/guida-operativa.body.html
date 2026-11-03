@@ -3,7 +3,7 @@
   <tbody>
     <tr>
       <td><strong>Versione documento</strong></td>
-      <td>2 novembre 2026</td>
+      <td>3 novembre 2026</td>
     </tr>
     <tr>
       <td><strong>Versione app di riferimento</strong></td>
@@ -226,7 +226,11 @@
     Si consiglia un <strong>dispositivo fisico</strong> (non solo simulatore o
     emulatore).
   </li>
-  <li>Orientamento supportato: <strong>verticale</strong> (portrait).</li>
+  <li>
+    Orientamento: <strong>verticale e orizzontale</strong>. In orizzontale la
+    fotocamera sposta i controlli ai lati (flash/mira/timbro a sinistra;
+    scatto/zoom a destra).
+  </li>
   <li>
     Lingua dell’interfaccia: <strong>italiano</strong> (predefinita) o
     <strong>inglese</strong>, selezionabile in <strong>Impostazioni</strong> e
@@ -295,7 +299,10 @@
 </p>
 <hr />
 <h2>6. Schermate principali</h2>
-<p>Tre schede nella barra inferiore:</p>
+<p>
+  Barra a schede flottante (vetro, uguale su iOS e Android) con
+  <strong>solo icone</strong>:
+</p>
 <ol>
   <li><strong>Fotocamera</strong> — scatto e anteprima del timbro</li>
   <li><strong>Foto</strong> — galleria in-app</li>
@@ -306,15 +313,22 @@
     dall’icona in alto a destra sulla fotocamera.
   </li>
 </ol>
+<p>
+  I nomi restano disponibili a VoiceOver / TalkBack tramite etichette di
+  accessibilità.
+</p>
 <hr />
 <h2>7. Fotocamera</h2>
 <h3>7.1 Mirino e bande nere</h3>
 <p>
-  L’anteprima live ha <strong>bande nere</strong> sopra e sotto. In alto:
-  <strong>flash</strong> a sinistra, <strong>Punta</strong> accanto al flash,
+  In <strong>verticale</strong>, l’anteprima live ha
+  <strong>bande nere</strong> sopra e sotto. In alto: <strong>flash</strong> a
+  sinistra, <strong>Punta</strong> accanto al flash,
   <strong>configurazione timbro</strong> a destra. In basso: scatto al centro,
-  anteprima ultimo scatto a sinistra, <strong>zoom</strong> a destra. Oltre 2×
-  il pulsante tele mostra il fattore live (3×, 4×, …).
+  anteprima ultimo scatto a sinistra, <strong>zoom</strong> a destra. In
+  <strong>orizzontale</strong>, le bande sono ai lati: controlli secondari a
+  sinistra, scatto / anteprima / zoom a destra. Oltre 2× il pulsante tele mostra
+  il fattore live (3×, 4×, …).
 </p>
 <h3>7.2 Anteprima del timbro (live)</h3>
 <p>
@@ -332,7 +346,10 @@
 <p>
   Carattere, dimensione del testo e opacità dello sfondo seguono la
   <strong>Configurazione</strong> (icona in alto a destra sulla fotocamera).
-  L’anteprima coincide con ciò che finirà sulla foto.
+  L’anteprima coincide con ciò che finirà sulla foto (anteprima e timbro
+  bruciato scalano dal lato corto del fotogramma). La
+  <strong>direzione</strong> (bussola) resta allineata a ciò che inquadra la
+  fotocamera anche in orizzontale.
 </p>
 <h3>7.3 Controlli</h3>
 <table>
@@ -346,21 +363,24 @@
     <tr>
       <td><strong>Pulsante di scatto</strong></td>
       <td>
-        Cerchio bianco al centro della banda inferiore: acquisisce la foto.
+        Cerchio bianco (banda inferiore in verticale; rail destro in
+        orizzontale): acquisisce la foto.
       </td>
     </tr>
     <tr>
       <td><strong>Anteprima ultimo scatto</strong></td>
       <td>
-        Quadratino a sinistra: apre il dettaglio dell’ultima foto pronta. Se
-        l’elaborazione è ancora in corso compare un indicatore di caricamento.
+        Quadratino vicino allo scatto: apre il dettaglio dell’ultima foto
+        pronta. Se l’elaborazione è ancora in corso compare un indicatore di
+        caricamento.
       </td>
     </tr>
     <tr>
       <td><strong>Flash</strong></td>
       <td>
-        Icona fulmine in <strong>alto a sinistra</strong>: solo
-        <strong>acceso / spento</strong> (non c’è modalità automatica).
+        Icona torcia (alto a sinistra in verticale; rail sinistro in
+        orizzontale): solo <strong>acceso / spento</strong> (non c’è modalità
+        automatica).
       </td>
     </tr>
     <tr>
@@ -381,17 +401,17 @@
     <tr>
       <td><strong>Configurazione</strong></td>
       <td>
-        Icona cursori in <strong>alto a destra</strong>: foglio a tutta
-        larghezza dal basso (altezza piena); chiusura con ✕ o tocco fuori.
+        Icona cursori (alto a destra in verticale; rail sinistro in
+        orizzontale): foglio a tutta larghezza dal basso (altezza piena);
+        chiusura con ✕ o tocco fuori.
       </td>
     </tr>
     <tr>
       <td><strong>Zoom</strong></td>
       <td>
-        Pulsanti in <strong>basso a destra</strong> (es. 0,5× / 1× / 2× se
-        disponibili) e gesto a <strong>due dita</strong>; oltre 2× il pulsante
-        attivo mostra 3×, 4×, …. <strong>Doppio tocco</strong> sul mirino
-        riporta lo zoom a 1×.
+        Pulsanti vicino allo scatto (es. 0,5× / 1× / 2× se disponibili) e gesto
+        a <strong>due dita</strong>; oltre 2× il pulsante attivo mostra 3×, 4×,
+        …. <strong>Doppio tocco</strong> sul mirino riporta lo zoom a 1×.
       </td>
     </tr>
     <tr>
@@ -521,6 +541,7 @@
     Le foto sono raggruppate per giorno (fuso Europe/Rome), con intestazioni
     tipo <em>Oggi</em> / <em>Ieri</em>.
   </li>
+  <li>Griglia a <strong>5 colonne</strong> di miniature quadrate.</li>
   <li>
     Toccare una miniatura per il dettaglio (<strong>Condividi</strong> /
     <strong>Elimina</strong>).

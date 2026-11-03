@@ -4,7 +4,7 @@
 
 <table class="doc-meta">
   <tbody>
-    <tr><td><strong>Document version</strong></td><td>2 November 2026</td></tr>
+    <tr><td><strong>Document version</strong></td><td>3 November 2026</td></tr>
     <tr><td><strong>Reference app version</strong></td><td>1.0.2</td></tr>
     <tr><td><strong>Language</strong></td><td>English</td></tr>
     <tr><td><strong>Site</strong></td><td><a href="https://smnl.dev/aib-camera">smnl.dev/aib-camera</a></td></tr>
@@ -98,7 +98,7 @@ The app is **not** built, endorsed, or affiliated with Civil Protection, the Fir
 
 - **iOS** or **Android** phone with a rear camera.
 - A **physical device** is recommended (not only a simulator or emulator).
-- Supported orientation: **portrait**.
+- Orientation: **portrait and landscape**. In landscape the camera moves controls to the side rails (flash/aim/stamp on the left; shutter/zoom on the right).
 - UI language: **Italian** (default) or **English**, selectable in **Settings** and stored on the device.
 - Stamp timezone: always **Europe/Rome**, independent of the phone timezone.
 
@@ -124,11 +124,13 @@ Permissions can be reviewed from **Settings** and the phone’s system Settings.
 
 ## 6. Main screens
 
-Three tabs in the bottom bar:
+A floating glass tab bar (same on iOS and Android) with **icons only**:
 
 1. **Camera** — capture and stamp preview
 2. **Photos** — in-app gallery
 3. **Settings** — language (Italiano / English), permissions, version and install ID (tap to copy), capture log, links to this guide and the privacy policy. Stamp settings open from the icon at the top right of the camera.
+
+Names stay available to VoiceOver / TalkBack via accessibility labels.
 
 ---
 
@@ -136,7 +138,7 @@ Three tabs in the bottom bar:
 
 ### 7.1 Viewfinder and letterbox bands
 
-The live preview has **black bands** above and below. Top: **flash** on the left, **Aim** next to flash, **stamp configuration** on the right. Bottom: shutter in the center, last-shot preview on the left, **zoom** on the right. Beyond 2× the tele button shows the live factor (3×, 4×, …).
+In **portrait**, the live preview has **black bands** above and below. Top: **flash** on the left, **Aim** next to flash, **stamp configuration** on the right. Bottom: shutter in the center, last-shot preview on the left, **zoom** on the right. In **landscape**, bands move to the sides: secondary controls on the left, shutter / preview / zoom on the right. Beyond 2× the tele button shows the live factor (3×, 4×, …).
 
 ### 7.2 Live stamp preview
 
@@ -145,19 +147,19 @@ The viewfinder shows the same block that will be **burned** into the JPEG:
 - top: date/time, optional **Aimed target (estimated)** line, coordinates, meta (estimated distance / accuracy / altitude / heading), place — per Stamp settings toggles;
 - bottom: custom text, if filled in.
 
-Font, text size, and background opacity follow **Stamp settings** (top-right icon on the camera). The preview matches what will land on the photo.
+Font, text size, and background opacity follow **Stamp settings** (top-right icon on the camera). The preview matches what will land on the photo (live and burned-in stamps scale from the short side of the frame). **Heading** stays aligned with what the camera is pointing at in landscape as well.
 
 ### 7.3 Controls
 
 | Control               | Behavior                                                                                                                                                                   |
 | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Shutter**           | White circle in the center of the bottom band: captures the photo.                                                                                                         |
-| **Last-shot preview** | Square on the left: opens the detail of the last ready photo. A loading indicator appears while processing is still running.                                               |
-| **Flash**             | Lightning icon **top left**: **on / off** only (no auto mode).                                                                                                             |
+| **Shutter**           | White circle (bottom band in portrait; right rail in landscape): captures the photo.                                                                                       |
+| **Last-shot preview** | Square near the shutter: opens the detail of the last ready photo. A loading indicator appears while processing is still running.                                          |
+| **Flash**             | Flashlight icon (top left in portrait; left rail in landscape): **on / off** only (no auto mode).                                                                          |
 | **Aim**               | Crosshair icon next to flash, or **press and hold** the viewfinder (~0.5 s): full-width content-height sheet; dismiss with ✕ or tap outside; distance and **Lock target**. |
 | **Me / Target**       | With a sticky point active, selector at top center: switches between your GPS position and the aimed target without losing it.                                             |
-| **Stamp settings**    | Sliders icon **top right**: full-width bottom sheet (full height); dismiss with ✕ or tap outside.                                                                          |
-| **Zoom**              | Buttons **bottom right** (e.g. 0.5× / 1× / 2× when available) and **pinch**; beyond 2× the active button shows 3×, 4×, …. **Double-tap** the viewfinder resets zoom to 1×. |
+| **Stamp settings**    | Sliders icon (top right in portrait; left rail in landscape): full-width bottom sheet (full height); dismiss with ✕ or tap outside.                                        |
+| **Zoom**              | Buttons near the shutter (e.g. 0.5× / 1× / 2× when available) and **pinch**; beyond 2× the active button shows 3×, 4×, …. **Double-tap** the viewfinder resets zoom to 1×. |
 | **Swipe**             | Swipe **left** from the viewfinder to open the gallery.                                                                                                                    |
 
 Only the **rear** camera is used.
@@ -228,6 +230,7 @@ Changes apply immediately to the live preview and later shots. Photos already ta
 ## 9. Gallery (Photos tab)
 
 - Photos are grouped by day (Europe/Rome timezone), with headers like _Today_ / _Yesterday_.
+- **5-column** grid of square thumbnails.
 - Tap a thumbnail for detail (**Share** / **Delete**).
 - Selection mode: **Select** button or long-press a thumbnail; then multi share or delete.
 

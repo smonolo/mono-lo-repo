@@ -133,7 +133,7 @@ const it: AibCopy = {
     features: [
       {
         title: 'Mirino 4:3 e timbro live',
-        body: 'Mirino con bande nere: flash, punta e configurazione timbro in alto, zoom e scatto in basso. Sul mirino compare lo stesso timbro che verrà bruciato sulla foto.',
+        body: 'Mirino con bande nere in verticale e orizzontale: in verticale flash, punta e timbro in alto, zoom e scatto in basso; in orizzontale i controlli passano ai lati. Sul mirino compare lo stesso timbro che verrà bruciato sulla foto.',
       },
       {
         title: 'Punto mirato',
@@ -378,7 +378,7 @@ const en: AibCopy = {
     features: [
       {
         title: '4:3 viewfinder and live stamp',
-        body: 'Viewfinder with black letterbox bands: flash, aim, and stamp settings on top; zoom and shutter below. The viewfinder shows the same stamp that will be burned into the photo.',
+        body: 'Viewfinder with black letterbox bands in portrait and landscape: portrait keeps flash, aim, and stamp settings on top with zoom and shutter below; landscape moves controls to the side rails. The viewfinder shows the same stamp that will be burned into the photo.',
       },
       {
         title: 'Aimed target',

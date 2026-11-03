@@ -4,7 +4,7 @@
 
 <table class="doc-meta">
   <tbody>
-    <tr><td><strong>Versione documento</strong></td><td>2 novembre 2026</td></tr>
+    <tr><td><strong>Versione documento</strong></td><td>3 novembre 2026</td></tr>
     <tr><td><strong>Versione app di riferimento</strong></td><td>1.0.2</td></tr>
     <tr><td><strong>Lingua</strong></td><td>Italiano</td></tr>
     <tr><td><strong>Sito</strong></td><td><a href="https://smnl.dev/aib-camera">smnl.dev/aib-camera</a></td></tr>
@@ -98,7 +98,7 @@ L’app **non** è realizzata, approvata né affiliata a Protezione Civile, Vigi
 
 - Telefono **iOS** o **Android** con fotocamera posteriore.
 - Si consiglia un **dispositivo fisico** (non solo simulatore o emulatore).
-- Orientamento supportato: **verticale** (portrait).
+- Orientamento: **verticale e orizzontale**. In orizzontale la fotocamera sposta i controlli ai lati (flash/mira/timbro a sinistra; scatto/zoom a destra).
 - Lingua dell’interfaccia: **italiano** (predefinita) o **inglese**, selezionabile in **Impostazioni** e memorizzata sul dispositivo.
 - Fuso orario sul timbro: sempre **Europe/Rome**, indipendente dal fuso impostato sul telefono.
 
@@ -124,11 +124,13 @@ I permessi si possono rivedere da **Impostazioni** e dalle Impostazioni di siste
 
 ## 6. Schermate principali
 
-Tre schede nella barra inferiore:
+Barra a schede flottante (vetro, uguale su iOS e Android) con **solo icone**:
 
 1. **Fotocamera** — scatto e anteprima del timbro
 2. **Foto** — galleria in-app
 3. **Impostazioni** — lingua (Italiano / English), permessi, versione e ID installazione (tocca per copiare), registro scatti, link a questa guida e informativa privacy. La configurazione del timbro si apre dall’icona in alto a destra sulla fotocamera.
+
+I nomi restano disponibili a VoiceOver / TalkBack tramite etichette di accessibilità.
 
 ---
 
@@ -136,7 +138,7 @@ Tre schede nella barra inferiore:
 
 ### 7.1 Mirino e bande nere
 
-L’anteprima live ha **bande nere** sopra e sotto. In alto: **flash** a sinistra, **Punta** accanto al flash, **configurazione timbro** a destra. In basso: scatto al centro, anteprima ultimo scatto a sinistra, **zoom** a destra. Oltre 2× il pulsante tele mostra il fattore live (3×, 4×, …).
+In **verticale**, l’anteprima live ha **bande nere** sopra e sotto. In alto: **flash** a sinistra, **Punta** accanto al flash, **configurazione timbro** a destra. In basso: scatto al centro, anteprima ultimo scatto a sinistra, **zoom** a destra. In **orizzontale**, le bande sono ai lati: controlli secondari a sinistra, scatto / anteprima / zoom a destra. Oltre 2× il pulsante tele mostra il fattore live (3×, 4×, …).
 
 ### 7.2 Anteprima del timbro (live)
 
@@ -145,20 +147,20 @@ Sul mirino compare lo stesso blocco che verrà **bruciato** sul JPEG:
 - in alto: data/ora, eventuale riga **Punto mirato (stimato)**, coordinate, meta (distanza stimata / precisione / altitudine / direzione), luogo — secondo gli interruttori in Configurazione;
 - in basso: testo personalizzato, se compilato.
 
-Carattere, dimensione del testo e opacità dello sfondo seguono la **Configurazione** (icona in alto a destra sulla fotocamera). L’anteprima coincide con ciò che finirà sulla foto.
+Carattere, dimensione del testo e opacità dello sfondo seguono la **Configurazione** (icona in alto a destra sulla fotocamera). L’anteprima coincide con ciò che finirà sulla foto (anteprima e timbro bruciato scalano dal lato corto del fotogramma). La **direzione** (bussola) resta allineata a ciò che inquadra la fotocamera anche in orizzontale.
 
 ### 7.3 Controlli
 
-| Controllo                   | Comportamento                                                                                                                                                                              |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Pulsante di scatto**      | Cerchio bianco al centro della banda inferiore: acquisisce la foto.                                                                                                                        |
-| **Anteprima ultimo scatto** | Quadratino a sinistra: apre il dettaglio dell’ultima foto pronta. Se l’elaborazione è ancora in corso compare un indicatore di caricamento.                                                |
-| **Flash**                   | Icona fulmine in **alto a sinistra**: solo **acceso / spento** (non c’è modalità automatica).                                                                                              |
-| **Punta**                   | Icona mirino accanto al flash, oppure **tieni premuto** il mirino (~0,5 s): foglio a tutta larghezza alto quanto il contenuto; chiusura con ✕ o tocco fuori; distanza e **Blocca punto**.  |
-| **Qui / Mirato**            | Con un punto sticky attivo, selettore in alto al centro: alterna tra la tua posizione GPS e il punto mirato senza perderlo.                                                                |
-| **Configurazione**          | Icona cursori in **alto a destra**: foglio a tutta larghezza dal basso (altezza piena); chiusura con ✕ o tocco fuori.                                                                      |
-| **Zoom**                    | Pulsanti in **basso a destra** (es. 0,5× / 1× / 2× se disponibili) e gesto a **due dita**; oltre 2× il pulsante attivo mostra 3×, 4×, …. **Doppio tocco** sul mirino riporta lo zoom a 1×. |
-| **Scorrimento**             | Scorrere verso **sinistra** dal mirino per aprire la galleria.                                                                                                                             |
+| Controllo                   | Comportamento                                                                                                                                                                             |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Pulsante di scatto**      | Cerchio bianco (banda inferiore in verticale; rail destro in orizzontale): acquisisce la foto.                                                                                            |
+| **Anteprima ultimo scatto** | Quadratino vicino allo scatto: apre il dettaglio dell’ultima foto pronta. Se l’elaborazione è ancora in corso compare un indicatore di caricamento.                                       |
+| **Flash**                   | Icona torcia (alto a sinistra in verticale; rail sinistro in orizzontale): solo **acceso / spento** (non c’è modalità automatica).                                                        |
+| **Punta**                   | Icona mirino accanto al flash, oppure **tieni premuto** il mirino (~0,5 s): foglio a tutta larghezza alto quanto il contenuto; chiusura con ✕ o tocco fuori; distanza e **Blocca punto**. |
+| **Qui / Mirato**            | Con un punto sticky attivo, selettore in alto al centro: alterna tra la tua posizione GPS e il punto mirato senza perderlo.                                                               |
+| **Configurazione**          | Icona cursori (alto a destra in verticale; rail sinistro in orizzontale): foglio a tutta larghezza dal basso (altezza piena); chiusura con ✕ o tocco fuori.                               |
+| **Zoom**                    | Pulsanti vicino allo scatto (es. 0,5× / 1× / 2× se disponibili) e gesto a **due dita**; oltre 2× il pulsante attivo mostra 3×, 4×, …. **Doppio tocco** sul mirino riporta lo zoom a 1×.   |
+| **Scorrimento**             | Scorrere verso **sinistra** dal mirino per aprire la galleria.                                                                                                                            |
 
 La fotocamera usata è solo quella **posteriore**.
 
@@ -228,6 +230,7 @@ Le modifiche si applicano subito all’anteprima live e agli scatti successivi. 
 ## 9. Galleria (scheda Foto)
 
 - Le foto sono raggruppate per giorno (fuso Europe/Rome), con intestazioni tipo _Oggi_ / _Ieri_.
+- Griglia a **5 colonne** di miniature quadrate.
 - Toccare una miniatura per il dettaglio (**Condividi** / **Elimina**).
 - Modalità selezione: pulsante **Seleziona** oppure pressione prolungata su una miniatura; quindi condivisione o eliminazione multipla.
 

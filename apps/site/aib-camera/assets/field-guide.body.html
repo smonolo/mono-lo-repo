@@ -3,7 +3,7 @@
   <tbody>
     <tr>
       <td><strong>Document version</strong></td>
-      <td>2 November 2026</td>
+      <td>3 November 2026</td>
     </tr>
     <tr>
       <td><strong>Reference app version</strong></td>
@@ -218,7 +218,11 @@
     A <strong>physical device</strong> is recommended (not only a simulator or
     emulator).
   </li>
-  <li>Supported orientation: <strong>portrait</strong>.</li>
+  <li>
+    Orientation: <strong>portrait and landscape</strong>. In landscape the
+    camera moves controls to the side rails (flash/aim/stamp on the left;
+    shutter/zoom on the right).
+  </li>
   <li>
     UI language: <strong>Italian</strong> (default) or <strong>English</strong>,
     selectable in <strong>Settings</strong> and stored on the device.
@@ -282,7 +286,10 @@
 </p>
 <hr />
 <h2>6. Main screens</h2>
-<p>Three tabs in the bottom bar:</p>
+<p>
+  A floating glass tab bar (same on iOS and Android) with
+  <strong>icons only</strong>:
+</p>
 <ol>
   <li><strong>Camera</strong> — capture and stamp preview</li>
   <li><strong>Photos</strong> — in-app gallery</li>
@@ -293,15 +300,19 @@
     the camera.
   </li>
 </ol>
+<p>Names stay available to VoiceOver / TalkBack via accessibility labels.</p>
 <hr />
 <h2>7. Camera</h2>
 <h3>7.1 Viewfinder and letterbox bands</h3>
 <p>
-  The live preview has <strong>black bands</strong> above and below. Top:
-  <strong>flash</strong> on the left, <strong>Aim</strong> next to flash,
+  In <strong>portrait</strong>, the live preview has
+  <strong>black bands</strong> above and below. Top: <strong>flash</strong> on
+  the left, <strong>Aim</strong> next to flash,
   <strong>stamp configuration</strong> on the right. Bottom: shutter in the
-  center, last-shot preview on the left, <strong>zoom</strong> on the right.
-  Beyond 2× the tele button shows the live factor (3×, 4×, …).
+  center, last-shot preview on the left, <strong>zoom</strong> on the right. In
+  <strong>landscape</strong>, bands move to the sides: secondary controls on the
+  left, shutter / preview / zoom on the right. Beyond 2× the tele button shows
+  the live factor (3×, 4×, …).
 </p>
 <h3>7.2 Live stamp preview</h3>
 <p>
@@ -319,7 +330,9 @@
 <p>
   Font, text size, and background opacity follow
   <strong>Stamp settings</strong> (top-right icon on the camera). The preview
-  matches what will land on the photo.
+  matches what will land on the photo (live and burned-in stamps scale from the
+  short side of the frame). <strong>Heading</strong> stays aligned with what the
+  camera is pointing at in landscape as well.
 </p>
 <h3>7.3 Controls</h3>
 <table>
@@ -333,21 +346,22 @@
     <tr>
       <td><strong>Shutter</strong></td>
       <td>
-        White circle in the center of the bottom band: captures the photo.
+        White circle (bottom band in portrait; right rail in landscape):
+        captures the photo.
       </td>
     </tr>
     <tr>
       <td><strong>Last-shot preview</strong></td>
       <td>
-        Square on the left: opens the detail of the last ready photo. A loading
-        indicator appears while processing is still running.
+        Square near the shutter: opens the detail of the last ready photo. A
+        loading indicator appears while processing is still running.
       </td>
     </tr>
     <tr>
       <td><strong>Flash</strong></td>
       <td>
-        Lightning icon <strong>top left</strong>: <strong>on / off</strong> only
-        (no auto mode).
+        Flashlight icon (top left in portrait; left rail in landscape):
+        <strong>on / off</strong> only (no auto mode).
       </td>
     </tr>
     <tr>
@@ -368,16 +382,16 @@
     <tr>
       <td><strong>Stamp settings</strong></td>
       <td>
-        Sliders icon <strong>top right</strong>: full-width bottom sheet (full
-        height); dismiss with ✕ or tap outside.
+        Sliders icon (top right in portrait; left rail in landscape): full-width
+        bottom sheet (full height); dismiss with ✕ or tap outside.
       </td>
     </tr>
     <tr>
       <td><strong>Zoom</strong></td>
       <td>
-        Buttons <strong>bottom right</strong> (e.g. 0.5× / 1× / 2× when
-        available) and <strong>pinch</strong>; beyond 2× the active button shows
-        3×, 4×, …. <strong>Double-tap</strong> the viewfinder resets zoom to 1×.
+        Buttons near the shutter (e.g. 0.5× / 1× / 2× when available) and
+        <strong>pinch</strong>; beyond 2× the active button shows 3×, 4×, ….
+        <strong>Double-tap</strong> the viewfinder resets zoom to 1×.
       </td>
     </tr>
     <tr>
@@ -503,6 +517,7 @@
     Photos are grouped by day (Europe/Rome timezone), with headers like
     <em>Today</em> / <em>Yesterday</em>.
   </li>
+  <li><strong>5-column</strong> grid of square thumbnails.</li>
   <li>
     Tap a thumbnail for detail (<strong>Share</strong> /
     <strong>Delete</strong>).
