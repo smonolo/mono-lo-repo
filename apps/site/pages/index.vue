@@ -29,6 +29,14 @@ const activeProjects = [
     githubUrl: 'https://github.com/smonolo/aib-camera',
   },
   {
+    name: 'GVPCBG',
+    description: 'Civil protection association site',
+    details:
+      'Institutional website for SAFETY TEAM OdV (GVPCBG), volunteer civil protection in Busto Garolfo: photo gallery, news, and announcements editable in Sanity Studio.',
+    domain: 'github.com/smonolo/gvpcbg',
+    githubUrl: 'https://github.com/smonolo/gvpcbg',
+  },
+  {
     name: 'Rails',
     description: 'Web-based railway simulator',
     details:
