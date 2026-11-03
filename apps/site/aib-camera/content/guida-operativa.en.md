@@ -4,8 +4,8 @@
 
 <table class="doc-meta">
   <tbody>
-    <tr><td><strong>Document version</strong></td><td>26 October 2026</td></tr>
-    <tr><td><strong>Reference app version</strong></td><td>1.0.0</td></tr>
+    <tr><td><strong>Document version</strong></td><td>2 November 2026</td></tr>
+    <tr><td><strong>Reference app version</strong></td><td>1.0.2</td></tr>
     <tr><td><strong>Language</strong></td><td>English</td></tr>
     <tr><td><strong>Site</strong></td><td><a href="https://smnl.dev/aib-camera">smnl.dev/aib-camera</a></td></tr>
     <tr><td><strong>Privacy</strong></td><td><a href="https://smnl.dev/aib-camera/privacy">smnl.dev/aib-camera/privacy</a></td></tr>
@@ -39,7 +39,7 @@
 
 This guide explains, in English, how AIB Camera works in the field: permissions, capture, stamping photos, gallery, capture log, and use without a network.
 
-It is for **anyone** who uses the app — citizens, volunteers, or others — to document a wildfire (AIB) or similar situation. It describes the real behavior of version **1.0.0**.
+It is for **anyone** who uses the app — citizens, volunteers, or others — to document a wildfire (AIB) or similar situation. It describes the real behavior of version **1.0.2**.
 
 ---
 
@@ -309,7 +309,7 @@ Anyone using the app should keep these points in mind:
 3. **Date and time on the stamp** always use Europe/Rome; check that the phone clock is set correctly.
 4. **“AIB Camera” album** is a convenience copy: the reliable copy on the device is the **in-app gallery**.
 5. **Privacy:** photos, settings, and log stay on the device; there is no developer-managed cloud sync. Sharing with third parties is the user’s choice.
-6. **Updates:** this guide refers to app version **1.0.0**; for later releases check for differences on [smnl.dev/aib-camera](https://smnl.dev/aib-camera).
+6. **Updates:** this guide refers to app version **1.0.2**; for later releases check for differences on [smnl.dev/aib-camera](https://smnl.dev/aib-camera).
 
 ---
 
@@ -340,4 +340,4 @@ Anyone using the app should keep these points in mind:
 
 ---
 
-_Unofficial document · Reference app version 1.0.0 · Printable · © Stefano Monolo — smnl.dev_
+_Unofficial document · Reference app version 1.0.2 · Printable · © Stefano Monolo — smnl.dev_

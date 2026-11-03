@@ -191,7 +191,7 @@ const it: AibCopy = {
       'Guida operativa in italiano di AIB Camera: permessi, fotocamera, timbro, galleria, registro scatti, limiti e checklist sul campo. Leggibile nel browser e scaricabile in PDF.',
     heading: 'Guida operativa',
     leadHtml:
-      'Come funziona AIB Camera sul campo: permessi, scatto, timbro, galleria e registro scatti. App <strong>non ufficiale</strong>, indipendente da enti pubblici. Versione di riferimento <strong>1.0.0</strong>.',
+      'Come funziona AIB Camera sul campo: permessi, scatto, timbro, galleria e registro scatti. App <strong>non ufficiale</strong>, indipendente da enti pubblici. Versione di riferimento <strong>1.0.2</strong>.',
     downloadPdf: 'Scarica PDF',
     openPdf: 'Apri PDF',
     pdfHref: '/docs/aib-camera-guida-operativa.pdf',
@@ -436,7 +436,7 @@ const en: AibCopy = {
       'AIB Camera field guide in English: permissions, camera, stamp, gallery, capture log, limits, and field checklist. Readable in the browser and downloadable as PDF.',
     heading: 'Field guide',
     leadHtml:
-      'How AIB Camera works in the field: permissions, capture, stamp, gallery, and capture log. <strong>Unofficial</strong> app, independent of public agencies. Reference version <strong>1.0.0</strong>.',
+      'How AIB Camera works in the field: permissions, capture, stamp, gallery, and capture log. <strong>Unofficial</strong> app, independent of public agencies. Reference version <strong>1.0.2</strong>.',
     downloadPdf: 'Download PDF',
     openPdf: 'Open PDF',
     pdfHref: '/docs/aib-camera-field-guide.pdf',

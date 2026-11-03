@@ -4,8 +4,8 @@
 
 <table class="doc-meta">
   <tbody>
-    <tr><td><strong>Versione documento</strong></td><td>26 ottobre 2026</td></tr>
-    <tr><td><strong>Versione app di riferimento</strong></td><td>1.0.0</td></tr>
+    <tr><td><strong>Versione documento</strong></td><td>2 novembre 2026</td></tr>
+    <tr><td><strong>Versione app di riferimento</strong></td><td>1.0.2</td></tr>
     <tr><td><strong>Lingua</strong></td><td>Italiano</td></tr>
     <tr><td><strong>Sito</strong></td><td><a href="https://smnl.dev/aib-camera">smnl.dev/aib-camera</a></td></tr>
     <tr><td><strong>Privacy</strong></td><td><a href="https://smnl.dev/aib-camera/privacy">smnl.dev/aib-camera/privacy</a></td></tr>
@@ -39,7 +39,7 @@
 
 Questa guida spiega, in italiano, come funziona AIB Camera sul campo: permessi, scatto, timbro sulle foto, galleria, registro scatti e uso senza rete.
 
-È pensata per **chiunque** usi l’app — cittadini, volontari o altri — per documentare un incendio boschivo (AIB) o una situazione simile. Descrive il comportamento reale della versione **1.0.0**.
+È pensata per **chiunque** usi l’app — cittadini, volontari o altri — per documentare un incendio boschivo (AIB) o una situazione simile. Descrive il comportamento reale della versione **1.0.2**.
 
 ---
 
@@ -309,7 +309,7 @@ Chi usa l’app deve tenere presenti questi punti:
 3. **Data e ora sul timbro** usano sempre Europe/Rome; verificare che l’orologio del telefono sia impostato correttamente.
 4. **Album «AIB Camera»** è una copia di comodo: sul dispositivo la copia affidabile è la **galleria in-app**.
 5. **Privacy:** foto, impostazioni e registro restano sul dispositivo; non c’è sincronizzazione cloud gestita dallo sviluppatore. La condivisione verso terzi è scelta di chi usa l’app.
-6. **Aggiornamenti:** questa guida si riferisce alla versione app **1.0.0**; in caso di release successive verificare eventuali differenze su [smnl.dev/aib-camera](https://smnl.dev/aib-camera).
+6. **Aggiornamenti:** questa guida si riferisce alla versione app **1.0.2**; in caso di release successive verificare eventuali differenze su [smnl.dev/aib-camera](https://smnl.dev/aib-camera).
 
 ---
 
@@ -340,4 +340,4 @@ Chi usa l’app deve tenere presenti questi punti:
 
 ---
 
-_Documento non ufficiale · Versione app di riferimento 1.0.0 · Stampabile · © Stefano Monolo — smnl.dev_
+_Documento non ufficiale · Versione app di riferimento 1.0.2 · Stampabile · © Stefano Monolo — smnl.dev_
