@@ -88,7 +88,7 @@ const showResumeSiteWarning = () => {
     <div class="space-y-12">
       <div
         aria-hidden="true"
-        class="painted-banner painted-banner--blue bg-sm-blue mx-auto flex h-48 w-full items-center justify-center gap-x-8 rounded-2xl md:w-[95%]"
+        class="bg-sm-blue mx-auto flex h-48 w-full items-center justify-center gap-x-8 overflow-hidden rounded-2xl md:w-[95%]"
       >
         <div
           v-for="key in 3"
@@ -127,7 +127,7 @@ const showResumeSiteWarning = () => {
     <div class="space-y-12">
       <div
         aria-hidden="true"
-        class="painted-banner painted-banner--purple bg-sm-purple group mx-auto flex h-48 w-full flex-col items-center justify-center gap-3 overflow-hidden rounded-2xl md:w-[95%]"
+        class="bg-sm-purple group mx-auto flex h-48 w-full flex-col items-center justify-center gap-3 overflow-hidden rounded-2xl md:w-[95%]"
       >
         <div
           v-for="(line, index) in [
@@ -213,7 +213,7 @@ const showResumeSiteWarning = () => {
     <div class="space-y-12">
       <div
         aria-hidden="true"
-        class="painted-banner painted-banner--orange group mx-auto flex h-48 w-full items-center justify-center gap-5 overflow-hidden rounded-2xl bg-[#f07835] md:w-[95%]"
+        class="group mx-auto flex h-48 w-full items-center justify-center gap-5 overflow-hidden rounded-2xl bg-[#f07835] md:w-[95%]"
       >
         <svg
           viewBox="0 0 100 100"
@@ -272,7 +272,7 @@ const showResumeSiteWarning = () => {
     <div class="space-y-12">
       <div
         aria-hidden="true"
-        class="painted-banner painted-banner--white group mx-auto flex h-48 w-full items-center justify-center gap-x-4 rounded-2xl bg-white md:w-[95%]"
+        class="group mx-auto flex h-48 w-full items-center justify-center gap-x-4 overflow-hidden rounded-2xl bg-white md:w-[95%]"
       >
         <div
           v-for="(circle, index) in circles"
