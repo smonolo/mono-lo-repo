@@ -13,6 +13,14 @@ const circles = [
 
 const activeProjects = [
   {
+    name: 'AIB',
+    description: 'Independent tools for wildfire response',
+    details:
+      'Home of AIB Camera and AIB SITAC: field camera and shared tactical map for wildfire response. Unofficial, open tools — not affiliated with public agencies.',
+    domain: 'aib.smnl.dev',
+    githubUrl: 'https://github.com/smonolo/aib-site',
+  },
+  {
     name: 'AIB SITAC',
     description: 'Tactical situation map for wildfires',
     details:
