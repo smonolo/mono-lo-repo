@@ -22,6 +22,10 @@ export default defineNuxtConfig({
     '/aib-camera/guida': {
       redirect: { to: '/aib-camera/guide', statusCode: 301 },
     },
+    '/aib-camera/novita': {
+      redirect: { to: '/aib-camera/changelog', statusCode: 301 },
+    },
+
     // Old asset paths (pre aib-assets move)
     '/aib-camera/favicon.png': {
       redirect: { to: '/aib-assets/favicon.png', statusCode: 301 },

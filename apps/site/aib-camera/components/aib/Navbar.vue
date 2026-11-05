@@ -52,6 +52,12 @@ function navClass(path: string) {
           {{ copy.nav.guide }}
         </NuxtLink>
         <NuxtLink
+          :to="localePath('/aib-camera/changelog')"
+          :class="navClass('/aib-camera/changelog')"
+        >
+          {{ copy.nav.changelog }}
+        </NuxtLink>
+        <NuxtLink
           :to="localePath('/aib-camera/privacy')"
           :class="navClass('/aib-camera/privacy')"
         >

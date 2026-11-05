@@ -7,6 +7,7 @@ export type AibCopy = {
   nav: {
     homeAria: string
     guide: string
+    changelog: string
     privacy: string
     terms: string
     langIt: string
@@ -43,6 +44,12 @@ export type AibCopy = {
     openPdf: string
     pdfHref: string
     pdfFilename: string
+  }
+  changelog: {
+    title: string
+    description: string
+    heading: string
+    leadHtml: string
   }
   privacy: {
     title: string
@@ -111,6 +118,7 @@ const it: AibCopy = {
   nav: {
     homeAria: 'AIB Camera — home',
     guide: 'Guida',
+    changelog: 'Novità',
     privacy: 'Privacy',
     terms: 'Termini',
     langIt: 'IT',
@@ -200,6 +208,14 @@ const it: AibCopy = {
     openPdf: 'Apri PDF',
     pdfHref: '/docs/aib-camera-guida-operativa.pdf',
     pdfFilename: 'aib-camera-guida-operativa.pdf',
+  },
+  changelog: {
+    title: 'Novità — AIB Camera',
+    description:
+      'Registro delle versioni di AIB Camera: cosa è cambiato in ogni rilascio, dalla 1.0.0 alla versione corrente.',
+    heading: 'Novità',
+    leadHtml:
+      'Cosa è cambiato in ogni versione rilasciata. App <strong>non ufficiale</strong>, indipendente da enti pubblici. Versione corrente <strong>1.2.0</strong>.',
   },
   privacy: {
     title: 'Informativa privacy — AIB Camera',
@@ -366,6 +382,7 @@ const en: AibCopy = {
   nav: {
     homeAria: 'AIB Camera — home',
     guide: 'Guide',
+    changelog: 'Changelog',
     privacy: 'Privacy',
     terms: 'Terms',
     langIt: 'IT',
@@ -455,6 +472,14 @@ const en: AibCopy = {
     openPdf: 'Open PDF',
     pdfHref: '/docs/aib-camera-field-guide.pdf',
     pdfFilename: 'aib-camera-field-guide.pdf',
+  },
+  changelog: {
+    title: 'Changelog — AIB Camera',
+    description:
+      'AIB Camera release notes: what changed in each version, from 1.0.0 to the current release.',
+    heading: 'Changelog',
+    leadHtml:
+      'What changed in each released version. <strong>Unofficial</strong> app, independent of public agencies. Current version <strong>1.2.0</strong>.',
   },
   privacy: {
     title: 'Privacy policy — AIB Camera',

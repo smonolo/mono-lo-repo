@@ -1,0 +1,93 @@
+<h1>Changelog — AIB Camera</h1>
+<h2>1.2.0 — 5 November 2026</h2>
+<ul>
+  <li>
+    <strong>Map tab</strong>: live map of the effective point (Me or Aimed),
+    with stamp-parity location lines, copy/share, and open in the system Maps
+    app.
+  </li>
+  <li>
+    <strong>iOS</strong> uses Apple Maps; <strong>Android</strong> uses Leaflet
+    with OpenStreetMap/CARTO tiles (no Google Maps).
+  </li>
+  <li>
+    Aimed red pin is <strong>draggable</strong> on the map; on drop, meters and
+    bearing update from live GPS.
+  </li>
+  <li>Same <strong>Aim</strong> sheet from Camera and Map.</li>
+  <li>
+    <strong>Photo viewer</strong> with swipe between shots and a bottom
+    filmstrip (share/delete the current shot).
+  </li>
+</ul>
+<h2>1.1.0 — 3 November 2026</h2>
+<ul>
+  <li><strong>Device rotation</strong> support (portrait and landscape).</li>
+  <li>
+    Adaptive letterbox viewfinder: in landscape, controls move to the
+    <strong>side rails</strong>.
+  </li>
+  <li>
+    Compass heading on the stamp is <strong>corrected</strong> for screen
+    orientation so it tracks the camera in landscape.
+  </li>
+  <li>
+    Fix for the <code>expo-screen-orientation</code> dependency in native
+    builds.
+  </li>
+</ul>
+<h2>1.0.2 — 3 November 2026</h2>
+<ul>
+  <li>
+    Shared floating <strong>glass tab bar</strong> on iOS and Android
+    (<code>expo-blur</code>), replacing iOS-only native liquid glass.
+  </li>
+  <li><strong>Solar Linear</strong> icons unified on both platforms.</li>
+  <li>Updated Android adaptive icon.</li>
+</ul>
+<h2>1.0.1 — 29 October 2026</h2>
+<ul>
+  <li>
+    <strong>Aimed target</strong>: distance (presets or custom meters) + GPS +
+    compass to estimate coordinates of what you point at; stamp label “Aimed
+    target (estimated)”.
+  </li>
+  <li>
+    <strong>English</strong> UI selectable in Settings (Italian remains the
+    default).
+  </li>
+  <li><strong>Terms of use</strong> published on the site.</li>
+  <li>Share <strong>multiple images</strong> from the gallery.</li>
+  <li>
+    GPS/compass/place improvements: heading accuracy gate, circular smoothing,
+    stickier place labels.
+  </li>
+  <li>
+    PolyForm Noncommercial license, privacy/store URLs, and local build/submit
+    flow.
+  </li>
+</ul>
+<h2>1.0.0 — 23 October 2026</h2>
+<p>First public release.</p>
+<ul>
+  <li>
+    Field camera with letterboxed viewfinder and
+    <strong>live stamp</strong> (date/time Europe/Rome, GPS, altitude, heading,
+    place, custom text).
+  </li>
+  <li>
+    Stamp <strong>burned into</strong> the JPEG (Skia) and best-effort EXIF
+    (capture ID, GPS, JSON UserComment).
+  </li>
+  <li>
+    <strong>In-app gallery</strong> as source of truth; optional Photos album
+    “AIB Camera”.
+  </li>
+  <li>
+    On-device <strong>capture log</strong> (UUID) with CSV export; install ID in
+    Settings.
+  </li>
+  <li>Stamp field toggles in Settings; pinch-to-zoom on the viewfinder.</li>
+  <li>Offline-first, no account or cloud sync; shutter works without GPS.</li>
+  <li>Expo SDK 58, brand icon and splash.</li>
+</ul>

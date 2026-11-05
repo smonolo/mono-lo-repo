@@ -51,6 +51,10 @@ body:has(.aib) {
   @apply border-aib-border text-aib-fg dark:border-aib-border-dark dark:text-aib-fg-inverse mb-2.5 mt-8 border-b pb-1.5 text-[17px] font-semibold;
 }
 
+.aib-prose > h1:first-of-type + h2 {
+  @apply mt-0;
+}
+
 .aib-prose h3 {
   @apply text-aib-fg dark:text-aib-fg-inverse mb-1.5 mt-5 text-[15px] font-semibold;
 }
@@ -66,9 +70,12 @@ body:has(.aib) {
   @apply mb-1;
 }
 
-.aib-prose ul,
+.aib-prose ul {
+  @apply list-disc pl-5;
+}
+
 .aib-prose ol {
-  @apply pl-5;
+  @apply list-decimal pl-5;
 }
 
 .aib-prose strong {
