@@ -33,7 +33,7 @@ const activeProjects = [
     description: 'Civil protection association site',
     details:
       'Institutional website for SAFETY TEAM OdV (GVPCBG), volunteer civil protection in Busto Garolfo: photo gallery, news, and announcements editable in Sanity Studio.',
-    domain: 'github.com/smonolo/gvpcbg',
+    domain: 'gvpcbg.smnl.dev',
     githubUrl: 'https://github.com/smonolo/gvpcbg',
   },
   {
