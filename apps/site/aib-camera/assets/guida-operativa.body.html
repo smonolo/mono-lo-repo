@@ -3,11 +3,11 @@
   <tbody>
     <tr>
       <td><strong>Versione documento</strong></td>
-      <td>3 novembre 2026</td>
+      <td>5 novembre 2026</td>
     </tr>
     <tr>
       <td><strong>Versione app di riferimento</strong></td>
-      <td>1.0.2</td>
+      <td>1.2.0</td>
     </tr>
     <tr>
       <td><strong>Lingua</strong></td>
@@ -53,6 +53,7 @@
   <li>Schermate principali</li>
   <li>Fotocamera</li>
   <li>Configurazione del timbro</li>
+  <li>Mappa</li>
   <li>Galleria (scheda Foto)</li>
   <li>Registro scatti</li>
   <li>Metadati EXIF</li>
@@ -72,7 +73,7 @@
 <p>
   È pensata per <strong>chiunque</strong> usi l’app — cittadini, volontari o
   altri — per documentare un incendio boschivo (AIB) o una situazione simile.
-  Descrive il comportamento reale della versione <strong>1.0.2</strong>.
+  Descrive il comportamento reale della versione <strong>1.2.0</strong>.
 </p>
 <hr />
 <h2>2. Cos’è AIB Camera</h2>
@@ -153,6 +154,13 @@
       <td>
         Si possono scattare più foto di seguito; il timbro viene elaborato in
         coda, una foto alla volta
+      </td>
+    </tr>
+    <tr>
+      <td>Scheda Mappa</td>
+      <td>
+        Punto Qui/Mirato sulla mappa; stesse info del timbro; copia,
+        condivisione testo + link mappe, apri in Mappe
       </td>
     </tr>
     <tr>
@@ -245,7 +253,7 @@
   Informazioni aggiornate su disponibilità e distribuzione:
   <a href="https://smnl.dev/aib-camera">smnl.dev/aib-camera</a>. Per adozioni
   organizzate (distribuzione a più dispositivi, build dedicate), contattare lo
-  sviluppatore (vedi § 16).
+  sviluppatore (vedi § 17).
 </p>
 <hr />
 <h2>5. Permessi</h2>
@@ -270,8 +278,8 @@
       <td><strong>Posizione (in uso)</strong></td>
       <td>No</td>
       <td>
-        Coordinate, precisione, altitudine, direzione e luogo sul timbro e, se
-        possibile, nell’EXIF.
+        Coordinate, precisione, altitudine, direzione e luogo sul timbro e sulla
+        scheda Mappa e, se possibile, nell’EXIF.
       </td>
     </tr>
     <tr>
@@ -305,6 +313,11 @@
 </p>
 <ol>
   <li><strong>Fotocamera</strong> — scatto e anteprima del timbro</li>
+  <li>
+    <strong>Mappa</strong> — punto effettivo (Qui o Mirato), stesso foglio
+    <strong>Punta</strong> della fotocamera, stesse informazioni del timbro,
+    copia / condivisione e apertura nelle Mappe di sistema
+  </li>
   <li><strong>Foto</strong> — galleria in-app</li>
   <li>
     <strong>Impostazioni</strong> — lingua (Italiano / English), permessi,
@@ -370,9 +383,9 @@
     <tr>
       <td><strong>Anteprima ultimo scatto</strong></td>
       <td>
-        Quadratino vicino allo scatto: apre il dettaglio dell’ultima foto
-        pronta. Se l’elaborazione è ancora in corso compare un indicatore di
-        caricamento.
+        Quadratino vicino allo scatto: apre il visualizzatore sull’ultima foto
+        pronta (swipe / filmstrip per le altre). Se l’elaborazione è ancora in
+        corso compare un indicatore di caricamento.
       </td>
     </tr>
     <tr>
@@ -426,26 +439,32 @@
 <p>La fotocamera usata è solo quella <strong>posteriore</strong>.</p>
 <h3>7.4 Punto mirato (distanza + direzione)</h3>
 <p>
-  Per stampare le coordinate di ciò a cui stai <strong>puntando</strong> (es. un
-  focolaio a 200 m), non la tua posizione:
+  Per usare le coordinate di ciò a cui stai <strong>puntando</strong> (es. un
+  focolaio a 200 m), non la tua posizione. Il foglio <strong>Punta</strong> è a
+  livello app: <strong>lo stesso menu</strong> da Fotocamera e da Mappa.
 </p>
 <ol>
   <li>Assicurati che GPS e bussola siano disponibili.</li>
-  <li>Punta la fotocamera verso il punto di interesse.</li>
   <li>
-    Tocca <strong>Punta</strong> (o tieni premuto il mirino): si apre un foglio
-    a tutta larghezza (chiudi con ✕ o toccando fuori).
+    Orientati verso il punto di interesse (la stima usa la direzione della
+    bussola).
   </li>
   <li>
-    Scegli o digita la distanza in metri, poi <strong>Blocca punto</strong>.
+    Apri <strong>Punta</strong>: sulla fotocamera (icona o pressione lunga sul
+    mirino) oppure sulla mappa (icona mirino in alto a destra). Si apre lo
+    stesso foglio a tutta larghezza (chiudi con ✕ o toccando fuori).
   </li>
   <li>
-    Sul timbro compaiono le coordinate stimate e l’etichetta
+    Scegli un preset (<strong>100 / 250 / 500 / 1000</strong> m) o digita i
+    metri, poi <strong>Blocca punto</strong>.
+  </li>
+  <li>
+    Sul timbro e sulla mappa compaiono le coordinate stimate e l’etichetta
     <strong>Punto mirato (stimato)</strong>.
   </li>
   <li>
-    Usa <strong>Qui ↔ Mirato</strong> per tornare alla tua posizione o
-    riattivare il punto sticky; <strong>Cancella punto</strong> lo elimina.
+    Usa <strong>Qui ↔ Mirato</strong> su fotocamera o mappa senza perdere il
+    punto; <strong>Cancella punto</strong> (nel foglio Punta) lo elimina.
   </li>
 </ol>
 <p>
@@ -535,7 +554,46 @@
   Le foto già scattate non vengono modificate.
 </p>
 <hr />
-<h2>9. Galleria (scheda Foto)</h2>
+<h2>9. Mappa</h2>
+<p>
+  La scheda <strong>Mappa</strong> mostra il punto geo
+  <strong>effettivo</strong> usato anche dal timbro:
+</p>
+<ul>
+  <li>
+    mappa con il pallino blu di sistema (e cono di direzione se la bussola è
+    disponibile) su <strong>Qui</strong>; sul <strong>punto mirato</strong> un
+    pin rosso, con il pallino blu che resta sulla tua posizione;
+  </li>
+  <li>
+    icona <strong>Punta</strong> in alto a destra: apre lo stesso foglio della
+    fotocamera (blocca, modifica distanza, cancella);
+  </li>
+  <li>
+    se un punto mirato è attivo, puoi alternare
+    <strong>Qui ↔ Mirato</strong> anche da qui, e
+    <strong>trascinare il pin rosso</strong> sulla mappa: al rilascio il punto
+    bloccato e la distanza in metri si aggiornano rispetto alla tua posizione;
+  </li>
+  <li>
+    le stesse righe informative del timbro (data/ora, coordinate, meta, luogo —
+    secondo gli interruttori in Configurazione);
+  </li>
+  <li>
+    <strong>Copia</strong> il testo negli appunti;
+    <strong>Condividi</strong> apre il foglio di sistema con testo + link mappe;
+    <strong>Apri nelle mappe</strong> apre Apple Maps / Google Maps.
+  </li>
+</ul>
+<p>
+  Senza GPS la scheda resta utilizzabile: compare un avviso e non c’è marker. I
+  tile richiedono rete: su <strong>iOS</strong> Apple Maps, su
+  <strong>Android</strong> Leaflet con OpenStreetMap (nessuna chiave Google
+  Maps). Copia e condivisione del testo funzionano comunque quando le coordinate
+  sono disponibili.
+</p>
+<hr />
+<h2>10. Galleria (scheda Foto)</h2>
 <ul>
   <li>
     Le foto sono raggruppate per giorno (fuso Europe/Rome), con intestazioni
@@ -543,8 +601,9 @@
   </li>
   <li>Griglia a <strong>5 colonne</strong> di miniature quadrate.</li>
   <li>
-    Toccare una miniatura per il dettaglio (<strong>Condividi</strong> /
-    <strong>Elimina</strong>).
+    Toccare una miniatura apre il <strong>visualizzatore</strong>: scorri le
+    foto (swipe o filmstrip sotto), poi <strong>Condividi</strong> /
+    <strong>Elimina</strong>.
   </li>
   <li>
     Modalità selezione: pulsante <strong>Seleziona</strong> oppure pressione
@@ -587,7 +646,7 @@
   </p>
 </aside>
 <hr />
-<h2>10. Registro scatti</h2>
+<h2>11. Registro scatti</h2>
 <p>Accesso: <strong>Impostazioni → Registro scatti</strong>.</p>
 <ul>
   <li>
@@ -626,7 +685,7 @@
   condivisione.
 </p>
 <hr />
-<h2>11. Metadati EXIF</h2>
+<h2>12. Metadati EXIF</h2>
 <p>Dopo il timbro l’app prova a scrivere sul JPEG, tra l’altro:</p>
 <ul>
   <li><code>Software</code> / <code>Artist</code></li>
@@ -648,7 +707,7 @@
   </p>
 </aside>
 <hr />
-<h2>12. Uso offline e luogo</h2>
+<h2>13. Uso offline e luogo</h2>
 <ul>
   <li>
     Scatto, timbro, galleria, registro e condivisione
@@ -677,19 +736,21 @@
   usano fallback di sistema. Lo scatto non deve bloccarsi per questi dettagli.
 </p>
 <hr />
-<h2>13. Condivisione</h2>
+<h2>14. Condivisione</h2>
 <p>
   Dal dettaglio o dalla selezione in galleria si apre il
   <strong>foglio di condivisione di sistema</strong> (Messaggi, Mail, WhatsApp,
   File, ecc.).
 </p>
 <p>
-  Il file condiviso è il JPEG già timbrato, con EXIF se è stato scritto. Dopo
-  l’invio, trattamento e conservazione dipendono dall’app o dal servizio scelto
-  da chi condivide (fuori dal controllo di AIB Camera).
+  Il file condiviso è il JPEG già timbrato, con EXIF se è stato scritto. Dalla
+  scheda <strong>Mappa</strong> puoi invece condividere o copiare il
+  <strong>testo</strong> della posizione (con link mappe) senza inviare una
+  foto. Dopo l’invio, trattamento e conservazione dipendono dall’app o dal
+  servizio scelto da chi condivide (fuori dal controllo di AIB Camera).
 </p>
 <hr />
-<h2>14. Limiti e responsabilità</h2>
+<h2>15. Limiti e responsabilità</h2>
 <p>Chi usa l’app deve tenere presenti questi punti:</p>
 <ol>
   <li>
@@ -717,12 +778,12 @@
   </li>
   <li>
     <strong>Aggiornamenti:</strong> questa guida si riferisce alla versione app
-    <strong>1.0.2</strong>; in caso di release successive verificare eventuali
+    <strong>1.2.0</strong>; in caso di release successive verificare eventuali
     differenze su <a href="https://smnl.dev/aib-camera">smnl.dev/aib-camera</a>.
   </li>
 </ol>
 <hr />
-<h2>15. Checklist operativa</h2>
+<h2>16. Checklist operativa</h2>
 <ol>
   <li>
     Concedere almeno il permesso <strong>Fotocamera</strong>; Posizione e Foto
@@ -759,7 +820,7 @@
   </li>
 </ol>
 <hr />
-<h2>16. Contatti</h2>
+<h2>17. Contatti</h2>
 <table class="doc-meta">
   <tbody>
     <tr>
@@ -803,7 +864,7 @@
 <hr />
 <p>
   <em
-    >Documento non ufficiale · Versione app di riferimento 1.0.2 · Stampabile ·
+    >Documento non ufficiale · Versione app di riferimento 1.2.0 · Stampabile ·
     © Stefano Monolo — smnl.dev</em
   >
 </p>

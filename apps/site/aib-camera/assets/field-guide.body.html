@@ -3,11 +3,11 @@
   <tbody>
     <tr>
       <td><strong>Document version</strong></td>
-      <td>3 November 2026</td>
+      <td>5 November 2026</td>
     </tr>
     <tr>
       <td><strong>Reference app version</strong></td>
-      <td>1.0.2</td>
+      <td>1.2.0</td>
     </tr>
     <tr>
       <td><strong>Language</strong></td>
@@ -53,6 +53,7 @@
   <li>Main screens</li>
   <li>Camera</li>
   <li>Stamp settings</li>
+  <li>Map</li>
   <li>Gallery (Photos tab)</li>
   <li>Capture log</li>
   <li>EXIF metadata</li>
@@ -72,7 +73,7 @@
 <p>
   It is for <strong>anyone</strong> who uses the app — citizens, volunteers, or
   others — to document a wildfire (AIB) or similar situation. It describes the
-  real behavior of version <strong>1.0.2</strong>.
+  real behavior of version <strong>1.2.0</strong>.
 </p>
 <hr />
 <h2>2. What AIB Camera is</h2>
@@ -149,6 +150,13 @@
       <td>
         You can take several photos in a row; the stamp is processed in a queue,
         one photo at a time
+      </td>
+    </tr>
+    <tr>
+      <td>Map tab</td>
+      <td>
+        Me/Aimed point on the map; same stamp info; copy, share text + maps
+        link, open in Maps
       </td>
     </tr>
     <tr>
@@ -235,7 +243,7 @@
 <p>
   Up-to-date availability and distribution:
   <a href="https://smnl.dev/aib-camera">smnl.dev/aib-camera</a>. For organized
-  rollouts (many devices, dedicated builds), contact the developer (see § 16).
+  rollouts (many devices, dedicated builds), contact the developer (see § 17).
 </p>
 <hr />
 <h2>5. Permissions</h2>
@@ -257,8 +265,8 @@
       <td><strong>Location (while using)</strong></td>
       <td>No</td>
       <td>
-        Coordinates, accuracy, altitude, heading, and place on the stamp and,
-        when possible, in EXIF.
+        Coordinates, accuracy, altitude, heading, and place on the stamp and Map
+        tab and, when possible, in EXIF.
       </td>
     </tr>
     <tr>
@@ -292,6 +300,11 @@
 </p>
 <ol>
   <li><strong>Camera</strong> — capture and stamp preview</li>
+  <li>
+    <strong>Map</strong> — effective point (Me or Aimed), the same
+    <strong>Aim</strong> sheet as Camera, stamp-parity info, copy / share, and
+    open in system Maps
+  </li>
   <li><strong>Photos</strong> — in-app gallery</li>
   <li>
     <strong>Settings</strong> — language (Italiano / English), permissions,
@@ -405,26 +418,29 @@
 <p>Only the <strong>rear</strong> camera is used.</p>
 <h3>7.4 Aimed target (distance + heading)</h3>
 <p>
-  To stamp the coordinates of what you are <strong>pointing at</strong> (e.g. a
-  hotspot 200 m away), not your position:
+  To use the coordinates of what you are <strong>pointing at</strong> (e.g. a
+  hotspot 200 m away), not your position. <strong>Aim</strong> is app-level: the
+  <strong>same sheet</strong> from Camera and Map.
 </p>
 <ol>
   <li>Make sure GPS and compass are available.</li>
-  <li>Point the camera at the point of interest.</li>
+  <li>Face the point of interest (the estimate uses compass heading).</li>
   <li>
-    Tap <strong>Aim</strong> (or press and hold the viewfinder): a full-width
+    Open <strong>Aim</strong>: on Camera (chrome or press-and-hold the
+    viewfinder) or on Map (crosshair in the top-right). The same full-width
     sheet opens (dismiss with ✕ or tap outside).
   </li>
   <li>
-    Choose or type the distance in meters, then <strong>Lock target</strong>.
+    Pick a preset (<strong>100 / 250 / 500 / 1000</strong> m) or type meters,
+    then <strong>Lock target</strong>.
   </li>
   <li>
-    The stamp shows estimated coordinates and the label
+    Stamp and map show estimated coordinates and the label
     <strong>Aimed target (estimated)</strong>.
   </li>
   <li>
-    Use <strong>Me ↔ Target</strong> to return to your position or re-enable
-    the sticky point; <strong>Clear target</strong> removes it.
+    Use <strong>Me ↔ Target</strong> on Camera or Map without losing the lock;
+    <strong>Clear target</strong> (in the Aim sheet) removes it.
   </li>
 </ol>
 <p>
@@ -511,7 +527,45 @@
   taken are not modified.
 </p>
 <hr />
-<h2>9. Gallery (Photos tab)</h2>
+<h2>9. Map</h2>
+<p>
+  The <strong>Map</strong> tab shows the same effective geo point used by the
+  stamp:
+</p>
+<ul>
+  <li>
+    map with the system blue user puck (and heading cone when the compass is
+    available) for <strong>Me</strong>; a red pin on the
+    <strong>aimed target</strong>, with the blue puck still on your position;
+  </li>
+  <li>
+    <strong>Aim</strong> icon top-right: opens the same sheet as Camera (lock,
+    change distance, clear);
+  </li>
+  <li>
+    if an aimed point is active, you can toggle
+    <strong>Me ↔ Aimed</strong> here too, and
+    <strong>drag the red pin</strong> on the map: on release the locked point
+    and distance in meters update from your position;
+  </li>
+  <li>
+    the same stamp info lines (date/time, coordinates, meta, place — per Stamp
+    settings toggles);
+  </li>
+  <li>
+    <strong>Copy</strong> puts the text on the clipboard;
+    <strong>Share</strong> opens the system sheet with text + a maps link;
+    <strong>Open in Maps</strong> opens Apple Maps / Google Maps.
+  </li>
+</ul>
+<p>
+  Without GPS the tab stays usable: a hint appears and there is no marker. Map
+  tiles need a network: <strong>iOS</strong> Apple Maps,
+  <strong>Android</strong> Leaflet with OpenStreetMap (no Google Maps key). Copy
+  and share of the text still work when coordinates are available.
+</p>
+<hr />
+<h2>10. Gallery (Photos tab)</h2>
 <ul>
   <li>
     Photos are grouped by day (Europe/Rome timezone), with headers like
@@ -519,8 +573,8 @@
   </li>
   <li><strong>5-column</strong> grid of square thumbnails.</li>
   <li>
-    Tap a thumbnail for detail (<strong>Share</strong> /
-    <strong>Delete</strong>).
+    Tap a thumbnail to open the <strong>viewer</strong>: browse shots (swipe or
+    the filmstrip below), then <strong>Share</strong> / <strong>Delete</strong>.
   </li>
   <li>
     Selection mode: <strong>Select</strong> button or long-press a thumbnail;
@@ -561,7 +615,7 @@
   </p>
 </aside>
 <hr />
-<h2>10. Capture log</h2>
+<h2>11. Capture log</h2>
 <p>Access: <strong>Settings → Capture log</strong>.</p>
 <ul>
   <li>
@@ -597,7 +651,7 @@
   device only if you choose a share app or service.
 </p>
 <hr />
-<h2>11. EXIF metadata</h2>
+<h2>12. EXIF metadata</h2>
 <p>After stamping the app tries to write on the JPEG, among other fields:</p>
 <ul>
   <li><code>Software</code> / <code>Artist</code></li>
@@ -619,7 +673,7 @@
   </p>
 </aside>
 <hr />
-<h2>12. Offline use and place</h2>
+<h2>13. Offline use and place</h2>
 <ul>
   <li>
     Capture, stamp, gallery, log, and share
@@ -647,18 +701,20 @@
   block for these details.
 </p>
 <hr />
-<h2>13. Sharing</h2>
+<h2>14. Sharing</h2>
 <p>
   From detail or gallery selection the <strong>system share sheet</strong> opens
   (Messages, Mail, WhatsApp, Files, etc.).
 </p>
 <p>
-  The shared file is the already stamped JPEG, with EXIF if it was written.
+  The shared file is the already stamped JPEG, with EXIF if it was written. From
+  the <strong>Map</strong> tab you can instead share or copy
+  <strong>location text</strong> (with a maps link) without sending a photo.
   After sending, handling and retention depend on the app or service chosen by
   the sharer (outside AIB Camera’s control).
 </p>
 <hr />
-<h2>14. Limits and responsibility</h2>
+<h2>15. Limits and responsibility</h2>
 <p>Anyone using the app should keep these points in mind:</p>
 <ol>
   <li>
@@ -686,12 +742,12 @@
   </li>
   <li>
     <strong>Updates:</strong> this guide refers to app version
-    <strong>1.0.2</strong>; for later releases check for differences on
+    <strong>1.2.0</strong>; for later releases check for differences on
     <a href="https://smnl.dev/aib-camera">smnl.dev/aib-camera</a>.
   </li>
 </ol>
 <hr />
-<h2>15. Field checklist</h2>
+<h2>16. Field checklist</h2>
 <ol>
   <li>
     Grant at least <strong>Camera</strong> permission; Location and Photos when
@@ -728,7 +784,7 @@
   </li>
 </ol>
 <hr />
-<h2>16. Contact</h2>
+<h2>17. Contact</h2>
 <table class="doc-meta">
   <tbody>
     <tr>
@@ -772,7 +828,7 @@
 <hr />
 <p>
   <em
-    >Unofficial document · Reference app version 1.0.2 · Printable · © Stefano
+    >Unofficial document · Reference app version 1.2.0 · Printable · © Stefano
     Monolo — smnl.dev</em
   >
 </p>

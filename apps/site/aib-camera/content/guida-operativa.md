@@ -4,8 +4,8 @@
 
 <table class="doc-meta">
   <tbody>
-    <tr><td><strong>Versione documento</strong></td><td>3 novembre 2026</td></tr>
-    <tr><td><strong>Versione app di riferimento</strong></td><td>1.0.2</td></tr>
+    <tr><td><strong>Versione documento</strong></td><td>5 novembre 2026</td></tr>
+    <tr><td><strong>Versione app di riferimento</strong></td><td>1.2.0</td></tr>
     <tr><td><strong>Lingua</strong></td><td>Italiano</td></tr>
     <tr><td><strong>Sito</strong></td><td><a href="https://smnl.dev/aib-camera">smnl.dev/aib-camera</a></td></tr>
     <tr><td><strong>Privacy</strong></td><td><a href="https://smnl.dev/aib-camera/privacy">smnl.dev/aib-camera/privacy</a></td></tr>
@@ -24,14 +24,15 @@
 6. Schermate principali
 7. Fotocamera
 8. Configurazione del timbro
-9. Galleria (scheda Foto)
-10. Registro scatti
-11. Metadati EXIF
-12. Uso offline e luogo
-13. Condivisione
-14. Limiti e responsabilità
-15. Checklist operativa
-16. Contatti
+9. Mappa
+10. Galleria (scheda Foto)
+11. Registro scatti
+12. Metadati EXIF
+13. Uso offline e luogo
+14. Condivisione
+15. Limiti e responsabilità
+16. Checklist operativa
+17. Contatti
 
 ---
 
@@ -39,7 +40,7 @@
 
 Questa guida spiega, in italiano, come funziona AIB Camera sul campo: permessi, scatto, timbro sulle foto, galleria, registro scatti e uso senza rete.
 
-È pensata per **chiunque** usi l’app — cittadini, volontari o altri — per documentare un incendio boschivo (AIB) o una situazione simile. Descrive il comportamento reale della versione **1.0.2**.
+È pensata per **chiunque** usi l’app — cittadini, volontari o altri — per documentare un incendio boschivo (AIB) o una situazione simile. Descrive il comportamento reale della versione **1.2.0**.
 
 ---
 
@@ -77,6 +78,7 @@ L’app **non** è realizzata, approvata né affiliata a Protezione Civile, Vigi
 | Punto mirato     | Distanza + direzione bussola da GPS: stima le coordinate di ciò a cui punti; commutatore Qui ↔ Mirato; etichetta «stimato» sul timbro             |
 | Anteprima live   | Sul mirino compare lo stesso blocco che verrà bruciato sulla foto                                                                                  |
 | Scatto rapido    | Si possono scattare più foto di seguito; il timbro viene elaborato in coda, una foto alla volta                                                    |
+| Scheda Mappa     | Punto Qui/Mirato sulla mappa; stesse info del timbro; copia, condivisione testo + link mappe, apri in Mappe                                        |
 | Galleria in-app  | Fonte di verità: le foto restano nell’app anche senza permesso alla libreria Foto                                                                  |
 | Album di sistema | Copia nell’album «AIB Camera» se il permesso Foto è concesso (non garantita)                                                                       |
 | Registro scatti  | Elenco locale solo in aggiunta: ID scatto, data/ora, coordinate; esportabile in CSV con `install_id`                                               |
@@ -102,17 +104,17 @@ L’app **non** è realizzata, approvata né affiliata a Protezione Civile, Vigi
 - Lingua dell’interfaccia: **italiano** (predefinita) o **inglese**, selezionabile in **Impostazioni** e memorizzata sul dispositivo.
 - Fuso orario sul timbro: sempre **Europe/Rome**, indipendente dal fuso impostato sul telefono.
 
-Informazioni aggiornate su disponibilità e distribuzione: [smnl.dev/aib-camera](https://smnl.dev/aib-camera). Per adozioni organizzate (distribuzione a più dispositivi, build dedicate), contattare lo sviluppatore (vedi § 16).
+Informazioni aggiornate su disponibilità e distribuzione: [smnl.dev/aib-camera](https://smnl.dev/aib-camera). Per adozioni organizzate (distribuzione a più dispositivi, build dedicate), contattare lo sviluppatore (vedi § 17).
 
 ---
 
 ## 5. Permessi
 
-| Permesso                  | Obbligatorio? | A cosa serve                                                                                        |
-| ------------------------- | ------------- | --------------------------------------------------------------------------------------------------- |
-| **Fotocamera**            | Sì            | Scattare le foto. Senza questo permesso l’app non può acquisire immagini.                           |
-| **Posizione (in uso)**    | No            | Coordinate, precisione, altitudine, direzione e luogo sul timbro e, se possibile, nell’EXIF.        |
-| **Libreria Foto / Media** | No            | Copiare le foto nell’album di sistema «AIB Camera» e rimuoverle da lì quando si eliminano dall’app. |
+| Permesso                  | Obbligatorio? | A cosa serve                                                                                                      |
+| ------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------- |
+| **Fotocamera**            | Sì            | Scattare le foto. Senza questo permesso l’app non può acquisire immagini.                                         |
+| **Posizione (in uso)**    | No            | Coordinate, precisione, altitudine, direzione e luogo sul timbro e sulla scheda Mappa e, se possibile, nell’EXIF. |
+| **Libreria Foto / Media** | No            | Copiare le foto nell’album di sistema «AIB Camera» e rimuoverle da lì quando si eliminano dall’app.               |
 
 **Senza GPS** è comunque possibile scattare. Sul timbro restano data/ora e l’eventuale testo personalizzato; le righe geo mostrano _Coordinate non disponibili_ / _Luogo non disponibile_.
 
@@ -127,8 +129,9 @@ I permessi si possono rivedere da **Impostazioni** e dalle Impostazioni di siste
 Barra a schede flottante (vetro, uguale su iOS e Android) con **solo icone**:
 
 1. **Fotocamera** — scatto e anteprima del timbro
-2. **Foto** — galleria in-app
-3. **Impostazioni** — lingua (Italiano / English), permessi, versione e ID installazione (tocca per copiare), registro scatti, link a questa guida e informativa privacy. La configurazione del timbro si apre dall’icona in alto a destra sulla fotocamera.
+2. **Mappa** — punto effettivo (Qui o Mirato), stesso foglio **Punta** della fotocamera, stesse informazioni del timbro, copia / condivisione e apertura nelle Mappe di sistema
+3. **Foto** — galleria in-app
+4. **Impostazioni** — lingua (Italiano / English), permessi, versione e ID installazione (tocca per copiare), registro scatti, link a questa guida e informativa privacy. La configurazione del timbro si apre dall’icona in alto a destra sulla fotocamera.
 
 I nomi restano disponibili a VoiceOver / TalkBack tramite etichette di accessibilità.
 
@@ -154,7 +157,7 @@ Carattere, dimensione del testo e opacità dello sfondo seguono la **Configurazi
 | Controllo                   | Comportamento                                                                                                                                                                             |
 | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Pulsante di scatto**      | Cerchio bianco (banda inferiore in verticale; rail destro in orizzontale): acquisisce la foto.                                                                                            |
-| **Anteprima ultimo scatto** | Quadratino vicino allo scatto: apre il dettaglio dell’ultima foto pronta. Se l’elaborazione è ancora in corso compare un indicatore di caricamento.                                       |
+| **Anteprima ultimo scatto** | Quadratino vicino allo scatto: apre il visualizzatore sull’ultima foto pronta (swipe / filmstrip per le altre). Se l’elaborazione è ancora in corso compare un indicatore di caricamento. |
 | **Flash**                   | Icona torcia (alto a sinistra in verticale; rail sinistro in orizzontale): solo **acceso / spento** (non c’è modalità automatica).                                                        |
 | **Punta**                   | Icona mirino accanto al flash, oppure **tieni premuto** il mirino (~0,5 s): foglio a tutta larghezza alto quanto il contenuto; chiusura con ✕ o tocco fuori; distanza e **Blocca punto**. |
 | **Qui / Mirato**            | Con un punto sticky attivo, selettore in alto al centro: alterna tra la tua posizione GPS e il punto mirato senza perderlo.                                                               |
@@ -166,14 +169,14 @@ La fotocamera usata è solo quella **posteriore**.
 
 ### 7.4 Punto mirato (distanza + direzione)
 
-Per stampare le coordinate di ciò a cui stai **puntando** (es. un focolaio a 200 m), non la tua posizione:
+Per usare le coordinate di ciò a cui stai **puntando** (es. un focolaio a 200 m), non la tua posizione. Il foglio **Punta** è a livello app: **lo stesso menu** da Fotocamera e da Mappa.
 
 1. Assicurati che GPS e bussola siano disponibili.
-2. Punta la fotocamera verso il punto di interesse.
-3. Tocca **Punta** (o tieni premuto il mirino): si apre un foglio a tutta larghezza (chiudi con ✕ o toccando fuori).
-4. Scegli o digita la distanza in metri, poi **Blocca punto**.
-5. Sul timbro compaiono le coordinate stimate e l’etichetta **Punto mirato (stimato)**.
-6. Usa **Qui ↔ Mirato** per tornare alla tua posizione o riattivare il punto sticky; **Cancella punto** lo elimina.
+2. Orientati verso il punto di interesse (la stima usa la direzione della bussola).
+3. Apri **Punta**: sulla fotocamera (icona o pressione lunga sul mirino) oppure sulla mappa (icona mirino in alto a destra). Si apre lo stesso foglio a tutta larghezza (chiudi con ✕ o toccando fuori).
+4. Scegli un preset (**100 / 250 / 500 / 1000** m) o digita i metri, poi **Blocca punto**.
+5. Sul timbro e sulla mappa compaiono le coordinate stimate e l’etichetta **Punto mirato (stimato)**.
+6. Usa **Qui ↔ Mirato** su fotocamera o mappa senza perdere il punto; **Cancella punto** (nel foglio Punta) lo elimina.
 
 È una stima a terra lungo la direzione della bussola (senza altimetria / DEM): utile in campo, non un fix GNSS sul bersaglio. Senza GPS o direzione, il blocco non va a buon fine; lo scatto resta comunque disponibile in modalità Qui.
 
@@ -227,11 +230,25 @@ Le modifiche si applicano subito all’anteprima live e agli scatti successivi. 
 
 ---
 
-## 9. Galleria (scheda Foto)
+## 9. Mappa
+
+La scheda **Mappa** mostra il punto geo **effettivo** usato anche dal timbro:
+
+- mappa con il pallino blu di sistema (e cono di direzione se la bussola è disponibile) su **Qui**; sul **punto mirato** un pin rosso, con il pallino blu che resta sulla tua posizione;
+- icona **Punta** in alto a destra: apre lo stesso foglio della fotocamera (blocca, modifica distanza, cancella);
+- se un punto mirato è attivo, puoi alternare **Qui ↔ Mirato** anche da qui, e **trascinare il pin rosso** sulla mappa: al rilascio il punto bloccato e la distanza in metri si aggiornano rispetto alla tua posizione;
+- le stesse righe informative del timbro (data/ora, coordinate, meta, luogo — secondo gli interruttori in Configurazione);
+- **Copia** il testo negli appunti; **Condividi** apre il foglio di sistema con testo + link mappe; **Apri nelle mappe** apre Apple Maps / Google Maps.
+
+Senza GPS la scheda resta utilizzabile: compare un avviso e non c’è marker. I tile richiedono rete: su **iOS** Apple Maps, su **Android** Leaflet con OpenStreetMap (nessuna chiave Google Maps). Copia e condivisione del testo funzionano comunque quando le coordinate sono disponibili.
+
+---
+
+## 10. Galleria (scheda Foto)
 
 - Le foto sono raggruppate per giorno (fuso Europe/Rome), con intestazioni tipo _Oggi_ / _Ieri_.
 - Griglia a **5 colonne** di miniature quadrate.
-- Toccare una miniatura per il dettaglio (**Condividi** / **Elimina**).
+- Toccare una miniatura apre il **visualizzatore**: scorri le foto (swipe o filmstrip sotto), poi **Condividi** / **Elimina**.
 - Modalità selezione: pulsante **Seleziona** oppure pressione prolungata su una miniatura; quindi condivisione o eliminazione multipla.
 
 ### Galleria in-app e album di sistema
@@ -250,7 +267,7 @@ Le modifiche si applicano subito all’anteprima live e agli scatti successivi. 
 
 ---
 
-## 10. Registro scatti
+## 11. Registro scatti
 
 Accesso: **Impostazioni → Registro scatti**.
 
@@ -265,7 +282,7 @@ Il registro **non** viene inviato a nessun server; l’esportazione CSV lascia i
 
 ---
 
-## 11. Metadati EXIF
+## 12. Metadati EXIF
 
 Dopo il timbro l’app prova a scrivere sul JPEG, tra l’altro:
 
@@ -283,7 +300,7 @@ Dopo il timbro l’app prova a scrivere sul JPEG, tra l’altro:
 
 ---
 
-## 12. Uso offline e luogo
+## 13. Uso offline e luogo
 
 - Scatto, timbro, galleria, registro e condivisione **non richiedono rete**.
 - La rete serve solo per la **geocodifica inversa** (coordinate → etichetta di luogo), se il campo Luogo è attivo e c’è connessione.
@@ -295,15 +312,15 @@ Su dispositivi più vecchi o con moduli nativi limitati, l’app **degrada in si
 
 ---
 
-## 13. Condivisione
+## 14. Condivisione
 
 Dal dettaglio o dalla selezione in galleria si apre il **foglio di condivisione di sistema** (Messaggi, Mail, WhatsApp, File, ecc.).
 
-Il file condiviso è il JPEG già timbrato, con EXIF se è stato scritto. Dopo l’invio, trattamento e conservazione dipendono dall’app o dal servizio scelto da chi condivide (fuori dal controllo di AIB Camera).
+Il file condiviso è il JPEG già timbrato, con EXIF se è stato scritto. Dalla scheda **Mappa** puoi invece condividere o copiare il **testo** della posizione (con link mappe) senza inviare una foto. Dopo l’invio, trattamento e conservazione dipendono dall’app o dal servizio scelto da chi condivide (fuori dal controllo di AIB Camera).
 
 ---
 
-## 14. Limiti e responsabilità
+## 15. Limiti e responsabilità
 
 Chi usa l’app deve tenere presenti questi punti:
 
@@ -312,11 +329,11 @@ Chi usa l’app deve tenere presenti questi punti:
 3. **Data e ora sul timbro** usano sempre Europe/Rome; verificare che l’orologio del telefono sia impostato correttamente.
 4. **Album «AIB Camera»** è una copia di comodo: sul dispositivo la copia affidabile è la **galleria in-app**.
 5. **Privacy:** foto, impostazioni e registro restano sul dispositivo; non c’è sincronizzazione cloud gestita dallo sviluppatore. La condivisione verso terzi è scelta di chi usa l’app.
-6. **Aggiornamenti:** questa guida si riferisce alla versione app **1.0.2**; in caso di release successive verificare eventuali differenze su [smnl.dev/aib-camera](https://smnl.dev/aib-camera).
+6. **Aggiornamenti:** questa guida si riferisce alla versione app **1.2.0**; in caso di release successive verificare eventuali differenze su [smnl.dev/aib-camera](https://smnl.dev/aib-camera).
 
 ---
 
-## 15. Checklist operativa
+## 16. Checklist operativa
 
 1. Concedere almeno il permesso **Fotocamera**; Posizione e Foto quando possibile e utili.
 2. Controllare **Configurazione** (campi attivi, testo personalizzato, formato data, dimensione, opacità) prima di scattare.
@@ -329,7 +346,7 @@ Chi usa l’app deve tenere presenti questi punti:
 
 ---
 
-## 16. Contatti
+## 17. Contatti
 
 <table class="doc-meta">
   <tbody>
@@ -343,4 +360,4 @@ Chi usa l’app deve tenere presenti questi punti:
 
 ---
 
-_Documento non ufficiale · Versione app di riferimento 1.0.2 · Stampabile · © Stefano Monolo — smnl.dev_
+_Documento non ufficiale · Versione app di riferimento 1.2.0 · Stampabile · © Stefano Monolo — smnl.dev_

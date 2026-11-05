@@ -4,8 +4,8 @@
 
 <table class="doc-meta">
   <tbody>
-    <tr><td><strong>Document version</strong></td><td>3 November 2026</td></tr>
-    <tr><td><strong>Reference app version</strong></td><td>1.0.2</td></tr>
+    <tr><td><strong>Document version</strong></td><td>5 November 2026</td></tr>
+    <tr><td><strong>Reference app version</strong></td><td>1.2.0</td></tr>
     <tr><td><strong>Language</strong></td><td>English</td></tr>
     <tr><td><strong>Site</strong></td><td><a href="https://smnl.dev/aib-camera">smnl.dev/aib-camera</a></td></tr>
     <tr><td><strong>Privacy</strong></td><td><a href="https://smnl.dev/aib-camera/privacy">smnl.dev/aib-camera/privacy</a></td></tr>
@@ -24,14 +24,15 @@
 6. Main screens
 7. Camera
 8. Stamp settings
-9. Gallery (Photos tab)
-10. Capture log
-11. EXIF metadata
-12. Offline use and place
-13. Sharing
-14. Limits and responsibility
-15. Field checklist
-16. Contact
+9. Map
+10. Gallery (Photos tab)
+11. Capture log
+12. EXIF metadata
+13. Offline use and place
+14. Sharing
+15. Limits and responsibility
+16. Field checklist
+17. Contact
 
 ---
 
@@ -39,7 +40,7 @@
 
 This guide explains, in English, how AIB Camera works in the field: permissions, capture, stamping photos, gallery, capture log, and use without a network.
 
-It is for **anyone** who uses the app — citizens, volunteers, or others — to document a wildfire (AIB) or similar situation. It describes the real behavior of version **1.0.2**.
+It is for **anyone** who uses the app — citizens, volunteers, or others — to document a wildfire (AIB) or similar situation. It describes the real behavior of version **1.2.0**.
 
 ---
 
@@ -77,6 +78,7 @@ The app is **not** built, endorsed, or affiliated with Civil Protection, the Fir
 | Aimed target   | Distance + compass heading from GPS: estimates coordinates of what you point at; Me ↔ Target toggle; “estimated” label on the stamp |
 | Live preview   | The viewfinder shows the same block that will be burned into the photo                                                               |
 | Fast capture   | You can take several photos in a row; the stamp is processed in a queue, one photo at a time                                         |
+| Map tab        | Me/Aimed point on the map; same stamp info; copy, share text + maps link, open in Maps                                               |
 | In-app gallery | Source of truth: photos stay in the app even without Photos library permission                                                       |
 | System album   | Copy into the “AIB Camera” album if Photos permission is granted (not guaranteed)                                                    |
 | Capture log    | Local append-only list: capture ID, date/time, coordinates; exportable as CSV with `install_id`                                      |
@@ -102,17 +104,17 @@ The app is **not** built, endorsed, or affiliated with Civil Protection, the Fir
 - UI language: **Italian** (default) or **English**, selectable in **Settings** and stored on the device.
 - Stamp timezone: always **Europe/Rome**, independent of the phone timezone.
 
-Up-to-date availability and distribution: [smnl.dev/aib-camera](https://smnl.dev/aib-camera). For organized rollouts (many devices, dedicated builds), contact the developer (see § 16).
+Up-to-date availability and distribution: [smnl.dev/aib-camera](https://smnl.dev/aib-camera). For organized rollouts (many devices, dedicated builds), contact the developer (see § 17).
 
 ---
 
 ## 5. Permissions
 
-| Permission                 | Required? | What it is for                                                                                |
-| -------------------------- | --------- | --------------------------------------------------------------------------------------------- |
-| **Camera**                 | Yes       | Taking photos. Without it the app cannot capture images.                                      |
-| **Location (while using)** | No        | Coordinates, accuracy, altitude, heading, and place on the stamp and, when possible, in EXIF. |
-| **Photos / media library** | No        | Copy photos into the system “AIB Camera” album and remove them there when deleted in the app. |
+| Permission                 | Required? | What it is for                                                                                            |
+| -------------------------- | --------- | --------------------------------------------------------------------------------------------------------- |
+| **Camera**                 | Yes       | Taking photos. Without it the app cannot capture images.                                                  |
+| **Location (while using)** | No        | Coordinates, accuracy, altitude, heading, and place on the stamp and Map tab and, when possible, in EXIF. |
+| **Photos / media library** | No        | Copy photos into the system “AIB Camera” album and remove them there when deleted in the app.             |
 
 **Without GPS** you can still shoot. The stamp keeps date/time and any custom text; geo lines show _Coordinates unavailable_ / _Place unavailable_.
 
@@ -127,8 +129,9 @@ Permissions can be reviewed from **Settings** and the phone’s system Settings.
 A floating glass tab bar (same on iOS and Android) with **icons only**:
 
 1. **Camera** — capture and stamp preview
-2. **Photos** — in-app gallery
-3. **Settings** — language (Italiano / English), permissions, version and install ID (tap to copy), capture log, links to this guide and the privacy policy. Stamp settings open from the icon at the top right of the camera.
+2. **Map** — effective point (Me or Aimed), the same **Aim** sheet as Camera, stamp-parity info, copy / share, and open in system Maps
+3. **Photos** — in-app gallery
+4. **Settings** — language (Italiano / English), permissions, version and install ID (tap to copy), capture log, links to this guide and the privacy policy. Stamp settings open from the icon at the top right of the camera.
 
 Names stay available to VoiceOver / TalkBack via accessibility labels.
 
@@ -166,14 +169,14 @@ Only the **rear** camera is used.
 
 ### 7.4 Aimed target (distance + heading)
 
-To stamp the coordinates of what you are **pointing at** (e.g. a hotspot 200 m away), not your position:
+To use the coordinates of what you are **pointing at** (e.g. a hotspot 200 m away), not your position. **Aim** is app-level: the **same sheet** from Camera and Map.
 
 1. Make sure GPS and compass are available.
-2. Point the camera at the point of interest.
-3. Tap **Aim** (or press and hold the viewfinder): a full-width sheet opens (dismiss with ✕ or tap outside).
-4. Choose or type the distance in meters, then **Lock target**.
-5. The stamp shows estimated coordinates and the label **Aimed target (estimated)**.
-6. Use **Me ↔ Target** to return to your position or re-enable the sticky point; **Clear target** removes it.
+2. Face the point of interest (the estimate uses compass heading).
+3. Open **Aim**: on Camera (chrome or press-and-hold the viewfinder) or on Map (crosshair in the top-right). The same full-width sheet opens (dismiss with ✕ or tap outside).
+4. Pick a preset (**100 / 250 / 500 / 1000** m) or type meters, then **Lock target**.
+5. Stamp and map show estimated coordinates and the label **Aimed target (estimated)**.
+6. Use **Me ↔ Target** on Camera or Map without losing the lock; **Clear target** (in the Aim sheet) removes it.
 
 It is a ground estimate along the compass heading (no altimetry / DEM): useful in the field, not a GNSS fix on the target. Without GPS or heading, lock fails; capture remains available in Me mode.
 
@@ -227,11 +230,25 @@ Changes apply immediately to the live preview and later shots. Photos already ta
 
 ---
 
-## 9. Gallery (Photos tab)
+## 9. Map
+
+The **Map** tab shows the same effective geo point used by the stamp:
+
+- map with the system blue user puck (and heading cone when the compass is available) for **Me**; a red pin on the **aimed target**, with the blue puck still on your position;
+- **Aim** icon top-right: opens the same sheet as Camera (lock, change distance, clear);
+- if an aimed point is active, you can toggle **Me ↔ Aimed** here too, and **drag the red pin** on the map: on release the locked point and distance in meters update from your position;
+- the same stamp info lines (date/time, coordinates, meta, place — per Stamp settings toggles);
+- **Copy** puts the text on the clipboard; **Share** opens the system sheet with text + a maps link; **Open in Maps** opens Apple Maps / Google Maps.
+
+Without GPS the tab stays usable: a hint appears and there is no marker. Map tiles need a network: **iOS** Apple Maps, **Android** Leaflet with OpenStreetMap (no Google Maps key). Copy and share of the text still work when coordinates are available.
+
+---
+
+## 10. Gallery (Photos tab)
 
 - Photos are grouped by day (Europe/Rome timezone), with headers like _Today_ / _Yesterday_.
 - **5-column** grid of square thumbnails.
-- Tap a thumbnail for detail (**Share** / **Delete**).
+- Tap a thumbnail to open the **viewer**: browse shots (swipe or the filmstrip below), then **Share** / **Delete**.
 - Selection mode: **Select** button or long-press a thumbnail; then multi share or delete.
 
 ### In-app gallery vs system album
@@ -250,7 +267,7 @@ Changes apply immediately to the live preview and later shots. Photos already ta
 
 ---
 
-## 10. Capture log
+## 11. Capture log
 
 Access: **Settings → Capture log**.
 
@@ -265,7 +282,7 @@ The log is **not** sent to any server; CSV export leaves the device only if you 
 
 ---
 
-## 11. EXIF metadata
+## 12. EXIF metadata
 
 After stamping the app tries to write on the JPEG, among other fields:
 
@@ -283,7 +300,7 @@ After stamping the app tries to write on the JPEG, among other fields:
 
 ---
 
-## 12. Offline use and place
+## 13. Offline use and place
 
 - Capture, stamp, gallery, log, and share **do not require a network**.
 - Network is only needed for **reverse geocoding** (coordinates → place label), if Place is enabled and there is connectivity.
@@ -295,15 +312,15 @@ On older or constrained devices, the app **degrades quietly**: if Skia stamp fai
 
 ---
 
-## 13. Sharing
+## 14. Sharing
 
 From detail or gallery selection the **system share sheet** opens (Messages, Mail, WhatsApp, Files, etc.).
 
-The shared file is the already stamped JPEG, with EXIF if it was written. After sending, handling and retention depend on the app or service chosen by the sharer (outside AIB Camera’s control).
+The shared file is the already stamped JPEG, with EXIF if it was written. From the **Map** tab you can instead share or copy **location text** (with a maps link) without sending a photo. After sending, handling and retention depend on the app or service chosen by the sharer (outside AIB Camera’s control).
 
 ---
 
-## 14. Limits and responsibility
+## 15. Limits and responsibility
 
 Anyone using the app should keep these points in mind:
 
@@ -312,11 +329,11 @@ Anyone using the app should keep these points in mind:
 3. **Date and time on the stamp** always use Europe/Rome; check that the phone clock is set correctly.
 4. **“AIB Camera” album** is a convenience copy: the reliable copy on the device is the **in-app gallery**.
 5. **Privacy:** photos, settings, and log stay on the device; there is no developer-managed cloud sync. Sharing with third parties is the user’s choice.
-6. **Updates:** this guide refers to app version **1.0.2**; for later releases check for differences on [smnl.dev/aib-camera](https://smnl.dev/aib-camera).
+6. **Updates:** this guide refers to app version **1.2.0**; for later releases check for differences on [smnl.dev/aib-camera](https://smnl.dev/aib-camera).
 
 ---
 
-## 15. Field checklist
+## 16. Field checklist
 
 1. Grant at least **Camera** permission; Location and Photos when useful.
 2. Check **Stamp settings** (active fields, custom text, date format, size, opacity) before shooting.
@@ -329,7 +346,7 @@ Anyone using the app should keep these points in mind:
 
 ---
 
-## 16. Contact
+## 17. Contact
 
 <table class="doc-meta">
   <tbody>
@@ -343,4 +360,4 @@ Anyone using the app should keep these points in mind:
 
 ---
 
-_Unofficial document · Reference app version 1.0.2 · Printable · © Stefano Monolo — smnl.dev_
+_Unofficial document · Reference app version 1.2.0 · Printable · © Stefano Monolo — smnl.dev_

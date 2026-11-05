@@ -137,7 +137,7 @@ const it: AibCopy = {
       },
       {
         title: 'Punto mirato',
-        body: 'Tieni premuto il mirino (o tocca Punta): si apre un foglio a tutta larghezza. Indica la distanza (es. 200 m) e blocca le coordinate stimate da GPS + bussola. Alterna Qui ↔ Mirato senza perdere il punto; sul timbro compare l’etichetta «Punto mirato (stimato)».',
+        body: 'Stesso foglio Punta da Fotocamera (mirino o pressione lunga) o Mappa (icona in alto). Indica la distanza (preset 100 / 250 / 500 / 1000 m o metri liberi) e blocca le coordinate stimate da GPS + bussola. Alterna Qui ↔ Mirato; sulla mappa puoi trascinare il pin rosso per aggiornare punto e metri. Sul timbro compare «Punto mirato (stimato)».',
       },
       {
         title: 'Timbro sul JPEG',
@@ -152,8 +152,12 @@ const it: AibCopy = {
         body: 'Dopo il timbro l’app scrive Software, ImageUniqueID (UUID), tag GPS e un UserComment JSON quando la build nativa lo supporta.',
       },
       {
+        title: 'Scheda Mappa',
+        body: 'Mappa del punto effettivo: pallino blu (con direzione) su Qui, pin rosso trascinabile sul Mirato (rilascio aggiorna i metri); Apple Maps su iOS, Leaflet/OpenStreetMap su Android; stesso foglio Punta della Fotocamera; copia / condivisione; apertura nell’app Mappe di sistema.',
+      },
+      {
         title: 'Galleria in-app',
-        body: 'Le foto restano nell’app come fonte di verità. Album Foto «AIB Camera» opzionale; eliminando dall’app si rimuove anche quella copia quando possibile.',
+        body: 'Le foto restano nell’app come fonte di verità. Dal visualizzatore scorri (swipe o filmstrip), condividi o elimina. Album Foto «AIB Camera» opzionale; eliminando dall’app si rimuove anche quella copia quando possibile.',
       },
       {
         title: 'Registro scatti',
@@ -191,7 +195,7 @@ const it: AibCopy = {
       'Guida operativa in italiano di AIB Camera: permessi, fotocamera, timbro, galleria, registro scatti, limiti e checklist sul campo. Leggibile nel browser e scaricabile in PDF.',
     heading: 'Guida operativa',
     leadHtml:
-      'Come funziona AIB Camera sul campo: permessi, scatto, timbro, galleria e registro scatti. App <strong>non ufficiale</strong>, indipendente da enti pubblici. Versione di riferimento <strong>1.0.2</strong>.',
+      'Come funziona AIB Camera sul campo: permessi, scatto, timbro, galleria e registro scatti. App <strong>non ufficiale</strong>, indipendente da enti pubblici. Versione di riferimento <strong>1.2.0</strong>.',
     downloadPdf: 'Scarica PDF',
     openPdf: 'Apri PDF',
     pdfHref: '/docs/aib-camera-guida-operativa.pdf',
@@ -202,7 +206,7 @@ const it: AibCopy = {
     description:
       'Informativa privacy di AIB Camera: app aperta a chiunque. Fotografia di campo sul dispositivo; foto, impostazioni, registro scatti e posizione restano sul telefono.',
     heading: 'Informativa privacy — AIB Camera',
-    updated: 'Ultimo aggiornamento: 26 ottobre 2026',
+    updated: 'Ultimo aggiornamento: 5 novembre 2026',
     intro1Html:
       'AIB Camera è un’app mobile indipendente e non ufficiale per la fotografia di campo nell’antincendio boschivo (AIB) e situazioni simili. È <strong>aperta a chiunque</strong> — non riservata a una specifica organizzazione, squadra o insieme di professionisti. Chiunque può usarla per scattare foto geolocalizzate timbrate (ad esempio per condividerle con la Protezione Civile locale via WhatsApp o Telegram, o per leggere coordinate e altri dettagli a chi risponde all’emergenza, come il 112). <strong>Non</strong> è affiliata, approvata né realizzata da Protezione Civile, Vigili del Fuoco, Regione Lombardia o altri enti pubblici.',
     intro2:
@@ -212,9 +216,9 @@ const it: AibCopy = {
       'L’app è <strong>offline-first</strong>. Foto, impostazioni, galleria in-app e registro scatti restano sul dispositivo.',
       'Non c’è <strong>account</strong>, <strong>SDK di analytics</strong> né <strong>sincronizzazione cloud</strong> gestita dallo sviluppatore.',
       'La <strong>fotocamera</strong> è necessaria per scattare.',
-      'La <strong>posizione</strong> è opzionale e serve a stampare coordinate, altitudine, direzione e luogo sulla foto, e a scrivere i campi corrispondenti nell’EXIF JPEG quando possibile. Puoi anche bloccare un <strong>punto mirato</strong> (GPS + bussola + distanza inserita): le coordinate stimate possono sostituire la tua posizione sul timbro finché non le cancelli.',
+      'La <strong>posizione</strong> è opzionale e serve a stampare coordinate, altitudine, direzione e luogo sulla foto, a mostrarli nella scheda <strong>Mappa</strong>, e a scrivere i campi corrispondenti nell’EXIF JPEG quando possibile. Puoi anche bloccare un <strong>punto mirato</strong> (GPS + bussola + distanza inserita): le coordinate stimate possono sostituire la tua posizione sul timbro e sulla mappa finché non le cancelli.',
       'L’accesso alla <strong>libreria Foto</strong> è opzionale e serve a salvare le foto timbrate nell’album «AIB Camera» e a rimuovere quelle copie quando elimini le foto dall’app.',
-      'La rete serve solo per la <strong>geocodifica inversa opzionale</strong> (da GPS a etichetta di luogo) quando c’è connessione. Le etichette vicine possono restare in cache sul dispositivo per riuso offline.',
+      'La rete serve per la <strong>geocodifica inversa opzionale</strong> (da GPS a etichetta di luogo) e per i <strong>tile della mappa</strong> (Apple Maps su iOS; OpenStreetMap/CARTO via Leaflet su Android, senza Google Maps) quando apri la scheda Mappa. Le etichette di luogo vicine possono restare in cache sul dispositivo per riuso offline. Copiare o condividere le coordinate non richiede i tile.',
     ],
     dataTitle: 'Dati trattati dall’app',
     colData: 'Dato',
@@ -271,6 +275,12 @@ const it: AibCopy = {
         where: 'Sul dispositivo (archivio locale)',
         why: 'Ricordare le preferenze del timbro e la lingua dell’interfaccia',
       },
+      {
+        data: 'Vista mappa (opzionale)',
+        where:
+          'Solo sul dispositivo; tile da Apple (iOS) o OpenStreetMap/CARTO (Android) quando online',
+        why: 'Mostrare il punto effettivo; copiare o condividere le coordinate',
+      },
     ],
     logTitle: 'Registro scatti',
     logBodyHtml:
@@ -288,7 +298,7 @@ const it: AibCopy = {
     ],
     shareTitle: 'Condivisione',
     shareBody:
-      'Se usi il foglio di condivisione di sistema (WhatsApp, Mail, File, ecc.), la foto condivisa (compreso l’eventuale EXIF scritto nel file) o un CSV del registro scatti lascia l’app secondo le regole dell’app o del servizio che scegli. Ciò è fuori dal controllo di AIB Camera.',
+      'Se usi il foglio di condivisione di sistema (WhatsApp, Mail, File, ecc.), la foto condivisa (compreso l’eventuale EXIF scritto nel file), un CSV del registro scatti o il testo/posizione dalla scheda Mappa lascia l’app secondo le regole dell’app o del servizio che scegli. Aprire un punto in Apple Maps o Google Maps segue le regole di quell’app. Ciò è fuori dal controllo di AIB Camera.',
     minorsTitle: 'Privacy dei minori',
     minorsBody:
       'L’app non è rivolta ai minori e non raccoglie consapevolmente dati personali di minori.',
@@ -382,7 +392,7 @@ const en: AibCopy = {
       },
       {
         title: 'Aimed target',
-        body: 'Press and hold the viewfinder (or tap Aim) to open a full-width sheet. Enter a distance (e.g. 200 m) and lock estimated coordinates from GPS + compass. Toggle Me ↔ Target without losing the lock; the stamp shows “Aimed target (estimated)”.',
+        body: 'Same Aim sheet from Camera (chrome or press-and-hold) or Map (header icon). Enter a distance (presets 100 / 250 / 500 / 1000 m or custom meters) and lock estimated coordinates from GPS + compass. Toggle Me ↔ Target; on the map you can drag the red pin to update the point and meters. Stamp shows “Aimed target (estimated)”.',
       },
       {
         title: 'Stamp on the JPEG',
@@ -397,8 +407,12 @@ const en: AibCopy = {
         body: 'After stamping, the app writes Software, ImageUniqueID (UUID), GPS tags, and a JSON UserComment when the native build supports it.',
       },
       {
+        title: 'Map tab',
+        body: 'Map of the effective point: blue puck (with heading) for Me, draggable red pin for Aimed (drop updates distance); Apple Maps on iOS, Leaflet/OpenStreetMap on Android; same Aim sheet as Camera; copy / share; open in system Maps.',
+      },
+      {
         title: 'In-app gallery',
-        body: 'Photos stay in the app as the source of truth. Optional Photos album “AIB Camera”; deleting in-app also removes that copy when possible.',
+        body: 'Photos stay in the app as the source of truth. The viewer lets you swipe or use the filmstrip, then share or delete. Optional Photos album “AIB Camera”; deleting in-app also removes that copy when possible.',
       },
       {
         title: 'Capture log',
@@ -436,7 +450,7 @@ const en: AibCopy = {
       'AIB Camera field guide in English: permissions, camera, stamp, gallery, capture log, limits, and field checklist. Readable in the browser and downloadable as PDF.',
     heading: 'Field guide',
     leadHtml:
-      'How AIB Camera works in the field: permissions, capture, stamp, gallery, and capture log. <strong>Unofficial</strong> app, independent of public agencies. Reference version <strong>1.0.2</strong>.',
+      'How AIB Camera works in the field: permissions, capture, stamp, gallery, and capture log. <strong>Unofficial</strong> app, independent of public agencies. Reference version <strong>1.2.0</strong>.',
     downloadPdf: 'Download PDF',
     openPdf: 'Open PDF',
     pdfHref: '/docs/aib-camera-field-guide.pdf',
@@ -447,7 +461,7 @@ const en: AibCopy = {
     description:
       'AIB Camera privacy policy: app open to anyone. On-device field photography; photos, settings, capture log, and location stay on the phone.',
     heading: 'Privacy policy — AIB Camera',
-    updated: 'Last updated: 26 October 2026',
+    updated: 'Last updated: 5 November 2026',
     intro1Html:
       'AIB Camera is an independent, unofficial mobile app for field photography in wildfire response (AIB) and similar situations. It is <strong>open to anyone</strong> — not limited to a specific organization, crew, or set of professionals. Anyone can use it to take stamped, geotagged photos (for example to share with local Civil Protection via WhatsApp or Telegram, or to read coordinates and other details to emergency responders such as 112). It is <strong>not</strong> affiliated with, endorsed by, or built by Civil Protection, the Fire Service, Regione Lombardia, or other public institutions.',
     intro2: 'This policy describes how the app handles data on the device.',
@@ -456,9 +470,9 @@ const en: AibCopy = {
       'The app is <strong>offline-first</strong>. Photos, settings, in-app gallery, and capture log stay on the device.',
       'There is no <strong>account</strong>, <strong>analytics SDK</strong>, or developer-managed <strong>cloud sync</strong>.',
       'The <strong>camera</strong> is required to take photos.',
-      '<strong>Location</strong> is optional and is used to print coordinates, altitude, heading, and place on the photo, and to write matching EXIF JPEG fields when possible. You can also lock an <strong>aimed target</strong> (GPS + compass + entered distance): estimated coordinates can replace your position on the stamp until you clear them.',
+      '<strong>Location</strong> is optional and is used to print coordinates, altitude, heading, and place on the photo, show them on the <strong>Map</strong> tab, and write matching EXIF JPEG fields when possible. You can also lock an <strong>aimed target</strong> (GPS + compass + entered distance): estimated coordinates can replace your position on the stamp and map until you clear them.',
       '<strong>Photos library</strong> access is optional and is used to save stamped photos into the “AIB Camera” album and remove those copies when you delete photos in the app.',
-      'Network is used only for optional <strong>reverse geocoding</strong> (GPS → place label) when online. Nearby labels may stay cached on the device for offline reuse.',
+      'Network is used for optional <strong>reverse geocoding</strong> (GPS → place label) and for <strong>map tiles</strong> (Apple Maps on iOS; OpenStreetMap/CARTO via Leaflet on Android — not Google Maps) when you open the Map tab. Nearby labels may stay cached on the device for offline reuse. Copying or sharing coordinates does not require map tiles.',
     ],
     dataTitle: 'Data processed by the app',
     colData: 'Data',
@@ -512,6 +526,12 @@ const en: AibCopy = {
         where: 'On device (local storage)',
         why: 'Remember stamp preferences and UI language',
       },
+      {
+        data: 'Map view (optional)',
+        where:
+          'On device only; tiles from Apple (iOS) or OpenStreetMap/CARTO (Android) when online',
+        why: 'Show the effective point; copy or share coordinates',
+      },
     ],
     logTitle: 'Capture log',
     logBodyHtml:
@@ -529,7 +549,7 @@ const en: AibCopy = {
     ],
     shareTitle: 'Sharing',
     shareBody:
-      'If you use the system share sheet (WhatsApp, Mail, Files, etc.), the shared photo (including any EXIF written into the file) or a capture-log CSV leaves the app under the rules of the app or service you choose. That is outside AIB Camera’s control.',
+      'If you use the system share sheet (WhatsApp, Mail, Files, etc.), the shared photo (including any EXIF written into the file), a capture-log CSV, or location text from the Map tab leaves the app under the rules of the app or service you choose. Opening a point in Apple Maps or Google Maps follows that app’s rules. That is outside AIB Camera’s control.',
     minorsTitle: 'Children’s privacy',
     minorsBody:
       'The app is not directed at children and does not knowingly collect personal data from minors.',
