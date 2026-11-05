@@ -1,6 +1,4 @@
 @import 'tailwindcss';
-/* Thin glue: AIB Camera layer styles share this Tailwind entry while colocated. */
-@import '../../aib-camera/assets/css/aib-camera.css';
 
 @theme {
   --font-heading: 'Geist Serif', serif;

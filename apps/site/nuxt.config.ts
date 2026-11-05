@@ -1,7 +1,6 @@
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
-  extends: ['./aib-camera', './aib-sitac'],
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   modules: ['@nuxt/fonts', '@nuxt/icon', 'nuxt-gtag'],
@@ -10,6 +9,45 @@ export default defineNuxtConfig({
   experimental: {
     appManifest: false,
   },
+  routeRules: {
+    '/aib-camera/guida': {
+      redirect: { to: 'https://aib.smnl.dev/camera/guide', statusCode: 301 },
+    },
+    '/aib-camera/novita': {
+      redirect: {
+        to: 'https://aib.smnl.dev/camera/changelog',
+        statusCode: 301,
+      },
+    },
+    '/aib-camera': {
+      redirect: { to: 'https://aib.smnl.dev/camera', statusCode: 301 },
+    },
+    '/aib-camera/**': {
+      redirect: { to: 'https://aib.smnl.dev/camera/**', statusCode: 301 },
+    },
+    '/aib-sitac': {
+      redirect: { to: 'https://aib.smnl.dev/sitac', statusCode: 301 },
+    },
+    '/aib-sitac/**': {
+      redirect: { to: 'https://aib.smnl.dev/sitac/**', statusCode: 301 },
+    },
+    '/aib-assets/**': {
+      redirect: { to: 'https://aib.smnl.dev/camera/**', statusCode: 301 },
+    },
+    '/docs/aib-camera-guida-operativa.pdf': {
+      redirect: {
+        to: 'https://aib.smnl.dev/docs/aib-camera-guida-operativa.pdf',
+        statusCode: 301,
+      },
+    },
+    '/docs/aib-camera-field-guide.pdf': {
+      redirect: {
+        to: 'https://aib.smnl.dev/docs/aib-camera-field-guide.pdf',
+        statusCode: 301,
+      },
+    },
+  },
+
   gtag: {
     id: 'G-F1H9HVR3BL',
   },

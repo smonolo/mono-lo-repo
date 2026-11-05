@@ -17,7 +17,7 @@ const activeProjects = [
     description: 'Tactical situation map for wildfires',
     details:
       'An unofficial shared tactical map for wildfire response: timestamped marks, link-based rooms, and a scrubbable timeline. Built for operators; open to anyone.',
-    domain: 'smnl.dev/aib-sitac',
+    domain: 'aib.smnl.dev/sitac',
     githubUrl: 'https://github.com/smonolo/aib-sitac',
   },
   {
@@ -25,7 +25,7 @@ const activeProjects = [
     description: 'Field camera for wildfire photos',
     details:
       'An independent mobile field camera that burns date, time, GPS, and place into each photo. Offline-first, no account, open to anyone documenting wildfires.',
-    domain: 'smnl.dev/aib-camera',
+    domain: 'aib.smnl.dev/camera',
     githubUrl: 'https://github.com/smonolo/aib-camera',
   },
   {

@@ -1,4 +1,51 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "ignoreCommand": "if [ \"$VERCEL_ENV\" != \"production\" ]; then exit 0; fi; git diff --quiet HEAD^ HEAD ."
+  "ignoreCommand": "if [ \"$VERCEL_ENV\" != \"production\" ]; then exit 0; fi; git diff --quiet HEAD^ HEAD .",
+  "redirects": [
+    {
+      "source": "/aib-camera/guida",
+      "destination": "https://aib.smnl.dev/camera/guide",
+      "permanent": true
+    },
+    {
+      "source": "/aib-camera/novita",
+      "destination": "https://aib.smnl.dev/camera/changelog",
+      "permanent": true
+    },
+    {
+      "source": "/aib-camera",
+      "destination": "https://aib.smnl.dev/camera",
+      "permanent": true
+    },
+    {
+      "source": "/aib-camera/:path*",
+      "destination": "https://aib.smnl.dev/camera/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/aib-sitac",
+      "destination": "https://aib.smnl.dev/sitac",
+      "permanent": true
+    },
+    {
+      "source": "/aib-sitac/:path*",
+      "destination": "https://aib.smnl.dev/sitac/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/aib-assets/:path*",
+      "destination": "https://aib.smnl.dev/camera/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/docs/aib-camera-guida-operativa.pdf",
+      "destination": "https://aib.smnl.dev/docs/aib-camera-guida-operativa.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/docs/aib-camera-field-guide.pdf",
+      "destination": "https://aib.smnl.dev/docs/aib-camera-field-guide.pdf",
+      "permanent": true
+    }
+  ]
 }
